@@ -1,0 +1,7 @@
+use_default_menu=true
+menu_file=
+icon_file=/root/icons/cdrom.png
+show_menu_icons=true
+button_title=Menu
+show_button_title=false
+

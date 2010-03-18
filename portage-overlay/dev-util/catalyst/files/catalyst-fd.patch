@@ -1,0 +1,151 @@
+diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modules/generic_stage_target.py
+--- catalyst-2.0.6-a/modules/generic_stage_target.py	2008-05-29 05:30:10.000000000 +0100
++++ catalyst-2.0.6-b/modules/generic_stage_target.py	2009-11-01 10:42:17.000000000 +0000
+@@ -426,7 +426,7 @@
+ 
+ 	def set_snapshot_path(self):
+ 		self.settings["snapshot_path"]=normpath(self.settings["storedir"]+\
+-			"/snapshots/portage-"+self.settings["snapshot"]+".tar.bz2")
++			"/snapshots/portage-"+self.settings["snapshot"]+".tar.lzma")
+ 
+ 		if os.path.exists(self.settings["snapshot_path"]):
+ 			self.settings["snapshot_path_hash"]=\
+@@ -684,7 +684,7 @@
+ 					self.settings["source_path"]+"\nto "+\
+ 					self.settings["chroot_path"]+\
+ 						" (This may take some time) ...\n"
+-				unpack_cmd="tar xjpf "+self.settings["source_path"]+" -C "+\
++				unpack_cmd="tar xpf "+self.settings["source_path"]+" --lzma -C "+\
+ 					self.settings["chroot_path"]
+ 				error_msg="Tarball extraction of "+\
+ 					self.settings["source_path"]+" to "+\
+@@ -1055,6 +1055,13 @@
+ 			else:
+ 				myf.write('CXXFLAGS="${CFLAGS}"\n')
+ 
++                        myf.write('MAKEOPTS="-j5 --load-average=8"\n')
++                        myf.write('PORTAGE_NICENESS="19"\n')
++                        myf.write('ACCEPT_LICENSE="*"\n')
++                        myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
++                        myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
++                        myf.write('FEATURES="parallel parallel-fetch confcache -collision-protect -protect-owned"\n')
++
+ 			if self.settings.has_key("LDFLAGS"):
+ 				myf.write("# LDFLAGS is unsupported.  USE AT YOUR OWN RISK!\n")
+ 				myf.write('LDFLAGS="'+self.settings["LDFLAGS"]+'"\n')
+diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/snapshot_target.py
+--- catalyst-2.0.6-a/modules/snapshot_target.py	2008-05-29 05:30:11.000000000 +0100
++++ catalyst-2.0.6-b/modules/snapshot_target.py	2009-11-01 10:42:17.000000000 +0000
+@@ -17,7 +17,7 @@
+ 		self.settings["target_subpath"]="portage"
+ 		st=self.settings["storedir"]
+ 		self.settings["snapshot_path"]=normpath(st+"/snapshots/portage-"+self.settings["version_stamp"]\
+-			+".tar.bz2")
++			+".tar.lzma")
+ 		self.settings["tmp_path"]=normpath(st+"/tmp/"+self.settings["target_subpath"])
+ 		if self.settings.has_key("portdir_overlay"):
+ 			print "\nWarning!!!!"
+diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-b/targets/support/chroot-functions.sh
+--- catalyst-2.0.6-a/targets/support/chroot-functions.sh	2008-05-29 05:30:09.000000000 +0100
++++ catalyst-2.0.6-b/targets/support/chroot-functions.sh	2009-11-01 10:42:17.000000000 +0000
+@@ -126,6 +126,7 @@
+ 	else
+ 		clst_myemergeopts="--quiet"
+ 	fi
++	clst_myemergeopts="${clst_myemergeopts} --jobs=4 --load-average=8"
+ 	if [ -n "${clst_FETCH}" ]
+ 	then
+ 		export bootstrap_opts="-f"
+diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-b/targets/support/kmerge.sh
+--- catalyst-2.0.6-a/targets/support/kmerge.sh	2008-05-29 05:30:09.000000000 +0100
++++ catalyst-2.0.6-b/targets/support/kmerge.sh	2009-11-01 10:42:17.000000000 +0000
+@@ -99,7 +99,7 @@
+ 	fi
+ 	if [ "${clst_kernel_merge}" != "" ]
+ 	then
+-		genkernel --callback="emerge ${gk_callback_opts} ${clst_kernel_merge}" \
++		genkernel --callback="emerge --jobs=4 --load-average=8 ${gk_callback_opts} ${clst_kernel_merge}" \
+ 			${GK_ARGS} || exit 1
+ 	else
+ 		genkernel ${GK_ARGS} || exit 1
+diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-b/targets/support/unmerge.sh
+--- catalyst-2.0.6-a/targets/support/unmerge.sh	2008-05-29 05:30:09.000000000 +0100
++++ catalyst-2.0.6-b/targets/support/unmerge.sh	2009-11-01 12:11:47.000000000 +0000
+@@ -2,6 +2,77 @@
+ 
+ source /tmp/chroot-functions.sh
+ 
++update_env_settings
++
++DO_EIX=1
++DO_SIZ=0
++DO_LST=0
++
++FILEPATH_PKG='/root/sysresccd-pkg.txt'
++FILEPATH_SIZ='/root/sysresccd-siz.txt'
++FILEPATH_EIX='/root/sysresccd-eix.txt'
++FILEPATH_LST='/root/sysresccd-lst.txt'
++
++# =========================================================================
++# ======================= create the package list =========================
++# =========================================================================
++echo "${clst_packages}" | sed -e "s/ /\n/g" > /root/packages-removed.txt
++equery -q -C list -i | grep -v '^virtual' | grep -v -f /root/packages-removed.txt > ${FILEPATH_PKG}
++
++# -------------------------------------------------------------------------
++if [ -n "(which eix)" ] && [ "${DO_EIX}" = '1' ]
++then
++        echo "---> generating ${FILEPATH_EIX}"
++        /usr/bin/eix-update || echo "eix-update failed"
++        FORMAT='<category>/<name>-<installedversions:VERSION> : <installedversions:FORMAT_INST_USEFLAGS>\n' eix -I -n > /root/eix-temp1.txt
++        cat /root/eix-temp1.txt | grep -v -f /root/packages-removed.txt > /root/eix-temp2.txt
++        cat /root/eix-temp2.txt | grep -v '^virtual' | grep '^[a-z0-9]*-[a-z0-9]*/[a-z0-9]*' > /root/eix-temp3.txt
++        cat /root/eix-temp3.txt | sed -e 's!(!!' -e 's!)!!' -e 's!: $!!g' -e 's! $!!g' > ${FILEPATH_EIX}
++        rm -f /root/eix-temp*.txt
++fi
++
++# -------------------------------------------------------------------------
++if [ -n "(which equery)" ] && [ "${DO_LST}" = '1' ]
++then
++       echo "---> generating ${FILEPATH_LST}"
++       for curpkg in $(cat ${FILEPATH_PKG})
++       do
++               echo "${curpkg}"
++               echo '' >> ${FILEPATH_LST}
++               echo "=========================${curpkg}=========================" >> ${FILEPATH_LST}
++               equery -C files "=${curpkg}" 2>/dev/null | grep '^/' >> ${FILEPATH_LST}
++       done
++fi
++
++# -------------------------------------------------------------------------
++if [ -n "(which equery)" ] && [ "${DO_SIZ}" = '1' ]
++then
++       echo "---> generating ${FILEPATH_SIZ}"
++       for curpkg in $(cat ${FILEPATH_PKG})
++       do
++               pkgfmt=$(echo ${curpkg} | sed -r -e 's!^([A-Za-z0-9-]*)\/([+A-Za-z0-9-]*)-([^-]*)(-r[0-9]){0,2}.*!\1:\2:\3\4 !g')
++               pkgcat=$(echo ${pkgfmt} | cut -d: -f1)
++               pkgnam=$(echo ${pkgfmt} | cut -d: -f2)
++               pkgver=$(echo ${pkgfmt} | cut -d: -f3)
++               sizraw=$(equery -q -C size -b -e ${curpkg} | xargs | sed -r -e 's!.*size\(([0-9]*)\).*!\1!g')
++               sizfmt=$(printf "%0.6d kb" $((sizraw/1024)))
++               output="${sizfmt} --> ${curpkg} --- ${pkgcat}:${pkgnam}:${pkgver}"
++               echo ${output} >> ${FILEPATH_SIZ}
++               echo ${output}
++       done
++fi
++
++# -------------------------------------------------------------------------
++rm -f /root/packages-removed.txt
++# -------------------------------------------------------------------------
++
++# delete the line which contains PORTDIR_OVERLAY in /etc/make.conf (this file is provided with devtools)
++sed -i -e '/PORTDIR_OVERLAY/d' /etc/make.conf
++
++# =========================================================================
++# =========================================================================
++# =========================================================================
++
+ run_merge -C ${clst_packages}
+ 
+ exit 0

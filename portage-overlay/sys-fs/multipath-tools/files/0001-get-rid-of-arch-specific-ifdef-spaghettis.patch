@@ -1,0 +1,45 @@
+From: Bastian Blank <waldi@debian.org>
+Date: Tue, 24 Jun 2008 16:38:37 +0200
+Subject: [PATCH] get rid of arch specific ifdef spaghettis
+
+---
+ kpartx/lopart.c |   19 ++-----------------
+ 1 files changed, 2 insertions(+), 17 deletions(-)
+
+diff --git a/kpartx/lopart.c b/kpartx/lopart.c
+index b18d6fa..6d02a18 100644
+--- a/kpartx/lopart.c
++++ b/kpartx/lopart.c
+@@ -26,29 +26,14 @@
+ #include <sys/stat.h>
+ #include <sys/mman.h>
+ #include <sysmacros.h>
+-
+-#if defined(__hppa__) || defined(__powerpc64__) || defined (__alpha__) \
+- || defined (__x86_64__)
+-typedef unsigned long __kernel_old_dev_t;
+-#elif defined(__powerpc__) || defined(__ia64__)
+-typedef unsigned int __kernel_old_dev_t;
+-#else
+-typedef unsigned short __kernel_old_dev_t;
+-#endif
+-
+-#define dev_t __kernel_old_dev_t
++#include <stdint.h>
+ 
+ #include <linux/loop.h>
+ 
+ #include "lopart.h"
+ #include "xstrncpy.h"
+ 
+-#if !defined (__alpha__) && !defined (__ia64__) && !defined (__x86_64__) \
+-        && !defined (__s390x__)
+-#define int2ptr(x)	((void *) ((int) x))
+-#else
+-#define int2ptr(x)	((void *) ((long) x))
+-#endif
++#define int2ptr(x)	((void *) ((uintptr_t) x))
+ 
+ static char *
+ xstrdup (const char *s)
+-- 

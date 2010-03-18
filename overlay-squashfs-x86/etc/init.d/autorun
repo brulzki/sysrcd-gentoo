@@ -1,0 +1,14 @@
+#!/sbin/runscript
+
+depend()
+{
+	after sysresccd tigervnc mdadm
+}
+
+start()
+{
+	ebegin "Starting SystemRescueCd autorun scripts"
+	export LANG=en_US.utf8
+	echo "Starting autorun at $(date +%Y%m%d-%H:%M:%S)" > /var/log/autorun.log
+	/usr/sbin/autorun
+}

@@ -1,0 +1,34 @@
+From: Hannes Reinecke <hare@suse.de>
+Date: Tue, 24 Jun 2008 16:38:37 +0200
+Subject: [PATCH] [kpartx] Fix udev rules for dmraid
+
+The kpartx_id program is located under /lib/udev, so we don't need to
+call it with the full pathname.
+And we should also create persistent links for dmraid tables.
+---
+ kpartx/kpartx.rules |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kpartx/kpartx.rules b/kpartx/kpartx.rules
+index f32c718..5a62d57 100644
+--- a/kpartx/kpartx.rules
++++ b/kpartx/kpartx.rules
+@@ -9,7 +9,7 @@ ACTION=="remove", GOTO="kpartx_end"
+ 
+ ENV{DM_TABLE_STATE}!="LIVE", GOTO="kpartx_end"
+ 
+-ENV{DM_UUID}=="?*", IMPORT{program}=="/lib/udev/kpartx_id %M %m $env{DM_UUID}"
++ENV{DM_UUID}=="?*", IMPORT{program}=="kpartx_id %M %m $env{DM_UUID}"
+ 
+ OPTIONS="link_priority=50"
+ 
+@@ -18,7 +18,7 @@ ENV{DM_UUID}=="mpath-*", \
+ 	SYMLINK+="disk/by-id/$env{DM_TYPE}-$env{DM_NAME}"
+ 
+ # Create persistent links for dmraid tables
+-ENV{DM_UUID}=="mpath-*", \
++ENV{DM_UUID}=="dmraid-*", \
+         SYMLINK+="disk/by-id/$env{DM_TYPE}-$env{DM_NAME}"
+ 
+ # Create persistent links for partitions
+-- 

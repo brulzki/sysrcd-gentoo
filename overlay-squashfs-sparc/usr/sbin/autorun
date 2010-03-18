@@ -1,0 +1,143 @@
+#!/bin/sh
+# (c) P.Dorgueil 2003
+# Distributed under the terms of the GNU General Public License v2
+
+
+# paths for sh & csh-type scripts
+export PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+export path="(/sbin /bin /usr/sbin /usr/bin)"
+
+# execute only on vc#1
+tty | grep 1 >/dev/null || exit 0
+
+# script name
+n=autorun
+mkdir -p /var/$n
+
+# exit if already done
+lock=/var/$n/$n.done
+[ -f $lock ] && exit 0
+>$lock
+
+
+# brutal kernel args parsing
+cat /proc/cmdline | grep ar_nowait >/dev/null && ar_nowait=y
+for a in $(cat /proc/cmdline); do eval $(echo $a|grep =); done
+
+
+# autorun exec rules:
+# - pass 'ar_source=/dev/fd#' to request floppy device test
+# - CD is tested if no floppy requested or no autorun found on floppy
+# - if a file named 'autorun' is found on any media, it is always run
+# - if a file named 'autorun[0-9]' is found on any media, it is run if either
+#  - 'autoruns=...' arg did specify its number (ex. autoruns=1,3,5), or
+#  - no 'autoruns=...' arg was passed
+# - pass autoruns=no to prevent running any 'autorun[0-9A-F]' file
+# - defaults to allow all 'autorun[0-9A-F]' files
+# - if many autorun files are to be run,
+#  - always in alphab order: autorun, then autorun0, then autorun1 etc...
+#  - first non-zero exit code stops all
+
+
+# allow any file if nothing specified
+[ "$autoruns" ] || autoruns=0123456789ABCDEF
+
+
+# general utils : ebegin, eend
+. /sbin/functions.sh
+
+# special source mount point
+ar_mnt=/mnt/$n
+
+
+# make logs directory
+logd=/var/$n/log
+mkdir -p $logd
+
+# do files test
+res=0
+
+# collect a list of runnable autorun* files
+autorun_files=
+addauto() {
+ for a in "" 0 1 2 3 4 5 6 7 8 9 A B C D E F; do
+  echo $autoruns|grep "$a">/dev/null && [ -f $1/$n$a ] && autorun_files="$autorun_files$1/$n$a "
+ done
+}
+
+
+# keep ar_floppy compatibility
+[ "$ar_floppy" ] && ar_source="$ar_floppy"
+
+# test for special devices request
+if [ "$ar_source" ]; then
+ # attempt to mount a special device
+ mkdir -p $ar_mnt
+ umount -f $ar_mnt 2>/dev/null
+ mtyp=; echo $ar_source | grep ^// > /dev/null && mtyp="-o guest -t smbfs"
+ mount $mtyp $ar_source $ar_mnt 2>/dev/null
+ addauto $ar_mnt
+fi
+
+
+# if no special files, test for cd files
+[ "$autorun_files" ] || addauto /mnt/cdrom
+
+# if no cd, test for copy of cached cd files
+[ "$autorun_files" ] || addauto /var/$nn/cdrom
+
+# if no cd files, test for home files
+[ "$autorun_files" ] || addauto /root
+
+# if no cached cd, test for system files
+[ "$autorun_files" ] || addauto /usr/share/sys.$n
+
+
+# execute selected autorun files
+if [ "$autorun_files" ]; then
+
+ # print banner
+ ebegin "Starting $n scripts"; eend 0
+
+ for a in $autorun_files; do
+
+  # compute log files base
+  base=$(basename $(dirname $a))
+
+  # log autorun file name
+  echo "*** $a" | tee -a $logd/${base}.log
+
+  # skip msdos trailing cr
+  cat $a | sed 's/\r//' >/tmp/$n
+
+  # execute temp copy of autorun file
+  sh /tmp/$n 2>&1 | tee -a $logd/${base}.log
+  res=$?
+
+  # remove temp copy
+  rm -f /tmp/$n
+
+  # mark autorun done
+  echo $a >> $lock
+  
+  # stop autorun at first error
+  if [ $res -ne 0 ]; then
+   echo "ERROR : $a script returned $res, aborting"
+   ar_nowait=
+   break
+  fi
+ done
+
+ if [ "$ar_nowait" = "" ]; then
+  echo -n "End of $n scripts, press <Enter> to continue "
+  read x
+ fi
+fi
+
+# unmount special device just in case, then sync disks
+[ "$ar_source" ] && umount -f $ar_mnt 2>/dev/null && sync
+
+# exit OK if $res is 0, else error message
+eend $res "$(cat $lock 2>/dev/null): $n script error"
+rm -f $lock
+exit $res

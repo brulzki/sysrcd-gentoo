@@ -1,0 +1,102 @@
+From: Guido Guenther <agx@sigxcpu.org>
+Date: Fri, 15 Aug 2008 15:38:00 +0200
+Subject: [PATCH] udev as of 0.124 doesn't support 'scsi_id -s' anymore
+
+---
+ libmultipath/defaults.h    |    2 +-
+ libmultipath/hwtable.c     |    4 ++--
+ multipath.conf.annotated   |    4 ++--
+ multipath.conf.synthetic   |    4 ++--
+ multipath/multipath.conf.5 |    2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/libmultipath/defaults.h b/libmultipath/defaults.h
+index df7d971..3047ae5 100644
+--- a/libmultipath/defaults.h
++++ b/libmultipath/defaults.h
+@@ -1,4 +1,4 @@
+-#define DEFAULT_GETUID		"/lib/udev/scsi_id -g -u -s /block/%n"
++#define DEFAULT_GETUID		"/lib/udev/scsi_id -g -u -d /dev/%n"
+ #define DEFAULT_UDEVDIR		"/dev"
+ #define DEFAULT_SELECTOR	"round-robin 0"
+ #define DEFAULT_FEATURES	"0"
+diff --git a/libmultipath/hwtable.c b/libmultipath/hwtable.c
+index ef761d7..e8fb5f9 100644
+--- a/libmultipath/hwtable.c
++++ b/libmultipath/hwtable.c
+@@ -157,7 +157,7 @@ static struct hwentry default_hw[] = {
+ 		/* HP Smart Array */
+ 		.vendor        = "HP",
+ 		.product       = "LOGICAL VOLUME.*",
+-		.getuid        = "/lib/udev/scsi_id -n -g -u -s /block/%n",
++		.getuid        = "/lib/udev/scsi_id -n -g -u -d /dev/%n",
+ 		.getprio       = NULL,
+ 		.features      = DEFAULT_FEATURES,
+ 		.hwhandler     = DEFAULT_HWHANDLER,
+@@ -199,7 +199,7 @@ static struct hwentry default_hw[] = {
+ 	{
+ 		.vendor        = "EMC",
+ 		.product       = "SYMMETRIX",
+-		.getuid        = "/lib/udev/scsi_id -g -u -ppre-spc3-83 -s /block/%n",
++		.getuid        = "/lib/udev/scsi_id -g -u -ppre-spc3-83 -d /dev/%n",
+ 		.getprio       = NULL,
+ 		.features      = DEFAULT_FEATURES,
+ 		.hwhandler     = DEFAULT_HWHANDLER,
+diff --git a/multipath.conf.annotated b/multipath.conf.annotated
+index e6cfe9a..76c2204 100644
+--- a/multipath.conf.annotated
++++ b/multipath.conf.annotated
+@@ -49,7 +49,7 @@
+ #	#           path identifier. Absolute path required
+ #	# default : /lib/udev/scsi_id -g -u -s
+ #	#
+-#	getuid_callout	"/lib/udev/scsi_id -g -u -s /block/%n"
++#	getuid_callout	"/lib/udev/scsi_id -g -u -d /dev/%n"
+ #
+ #	#
+ #	# name    : prio_callout
+@@ -293,7 +293,7 @@
+ #		#           path identifier. Absolute path required
+ #		# default : /lib/udev/scsi_id -g -u -s
+ #		#
+-#		getuid_callout          "/lib/udev/scsi_id -g -u -s /block/%n"
++#		getuid_callout          "/lib/udev/scsi_id -g -u -d /dev/%n"
+ #
+ #		#
+ #		# name    : prio_callout
+diff --git a/multipath.conf.synthetic b/multipath.conf.synthetic
+index 633d625..41ebdec 100644
+--- a/multipath.conf.synthetic
++++ b/multipath.conf.synthetic
+@@ -7,7 +7,7 @@
+ #	polling_interval 	10
+ #	selector		"round-robin 0"
+ #	path_grouping_policy	multibus
+-#	getuid_callout		"/lib/udev/scsi_id -g -u -s /block/%n"
++#	getuid_callout		"/lib/udev/scsi_id -g -u -d /dev/%n"
+ #	prio_callout		/bin/true
+ #	path_checker		directio
+ #	rr_min_io		100
+@@ -52,7 +52,7 @@
+ #		vendor			"COMPAQ  "
+ #		product			"HSV110 (C)COMPAQ"
+ #		path_grouping_policy	multibus
+-#		getuid_callout          "/lib/udev/scsi_id -g -u -s /block/%n"
++#		getuid_callout          "/lib/udev/scsi_id -g -u -d /dev/%n"
+ #		path_checker		directio
+ #		path_selector		"round-robin 0"
+ #		hardware_handler	"0"
+diff --git a/multipath/multipath.conf.5 b/multipath/multipath.conf.5
+index c8ab6b0..233a154 100644
+--- a/multipath/multipath.conf.5
++++ b/multipath/multipath.conf.5
+@@ -109,7 +109,7 @@ Default value is \fImultibus\fR.
+ The default program and args to callout to obtain a unique path
+ identifier. Should be specified with an absolute path. Default value
+ is
+-.I /lib/udev/scsi_id -g -u -s
++.I /lib/udev/scsi_id -g -u -d /dev/%n
+ .TP
+ .B prio_callout
+ The default program and args to callout to obtain a path priority
+-- 

@@ -1,0 +1,121 @@
+#!/sbin/runscript
+
+depend()
+{
+	before xdm autorun tigervnc
+	after pwgen sshd lvm portmap hald
+}
+
+start()
+{
+	ebegin "Performing the SystemRescueCd specific initializations"
+
+	CMDLINE="$(cat /proc/cmdline)"
+
+	# ---- create file /var/log/lastlog so that ssh does not complain in the logs ----
+	touch /var/log/lastlog
+
+	# ---- create dir /var/log/samba so that samba is happy ----
+	mkdir -p /var/log/samba
+	
+	# ---- create several directories
+	mkdir -p /var/cache/revdep-rebuild
+
+	# ---- load the right keymap ----
+	keymap=$(grep '^XKEYBOARD=' /etc/sysconfig/keyboard 2>/dev/null | cut -d= -f2)
+	case "${keymap}" in
+		fr)
+			loadkeys fr-latin9
+			;;
+		uk)
+			loadkeys uk
+			;;
+	esac
+	
+	# ---- auto-detect software raid ----
+	[ -n "$(which mdadm)" ] && mdadm --auto-detect 2>&1
+	
+	# ---- change the root password if requested in cmdline ----
+	#[ -n "${newpass}" ] && ( echo root:${newpass} ) | chpasswd 1>/dev/null 2>&1
+	for curopt in ${CMDLINE}
+	do
+		if echo "${curopt}" | grep -q -E '^rootpass=[^ ]{1,32}$'
+		then
+			newpass="$(echo ${curopt} | sed -r -e 's!^rootpass=([^ ]{1,32})$!\1!g')"
+			( echo root:${newpass} ) | chpasswd 1>/dev/null 2>&1
+		fi
+	done
+
+	# ---- options to start/stop services ----
+	for curopt in ${CMDLINE}
+	do
+		if echo "${curopt}" | grep -q -E '^initscript=[a-zA-Z0-9]{1,32}:[a-z]{1,32}$'
+		then
+			touch /var/log/initscript.log
+			service="$(echo ${curopt} | sed -r -e 's!^initscript=([a-zA-Z0-9]{1,32}):([a-z]{1,32})$!\1!g')"
+			action="$(echo ${curopt} | sed -r -e 's!^initscript=([a-zA-Z0-9]{1,32}):([a-z]{1,32})$!\2!g')"
+			echo "initscript: found option ${curopt} (service=${service} and action=${action}" >| /var/log/initscript.log
+			if [ -x "/etc/init.d/${service}" ]
+			then
+				cmd="/etc/init.d/${service} ${action}"
+				${cmd} > /var/log/initscript-${service}.log 2>&1
+				res=$?
+				echo "initscript: ${cmd} --> ${res}" | tee -a /var/log/initscript.log
+			else
+				echo "initscript: /etc/init.d/${service} not found" | tee -a /var/log/initscript.log
+			fi
+		fi
+	done
+	
+	# ---- options to configure and start the vncserver ----
+	# eg: "rescuecd vncserver=2:mYpAsWd" will create two vnc displays (display=1 on port 5900 and display=2 on port 5901)
+	# and the two displays will use the same password and the root user account (password=mYpAsWd)
+	# this option should be used only once, but in case of multiple usages the last vncserver option overwrite the previous ones
+	for curopt in ${CMDLINE}
+	do
+		if echo "${curopt}" | grep -q -E '^vncserver=[1-9]:[^ ]{5,8}$'
+		then
+			rm -f /root/.vnc/passwd
+			sed -i -e 's!^DISPLAYS=.*!!g' /etc/conf.d/tigervnc
+			displaycnt="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{5,8})$!\1!g')"
+			password="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{5,8})$!\2!g')"
+			echo "vncserver: found option ${curopt} (will create ${displaycnt} displays" >| /var/log/vncserver.log
+			mkdir -p /root/.vnc/
+			echo -e "${password}\n${password}\n" | vncpasswd /root/.vnc/passwd >/dev/null 2>&1
+			chmod 600 /root/.vnc/passwd
+			echo "exec /usr/bin/startxfce4 >/dev/null 2>&1" >| /root/.vnc/xstartup
+			chmod 700 /root/.vnc/xstartup
+			displayopt=''
+			for ((i=1; i <= displaycnt; i++))
+			do
+				echo "vncserver: preparing display number $i" >> /var/log/vncserver.log
+				displayopt="${displayopt} root:$i"
+				displayopt="$(echo ${displayopt} | sed -e 's!^ !!g' | sed -e 's! $!!g')"
+			done
+			echo "DISPLAYS=\"${displayopt}\"" >> /etc/conf.d/tigervnc
+			#/etc/init.d/tigervnc start 
+		fi
+	done
+	
+	# ---- clean /etc/mtab ----
+	if cat /etc/mtab | grep -q -F 'tmpfs /newroot'
+	then
+		rm -f /etc/mtab.bak
+		cp /etc/mtab /etc/mtab.bak
+		sed -i -e "/ \/newroot/d" /etc/mtab
+	fi
+
+	# ---- allow freshclam ----
+	mkdir -p /var/log/clamav /var/run/clamav
+	chown clamav:clamav /var/log/clamav
+	chown clamav:clamav /var/run/clamav
+	chown clamav:clamav /var/lib/clamav
+	chown clamav:clamav /var/lib/clamav/*
+
+	# ---- create a kernel options file ----
+	if [ -f /proc/config.gz ]
+	then
+		cat /proc/config.gz | gzip -d > /root/kernel-$(uname -r).conf
+	fi
+}
+

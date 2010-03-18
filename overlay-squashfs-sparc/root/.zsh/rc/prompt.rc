@@ -1,0 +1,25 @@
+# for have colors
+autoload -U colors
+colors
+
+# define your colors here (i hate white background)
+host_color="green" 
+path_color="blue"
+date_color="white"
+
+# Format
+date_format="%H:%M"
+
+date="%{$fg[$date_color]%}%D{$date_format}"
+host="%{$fg[$host_color]%}%n@%m"
+cpath="%B%{$fg[$path_color]%}%/%b"
+end="%{$reset_color%}%% "
+
+# enjoy 256 colors in xterm !!! (thanks to Denis Bodor)
+# Note : your xterm _must_ have compiled with 256 colors support !!
+# This is *not* the default !
+if [[ $TERM == "xterm" ]]; then
+	PS1="$host $cpath $end"
+else
+	PS1="$date $host $cpath $end"
+fi 

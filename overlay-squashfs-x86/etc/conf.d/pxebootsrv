@@ -1,0 +1,46 @@
+# Copyright 2003-2007 Francois Dupoux - www.sysresccd.org
+# Distributed under the terms of the GNU General Public License v2
+
+# Config file for /etc/init.d/pxebootsrv
+# Have a look at the PXE chapter in the official manual for more details:
+# http://www.sysresccd.org/Sysresccd-manual-en_PXE_network_booting
+
+# ------------------------- README ------------------------------------
+# The pxebootsrv service allows to provide a PXE-boot-server for 
+# SystemRescueCd out of the box. You just need to edit the following 
+# options and run "/etc/init.d/pxebootsrv restart", and you can boot 
+# any computer of your local network with PXE.
+#
+# You must configure these options if the current SystemRescueCd system
+# acts as DHCP-server and TFTP-server and HTTP-server. If you keep this
+# default behavior you just need to edit these options and start the
+# service with "/etc/init.d/pxebootsrv restart".
+# If you don't want the current system to be the DHCP server, you will have
+# to configure everything by hand and it will not be possible to use
+# the pxebootsrv service.
+
+# ------------------------ CONFIGURATION -------------------------------
+# By default the current systems acts as DHCP and TFTP and HTTP server
+# If you want another machine of you network to act as one of those
+# you will have to turn the appropriate option yo "no"
+
+# Set to "yes" if you want this machine to act as a DHCP server
+PXEBOOTSRV_DODHCPD="yes"
+# Set to "yes" if you want this machine to act as a TFTP server
+PXEBOOTSRV_DOTFTPD="yes"
+# Set to "yes" if you want this machine to act as an HTTP server
+PXEBOOTSRV_DOHTTPD="yes"
+
+# Here is a typical PXE-Boot configuration --> update with your settings
+PXEBOOTSRV_SUBNET="192.168.1.0"                    # Used only if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_NETMASK="255.255.255.0"                 # Used only if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_DEFROUTE="192.168.1.254"                # Used only if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_DNS="192.168.1.254"                     # Used only if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_DHCPRANGE="192.168.1.100 192.168.1.150" # Used only if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_LOCALIP="192.168.1.5"
+
+# Keep these values to $PXEBOOTSRV_LOCALIP if the current computer
+# acts as TFTP server and HTTP server as well as DHCP server
+PXEBOOTSRV_TFTPSERVER="$PXEBOOTSRV_LOCALIP"        # IP address of the TFTP server if PXEBOOTSRV_DODHCPD="yes"
+PXEBOOTSRV_HTTPSERVER="http://$PXEBOOTSRV_LOCALIP/sysrcd.dat" # download URL
+

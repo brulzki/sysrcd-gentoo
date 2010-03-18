@@ -1,0 +1,1434 @@
+#!/bin/sh
+# Copyright 2003-2006 Gentoo Foundation
+# Copyright 2006-2010 Francois Dupoux
+# Distributed under the terms of the GNU General Public License v2
+
+good_msg()
+{
+	msg_string=$1
+	msg_string="${msg_string:-...}"
+	[ "$2" != 1 ] && echo -e "${GOOD}>>${NORMAL} ${msg_string} ${NORMAL}"
+}
+
+bad_msg()
+{
+	msg_string=$1
+	msg_string="${msg_string:-...}"
+	[ "$2" != 1 ] && echo -e "${BAD}!!${NORMAL} ${msg_string} ${NORMAL}"
+}
+
+parse_opt()
+{
+	case "$1" in
+		*\=*)
+		local key_name="`echo "$1" | cut -f1 -d=`"
+		local key_len=${#key_name}
+		local value_start=$((key_len+2))
+		echo "$1" | cut -c ${value_start}-
+		;;
+	esac
+}
+
+sysresccd_expand_alldevices()
+{
+	for curdev in $*
+	do
+		echo ${curdev}
+	done
+}
+
+sysresccd_expand_removable()
+{
+	# Look for the value of 1 in the file /sys/block/sd*/removable
+	for curdev in $*
+	do
+		devroot=$(echo ${curdev} | awk -F / '{sub(/[0-9]+$/,"",$NF); print $NF}')
+		removable_f="/sys/block/${devroot}/removable"
+		[ -f "${removable_f}" ] && grep -q ^1 ${removable_f} && echo ${curdev}
+	done
+}
+
+sysresccd_runshell()
+{
+	if [ -n "$1" ] && [ -x "$1" ]
+	then
+		exec "$1"
+	else
+		exec /bin/sh
+	fi
+	exit 1
+}
+
+sysresccd_panic()
+{
+	bad_msg "$@"
+	bad_msg "Running a mini shell (cannot complete the boot process)"
+	sleep 2
+	sysresccd_runshell
+}
+
+sysresccd_setup_keymap()
+{
+	if [ -z "$SETKMAP" ]
+	then
+		if [ ! -e /dev/vc/0 -a ! -e /dev/tty0 ]
+		then
+			DEVBIND=1
+			mount -o bind ${NEWROOT}/dev /dev
+		fi
+		[ ! -e /dev/tty0 ] && ln -s /dev/tty1 /dev/tty0
+
+		sysresccd_chooseKeymap
+
+		[ "${DEVBIND}" -eq '1' ] && umount /dev
+	else # "setkmap=xx" option was used
+		sysresccd_useKeymap $SETKMAP
+	fi
+}
+
+sysresccd_useKeymap()
+{
+	keymap=$1
+
+	if [ -e /lib/keymaps/${keymap}.map ]
+	then
+		good_msg "Loading the ''${keymap}'' keymap"
+		loadkmap < /lib/keymaps/${keymap}.map
+		xkeymap=${keymap}
+		echo ${keymap} | grep -e "[0-9]+" >/dev/null 2>&1
+		if [ "$?" -eq '0'  ]
+		then
+			xkeymap=`tail -n 7 /lib/keymaps/keymapList | grep ${keymap} | sed -r "s/.*\s+${keymap}\s+([a-z-]+).*/\1/g" | grep -v 1`
+		fi
+		mkdir -p /etc/sysconfig
+		echo "XKEYBOARD=${xkeymap}" > /etc/sysconfig/keyboard
+	elif [ "$keymap" = '' ]
+	then
+		echo
+		good_msg "Keeping default keymap"
+	else
+		bad_msg "Sorry, but keymap ''${keymap}'' is invalid!"
+		sysresccd_chooseKeymap
+	fi
+}
+
+sysresccd_chooseKeymap()
+{
+	good_msg "Loading keymaps"
+	cat /lib/keymaps/keymapList
+	echo "default choice (US keymap) will be used if no action within 20 seconds"
+	read -t 20 -p '<< Load keymap (Enter for default): ' keymap
+	sysresccd_useKeymap $keymap
+}
+
+sysresccd_terminal()
+{
+	# set terminal in utf8 mode
+	kbd_mode -u
+	#/bin/consolechars -f /lat0-sun16.psf
+	#dumpkeys | loadkeys --unicode
+}
+
+sysresccd_debug()
+{
+	# Run debug shell if requested with "minishell" in cmdline
+	if [ "${MINISHELL}" = '1' ]
+	then
+		good_msg "Running a mini shell (as requested by the command line)"
+		sysresccd_runshell ${MINISHELL}
+	fi
+}
+
+# ---- convert a short netmask (eg: '/24') to a long one ----
+netmask_shorttolong() # eg: '24' ==> '255.255.255.0'
+{
+	mask="$1"
+	if [ -n "${mask}" ]
+	then
+		[ "${mask}" -gt '32' ] && mask='32'
+		[ "${mask}" -lt '0' ] && mask='0'
+		bit=0
+		for i in 0 1 2 3
+		do
+			curbyte=0
+			for j in 0 1 2 3 4 5 6 7
+			do
+				curbit=0 ; [ "$bit" -lt "$mask" ] && curbit=1
+				curbyte=$((curbyte*2))
+				curbyte=$((curbyte+curbit))
+				bit=$((bit+1))
+			done
+			echo -n "$curbyte"
+			[ "$i" -lt '3' ] && echo -n '.'
+		done
+	fi
+}
+
+# configure an interface: eg: $1='192.168.1.1/24' $2='eth0'
+netconfig_setip()
+{
+	ethip=$1
+	cureth=$2
+	ipaddrbase=${ethip%%/*} # '192.168.1.1/24' --> '192.168.1.1'
+
+	if echo "${ethip}" | grep -q -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/([0-9]{1,2})$'
+	then
+		ipaddrmask=${ethip#*/} # '192.168.1.1/24' --> '24'
+	else
+		ipaddrmask=''
+	fi
+
+	if [ -n "${ipaddrmask}" ]
+	then
+		iplongmask=$(netmask_shorttolong $ipaddrmask  2>/dev/null)
+		maskopt="netmask ${iplongmask}"
+		echo "netconfig1: netmask_shorttolong($ipaddrmask)=$iplongmask"
+	else
+		iplongmask=''
+		maskopt=''
+	fi
+
+	echo "netconfig1: configure ${cureth} to ${ethip}"
+	ipcmd_add="ifconfig ${cureth} ${ipaddrbase} ${maskopt}"
+	${ipcmd_add} ; res=$?
+	echo "netconfig1: ${ipcmd_add} --> ${res}"
+}
+
+sysresccd_speakup()
+{
+	if [ -n "${SPEAKUP}" ]
+	then
+		OPTLIST="$(echo ${SPEAKUP} | sed -e 's!,! !g')"
+
+		for curopt in ${OPTLIST}
+		do
+			for x in ${curopt}
+			do
+				case "${x}" in
+					quiet\=*)
+						SPEAKUP_QUIET=`parse_opt "${x}"`
+						;;
+					synth\=*)
+						SPEAKUP_SYNTH=`parse_opt "${x}"`
+						;;
+					port\=*)
+						SPEAKUP_PORT=`parse_opt "${x}"`
+						SPEAKUP_OPTIONS="${SPEAKUP_OPTIONS} port=${SPEAKUP_PORT}"
+						;;
+					ser\=*)
+						SPEAKUP_SER=`parse_opt "${x}"`
+						SPEAKUP_OPTIONS="${SPEAKUP_OPTIONS} ser=${SPEAKUP_SER}"
+						;;
+				esac
+			done
+		done
+
+		if [ -n "${SPEAKUP_QUIET}" ]
+		then
+			cmd="modprobe speakup quiet=${SPEAKUP_QUIET}"
+			${cmd}
+		fi
+
+		if [ -n "${SPEAKUP_SYNTH}" ]
+		then
+			cmd="modprobe speakup_${SPEAKUP_SYNTH} ${SPEAKUP_OPTIONS} start=1"
+			${cmd}
+		fi
+	fi
+}
+
+sysresccd_udev_start()
+{
+	good_msg "Loading modules..."
+
+	echo '0' > /proc/sys/kernel/printk
+
+	# Note that this only becomes /dev on the real filesystem if udev's scripts
+	# are used; which they will be, but it's worth pointing out
+	tmpfs_size="10M"
+	if [ -e /etc/udev/udev.conf ]; then
+		. /etc/udev/udev.conf
+	fi
+	mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
+	[ -e /dev/console ] || mknod -m 0600 /dev/console c 5 1
+	[ -e /dev/null ] || mknod /dev/null c 1 3
+	> /dev/.initramfs-tools
+	mkdir /dev/.initramfs
+
+	# Set modprobe env
+	export MODPROBE_OPTIONS="-qb"
+
+	# delete the useless modules
+	ls /lib/modules | grep -v $(uname -r) | busybox xargs rm -rf
+
+	# process module dependencies
+	depmod -a
+
+	# load custom modules
+	for modname in ${MODLOAD}
+	do
+		modprobe ${modname}
+		if [ $? -eq 0 ]
+		then
+			good_msg "modprobe ${modname} successful"
+		else
+			bad_msg "modprobe ${modname} failed (res=$?)"
+		fi
+	done
+
+	# write blacklist to modprobe.d
+	for modname in ${BLACKLIST}
+	do
+		echo "blacklist ${modname}" >> /etc/modprobe.d/initramfs
+		good_msg "module ${modname} has been blacklisted"
+	done
+
+	# run udevd and let it process uevents
+	echo > /sys/kernel/uevent_helper
+	mkdir -p /dev/.udev/db/
+	udevd --daemon --resolve-names=never
+	mkdir -p /dev/.udev/queue/ /dev/.udev/rules.d/
+	udevadm trigger
+	udevadm settle || true
+
+	# if the scandelay parameter has been set, we wait a bit for devices
+	sleep 3 # sleep 3 seconds anyway: most USB devices just need it to initialize
+	[ -n "${SCANDELAY}" ] && good_msg "Waiting ${SCANDELAY} seconds..." && sleep ${SCANDELAY}
+
+	# show list of modules which have been loaded
+	modcount=0
+	modlist=''
+	while read modname details
+	do
+		[ ${modcount} -ge 1 ] && modlist="${modlist}, "
+		modlist="${modlist}${modname}"
+		modcount=$((modcount+1))
+	done < /proc/modules
+	echo "${modlist}"
+}
+
+sysresccd_udev_stop()
+{
+	# Stop udevd, we'll miss a few events while we run init, but we catch up
+	for proc in /proc/[0-9]*
+	do
+		[ -x $proc/exe ] || continue
+		[ "$(busybox readlink $proc/exe)" != /sbin/udevd ] || kill ${proc#/proc/}
+	done
+	echo '6' > /proc/sys/kernel/printk
+}
+
+sysresccd_netconfig()
+{
+	good_msg "Performing the network configuration..."
+
+	# ---- force dhcp if booting via pxe and no static configuration specified
+	if [ "${NETCONFIG}" = '1' ] && [ -z "${SETETHX}" ]
+	then
+		DODHCP='1'
+	fi
+
+	# ---- create the /etc/nsswitch.conf file (it must exist for both dns and static) ----
+	rm -f /etc/nsswitch.conf /etc/host.conf
+	echo "hosts: files dns" > /etc/nsswitch.conf
+
+	# ---- set the name of the network interfaces if requested on the boot argv
+	if grep -q -E 'nameif=[0-9,!:a-fA-F]*' /proc/cmdline
+	then
+		good_msg "Renaming the network interfaces (option 'nameif' was used)"
+		ethlist="$(/sbin/ifconfig -a | grep 'HWaddr' | grep '^eth[0-9]*' | awk '{print $1}')"
+		maclist="$(/sbin/ifconfig -a | grep 'HWaddr' | grep '^eth[0-9]*' | awk '{print $5}')"
+
+		# ---- get the option from the boot command line # eg: "nameif=eth0!00:11:22:33:44:55,eth1!00:22:33:44:55:aa"
+		NAMEIFOPT=''
+		for x in $(cat /proc/cmdline)
+		do
+			if echo "${x}" | grep -q -E 'nameif=[0-9,!:a-fA-F]*'
+			then
+				NAMEIFOPT="$(echo ${x} | cut -d= -f2 | sed -e 's!,! !g')"
+			fi
+		done
+
+		# ---- rename all the network interfaces so that each name is free for another interface
+		pos=0
+		for curmac in ${maclist}
+		do
+			cmd="busybox nameif iftmp${pos} ${curmac}"
+			${cmd}
+			echo "netconfig1: ${cmd} --> $?"
+			pos=$((pos+1))
+		done
+
+		# ---- rename the interfaces with the name requested on the boot command
+		for val in ${NAMEIFOPT}
+		do
+			for opt in ${val}
+			do
+				name="$(echo ${opt} | cut -d! -f1)"
+				mac="$(echo ${opt} | cut -d! -f2)"
+
+				cmd="busybox nameif $name $mac"
+				${cmd}
+				echo "netconfig1: ${cmd} --> $?"
+				sleep 1
+			done
+		done
+
+		# ---- attribute the remaining names to the remaining network interfaces
+		maclist="$(/sbin/ifconfig -a | grep 'HWaddr' | grep '^iftmp[0-9]*' | awk '{print $5}')"
+		for curmac in ${maclist}
+		do
+			pos=0
+			ifdone=0
+			while [ "${pos}" -lt 99 ] && [ "$ifdone" = '0' ]
+			do
+				curif="eth${pos}"
+				if ! /sbin/ifconfig -a | grep 'HWaddr' | grep -q "^${curif}"
+				then
+					cmd="busybox nameif $curif $curmac"
+					${cmd}
+					echo "netconfig1: ${cmd} --> $?"
+					ifdone=1
+					sleep 1
+				fi
+				pos=$((pos+1))
+			done
+		done
+	fi
+
+	if [ "${NETCONFIG}" = '1' ] # show interfaces detected with the new name
+	then
+		ethlist="$(/sbin/ifconfig -a | grep 'HWaddr' | grep '^eth[0-9]*' | awk '{print $1}')"
+
+		if [ -z "${ethlist}" ]
+		then
+			echo "No ethernet interfaces found on your system, PXE boot won't work."
+			sleep 2
+		else
+			echo "Here are the ethernet interfaces found on your system:"
+
+			# ---- get the option from the boot command line # eg: "nameif=eth0!00:11:22:33:44:55,eth1!00:22:33:44:55:aa"
+			for cureth in ${ethlist}
+			do
+				#cureth="${ethlist[curpos]}"
+				curmac="$(/sbin/ifconfig ${cureth} | grep 'HWaddr' | grep '^eth[0-9]*' | awk '{print $5}')"
+				echo "* ${cureth}: ${curmac}"
+				ifconfig ${cureth} up
+			done
+		fi
+	fi
+
+	# ---- configure the ethernet interfaces if requested by 'ethx=ip' ----
+	if [ -n "${SETETHX}" ]
+	then
+		echo "netconfig1: found option ethx=${SETETHX}"
+		ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
+		for cureth in ${ethlist}
+		do
+			netconfig_setip ${SETETHX} ${cureth}
+		done
+	fi
+
+	# ---- configure individual ethernet interfaces ----
+	if cat /proc/cmdline | grep -q -E 'eth[0-9]{1,2}=[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+	then
+		# parse the command line for individual ethernet interfaces settings
+		for x in $(cat /proc/cmdline)
+		do
+			if echo "${x}" | grep -q -E 'eth[0-9]{1,2}=[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+			then
+				iface=$(echo ${x} | cut -d= -f1)
+				ipaddr=$(echo ${x} | cut -d= -f2)
+				echo "netconfig1: found option ${x}"
+				netconfig_setip ${ipaddr} ${iface}
+			fi
+		done
+	fi
+
+	# ---- configure the network via dhcp ----
+	if [ "${DODHCP}" = '1' ]
+	then
+		ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
+
+		dhcpstate=''
+		while [ "${dhcpstate}" != 'ok' ] # retry until we get a dhcp address on at least one interface
+		do
+			for cureth in ${ethlist}
+			do
+				# Try to find whether or not the link is connected
+				mac=$(ifconfig ${cureth} | grep HWaddr | awk '{print $5}')
+				if [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qF 'link ok'
+				then
+					linkstate='link-ok'
+				elif [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qF 'no link'
+				then
+					linkstate='no-link'
+				else # if not sure, set linkstate='unknown'
+					linkstate='unknown'
+				fi
+				echo "--- ${cureth}: link=${linkstate}, mac=${mac}"
+
+				# If the link is up, then try (even if another interface already has a dhcp address)
+				if [ "${linkstate}" != 'no-link' ] 
+				then
+					good_msg "Attempting to get a DHCP address on ${cureth}..."
+					[ -n "${DHCPHOSTNAME}" ] && hostnameopt="-H ${DHCPHOSTNAME}"
+					cmd="busybox udhcpc -n -i ${cureth} ${hostnameopt}"
+					${cmd} ; res="$?"
+					echo "${cmd} --> ${res}"
+					[ "${res}" = '0' ] && dhcpstate='ok'
+				fi
+			done
+
+			if [ "${dhcpstate}" != 'ok' ]
+			then
+				echo "Cannot get a DHCP address. Check the cables on the ethernet interfaces."
+				sleep 2
+			fi
+		done
+	fi
+
+	# ---- configure the gateway if requested on cmdline ----
+	if [ -n "${SETGW}" ]
+	then
+		while route del default gw 0.0.0.0 2>&-
+		do
+			echo "netconfig1: removing old default route"
+		done
+		echo "netconfig1: set new default route to ${SETGW}"
+		route add default gw ${SETGW}
+	fi
+
+	# ---- configure the nameserver if requested on cmdline ----
+	if [ -n "${SETDNS}" ]
+	then
+		rm -f /etc/resolv.conf 2>/dev/null
+		echo "netconfig1: set nameserver to ${SETDNS}"
+		echo "nameserver ${SETDNS}" > /etc/resolv.conf
+	fi
+}
+
+sysresccd_setup_volumes()
+{
+	# Setup dmraid for fake raid devices
+	if [ -x "/sbin/dmraid-activate" ] && ! grep -q 'nodmraid' /proc/cmdline
+	then
+		good_msg "Activating dmraid (fake hardware raid)..."
+		if devices=$(dmraid -r -c)
+		then
+			for dev in $devices
+			do
+				dmraid-activate $dev
+			done
+		fi
+	fi
+
+	# Setup mdadm for linux software raid
+	if [ -x "/sbin/mdadm" ] && ! grep -q 'nomdadm' /proc/cmdline
+	then
+		good_msg "Loading MD modules for software raid..."
+		for mod in linear multipath raid0 raid1 raid456 raid5 raid6 raid10
+		do
+			modprobe -q ${mod}
+		done
+		good_msg "Starting mdadm (linux software raid)"
+		/sbin/mdadm -Es > /etc/mdadm.conf
+		/sbin/mdadm -As
+	fi
+
+	# Setup the Logical Volume Manager
+	if [ -x "/sbin/lvm" ] && ! grep 'nolvm' /proc/cmdline
+	then
+		good_msg 'Setting up the Logical Volume Manager'
+		/sbin/lvm vgscan --ignorelockingfailure --mknodes 2>/dev/null
+		/sbin/lvm vgchange -ay --ignorelockingfailure 2>/dev/null
+	fi
+}
+
+# ============================================================================================================
+
+sysresccd_chroot()
+{
+	# check the kernel is able to execute /sbin/init
+	good_msg "Checking ${INITPROG} can be executed by the current kernel..."
+	inittype="$(readelf -h ${NEWROOT}${INITPROG} | grep Class | awk '{print $2}')"
+	archtype="$(uname -m)"
+	echo "   ${INITPROG} on the root filesystem is an ${inittype} binary"
+	echo "   The current running kernel architecture is ${archtype}"
+	if [ "${inittype}" = 'ELF64' ] && [ "${archtype}" != 'x86_64' ]
+	then
+		sysresccd_panic "You must boot with a 64bit kernel such as rescue64 to run ${INITPROG}"
+	fi
+
+	# move /dev to the new root filesystem
+	mount -n -o move /dev ${NEWROOT}/dev
+	nuke /dev
+	ln -s ${NEWROOT}/dev /dev
+
+	if [ ! -x ${NEWROOT}${INITPROG} ]
+	then
+		sysresccd_panic "${INITPROG} not found on root filesystem"
+	fi
+
+	umount /proc
+	umount /sys
+
+	good_msg "Executing ${INITPROG} from the root filesystem..."
+	exec run-init ${NEWROOT} ${INITPROG} <${NEWROOT}/dev/console >${NEWROOT}/dev/console
+
+	# ------------------------------- minishell -------------------------------
+	sysresccd_panic "Failed to run run-init ${NEWROOT} ${INITPROG}"
+}
+
+# ============================================================================================================
+# ============================================================================================================
+
+sysresccd_stage1_http()
+{
+	if ! mount -t tmpfs -o ${CACHESIZE} tmpfs ${BOOTPATH}
+	then
+		sysresccd_panic "Cannot create tmpfs on ${BOOTPATH}"
+	fi
+
+	if ! echo "${HTTPBOOT}" | grep -q '^http://'
+	then
+		sysresccd_panic "You requested an http boot, the address is not a valid http:// url."
+	fi
+
+	good_msg "Downloading ${LOOPDAT} from ${HTTPBOOT}"
+	BOOTMD5=$(echo ${HTTPBOOT} | sed -e "s/${LOOPDAT}/${LOOPMD5}/g") # URL of the md5 file
+	/bin/busybox wget ${BOOTMD5} -O ${BOOTPATH}/${LOOPMD5}
+	res1=$?
+	/bin/busybox wget ${HTTPBOOT} -O ${BOOTPATH}/${LOOPDAT}
+	res2=$?
+
+	if [ ${res1} -ne 0 ] || [ ${res2} -ne 0 ]
+	then
+		sysresccd_panic "Cannot download the files: wget failed. May be due to lack of memory"
+	fi
+
+	if [ ! -f "${BOOTPATH}/${LOOPDAT}" ]
+	then
+		sysresccd_panic "Cannot download the \"${LOOPDAT}\" boot file."
+	fi
+
+	md5now=$(/bin/busybox md5sum ${BOOTPATH}/${LOOPDAT} | cut -d ' ' -f1)
+	md5orig=$(cat ${BOOTPATH}/${LOOPMD5} | cut -d ' ' -f1)
+	if [ "$md5now" = "$md5orig" ]
+	then
+		good_msg "Downloaded boot file to \"${BOOTPATH}/${LOOPDAT}\""
+	else
+		sysresccd_panic "The root filesystem image is invalid: md5sum failed"
+	fi
+}
+
+sysresccd_stage1_tftp()
+{
+	if ! mount -t tmpfs -o ${CACHESIZE} tmpfs ${BOOTPATH}
+	then
+		sysresccd_panic "Cannot create tmpfs on ${BOOTPATH}"
+	fi
+
+	if ! echo "${TFTPBOOT}" | grep -q '^tftp://'
+	then
+		sysresccd_panic "You requested an tftp boot, the address is not a valid tftp:// url."
+	fi
+
+	good_msg "Downloading ${LOOPDAT} from ${TFTPBOOT}"
+	url="$(echo ${TFTPBOOT} | sed 's!tftp://!!g')" # remote the 'tftp://' prefix
+	tftpip="${url%%/*}"
+	tftpurl="/${url#*/}"
+	BOOTMD5=$(echo ${tftpurl} | sed -e "s/${LOOPDAT}/${LOOPMD5}/g") # URL of the md5 file
+	cmd1="/bin/busybox tftp -g -r ${BOOTMD5} -l ${BOOTPATH}/${LOOPMD5} ${tftpip}"
+	echo "$cmd1"
+	${cmd1} ; res1="$?"
+	cmd2="/bin/busybox tftp -g -r ${tftpurl} -l ${BOOTPATH}/${LOOPDAT} ${tftpip}"
+	echo "$cmd2"
+	${cmd2} ; res2="$?"
+
+	if [ "$res1" != '0' ] || [ "$res2" != '0' ]
+	then
+		sysresccd_panic "Cannot download the files, wget failed. May be due to lack of memory"
+	fi
+
+	if [ ! -f "${BOOTPATH}/${LOOPDAT}" ]
+	then
+		sysresccd_panic "Cannot download the \"${LOOPDAT}\" boot file."
+	fi
+
+	md5now=$(/bin/busybox md5sum ${BOOTPATH}/${LOOPDAT} | cut -d ' ' -f1)
+	md5orig=$(cat ${BOOTPATH}/${LOOPMD5} | cut -d ' ' -f1)
+	if [ "$md5now" = "$md5orig" ]
+	then
+		good_msg "Downloaded boot file to \"${BOOTPATH}/${LOOPDAT}\""
+	else
+		sysresccd_panic "The root filesystem image is invalid: md5sum failed"
+	fi
+}
+
+sysresccd_stage1_nfs()
+{
+	nfsurl=$(echo ${NFSBOOT} | sed -e 's!nfs://!!g')
+
+	good_msg "Mouting the NFS filesystem from ${NFSBOOT}"
+	cmd="mount -t nfs -o intr,nolock ${nfsurl} ${BOOTPATH}"
+	if ! ${cmd}
+	then
+		sysresccd_panic "Cannot mount NFS: ${cmd}"
+	fi
+	good_msg "Successfully mounted the NFS filesystem"
+
+	if [ ! -f "${BOOTPATH}/${SUBDIR}/${LOOPDAT}" ]
+	then
+		sysresccd_panic "Cannot find the \"${SUBDIR}/${LOOPDAT}\" boot file."
+	fi
+
+	md5now=$(/bin/busybox md5sum ${BOOTPATH}/${SUBDIR}/${LOOPDAT} | cut -d ' ' -f1)
+	md5orig=$(cat ${BOOTPATH}/${SUBDIR}/${LOOPMD5} | cut -d ' ' -f1)
+	if [ "$md5now" = "$md5orig" ]
+	then
+		good_msg "Successfully checked md5 sum of ${BOOTPATH}/${LOOPDAT}"
+	else
+		sysresccd_panic "md5sum checksum is invalid on the root filesystem image"
+	fi
+}
+
+# find the device that contains a file with that path: ${SUBDIR}/${LOOPDAT}
+sysresccd_find_file() # $1=devtype, $2=filepath $3=mountdir, $4=mode
+{
+	devtype="$1"   # on which devices should we search that file
+	filepath="$2"  # path of the file we are looking for (eg: "/sysrcd.dat")
+	mountdir="$3"  # where to mount the device if we find it
+	mountmode="$4" # mount mode: either 'ro' or 'rw'
+
+	case "${devtype}" in
+	auto) # all devices
+		searchdevices=$(sysresccd_expand_alldevices ${BLKDEVICES})
+		;;
+	rmdev) # removable devices only
+		searchdevices=$(sysresccd_expand_removable ${BLKDEVICES})
+		;;
+	UUID\=*) # find file on filesystem having the speficed UUID
+		uuid=`parse_opt "${devtype}"`
+		target="$(/bin/readlink -f /dev/disk/by-uuid/${uuid})"
+		if [ -b "${target}" ]
+		then
+			searchdevices="${target}"
+		elif [ -b "/dev/disk/by-uuid/${uuid}" ]
+		then
+			searchdevices="/dev/disk/by-uuid/${uuid}"
+		fi
+		;;
+	LABEL\=*) # find file on filesystem having the speficed LABEL
+		label=`parse_opt "${devtype}"`
+		target="$(/bin/readlink -f /dev/disk/by-label/${label})"
+		if [ -b "${target}" ]
+		then
+			searchdevices="${target}"
+		elif [ -b "/dev/disk/by-label/${uuid}" ]
+		then
+			searchdevices="/dev/disk/by-label/${uuid}"
+		fi
+		;;
+	*) # specific device name (eg: "/dev/sda1")
+		searchdevices="${devtype}"
+		;;
+	esac
+
+	SEARCHDEVICE='' # result returned
+	mkdir -p ${mountdir}
+	for curdev in ${searchdevices}
+	do
+		if [ -b "${curdev}" ] # Check for a block device to mount
+		then
+			# check the 'skipmount=/dev/xxx' option (use it with a failing hard drive)
+			# compare with a space at the end so that "/dev/sda1" and "/dev/sda11" don't match
+			if echo "$(cat /proc/cmdline) " | grep -F -q "skipmount=${curdev} "
+			then
+				good_msg "Skipping mount on device: ${curdev}"
+			else
+				good_msg "Attempting to mount device: ${curdev}"
+
+				for curfs in vfat msdos iso9660 ntfs auto
+				do
+					case "${curfs}" in
+						iso9660)
+							mntopt='-o mode=0644'
+							;;
+						vfat)
+							mntopt='-o fmask=0133'
+							;;
+						*)
+							mntopt=''
+							;;
+					esac
+
+					if mount -r -t ${curfs} ${curdev} ${mountdir} ${mntopt} >/dev/null 2>&1
+					then
+						if [ -e ${mountdir}/${filepath} ]
+						then
+							SEARCHDEVICE="${curdev}"
+							good_msg "File ${filepath} found on device ${curdev}"
+							if [ "${mountmode}" = 'rw' ] && ! mount -o remount,rw,noatime ${mountdir}
+							then
+								sysresccd_panic "Cannot remount ${curdev} in read-write mode"
+							fi
+							return 0
+						else
+							umount ${mountdir} >/dev/null 2>&1
+						fi
+					fi
+				done
+			fi
+		fi
+	done
+	return 1
+}
+
+# find the device which contains sysrcd.dat and mount it on ${BOOTPATH}
+sysresccd_stage1_normal()
+{
+	good_msg "Searching for ${SUBDIR}/${LOOPDAT} on devices..."
+	filefound=''
+	for attempts in 1 2 3 4 5
+	do
+		[ ${attempts} -gt 1 ] && sleep 3 && bad_msg "Cannot find device with ${SUBDIR}/${LOOPDAT}. Retrying..."
+		if sysresccd_find_file 'auto' ${SUBDIR}/${LOOPDAT} ${BOOTPATH} 'ro'
+		then
+			if [ "${DOCHECK}" = '1' ] # don't run checksum by default on slow medias (cdrom, usb, ...)
+			then
+				if [ ! -f "${BOOTPATH}/${SUBDIR}/${LOOPMD5}" ]
+				then
+					bad_msg "Cannot find md5 checksum file: ${LOOPMD5}"
+				else
+					md5now=$(/bin/busybox md5sum ${BOOTPATH}/${SUBDIR}/${LOOPDAT} | cut -d ' ' -f1)
+					md5orig=$(cat ${BOOTPATH}/${SUBDIR}/${LOOPMD5} | cut -d ' ' -f1)
+					if [ "$md5now" = "$md5orig" ]
+					then
+						good_msg "md5 checksum of ${LOOPDAT} successfully checked"
+					else
+						sysresccd_panic "md5sum checksum is invalid on the root filesystem image"
+					fi
+				fi
+			fi
+			filefound='1'
+			break
+		fi
+	done
+
+	if [ -z "${filefound}" ]
+	then
+		sysresccd_panic "Cannot find ${SUBDIR}/${LOOPDAT} on devices"
+	fi
+
+	if [ "${DOCACHE}" = '1' ]
+	then
+		good_msg "Creating tmpfs for caching in ${CACHEDIR}"
+		if ! mount -t tmpfs -o ${CACHESIZE} tmpfs ${CACHEDIR}
+		then
+			sysresccd_panic "Cannot mount tmpfs filesystem on ${CACHEDIR} for caching"
+		fi
+
+		# --------------- Get loopfile size
+		squashfspath="${BOOTPATH}/${SUBDIR}/${LOOPDAT}"
+		squashfssize=$(ls -l "$squashfspath" | sed -e ":a;s/  / /g;ta" | cut -f 5 -d ' ') # size in bytes
+		squashfssizekb=$(( $squashfssize / 1024 )) # size in kilo-bytes
+
+		# --------------- Cache autorun files
+		autoruns="$(ls -d ${BOOTPATH}/${SUBDIR}/autorun* 2>/dev/null)"
+		[ "$autoruns" != "" ] && cp $autoruns ${CACHEDIR}/
+
+		# --------------- Cache main loop file
+		cp -a ${BOOTPATH}/${SUBDIR}/version ${CACHEDIR}/ 2>/dev/null
+		cp -a ${BOOTPATH}/${SUBDIR}/${LOOPMD5} ${CACHEDIR}/${LOOPMD5} 2>/dev/null
+		good_msg "Copying ${LOOPDAT} file for caching (size: $squashfssizekb KB)..."
+		cp -a ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT} 2>/dev/null
+
+		# --------------- Check main loop file
+		expectedsize=$(/bin/busybox stat -c%s "${BOOTPATH}/${SUBDIR}/${LOOPDAT}")
+		copiedsize=$(/bin/busybox stat -c%s "${CACHEDIR}/${LOOPDAT}")
+
+		if [ "${copiedsize}" != "${expectedsize}" ] # Was the copy completed successfully ?
+		then # docache failed
+			bad_msg "Caching failed. Likely due to lack of memory"
+			rm -f "${CACHEDIR}/${LOOPDAT}"
+			umount ${CACHEDIR} 2>/dev/null
+			sleep 3
+		else # docache successful
+			good_msg "File ${LOOPDAT} successfully cached"
+			SUBDIR=''
+
+			# cache other files if possible
+			if [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/isolinux ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
+			then
+				good_msg "Copying isolinux + bootdisk + ntpasswd for caching..."
+				if ! cp -a ${BOOTPATH}/${SUBDIR}/isolinux ${BOOTPATH}/${SUBDIR}/bootdisk ${BOOTPATH}/${SUBDIR}/ntpasswd ${CACHEDIR}/ #2>/dev/null
+				then
+				    rm -rf ${CACHEDIR}/{isolinux,bootdisk,ntpasswd}
+				    bad_msg "Cannot cache isolinux and bootdisk. Likely due to lack of memory"
+				fi
+			fi
+
+			# unmount the media if possible
+			if umount ${BOOTPATH}
+			then
+				good_msg "The original media has been unmounted"
+				cmd="mount -n --move ${CACHEDIR} ${BOOTPATH}"
+				if ! ${cmd}
+				then
+					bad_msg "${cmd} --> ${res}" && sleep 3
+				fi
+			else
+				bad_msg "Cannot unmount the original media"
+			fi
+
+			# unmount isostore if necessary
+			if cat /proc/mounts | awk '{print $2}' | grep -q "^${ISOSTORE}$"
+			then
+				if losetup -d /dev/loop0
+				then
+					umount ${ISOSTORE} && good_msg "Unmounted ${ISOSTORE}" || bad_msg "Cannot unmount ${ISOSTORE}"
+				fi
+			fi
+		fi
+	fi
+}
+
+sysresccd_stage2_nbd()
+{
+	nbdurl=$(echo ${NBDBOOT} | sed -e 's!nbd://!!g')
+	NBD_SERVER=$(echo "${nbdurl}" | sed 's/:.*//')
+	NBD_PORT=$(echo "${nbdurl}" | sed 's/.*://')
+
+	REAL_ROOT="nbd"
+	NBD_DEVICE="/dev/nbd0"
+	NBD_PROG="/sbin/nbd-client"
+
+	if [ ! -x "${NBD_PROG}" ]
+	then
+		sysresccd_panic "Error: program ${NBD_PROG} not found"
+	fi
+
+	if ! modprobe nbd
+	then
+		sysresccd_panic "Error: cannot load nbd kernel module"
+	fi
+
+	good_msg "Setting up the NBD boot device..."
+	if ! ${NBD_PROG} "${NBD_SERVER}" "${NBD_PORT}" "${NBD_DEVICE}" -persist
+	then
+		sysresccd_panic "Error: nbd-client failed to connect to ${NBD_SERVER}:${NBD_PORT}"
+	else
+		good_msg "nbd-client successfully connected to ${NBD_SERVER}:${NBD_PORT}"
+	fi
+
+	cmd="mount -t squashfs -o ro ${NBD_DEVICE} ${SQUASHFSMNT}"
+	if ! ${cmd}
+	then
+		sysresccd_panic "ERROR: Cannot mount ${NBD_DEVICE}. ${cmd}"
+	else
+		good_msg "successfully mounted ${NBD_DEVICE} on ${SQUASHFSMNT}"
+	fi
+}
+
+sysresccd_stage2_normal() # mount ${BOOTPATH}/sysrcd.dat on ${SQUASHFSMNT}
+{
+	good_msg "Mounting the squashfs root filesystem on ${SQUASHFSMNT}"
+
+	mountok=''
+	squashfsimg="${BOOTPATH}/${SUBDIR}/${LOOPDAT}"
+	for fs in '-t squashfs' ''
+	do
+		if [ "$mountok" != "ok" ]
+		then
+			mount ${fs} ${squashfsopt} -o ro ${squashfsimg} ${SQUASHFSMNT} 2>/dev/null && mountok='ok'
+		fi
+	done
+
+	if [ "$mountok" != "ok" ]
+	then
+		sysresccd_panic "ERROR: Cannot mount ${LOOPDAT}. Kernel version [$(uname -a)]"
+	fi
+}
+
+sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
+{
+	# 1. search for a backstore file ("sysrcd.bs" by default)
+	BACKSTORE_FOUND=''
+	if [ "${BACKSTORE_CMD}" != 'off' ]
+	then
+		BACKSTORE_DEVTYPE='rmdev' # by default search backstores only on removable devices
+		for curopt in $(echo ${BACKSTORE_CMD} | sed -e 's!,! !g')
+		do
+			case "${curopt}" in
+				alldev)
+					BACKSTORE_DEVTYPE='auto' # search for backstores on all types of devices
+					;;
+				*)
+					BACKSTORE_DAT=${curopt} # search for backstores on that particular device
+					;;
+			esac
+		done
+
+		good_msg "Searching for ${SUBDIR}/${BACKSTORE_DAT} on devices..."
+		if sysresccd_find_file ${BACKSTORE_DEVTYPE} ${SUBDIR}/${BACKSTORE_DAT} ${BACKSTORE_MNT} 'rw'
+		then
+			good_msg "Backing store ${SUBDIR}/${BACKSTORE_DAT} found on ${SEARCHDEVICE}"
+			if ! mount ${BACKSTORE_MNT}/${SUBDIR}/${BACKSTORE_DAT} ${BACKSTORE_MEM}
+			then
+				sysresccd_panic "Cannot mount the loopback backstore file ${SUBDIR}/${BACKSTORE_DAT}"
+			fi
+			BACKSTORE_FOUND='1'
+		fi
+	fi
+
+	# 2. store modifications in a tmpfs filesystem if there is no backstore
+	if [ -z "${BACKSTORE_FOUND}" ] && ! mount -t tmpfs tmpfs ${BACKSTORE_MEM}
+	then
+		sysresccd_panic "Fatal error: cannot mount tmpfs on ${BACKSTORE_MEM}"
+	fi
+
+	# 3. create the aufs filesystem
+	if ! grep -q aufs /proc/filesystems
+	then
+		sysresccd_panic "Fatal error: aufs filesystem not supported by the kernel."
+	fi
+	if mount -t aufs none ${NEWROOT} -o dirs=${BACKSTORE_MEM}=rw:${SQUASHFSMNT}=ro -o noatime
+	then
+		good_msg "The aufs filesystem has been created"
+	else
+		sysresccd_panic "Fatal error: cannot mount the aufs filesystem."
+	fi
+
+	# 4. copy cached autorun scripts
+	autoruns="$(ls -d ${CACHEDIR}/autorun* 2>/dev/null)"
+	[ "$autoruns" != "" ] && cp $autoruns ${NEWROOT}/var/autorun/cdrom
+
+	# 5. move filesystems mount points to the newroot
+	for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE}
+	do
+		targetdir="${NEWROOT}/livemnt/${mntdir}"
+		if cat /proc/mounts | awk '{print $2}' | grep -q "^${mntdir}$"
+		then
+			mkdir -p ${targetdir} 2>/dev/null
+			cmd="mount -n --move ${mntdir} ${targetdir}"
+			if ! ${cmd}
+			then
+				sysresccd_panic "${cmd} failed"
+			fi
+		fi
+	done
+
+	# make directories
+	for curdir in /mnt/custom /mnt/gentoo /mnt/windows /mnt/floppy /mnt/backup \
+		/var/run/iptraf /var/log/iptraf /var/spool/cron /var/run/samba \
+		/var/log/samba /var/cache/samba /var/log/clamav /var/run/clamav
+	do
+		mkdir -p "${NEWROOT}${curdir}"
+	done
+
+	if [ -e /etc/sysconfig/keyboard ]
+	then
+		mkdir -p ${NEWROOT}/etc/sysconfig/
+		cp /etc/sysconfig/keyboard ${NEWROOT}/etc/sysconfig/keyboard
+	fi
+
+	# if option "lowmem" was enabled then do not start these initscripts
+	if [ "${LOWMEM}" = '1' ]
+	then
+		for initscr in sshd nfs portmap
+		do
+			rm -f "${NEWROOT}/etc/runlevels/default/${initscr}"
+		done
+	fi
+}
+
+sysresccd_stage3_rootsys() # mount the root partition on ${SQUASHFSMNT}
+{
+	good_msg "Searching a root filesystem having ${INITPROG}"
+
+	filefound=''
+	for attempts in 1 2 3 4 5
+	do
+		[ ${attempts} -gt 1 ] && sleep 3 && bad_msg "Cannot find device with ${INITPROG}. Retrying..."
+		if sysresccd_find_file ${ROOTOPT} ${INITPROG} ${NEWROOT} 'rw'
+		then
+			filefound='1'
+			break
+		fi
+	done
+
+	if [ -z "${filefound}" ]
+	then
+		sysresccd_panic "Cannot find a valid root filesystem (partition having ${INITPROG})"
+	fi
+
+	#NEWKERMODS="${NEWROOT}/lib/modules/$(uname -r)"
+	#mkdir -p ${NEWKERMODS}
+	#mount -t tmpfs tmpfs ${NEWKERMODS}
+	#cp -a /lib/modules/$(uname -r)/* ${NEWKERMODS}/
+}
+
+sysresccd_stage0_isoloop() # losetup the iso image on /dev/loop0
+{
+	good_msg "Searching for ${SUBDIR}/${ISOLOOP} on devices..."
+	filefound=''
+	for attempts in 1 2 3 4 5
+	do
+		[ ${attempts} -gt 1 ] && sleep 3 && bad_msg "Cannot find device with ${SUBDIR}/${ISOLOOP}. Retrying..."
+		if sysresccd_find_file 'auto' ${SUBDIR}/${ISOLOOP} ${ISOSTORE} 'ro'
+		then
+			filefound='1'
+			break
+		fi
+	done
+
+	if [ -z "${filefound}" ]
+	then
+		sysresccd_panic "Cannot find device with ${SUBDIR}/${ISOLOOP}"
+	fi
+
+	if losetup /dev/loop0 ${ISOSTORE}/${SUBDIR}/${ISOLOOP}
+	then
+		good_msg "Loopback device configured with ${ISOSTORE}/${SUBDIR}/${ISOLOOP}"
+	else
+		bad_msg "Cannot configure /dev/loop0 with ${ISOSTORE}/${SUBDIR}/${ISOLOOP}"
+	fi
+}
+
+# =============================================================================
+
+sysresccd_stage0() # special preparations for isoroot
+{
+	case "${STAGE0}" in
+		isoloop)
+			sysresccd_stage0_isoloop
+			STAGE1='normal'
+			;;
+		*)
+			STAGE1="${STAGE0}"
+			;;
+	esac
+}
+
+sysresccd_stage1() # find sysrcd.dat and put it in ${BOOTPATH}
+{
+	case "${STAGE1}" in
+		rootsys)
+			STAGE2="rootsys"
+			;;
+		nbd)
+			STAGE2="nbd"
+			;;
+		http)
+			sysresccd_stage1_http
+			STAGE2="normal"
+			;;
+		tftp)
+			sysresccd_stage1_tftp
+			STAGE2="normal"
+			;;
+		nfs)
+			sysresccd_stage1_nfs
+			STAGE2="normal"
+			;;
+		normal)
+			sysresccd_stage1_normal
+			STAGE2="normal"
+			;;
+	esac
+}
+
+sysresccd_stage2() # mount ${BOOTPATH}/sysrcd.dat on ${SQUASHFSMNT}
+{
+	case "${STAGE2}" in
+		rootsys)
+			STAGE3="rootsys"
+			;;
+		nbd)
+			sysresccd_stage2_nbd
+			STAGE3="normal"
+			;;
+		normal)
+			sysresccd_stage2_normal
+			STAGE3="normal"
+			;;
+	esac
+}
+
+sysresccd_stage3() # ${NEWROOT}=aufs
+{
+	case "${STAGE3}" in
+		rootsys)
+			sysresccd_stage3_rootsys
+			;;
+		normal)
+			sysresccd_stage3_normal
+			;;
+	esac
+}
+
+# =============================================================================
+
+sysresccd_parsecmdline()
+{
+	for x in $(cat /proc/cmdline)
+	do
+		case "${x}" in
+		init\=*)
+			INITPROG=`parse_opt "${x}"`
+			;;
+		ethx\=*)
+			SETETHX=`parse_opt "${x}"`
+			DODHCP=''
+			NETCONFIG='1'
+			;;
+		dodhcp)
+			DODHCP='1'
+			SETETHX=''
+			NETCONFIG='1'
+			;;
+		dns\=*)
+			SETDNS=`parse_opt "${x}"`
+			NETCONFIG='1'
+			;;
+		gw\=*)
+			SETGW=`parse_opt "${x}"`
+			NETCONFIG='1'
+			;;
+		gateway\=*)
+			SETGW=`parse_opt "${x}"`
+			NETCONFIG='1'
+			;;
+		dhcphostname\=*)
+			DHCPHOSTNAME=`parse_opt "${x}"`
+			NETCONFIG='1'
+			;;
+		netboot\=http://*)
+			HTTPBOOT=`parse_opt "${x}"`
+			STAGE0='http'
+			NETCONFIG='1'
+			;;
+		netboot\=tftp://*)
+			TFTPBOOT=`parse_opt "${x}"`
+			STAGE0='tftp'
+			NETCONFIG='1'
+			;;
+		netboot\=nfs://*)
+			NFSBOOT=`parse_opt "${x}"`
+			STAGE0='nfs'
+			NETCONFIG='1'
+			;;
+		netboot\=nbd://*)
+			NBDBOOT=`parse_opt "${x}"`
+			STAGE0='nbd'
+			NETCONFIG='1'
+			;;
+		root\=*)
+			ROOTOPT=`parse_opt "${x}"`
+			STAGE0='rootsys'
+			;;
+		isoloop\=*)
+			ISOLOOP=`parse_opt "${x}"`
+			STAGE0='isoloop'
+			;;
+		docache)
+			DOCACHE='1'
+			;;
+		subdir\=*)
+			SUBDIR=`parse_opt "${x}"`
+			;;
+		speakup\=*)
+			SPEAKUP=`parse_opt "${x}"`
+			;;
+		backstore\=*)
+			BACKSTORE_CMD=`parse_opt "${x}"`
+			;;
+		setkmap\=*)
+			SETKMAP=`parse_opt "${x}"`
+			;;
+		scandelay\=*)
+			SCANDELAY=`parse_opt "${x}"`
+			;;
+		scandelay)
+			SCANDELAY=10
+			;;
+		doload\=*)
+			MODLOAD=`parse_opt "${x}"`
+			MODLOAD="`echo ${MODLOAD} | sed -e \"s/,/ /g\"`"
+			;;
+		nodetect)
+			NODETECT='1'
+			;;
+		noload\=*)
+			BLACKLIST=`parse_opt "${x}"`
+			BLACKLIST="`echo ${BLACKLIST} | sed -e \"s/,/ /g\"`"
+			;;
+		CONSOLE\=*)
+			CONSOLE=`parse_opt "${x}"`
+			exec >${CONSOLE} <${CONSOLE} 2>&1
+			;;
+		docheck)
+			DOCHECK='1'
+			;;
+		lowmem)
+			LOWMEM='1'
+			;;
+		minishell)
+			MINISHELL='1'
+			;;
+		httpboot\=*) # for compatibility only
+			HTTPBOOT=`parse_opt "${x}"`
+			STAGE0='http'
+			NETCONFIG='1'
+			;;
+		tftpboot\=*) # for compatibility only
+			TFTPBOOT=`parse_opt "${x}"`
+			STAGE0='tftp'
+			NETCONFIG='1'
+			;;
+		boothttp\=*) # for compatibility only
+			HTTPBOOT=`parse_opt "${x}"`
+			STAGE0='http'
+			NETCONFIG='1'
+			;;
+		boottftp\=*) # for compatibility only
+			TFTPBOOT=`parse_opt "${x}"`
+			STAGE0='tftp'
+			NETCONFIG='1'
+			;;
+		nfsboot\=*) # for compatibility only
+			ARG=`parse_opt "${x}"`
+			NFSBOOT="nfs://${ARG}"
+			STAGE0='nfs'
+			NETCONFIG='1'
+			;;
+		nbdboot\=*) # for compatibility only
+			ARG=`parse_opt "${x}"`
+			NBDBOOT="nbd://${ARG}"
+			STAGE0='nbd'
+			NETCONFIG='1'
+			;;
+		esac
+	done
+}
+
+# =============================================================================
+
+sysresccd_init()
+{
+	export PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+	# only run as an init program
+	if [ "$$" != '1' ]
+	then
+		echo '/linuxrc has to be run as the init process as the one'
+		echo 'with a PID of 1. Try adding init="/linuxrc" to the'
+		echo 'kernel command line or running "exec /linuxrc".'
+		exit 1
+	fi
+
+	# create system directories
+	[ -d /dev ] || mkdir -m 0755 /dev
+	[ -d /root ] || mkdir -m 0700 /root
+	[ -d /sys ] || mkdir /sys
+	[ -d /proc ] || mkdir /proc
+	[ -d /tmp ] || mkdir /tmp
+	[ -d /selinux ] || mkdir /selinux
+	[ -d /var/lock ] || mkdir -p /var/lock
+	[ -d /usr/bin ] || mkdir -p /usr/bin
+	[ -d /usr/sbin ] || mkdir -p /usr/sbin
+	[ -d ${SQUASHFSMNT} ] || mkdir -p ${SQUASHFSMNT}
+	[ -d ${BOOTPATH} ] || mkdir -p ${BOOTPATH}
+	[ -d ${NEWROOT} ] || mkdir -p ${NEWROOT}
+	[ -d ${BACKSTORE_MNT} ] || mkdir -p ${BACKSTORE_MNT}
+	[ -d ${BACKSTORE_MEM} ] || mkdir -p ${BACKSTORE_MEM}
+	[ -d ${ISOSTORE} ] || mkdir -p ${ISOSTORE}
+	[ -d ${CACHEDIR} ] || mkdir -p ${CACHEDIR}
+
+	# mount virtual filesystems
+	/bin/busybox mount -t sysfs -o nodev,noexec,nosuid none /sys
+	/bin/busybox mount -t proc -o nodev,noexec,nosuid none /proc
+
+	# setup busybox
+	/bin/busybox --install -s
+}
+
+# =============================================================================
+
+NORMAL="\033[0m"
+WARN="\033[33;1m"
+BAD="\033[31;1m"
+BOLD="\033[1m"
+GOOD="\033[32;1m"
+
+DOCACHE=''
+SETKMAP=''
+MINISHELL=''
+NETCONFIG=''
+DHCPHOSTNAME=''
+DOCHECK=''
+LOWMEM=''
+SETGW=''
+SETDNS=''
+SETETHX=''
+NETBOOT=''
+NFSBOOT=''
+NBDBOOT=''
+ISOLOOP=''
+ISOLOOPDEV=''
+DODHCP=''
+ROOTFS=''
+SUBDIR=''
+SPEAKUP=''
+STAGE0='normal'
+BOOTPATH='/boot'
+NEWROOT='/newroot'
+SQUASHFSMNT='/squashfs'
+ISOSTORE='/isostore'
+BACKSTORE_CMD=''
+BACKSTORE_MNT='/backstore'
+BACKSTORE_MEM='/memory'
+BACKSTORE_DAT='sysrcd.bs'
+LOOPDAT='sysrcd.dat'
+LOOPMD5='sysrcd.md5'
+INITPROG='/sbin/init'
+CONSOLE='/dev/console'
+CACHEDIR='/cache'
+CACHESIZE='size=512m'
+
+# CDROM DEVICES
+BLKDEVICES="/dev/cdroms/* /dev/ide/cd/* /dev/sr*"
+# USB Keychain/Storage
+BLKDEVICES="$BLKDEVICES /dev/sd*"
+# IDE devices
+BLKDEVICES="$BLKDEVICES /dev/hd*"
+# Loopback devices (used for isoloop=xxx)
+BLKDEVICES="$BLKDEVICES /dev/loop* /dev/loop/*"
+# USB using the USB Block Driver
+BLKDEVICES="$BLKDEVICES /dev/ubd* /dev/ubd/*"
+# iSeries devices
+BLKDEVICES="$BLKDEVICES /dev/iseries/vcd*"
+# HP Smart Array
+BLKDEVICES="$BLKDEVICES /dev/cciss* /dev/cciss/*"
+# devmapper
+BLKDEVICES="$BLKDEVICES /dev/dm* /dev/mapper/*"
+
+# =============================================================================
+
+sysresccd_init
+sysresccd_parsecmdline
+sysresccd_terminal
+sysresccd_udev_start
+sysresccd_speakup
+sysresccd_setup_keymap
+sysresccd_setup_volumes
+sysresccd_netconfig
+sysresccd_debug
+sysresccd_stage0
+sysresccd_stage1
+sysresccd_stage2
+sysresccd_stage3
+sysresccd_udev_stop
+sysresccd_chroot
+

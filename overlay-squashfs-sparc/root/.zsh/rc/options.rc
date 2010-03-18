@@ -1,0 +1,7 @@
+setopt CORRECT
+setopt ALWAYS_TO_END
+setopt NOTIFY
+setopt NOCLOBBER
+setopt NOBEEP
+setopt AUTOLIST
+setopt AUTOCD

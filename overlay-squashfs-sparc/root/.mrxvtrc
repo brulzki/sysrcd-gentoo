@@ -1,0 +1,13 @@
+Mrxvt.syncTabTitle: True
+
+Mrxvt.scrollBar: true
+Mrxvt.scrollbarRight: true
+
+# Number of lines to save in the scroll back buffer for all tabs
+mrxvt*saveLines: 32767
+
+# Don't scroll to the bottom every time some output is produced.
+Mrxvt.scrollTtyOutputInhibit: true
+
+# Scroll to the bottom when a key is pressed.
+Mrxvt.scrollTtyKeypress: true

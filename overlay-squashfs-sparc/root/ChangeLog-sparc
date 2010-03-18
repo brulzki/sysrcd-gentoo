@@ -1,0 +1,27 @@
+This is the ChangeLog of SystemRescueCd (SPARC edition)
+=======================================================
+
+Homepage:.......http://www.sysresccd.org/
+Forums:.........http://www.sysresccd.org/forums/
+Manual:.........http://www.sysresccd.org/Online-Manual-EN
+
+-----------------------------------------------------------------------------
+0.4.0 (released 20071001)
+-----------------------------------------------------------------------------
+* First SystemRescueCd release for sparc architecture
+* Linux-2.6.22 kernel with Reiser4 patch
+* Support for most hardware (disks, network cards, ...) found on SPARC64
+* File systems support for ext2fs/ext3fs, reiserfs, ufs (solaris)
+* Network tools: ssh, telnet, tcpdump, traceroute, nmap, netcat, ...
+* Sparc-utils (eeprom, prtconf, ...) and OBP available from /proc/openprom
+* Archive and compression tools: tar, gzip, bzip2, zip, rar, p7zip, lzop, ...
+* Ability to mount Solaris UFS partitions read-only (useful for backup)
+* CD/DVD burning tools: cdrecord-2.01, dvd+rw-tools-7.0, cdw-0.2.4
+* Disk tools: fdisk, parted (for PC disk labels), dd-rescue
+* Network filesystems: NFS client+server, Samba-3.0.24
+* Scripting languages: Perl-5.8.8 and Python-2.4.4
+* SystemRescueCd customization script (sysresccd-custom)
+* Midnight Commander (mc) file manager
+* Text editors: vim, nano, zile, hexedit
+* Security tools: clamav antivirus, chkrootkit, ...
+* No graphical mode for the moment

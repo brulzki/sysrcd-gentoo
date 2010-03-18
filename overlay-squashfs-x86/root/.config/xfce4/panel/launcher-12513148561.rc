@@ -1,0 +1,12 @@
+[Entry 0]
+Name=GParted
+Comment=disk partitionning
+Icon=/root/icons/gparted.png
+Exec='/usr/sbin/gpartedbin'
+Path=/root
+Terminal=false
+
+[Global]
+MoveFirst=false
+ArrowPosition=0
+

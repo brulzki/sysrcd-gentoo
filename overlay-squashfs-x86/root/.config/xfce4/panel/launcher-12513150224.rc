@@ -1,0 +1,12 @@
+[Global]
+MoveFirst=false
+ArrowPosition=0
+
+[Entry 0]
+Name=emelfm
+Comment=File Manager
+Icon=/root/icons/emelfm2.png
+Exec='/usr/bin/emelfm2'
+Path=/root
+Terminal=false
+

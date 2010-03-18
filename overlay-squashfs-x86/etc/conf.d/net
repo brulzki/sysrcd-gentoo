@@ -1,0 +1,4 @@
+config_eth0=( "null" )
+config_eth1=( "null" )
+config_eth2=( "null" )
+config_eth3=( "null" )

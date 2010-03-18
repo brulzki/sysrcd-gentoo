@@ -1,0 +1,930 @@
+This is the ChangeLog of SystemRescueCd (x86 edition)
+=====================================================
+
+Homepage:.......http://www.sysresccd.org/
+Forums:.........http://www.sysresccd.org/forums/
+Manual:.........http://www.sysresccd.org/Online-Manual-EN
+
+-----------------------------------------------------------------------------
+1.5.0 (2010-03-22)
+-----------------------------------------------------------------------------
+* initramfs: udevd used to load kernel modules that corresponds to the hardware
+* initramfs: /init bootscript rewritten ("rdinit=/initold" to use the old one)
+* initramfs: added firmwares required for ethernet and disk controller devices
+* initramfs: ability to boot systems with selinux enabled using root=/dev/xxx
+* initramfs: kernel modules are gzipped to save memory used by the initramfs
+* initramfs: print error when chrooting to a 64bit system from a 32bit kernel
+* Option for network boot changed to "netboot=proto://" (http, tftp, nfs, nbd)
+* Updated the standard kernels (rescuecd and rescue64) to linux-2.6.32.10
+* Updated util-linux to 2.17.1 (adds support of harddrives with 4k blocks)
+* Updated parted to version 2.2 (standard text based partitionning tool)
+* Updated GParted to version 0.5.2 (graphical partitionning tool)
+* Updated ntfs3g to 2010.3.6 (driver that provides read-write access to ntfs)
+* Updated gdisk to 0.6.5 (fdisk utility for GPT based hard disks)
+
+-----------------------------------------------------------------------------
+1.4.0 (2010-03-01)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to linux-2.6.32.9
+* Updated the alternative kernels to Linux-2.6.27.45
+* Updated mozilla-firefox to 3.6
+* Added zfs-fuse-0.6.0 filesystem
+* Updated fsarchiver to 0.6.8 (fixes archive corruption when saved to smbfs/cifs)
+* Updated sys-apps/parted to 2.1 (support for devices with sectors > 512 bytes)
+* New boot option "nbdboot=ip:port" to boot sysresccd from NBD (network block device)
+* New boot option "nfsboot=ip:/path" to boot sysresccd from NFS (network filesystem)
+* New boot option "isoloop=xxx" to boot sysresccd from an ISO on the disk with grub2
+
+-----------------------------------------------------------------------------
+1.3.5 (2010-01-25)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to linux-2.6.31.12 with btrfs update from 2.6.32
+* Updated fsarchiver to 0.6.5 (bug fixes, progress info, "--exclude" option)
+* Updated GParted to version 0.5.1 (with workaround for partition resizing problems)
+* Added missing codepages (especially CP850) required by mtools / syslinux
+* Implemented boot option dhcphostname=myhostname which is used by the dhcp client
+* Updated lvm2 to 2.02.56 (Logical Volume Manager version 2)
+* Downgraded mtools to version 3.9.11 to fix problems
+* Updated ntfs3g to 2010.01.16 (bug fix release)
+
+-----------------------------------------------------------------------------
+1.3.4 (2009-12-28)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to linux-2.6.31.9 with btrfs update from 2.6.32
+* Updated the alternative kernels to Linux-2.6.27.41
+* Updated xorg-server to version 1.6.5 (graphical server and drivers)
+* Updated ntfs3g from 2009.04.04-AR21 to 2009.11.14 (standard release)
+* Updated gdisk to 0.5.1 (gdisk is a GPT partition table manipulator)
+* Updated fsarchiver to 0.6.2 (default: stable version)
+* Added fsarchiver-0.6.3-beta10 (alternative: beta version)
+* Added sys-block/scsiadd which allows to add and remove scsi devices
+* Added /usr/sbin/suspend-usb-device script to safely disconnect usb disks 
+* memtest+ 4.00 is now booted as a kernel to fix issues (thx to argonavis)
+* Replaced aida with hdt-0.3.6 (Hardware-Detection-Tool floppy disk image)
+
+-----------------------------------------------------------------------------
+1.3.3 (2009-12-07)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.31.6 with btrfs update from 2.6.32
+* Added Grub2-beta (version 1.97.1), Grub-legacy (0.97) is still there anyway
+* Patched parted-1.9.0 to fix multiple problems (GParted bug 601574)
+* Updated gparted to version 0.5.0 (adds support for Linux software RAID)
+* dmraid-1.0.0-rc16 fixes (Gentoo bug #275451)
+
+-----------------------------------------------------------------------------
+1.3.2 (2009-11-09)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.31.5 with btrfs update from 2.6.32
+* Updated the alternative kernels to Linux-2.6.27.38
+* Updated dmraid to 1.0.0-rc16 and mdadm to 3.0.2 (hardware and software raid)
+* Updated lvm2 to 2.02.51 (Logical Volume Manager version 2)
+* Updated xorg-server to version 1.6.3.901 (graphical server and drivers)
+* Support for framebuffer video in the standard kernels (boot option "vga=xxx")
+* Replaced Xvesafb with Xfbdev (run "wizard" to use this graphical mode)
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR21 (ntfs-3g advanced release)
+* Updated gparted to 0.4.8 (Graphical Partitionning tool)
+* Added Super Grub Disk version 1.21 (includes GRUB-1.96)
+
+-----------------------------------------------------------------------------
+1.3.1 (2009-10-04)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.31.1
+* Updated the alternative kernels to Linux-2.6.27.35
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR19 (ntfs-3g advanced release)
+* Updated the memtest86+ floppy disk image to 4.00 (memtestp boot entry)
+* Updated partimage to 0.6.8 (ssl can now be disabled at runtime)
+* Updated sys-block/gdisk to 0.5.0 (gdisk is a GPT partition table manipulator)
+* Updated sys-fs/fsarchiver to 0.6.1 (crypto is now based on libgcrypt)
+* Replaced tightvnc with tigervnc-1.0.0 and fixed the vnc server configuration
+* Fixed dns in the initramfs (required to boot from an url using an hostname)
+* Added app-benchmarks/iozone-3.242 (filesystem benchmarking program)
+
+-----------------------------------------------------------------------------
+1.3.0 (2009-09-14)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.31.0
+* Updated sys-fs/fsarchiver to 0.5.9 (better ntfs support)
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR17 (ntfs-3g advanced release)
+* Updated sys-fs/e2fsprogs to 1.41.9 (ext2/ext3/ext4 filesystem tools)
+* Linux-2.6.31 and btrfs-progs-0.19 are using a new btrfs format 
+* Added sys-block/gdisk-0.3.1 (gdisk is a GPT partition table manipulator)
+* Updated the xfce environment to 4.6.1
+* Updated python to version 2.6.2
+* Updated mozilla-firefox to 3.5.2
+
+-----------------------------------------------------------------------------
+1.2.3 (2009-08-10)
+-----------------------------------------------------------------------------
+* Updated the alternative kernels to Linux-2.6.27.29
+* Updated sys-fs/e2fsprogs to 1.41.8 (ext2/ext3/ext4 filesystem tools)
+* Updated app-arch/dump to 0.4b42 (better support for ext4)
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR16 (ntfs-3g advanced release)
+* Added missing firmwares (package sys-kernel/linux-firmware)
+* Initial support for sys-block/partclone-0.1.1
+* Updated sys-block/gparted to 0.4.6
+* Updated sys-apps/parted to 1.9.0
+
+-----------------------------------------------------------------------------
+1.2.2 (2009-07-13)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.29.6
+* Updated the alternative kernels to Linux-2.6.27.25
+* Updated the sysresccd-cleansys script with the new packages list
+* Updated aufs to aufs2-git-20090622 for linux-2.6.29 (standard kernels)
+* Updated sys-fs/fsarchiver to 0.5.8 (filesystems backup/deployment tool)
+* Updated sys-fs/e2fsprogs to 1.41.7 (ext2/ext3/ext4 filesystem tools)
+* Added sys-fs/mtd-utils-20080907 (contains the tools related to ubifs)
+* Added net-analyzer/macchanger-1.5.0 (change the mac address of an interface)
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR12 (ntfs-3g advanced release)
+* pxe boot fix: allow thttpd to send files with the execution permission
+* Added mdadm support in the initial boot process 
+
+-----------------------------------------------------------------------------
+1.2.1 (2009-06-15)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.29.4
+* Updated the alternative kernels to Linux-2.6.27.24
+* Updated sys-fs/e2fsprogs to 1.41.6 (ext2/ext3/ext4 filesystem tools)
+* Updated lvm2 (Logical Volume Manager) to 2.02.45 (comes with devmapper)
+* Updated sys-fs/ntfs3g to version 2009.4.4-AR10 (ntfs-3g advanced release)
+* Updated sys-fs/fsarchiver to 0.5.7 (filesystems backup/deployment tool)
+* Updated sys-apps/parted to 1.8.8-git-20080324
+* Added cowloop-3.1 (Copy On Write block device)
+
+-----------------------------------------------------------------------------
+1.2.0 (released 20090512)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.29.3 (more drivers and new btrfs)
+* Updated the alternative kernels to Linux-2.6.27.22 with reiser4 and ext4
+* Changed the default desktop environment to xfce4 (it was jwm before)
+* Updated sys-fs/fsarchiver to 0.5.4 (filesystems backup/deployment tool)
+* Updated app-admin/testdisk to 6.11 (testdisk-6.11 and photorec-6.11)
+* Updated sys-fs/ntfs3g to version 2009.4.4 (ntfs-3g advanced release)
+* Updated Xorg-server to 1.5.3 (graphical server, drivers, environment)
+* Updated GNU tar archiver to 1.22 (adds option -J to compress with lzma)
+* GParted-0.4.5 with better dmraid and crypt-luks support (special thanks to Curtis)
+
+-----------------------------------------------------------------------------
+1.1.7 (released 20090406)
+-----------------------------------------------------------------------------
+* Updated the kernels (standard and alternative) to Linux-2.6.27.21
+* Updated sys-fs/ntfs3g to version 2009.3.8 (ntfs-3g advanced release)
+* Updated sys-fs/fsarchiver to 0.4.7 (filesystems backup/deployment tool)
+* Added gpxe-0.9.6 (Etherboot images boot from network using an image on the cdrom)
+* Updated the intel gigabit e1000/e1000e network driver in the standard kernel
+* Fixed boot on dmraid and lsi devices (thanks to luispoo for that fix in linuxrc)
+* Fixed a problem related to the bootdisk images in sysresccd-custom (thanks to jtournier)
+* Updated sys-block/gparted to 0.4.4
+
+-----------------------------------------------------------------------------
+1.1.6 (released 20090302)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.27.19 with reiser4 and ext4
+* Updated the alternative kernels to Linux-2.6.27.19 with reiser4 and ext4
+* Updated sys-fs/ntfs3g to version 2009.2.1 (ntfs-3g advanced release)
+* Updated sys-fs/fsarchiver to 0.4.3 (filesystems backup/deployment tool)
+* Updated the speakup driver to version 3.0.3_p20090222
+* Fixed problems with the function keys in Midnight-Commander in terminal
+* Added crossdev to make it easier to compile 64bit programs or kernels
+* Added lxde-terminal and xarchiver (graphical file archiver)
+* Added xfburn-0.4.0 (simple CD/DVD burning software, still in development)
+* Updated sys-block/gparted to 0.4.3
+
+-----------------------------------------------------------------------------
+1.1.5 (released 20090209)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.27.14 with reiser4 and ext4
+* Recent ext4 kernel updates backported from linux-2.6.29-rc
+* Updated sys-fs/fsarchiver to 0.4.1 (filesystems backup/deployment tool)
+* Updated sys-boot/grub to 0.97-r9 (support boot from ext4 filesystems)
+* Updated the btrfs filesystem support to 0.18 (kernel module and utils)
+* Updated sys-fs/ntfs3g to version 2009.1.1 (ntfs full read-write support)
+* Updated sys-fs/e2fsprogs to 1.41.4 (important ext4 fixes)
+* Updated GParted to version 0.4.2 (add support for ext4, detection of LVM pv)
+* Patched app-arch/tar to add support for xattr/acl/selinux (patch from fedora)
+* Fix: autorun scripts copied in the root of the cdrom were not executed
+* Created the whatis / locate databases (useful to find a file quickly and help)
+* Repaired sysresccd-cleansys which was broken on portage-2.2
+
+-----------------------------------------------------------------------------
+1.1.4 (released 20090105)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.27.10 with Reiser4
+* Updated the alternative kernels to Linux-2.6.27.09 with Reiser4
+* Updated sys-fs/fsarchiver to 0.2.3 (filesystems backup/deployment tool)
+* Updated the memtest86+ floppy disk image to 2.11 (memtestp boot entry)
+* New script to help installing sysresccd on an usb stick: sysresccd-usbstick
+* Updated grub to sys-boot/grub-0.97-r8 (boot manager)
+* Updated sys-apps/portage to version 2.2_rc20
+* Updated mozilla-firefox web browser to version 3.0.5
+* Added sys-process/atop-1.21 to monitor processes
+* Added support for floppy disks in the kernel
+
+-----------------------------------------------------------------------------
+1.1.3 (released 20081208)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.27.7 with Reiser4
+* Updated the alternative kernels to Linux-2.6.27.7 with Reiser4
+* Updated squashfs with lzma support (kernel driver and tools) to 3.4
+* Updated sys-block/gparted to 0.4.1
+* Updated the memtest86+ floppy disk image to 2.10 (memtestp boot entry)
+* Updated sys-fs/ntfs3g to 1.5130 (ntfs full read-write support)
+* Updated sys-fs/fsarchiver to 0.1.6 (tool to backup linux filesystems)
+* backported ext4 filesystem support from linux-2.6.28-rc
+* Added sys-block/iscsitarget and core-iscsi-tools-3.5
+* Fixed bug with the permissions which prevents thttpd from working
+* Fixed bug in the pxe network boot to get a dynamic address
+
+-----------------------------------------------------------------------------
+1.1.2 (released 20081117)
+-----------------------------------------------------------------------------
+* Fixed a problem in the ISO filesystem that may prevent the disc from booting
+* Updated the standard kernels to Linux-2.6.26.08 with Reiser4
+* Added fsarchiver-0.1.2 (tool to backup linux filesystems)
+* Ability to uninstall all the graphical tools using sysresccd-cleansys
+
+-----------------------------------------------------------------------------
+1.1.1 (released 20081110)
+-----------------------------------------------------------------------------
+* Updated the standard kernels to Linux-2.6.26.07 with Reiser4
+* Updated the alternative kernels to Linux-2.6.26.07 with Reiser4
+* Updated the speakup kernel modules (thanks to Gregory Nowak)
+* Updated truecrpt (encryption program) to 6.0a
+* Updated sys-fs/ntfs3g to 1.5012 (ntfs full read-write support)
+* Updated sys-block/gparted to 0.3.9
+* Updated the e1000 network driver (with protection against corruption)
+* Updated "Offline NT Password & Registry Editor" ("ntpasswd" boot entry)
+* Fixed option "skipmount" which was broken
+* The network driver r8169 is back in the standard kernels
+* Added support for Firewire-1394 which was missing from the kernel
+* Added sys-fs/ntfsreloc-0.7 (deals with moving NTFS filesystems)
+* Added network drivers: atl1e, at76_usb
+* Added firmware for Ralink rt73-based WiFi USB adapters
+
+-----------------------------------------------------------------------------
+1.1.0 (released 20080908)
+-----------------------------------------------------------------------------
+* Swapped the two kernel sources: standard-kernel and alternative-kernels
+* Most drivers are compiled as module in the standard kernels (2.6.25.16)
+* Most drivers are built-in the alternative kernels (2.6.25.14)
+* Added development tools (gcc, make, ...) and gentoo tools (emerge, equery, ...)
+* Added option nameif ("nameif=eth0!00:0C:29:57:D0:6E,eth1!00:0C:29:57:D0:64")
+* Added support for backing-store loopback file systems (keep the changes)
+* Added support for the speakup (support devices for blind people)
+* Ability to install your own packages using the gentoo commands (emerge)
+* Script sysresccd-cleansys which removes the optional packages (such as devtools)
+* Added dev-util/geany-0.14 (lightweight but powerful text editor based on gtk2)
+* Fixed problems with the qla2xxx fiber channel driver (compiled as module)
+* Added Realtek network driver (RTL8111B/RTL8168B/RTL8111/RTL8168/RTL8111C)
+* Added an alternative driver for realtek rtl8187 wireless devices: r8187.ko
+* Changed option "vncserver=x:password" so that display 0 is not used by vnc
+* Improved the default configuration of the graphical software in JWM
+* Updated sys-fs/e2fsprogs to 1.41.1 (add support for the ext4 filesystem)
+* Updated sys-fs/ntfs3g to 1.2812 (ntfs full read-write support)
+* Updated app-admin/testdisk to 6.10 (testdisk-6.10 and photorec-6.10)
+* Updated squashfs with lzma support (kernel driver and tools) to fix a bug
+* Updated the btrfs filesystem support to 0.16 (kernel module and utils)
+* Updated the python interpreter to dev-lang/python-2.5.2-r5
+* Updated lvm2 (Logical Volume Manager) to 2.02.39
+* Updated sys-block/gparted to 0.3.8
+* Updated the freedos bootdisk image
+
+-----------------------------------------------------------------------------
+1.0.4 (released 20080630)
+-----------------------------------------------------------------------------
+* Updated the default kernels to Linux-2.6.25.07 with Reiser4 
+* Fixed problem with samba due to bad case in the utf8 charset
+* Fixed the lvm package: the lvm1 support was broken
+* Fixed the lvm service: now it starts after mdadm so that lvm on raid works
+* Updated sys-fs/ntfs3g to 1.2531 (ntfs full read-write support)
+* Updated the btrfs filesystem support to 0.15 (kernel module and utils)
+* Ability to boot linux from an lvm disk: "rescuecd root=/dev/VolGroup00/LogVol00"
+* Added option "root=auto" to boot the first linux system found on an hard drive
+* Added "mhdd" boot floppy disk image (low-level hard-disk diagnostic tool)
+
+-----------------------------------------------------------------------------
+1.0.3 (released 20080526)
+-----------------------------------------------------------------------------
+* Updated the default kernels to Linux-2.6.25.04 with Reiser4 
+* Updated the alternative kernels to Linux-2.6.24.07 with Reiser4
+* Switched from unionfs to aufs (another union file system)
+* Boot from network via PXE or with docache now work with only 256MB of RAM
+* Updated the btrfs filesystem support to 0.14 (kernel patch and utils)
+* Updated the graphical environment to Xorg-server version 1.4
+* Updated sys-fs/ntfs3g to 1.2506 (ntfs full read-write support)
+* Updated sys-block/gparted to 0.3.7
+* Improved fonts in the graphical environment (Xorg and Xvesa)
+* Added support for 256-byte inode in ext3fs in grub-0.97
+* Added a PDF viewer (app-text/epdfview-0.1.6-r1)
+* Fixed shell problem with the serial console
+
+-----------------------------------------------------------------------------
+1.0.2 (released 20080428)
+-----------------------------------------------------------------------------
+* Enabled unicode by default (thanks to Melkor for his help)
+* Updated the default kernel to Linux-2.6.24.05 with Reiser4
+* Updated sys-block/partimage and sys-block/partimage-ssl to 0.6.7
+* Updated sys-fs/ntfs3g to 1.2412 (ntfs full read-write support)
+* Added extra ntfsprogs tools (ntfswipe ntfstruncate ntfsmove ntfsmftalloc)
+* Added x11-terms/rxvt-unicode (terminal that supports unicode)
+* Added xfce-extra/terminal-0.2.8 (terminal with utf8 support and tabs)
+* Added networking tools: openvpn + pptpclient + openswan + vpnc
+* Added net-misc/autossh (automatically restart SSH sessions and tunnels)
+* Rewrote the network boot options implementation (make it simpler)
+* Improved the dhcp boot options support (pxeboot and dodhcp option)
+* Added network boot options for static addresses on single interfaces
+* Fixed boot from and hard disk connected to an HP-Smart-Array (CCISS)
+* Added the server mode in tightvnc (vncpasswd + /etc/init.d/vnc start)
+* Added the "vncserver=x:password" option (start vncserver with x displays)
+* Added the "initscript=service:action" boot option to start/stop services 
+* Start the portmap initscript by default (required by autorun on nfs)
+* Improved the vim configuration (turned on syntax highlighting)
+* Added the missing net-dialup/rp-pppoe package (pppoe-setup command)
+* Moved the initialization stuff from bashlogin to initscript
+* Updated e2fsprogs to 1.40.8 (fix the wrong value for the inode size)
+* Added several drivers for 56k modems
+
+-----------------------------------------------------------------------------
+1.0.1 (released 20080331)
+-----------------------------------------------------------------------------
+* Using JWM-2.0.1 as default Window-Manager instead of Window-Maker
+* Using unionfs-2.2.4 as the root filesystem (all files are now writable)
+* Updated sys-block/gparted to 0.3.6 (add support for the labels)
+* Updated squashfs to 3.3 (with LZMA compression) to save space
+* Updated sys-fs/ntfsprogs to 2.0.0 since it's marked as stable in gentoo
+* Updated sys-fs/ntfs3g to 1.2310 (ntfs full read-write support)
+* Updated the Memtest86+ floppy disk image to 2.01
+* Updated the btrfs filesystem support to 0.13 (kernel patch and utils)
+* Updated the default kernel to Linux-2.6.24.04 with Reiser4 (rescuecd + rescue64)
+* Updated app-cdr/cdrkit-1.1.7.1 (Fix for Joliet directory length bug)
+* Added sys-apps/ipmitool (Utility for controlling IPMI enabled devices)
+* Added missing crypto modules in the default kernel (rescuecd + rescue64)
+* Added skipmount=/dev/xxx option that prevents the system from mounting a device
+* Replaced cryptsetup-luks with cryptsetup-1.0.5
+* Autodetect software raid volumes at boot time using 'mdadm --auto-detect'
+* Fixed an autorun bug introduced in 1.0.0: no stdout for interactive scripts
+* Fixed bugs in the network configuration boot options (ethx, gateway, dns)
+* Fixed problems with udhcpc client when multiple ethernet interfaces exists
+* Prevents multiple setkmap when "sysresccd-custom setkmap" used several times
+
+-----------------------------------------------------------------------------
+1.0.0 (released 20080303)
+-----------------------------------------------------------------------------
+* A processor >= i686 is not required anymore (programs are now compiled for i486)
+* Added Xvesa to fix problems with the graphical environment on some hardware
+* Added a 64bits alternative kernel (altker64)
+* The alternative kernel (known as vmlinuz2) has been renamed altker32
+* Merged all the old initramfs igz files into a single initram.igz file
+* The PXE boot can now download the sysrcd.dat file using the tftp protocol
+* Rewrote autorun with support of the http source (can execute scripts from http)
+* Fixed problems with the network configuration boot options (ethx, dodhcp, gateway)
+* Updated the default kernel to Linux-2.6.24.02 with Reiser4 (rescuecd + rescue64)
+* Updated the alternative kernel to Linux-2.6.22.18 (altker32 + altker64)
+* Removed the framebuffer from the default kernel (it can disturb Xorg)
+* Updated app-admin/testdisk to 6.9 (testdisk-6.9 and photorec-6.9)
+* Updated sys-block/gparted to 0.3.5 (bug fixes and stability release)
+* Updated sys-fs/ntfs3g to 1.2216 (ntfs full read-write support)
+* Compiled the hard disk controllers support as module in the alternative kernels
+* Renamed the 'boothttp=url' and 'boottftp=url' to netboot='url'
+* Removed the "cdroot" boot option (from linuxrc, isolinux.cfg, syslinux.cfg)
+* Compiled the CCISS driver as built-in to improve the HP Smart Array support
+* Improved the wireless network support (drivers and firmwares)
+* When options 'docache' and 'lowmem' used together it does not cache the bootdisks
+* Added sys-fs/scrounge-ntfs-0.9 (Data recovery program for NTFS file systems)
+* Added sys-apps/rescan-scsi-bus and sys-apps/sg3_utils (SCSI utils)
+* Added sys-block/lsiutil-1.52 (LSI Logic Fusion MPT command line management tool)
+* Added the GPT-disklabel support and CCISS support to grub-0.97 
+* Added sys-block/mbuffer (tool for buffering data streams)
+* Added support for btrfs-0.12 (kernel and utils) thanks to Christian Hesse
+* Added the atl2-1.0.4 network driver (Attansic/Atheros L2 network driver)
+* Added support for loop-aes (encrypted loopback block device driver + utils)
+* Fix: process the network boot options before autorun (it may need the network)
+* Fixed name resolution that was broken in the pxe boot process due to libc
+* Updated the memtest86+ floppy disk image to 2.00 (memtestp boot entry)
+
+-----------------------------------------------------------------------------
+0.4.3 (released 20080122)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.23.14 with Reiser4 (rescuecd + rescue64)
+* Updated the alternative kernel to Linux-2.6.22.16 with Reiser4 (vmlinuz2)
+* Patched the kernel with a fix for sis190 network driver
+* Updated the build files to catalyst-2.0.5 and genkernel-3.4.9
+* Fix: patched gparted (refreshing the devices crashed the program)
+* Fix: program /sbin/ip was not installed with sys-apps/iproute2 (wrong use)
+* Fix: the lvm (Logical Volume Manager v2) initscript was broken
+* Added boot option: dodebug enables verbose messages in the linuxrc script
+* Added boot option: lowmem prevents non critical things to be loadded into memory
+* Added x11-drivers/ati-drivers (better support for ATI cards in X.Org)
+* Added x11-drivers/nvidia-drivers (better support for Nvidia cards in X.Org)
+* Added ksh and tcsh shells (app-shells/ksh-93.20070628, app-shells/tcsh-6.15-r2)
+* Added app-arch/pbzip2-1.0.2 (Parallel bzip2 compression for SMP computers)
+* Added app-arch/lzma-utils-4.32.2 (compression tools based on LZMA)
+* Added the missing mount-cifs tool (mount-cifs supports smbfs)
+
+-----------------------------------------------------------------------------
+0.4.2 (released 20071205)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.23.08 with Reiser4 (rescuecd + rescue64)
+* Updated the alternative kernel to Linux-2.6.22.12 with Reiser4 (vmlinuz2)
+* Updated sys-fs/ntfs3g to 1.1120 (ntfs full read-write support)
+* Introduced the support of the smbfs (samba) again (cifs recommended anyway)
+* Disable unicode by default in the console (exec unicode_stop at startup)
+* Added madwifi (support for ath5k wireless cards)
+* Added extra ntfsprogs tools (ntfswipe ntfstruncate ntfsmove ntfsmftalloc)
+* Added boot option: rootpass=xxx sets the root password to xxx at startup
+* Added boot option: ethx=ipaddress sets the ip of all the ethernet interfaces
+* Added boot option: gateway=ipaddress sets the default route
+* Added boot option: dns=ipaddress sets the dns nameserver (useful for pxe)
+* Fix: solved problems with accentued characters in zsh
+* Fix: bug with USB keys: removed /bootdisk/ from syslinux.cfg
+* Fix: autorun scripts were not executed when option docache used
+* Fix: the default-route was ignored by the dhcp client on pxe booting
+* Fix: the dns-server was ignored by the dhcp client on pxe booting
+
+-----------------------------------------------------------------------------
+0.4.1 (released 20071101)
+-----------------------------------------------------------------------------
+* Updated sys-fs/ntfs3g to 1.1004
+* Updated sys-apps/parted to 1.8.8
+* New sources for the default kernel (rescuecd and rescue64)
+* Fix: option setkmap was broken in sysresccd-custom script
+* Fix: network booting via PXE was broken on 64bits (rescue64)
+* Fix: docache was broken with the Hard-disk easy installation
+* Updated Oscar (French tool to backup computers)
+* Added option boothd=xxx (boot an installed linux from harddisk)
+* Added raid monitoring tools (mpt-status and cciss_vol_status)
+* Improved the wireless support
+
+-----------------------------------------------------------------------------
+0.4.0 (released 20071004)
+-----------------------------------------------------------------------------
+* Added PXE-Network booting support (boot sysresccd from the network)
+* Added a 64bits kernel (rescue64) to chroot on a 64bits linux
+* Added a 32bits alternative kernel (vmlinuz2) based on 2.6.20.19
+* Updated the default 32bits kernel (rescuecd) to 2.6.22.09 (with Reiser4)
+* Added partimage-ssl client (partimage client with SSL support)
+* Updated the e1000 network driver (added ich9 support for new devices)
+* Updated the "Offline NT Password & Registry Editor" disk (Vista support)
+* Added option "minishell" to debug the initramfs and the startup scripts
+* Updated squashfs (driver and tools) to version 3.2 (with LZMA support)
+* Optimized and cleaned the linuxrc startup script
+* Updated Oscar (French tool to backup computers)
+* Many boot options are not required anymore
+* Updated sys-fs/ntfs3g to 1.913
+* Added lm_sensors-2.10.1
+
+-----------------------------------------------------------------------------
+0.3.8 (released 20070905)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.22.06 with Reiser4
+* Updated sys-fs/ntfs3g to 1.826
+* Updated sys-block/partimage to 0.6.6
+* Updated app-admin/testdisk to 6.8
+* Added sys-fs/dm-raid-1.0.0-rc14 (Device mapper tool)
+* Added serial communication tools (minicom-2.2 + gtkterm-0.99.5 + ckermit-8.0.211)
+* Improved the welcome screen (removed images for serial console)
+* Updated Oscar (French tool to backup computers)
+
+-----------------------------------------------------------------------------
+0.3.7 (released 20070718)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.20.15 with Reiser4
+* Updated sys-fs/ntfs3g to 1.710
+* Updated app-admin/testdisk to 6.7
+* Added Attansic L2 Gigabit Ethernet driver
+* Added sys-fs/ddrescue-1.2 (GNU ddrescue)
+* Added app-crypt/truecrypt-4.3 (multiplatform encryption tool)
+* Added sys-fs/lde-2.6.1 (Linux Disk Editor)
+* Updated Oscar (French tool to backup computers)
+
+-----------------------------------------------------------------------------
+0.3.6 (released 20070611)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.20.11 with Reiser4
+* Updated sys-fs/ntfs3g to 1.516
+* Updated X-Window-System to 1.3.0
+* Added support for ZFS Filesystem 0.4.0-beta1 (unstable)
+* Added MondoRescue 2.2.3
+* Added app-backup/rdiff-backup 1.0.4
+* Added option "rescuehd" to boot linux on hard disk
+* Updated Oscar (French tool to backup computers)
+
+-----------------------------------------------------------------------------
+0.3.5 (released 20070419)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.20.7 with Reiser4
+* Updated sys-fs/ntfs3g to 1.417
+* Updated X.Org to 7.2 (better graphical mode support)
+* Updated Oscar (French tool to backup computers)
+* Added sys-apps/dmidecode
+* Added sys-boot/ms-sys
+* Added vncviewer (app-misc/vnc)
+
+-----------------------------------------------------------------------------
+0.3.4 (released 20070320)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.19.7 with Reiser4
+* Improved the compression level for squashfs with lzma to save space
+* Added sys-block/mtx, app-arch/mt-st, app-benchmarks/cpuburn
+* Added dev-lang/python (python interpreter version 2.4)
+* Added app-backup/duplicity (python script to backup remote files)
+* Fixed boot problems on laptops (thanks to markmarques for his tests)
+* Updated Oscar (French tool to backup computers)
+
+-----------------------------------------------------------------------------
+0.3.3 (released 20070301)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.19.2 with Reiser4
+* Updated sys-fs/ntfs3g to 1.0
+* Updated sys-block/gparted to 0.3.4
+* Updated app-admin/testdisk to 6.6
+* Updated Memtest+ bootdisk to 1.70
+* Updated the system (glibc-2.5, udev-104, clamav-0.90, mdadm-2.6)
+* Updated Oscar (French tool to backup computers)
+* Added option "forcevesa", and changed DefaultDepth for X.Org 
+* Added app-forensics/foremost (program to recover files)
+* Added sys-devel/bc (calculator)
+* Fixed hangs problems at boot time
+
+-----------------------------------------------------------------------------
+0.3.2 (released 20070110)
+-----------------------------------------------------------------------------
+* Updated sys-apps/testdisk to 6.5
+* Updated sys-fs/ntfs3g beta to 20070102
+* Updated ntfsresize to 1.13.1.1 (for win-vista)
+* Added option "doeject" to eject the disc at boot time
+* Added sys-fs/cryptsetup-luks
+* Added app-forensics/cmospwd (decrypts cmos password)
+* Added app-forensics/magicrescue (find deleted files)
+* Added app-admin/mbr (install-mbr)
+* Added x11-terms/mrxvt (nice terminal for xorg)
+* Added several app-admin tools (sysstat, hddtemp, ide-smart)
+* Added Oscar (French tool to backup computers)
+* Improved support for hardware
+* Improved keymaps support (fr_CH and speakup)
+
+-----------------------------------------------------------------------------
+0.3.1 (released 20070101)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.18.6 with Reiser4
+* Updated ntfs3g-beta to 20061218 (full NTFS Read/Write)
+* Optimized space usage to reduce the size of the disc
+* Added option "dodhcp" to get a dynamic IP at boot time
+* Added option "dostartx" to run XOrg environment at boot time
+* Added sys-apps/lshw (hardware lister)
+* Improved support for hardware
+
+-----------------------------------------------------------------------------
+0.3.0 (released 20061220)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.18.5 with Reiser4
+* Added xorg graphical environment with WindowMaker
+* Added gparted-0.3.3 to replace qtparted
+* Added ntfs3g-beta-20061212 (full NTFS Read/Write)
+* Added graphical editors (gvim, leafpad)
+* Added graphical web browsers (firefox-2.0 and dillo)
+* Updated the file-system tools (parted, e2fsprogs, xfsprogs, ...)
+* Updated the system (glibc, clamav, ...)
+* Updated the bootdisks
+
+-----------------------------------------------------------------------------
+0.2.19 (released 20060501)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.16.10
+* Option to boot sysresccd from the harddisk
+* Fixed problems with SCSI cdrom devices
+* Fixed boot problems with cdcache
+* Updated ntfsprogs to 1.13.0
+* Updated Oscar scripts
+* Updated the manual
+* Added rsnapshot
+
+-----------------------------------------------------------------------------
+0.2.18 (released 20060401)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.15.6
+* Fixed important problems with USB-stick installation 
+* Fixed bugs with ftp that was broken
+* Updated e2fsprogs to 1.38 (ext2 and ext3 system tools)
+* Updated ntfsprogs-1.12.1
+* Updated the manual
+* Updated Oscar scripts
+* Other minor fixes and updates
+
+-----------------------------------------------------------------------------
+0.2.17 (released 20060301)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.15.4 
+* Updated CaptiveNtfs to 1.1.7
+* Fixed boot from an USB stick
+* Added Framebuffer support for intel video chipsets (i810fb and intelfb)
+* Added Oscar (Outil Complet d'Assistance Reseau)
+* Updated the manual
+
+-----------------------------------------------------------------------------
+0.2.16 (released 20060201)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.6.15.1 
+* Updated the system (udev-080, hotplug-20040923, coldplug-20040920) 
+* Updated LVM tools (evms-2.5.3, device-mapper-1.01.03) 
+* Added Reiser4 support (support in the kernel, and reiser4progs-1.0.5) 
+* Updated NTFS support (Improved support in the kernel, and ntfsprogs-1.11.2) 
+* Updated Parted to 1.6.23 
+* Updated bootloaders support (grub-0.96, lilo-22.7) 
+* Updated file systems tools (jfsutils-1.1.8, dosfstools-2.11) 
+* Updated bootdisks (memtest+ and "Offline NT Password and registry editor") 
+* Updated ClamAV virus definitions 
+* Many thanks to Isaiah Salinas for his help
+
+-----------------------------------------------------------------------------
+0.2.15 (released 20040818)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.4.27
+* Added missing LVM tools (Volume Manager tools)
+* Added Oscar (build an advanced customized disc)
+* Updated Samba to 3.0.5
+* Module "cpqarray" loaded if required
+* Updated ClamAv to 0.75.1
+* Updated Memtest86+ bootdisk to 1.20
+* Added bootdisk "Offline NT Password and registry editor"
+* Fixed a keyboard problem
+* Fixed a problem in the partimage-ssl package
+* Added mdadm (Software RAID administrator program)
+* Added sleuthkit (file system and media management forensic analysis tools)
+* Added rzip (compression program for large files)
+* Udded udpcast (allows mulitcast transfers)
+* Many minor updates
+
+-----------------------------------------------------------------------------
+0.2.14 (released 20040818)
+-----------------------------------------------------------------------------
+* Added menu that help choosing boot options (contrib from Jernej Simoncic)
+* Allow to boot harddisk and floppy at prompt
+* Compressed bootdisk images (saved a lot of space)
+* Updated hotplug and hardware detection
+* Updated e2fsprogs to 1.35
+* Partimage available in two versions (with or without SSL)
+* Added joe (editor)
+* Added telnet (client and server)
+* Added tcpdump (Network analyser)
+* Removed the warning at startup
+* Many minor updates 
+
+-----------------------------------------------------------------------------
+0.2.13 (released 20040607)
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.4.26 (patched with SATA support)
+* Improved FrameBuffer support (should work with dell laptops)
+* Updated the FreeDos bootdisk
+* Updated parted to 1.6.11
+* Updated QtParted to 0.4.4
+* Updated ntfsprogs to 1.9.2
+* Added aget (download manager)
+* Added iftop (network administration tool)
+* Added zile (tiny emacs editor clone)
+* Added bonnie++ (tiny benchmark tool)
+* Added par2cmdline (Parity Archive Volume Set v2)
+* Updated DBAN bootdisk
+* Updated Clam-AntiVirus to 0.70
+* Updated hotplug
+* Better SCSI hardware autodetection
+* Many minor updates 
+
+-----------------------------------------------------------------------------
+0.2.12
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.4.25
+* Updated EVMS VolumeManager to 2.3.0
+* Enabled the NTFS Read/Write support in the kernel (uncomplete but safe)
+* Updated ntfsprogs to 1.9.0 (major ntfsresize improvements)
+* Updated QtParted to 0.4.3
+* Updated parted to 1.6.7
+* Updated the eagle-usb adsl driver to 1.9.6
+* Updated memtest+ to 1.11
+* Many minor updates
+
+-----------------------------------------------------------------------------
+0.2.11
+-----------------------------------------------------------------------------
+* Updated EVMS to 2.2.2 patched
+* Added Dban bootdisk (tool that wipes all data of a computer)
+* Added pppconfig (configure PPP)
+* Added BashBurn (script that make CD burning easier)
+* Put the manual (Pdf, Html) on the CDRom
+* Updated partimage to 0.6.4 final
+* Updated Clam-AntiVirus to 0.66
+* Updated Samba to 3.0.2a
+* Updated Reiserfsprogs to 3.6.12
+* Many minor updates
+
+-----------------------------------------------------------------------------
+0.2.10
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.4.24
+* Improved the EVMS support
+* Added CaptiveNtfs-1.1.5
+* Added Perl-5.8 (for Captive-Ntfs)
+* Added Ranish partition manager bootdisk
+* Added Aida bootdisk (Hardware diagnostic tool)
+* Added DVD burning tools (dvd+rw-tools)
+* Added app-cdr/cdw (CD Burning program)
+* Updated/added network drivers
+* Updated memtest (memory tester)
+* Updated partimage to 0.6.3 final
+* Many minor updates
+
+-----------------------------------------------------------------------------
+0.2.9
+-----------------------------------------------------------------------------
+* Updated the kernel to Linux-2.4.23
+* Added LDE (Linux Disk editor)
+* Added sys-apps/ms-sys (Like the DOS "sys" command)
+* Updated Samba to 3.0.1
+* Updated QtParted to 0.4.1 (many bug fixes)
+* Updated partimage to 0.6.3_beta14 (bug fixes)
+* Many minor updates
+* Added Floppy images: FreeDOS, Memtest, Gag
+
+-----------------------------------------------------------------------------
+0.2.8
+-----------------------------------------------------------------------------
+* The system can be installed on an USB stick (128 MB or better)
+* Added network tools: iptraf, nmap, pppoeconf, netcat
+* Added support for i810-FrameBuffer (for Dell laptops)
+* Updated QtParted to 0.4.1_pre4 (many bugfixes)
+* Updated QtEmbedded to 3.2.3
+* Updated DAR (Disk Archiver) to 2.0.0
+* Updated Clam-AntiVirus to 0.65
+* Updated Ntfsprogs to 1.8.0
+* Updated ChkRootKit to 0.42b
+* Removed the warning at kernel boot about cud driver
+* Added testdisk, unace, smartmontools, ren, rename
+* Made ISO smaller (removed translation files)
+* An HTML version of the manual is available from the CDRom
+* Fixed problems in the FI (finish) keymap
+
+-----------------------------------------------------------------------------
+0.2.7
+-----------------------------------------------------------------------------
+* Updated QtEmbedded to 3.2.2 (bugfixes related to the mouse support)
+* Kernel: added LVM/RAID support
+* Added iptables tools (firewall)
+* Added many network drivers
+* Added ntfs-rw module (NTFS Write/Debug support)
+* Added the eject command (eject a CDRom)
+* Improved the isolinux boot splash/help pages
+* Partimage compiled as static (allows to copy the binary on a server)
+* Updated Libaal, Reiser4Progs, Nano
+* Updated ClamAv virus definitions
+* More internet providers known in the eagle-config script
+* Script for installation of the system on the hard disk
+* Generated detailed list of packages on the system
+
+-----------------------------------------------------------------------------
+0.2.6
+-----------------------------------------------------------------------------
+* Added autorun script feature
+* Added bind-tools (nslookup, ...)
+* Added sys-apps/lsof (list processes)
+* More hardware supported in the kernel (pcmcia, ...)
+* Make loadlin easy to use
+* Removed packet writing patch (may cause problems)
+* Updated Samba to version 3.0.0
+* Updated OpenSSL, Nano, Nfs-Tools, Vim
+* Updated Libaal, Reiser4Progs
+* Updated ClamAv virus definitions
+* Updated partimage-0.6.3 (bugfixes)
+
+-----------------------------------------------------------------------------
+0.2.5
+-----------------------------------------------------------------------------
+* Update: kernel-2.4.22 (xfs, ntfs, speakup, packet writing)
+* Used cloop instead of gcloop (more stable)
+* Fixed links (strings, for chkrootkit)
+* Updated sys-apps/coreutils to 5.0-r3
+* Updated ssh to 3.7.1 (security fixes)
+* Updated QtParted to 0.4.0-final (stable version)
+* Added mtools-3.9.8 (access a fat  file system with dos commands)
+* Added HFS+ tools (mac file system)
+* Big cleanup: removed bad symlinks, and garbage files
+
+-----------------------------------------------------------------------------
+0.2.4
+-----------------------------------------------------------------------------
+* Major bugfix: downgraded kernel
+* Personnalization script simpler
+* No password required for all consoles
+* Options at boottime (setroot) for developers
+* Updated QtParted, Lufs, Jfsutils
+* Many minor bugfixes (symlinks, ...)
+* Removed IDE error messages kernel bug
+
+-----------------------------------------------------------------------------
+0.2.3
+-----------------------------------------------------------------------------
+* Added net-ftp/lftp
+* Added app-admin/chkrootkit
+* Added sys-apps/dar
+* Added sys-apps/linux-ldm
+* Added net-mail/clamav Anti-Virus
+* New feature: personnalization script
+* Updated QtParted.
+* Updated Qt-Embedded: 3.2.0 -> 3.2.1
+* Reduced size of the Qt library
+* Updated kernel -> 2.4.22-xfs
+* Bugfixes: vim, fsck.reiser4
+
+-----------------------------------------------------------------------------
+0.2.2
+-----------------------------------------------------------------------------
+* Removed many garbage files (reduce size of packages)
+* Run numlock in the default runlevel
+* Added sys-apps/convertfs (unstable)
+* Added FR_ch, cs_CZ keymaps
+* Added DirectFb + lite + DFBTerm
+* Added QTinyEditor (graphical text editor)
+* Added links webbrowser
+* Added manpages
+* Added THC secure-delete tools
+* Added VCHE (hex editor)
+
+-----------------------------------------------------------------------------
+0.2.1
+-----------------------------------------------------------------------------
+2003-08-01   
+* Added a script (eagle-config) in order to make adsl easy with eagle modems
+* Updated QtParted-0.4.0_pre, reiserfsprogs, reiser4progs, e2fsprogs
+
+2003-07-24   
+* Added net-fs/samba, net-fs/nfs-utils, net-fs/ftpfs
+* released 0.2.1
+
+-----------------------------------------------------------------------------
+0.2.0
+-----------------------------------------------------------------------------
+2003-07-27   
+* Fixed bug: speakup-1.5 (soft for blind) keeps its keymap
+* New: added Reiser4Progs, that manage ReiserFs-4 partitions (beta)
+* Updated parted, QtParted, reiserfsprogs
+* released 0.2.0
+
+2003-07-24   
+* Updated Qt-3.1.2 -> Qt-3.2.0
+* Added system utilities: xfsdump
+* New splash screen at boot that presents the software
+* Fixed bug: no more error messages at startup with hardware detection
+* Added system utilities: gpart, dd_rescue, dump/restore
+
+-----------------------------------------------------------------------------
+0.1.4
+-----------------------------------------------------------------------------
+2003-07-23   
+* added new tools: md5deep, coreutils, wipe
+* make Zsh the default shell
+* release 0.1.4
+
+2003-07-22   
+* system based on a new stage archive
+* added some tools: md5deep, aide
+* resolved many errors at startup
+
+-----------------------------------------------------------------------------
+0.1.3
+-----------------------------------------------------------------------------
+2003-07-21   
+* hardware detection with hotplug
+* add backup scripts in /root
+* add eagle driver for Adsl modem SagemFast800
+* released 0.1.3
+
+2003-07-20   
+* no more error message destroying the QtEmbedded screen
+* more details about FrameBuffer in text files 
+
+-----------------------------------------------------------------------------
+0.1.2
+-----------------------------------------------------------------------------
+2003-07-20   
+* released 0.1.2
+ 
+2003-07-19   
+* QtEmbedded support with uic and no QtDesigner
+* QtParted-0.4.0_pre3 and PartGui-0.2.3_pre1
+
+-----------------------------------------------------------------------------
+0.1.1
+-----------------------------------------------------------------------------
+2003-07-18   
+* made the isolinux configuration (help.msg, bootlogo)
+* mylivecd script: now uses PORTAGE_OVERLAY
+* The partimage server can start
+* release 0.1.1
+ 
+-----------------------------------------------------------------------------
+0.1.0
+-----------------------------------------------------------------------------
+2003-07-17   
+* added many programs:
+  - vim
+  - xfsprogs, ntfsprogs
+* released 0.1.0

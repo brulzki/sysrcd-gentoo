@@ -1,0 +1,12 @@
+[Entry 0]
+Name=Firefox
+Comment=Web browser
+Icon=/root/icons/firefox.png
+Exec='/usr/bin/firefox'
+Path=/root
+Terminal=false
+
+[Global]
+MoveFirst=false
+ArrowPosition=0
+

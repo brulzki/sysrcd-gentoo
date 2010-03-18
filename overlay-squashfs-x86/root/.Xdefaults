@@ -1,0 +1,2 @@
+URxvt*scrollBar_right: True
+URxvt*saveLines: 32767

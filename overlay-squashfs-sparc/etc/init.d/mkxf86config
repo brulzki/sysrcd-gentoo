@@ -1,0 +1,25 @@
+#!/sbin/runscript
+ 
+depend() 
+{
+    before local xdm
+}
+
+start() 
+{
+	if grep -i -q "forcevesa" /proc/cmdline
+	then
+		ebegin "Force xorg.conf with driver vesa (due to option \"forcevesa\")"
+		sed -i -e 's/"@@XMODULE@@"/"vesa"/' /etc/X11/xorg.conf.in
+	fi
+
+	if grep -i -q "doxdetect" /proc/cmdline
+	then
+		ebegin "Creating X Configuration"
+		/usr/sbin/mkxf86config.sh
+		eend $?
+	else
+		#ewarn "Skipping creation of X configuration (due to option \"noxdetect\")"
+		eend 0
+	fi
+}

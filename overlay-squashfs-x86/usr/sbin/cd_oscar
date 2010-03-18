@@ -1,0 +1,76 @@
+#!/bin/sh
+
+
+## Copyright (C) 2003-2008 Tissoires Jean-François & Benjamin,  Jean-Francois.Tissoires@ac-lyon.fr
+## Cédérom Outil Système Complet d'Assistance Réseau: OSCAR
+## Cédérom Rapide de Sauvegarde aux Ordinateurs et Systèmes: RapideSOS
+## Ce programme est sous Licence Publique Générale GNU publiée par la Free Software Foundation.
+
+## caractères : é, è, ç, à, ù, ê, â, ï, ô, correspondent �  : �, �, �, �, �, �, �, �, �,
+## il faut donc remplac� é, è, ç, à, ù, ê, â, i_accent_traima, ô, par é, è, ç, à, ù, ê, â, ï, ô,
+
+
+
+
+
+#-----------------------------------------------------------------------------------------------------
+boite_choix_test_ou_cdoscar()    # Choisir tester Oscar ou faire cdOscar
+{
+langage
+choix_langue=`cat /usr/share/oscar/usr/choix_langue`
+chemin_langue=/usr/share/oscar/usr/langue/$choix_langue
+
+	DIALOGRC="/etc/dialogmenu_bloque" dialog --colors\
+	--backtitle "`cat /etc/banniere_oscar`" \
+	--cancel-label "`cat $chemin_langue/Annuler`" --ok-label "`cat $chemin_langue/menu_298`" --extra-button --extra-label "`cat $chemin_langue/menu_299`" \
+	--menu "\n`cat $chemin_langue/menu_164`\Z3O\Z4util de\Z3 S\Z4auvegarde\Z3 C\Z4omplet d'\Z3A\Z4ssistance \Z3R\Z4éseaux \n\n" 10 80 0 \
+	"" " " \
+	"" " " \
+	"" "`cat $chemin_langue/menu_294`"  \
+	"" "`cat $chemin_langue/menu_295`" \
+	"" " " \
+	"" " " \
+	"" "`cat $chemin_langue/menu_296`" \
+	"" "`cat $chemin_langue/menu_297`" \
+	"" " " \
+	"" " "
+      case $? in
+	    0)	cdrom_oscar ;;  # Réaliser cdOSCAR
+	    3)  if ( test -e /usr/share/oscar/usr/GNUstep/.jwmrc )
+	    	then
+	    		if ( test -e /root/.jwmrc )
+	    		then
+	    			if ! ( test -e /root/.jwmrc.bak )
+	    			then
+	    				cp -f /root/.jwmrc /root/.jwmrc.bak
+	    			fi
+	    			cp -f /usr/share/oscar/usr/GNUstep/.jwmrc /root/.jwmrc
+	    		fi
+	    	fi
+	    	/usr/share/oscar/bin/oscar ;; # Tester OSCAR
+	    1)	exit ;;	#Annuler
+	    255) exit ;;
+	esac
+}
+#-----------------------------------------------------------------------------------------------------
+
+PATH="/usr/share/oscar/bin:$PATH"
+if ( test -e /usr/share/oscar/usr/choix_langue )
+then
+	choix_langue=`cat /usr/share/oscar/usr/choix_langue`
+else
+	traduction
+	echo "fr" > /usr/share/oscar/usr/choix_langue
+	choix_langue=fr
+fi
+chemin_langue=/usr/share/oscar/usr/langue/$choix_langue
+
+cp -f /usr/share/oscar/usr/dialogmenu_bloque /etc
+cp -f /usr/share/oscar/usr/dialogrc /etc
+cp -f /usr/share/oscar/usr/exec_dialog_src /etc
+chmod +x /etc/exec_dialog_src
+
+cp -f /usr/share/oscar/usr/version_theme_oscar /root/version_theme_oscar
+chmod +x /root/version_theme_oscar
+/root/version_theme_oscar
+boite_choix_test_ou_cdoscar

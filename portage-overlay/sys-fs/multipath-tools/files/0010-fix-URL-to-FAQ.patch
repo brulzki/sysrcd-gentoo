@@ -1,0 +1,20 @@
+From: Vincent McIntyre <Vincent.McIntyre@csiro.au>
+Date: Fri, 9 Jan 2009 18:18:46 +0100
+Subject: [PATCH] fix URL to FAQ
+
+---
+ FAQ |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/FAQ b/FAQ
+index 35dc2f9..ad717b4 100644
+--- a/FAQ
++++ b/FAQ
+@@ -1,4 +1,5 @@
+-More at http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=FAQ
++More at http://christophe.varoqui.free.fr/faq.html
++See also http://christophe.varoqui.free.fr/usage.html
+ 
+ 1. How to set up System-on-multipath ?
+ ======================================
+-- 

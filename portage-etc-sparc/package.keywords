@@ -1,0 +1,8 @@
+# Misc packages
+sys-fs/dmraid ~sparc
+sys-fs/xfsprogs ~sparc
+sys-fs/jfsutils ~sparc
+
+# kernel related packages
+sys-kernel/gentoo-sources ~sparc
+sys-kernel/genkernel ~sparc

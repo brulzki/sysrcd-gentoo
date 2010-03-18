@@ -1,0 +1,14 @@
+# kernel related packages
+<sys-kernel/fd-sources-2.6.22.08
+>=sys-kernel/linux-headers-2.6.21
+>=sys-kernel/gentoo-sources-2.6.23
+<sys-kernel/genkernel-3.4.9_pre3
+>sys-kernel/genkernel-3.4.9_pre3
+
+# misc packages
+>app-admin/testdisk-6.8
+>=sys-apps/parted-1.8.0
+>app-misc/mc-4.6.1
+
+# fix bugs
+>x11-libs/cairo-1.4.6

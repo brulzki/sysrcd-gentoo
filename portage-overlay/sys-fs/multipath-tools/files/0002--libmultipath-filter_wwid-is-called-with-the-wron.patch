@@ -1,0 +1,26 @@
+From: Stefan Bader <shbader@de.ibm.com>
+Date: Tue, 24 Jun 2008 16:38:37 +0200
+Subject: [PATCH] [libmultipath] filter_wwid() is called with the wrong lists from filter_path()
+
+When filter_path() calls filter_wwid() it passes the devnode lists instead
+of the wwid lists.
+
+Signed-off-by: Christophe Varoqui <christophe.varoqui@free.fr>
+---
+ libmultipath/blacklist.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libmultipath/blacklist.c b/libmultipath/blacklist.c
+index 0c277cb..9a058f7 100644
+--- a/libmultipath/blacklist.c
++++ b/libmultipath/blacklist.c
+@@ -299,7 +299,7 @@ _filter_path (struct config * conf, struct path * pp)
+ 	r = _filter_devnode(conf->blist_devnode, conf->elist_devnode,pp->dev);
+ 	if (r)
+ 		return r;
+-	r = _filter_wwid(conf->blist_wwid, conf->elist_devnode, pp->wwid);
++	r = _filter_wwid(conf->blist_wwid, conf->elist_wwid, pp->wwid);
+ 	if (r)
+ 		return r;
+ 	r = _filter_device(conf->blist_device, conf->elist_device,
+-- 

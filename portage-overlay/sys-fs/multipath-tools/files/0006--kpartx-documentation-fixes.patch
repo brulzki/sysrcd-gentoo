@@ -1,0 +1,36 @@
+From: =?utf-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Date: Tue, 24 Jun 2008 16:38:38 +0200
+Subject: [PATCH] [kpartx] documentation fixes
+
+---
+ kpartx/kpartx.8 |    3 +++
+ kpartx/kpartx.c |    1 +
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/kpartx/kpartx.8 b/kpartx/kpartx.8
+index 87b07ce..c61f312 100644
+--- a/kpartx/kpartx.8
++++ b/kpartx/kpartx.8
+@@ -26,6 +26,9 @@ List partition mappings that would be added -a
+ .B \-p
+ set device name-partition number delimiter
+ .TP
++.B \-g
++force GUID partition table (GPT)
++.TP
+ .B \-v
+ Operate verbosely
+ .SH "SEE ALSO"
+diff --git a/kpartx/kpartx.c b/kpartx/kpartx.c
+index 6771e41..e3550bb 100644
+--- a/kpartx/kpartx.c
++++ b/kpartx/kpartx.c
+@@ -94,6 +94,7 @@ usage(void) {
+ 	printf("\t-d del partition devmappings\n");
+ 	printf("\t-l list partitions devmappings that would be added by -a\n");
+ 	printf("\t-p set device name-partition number delimiter\n");
++	printf("\t-g force GUID partition table (GPT)\n");
+ 	printf("\t-v verbose\n");
+ 	return 1;
+ }
+-- 

@@ -1,0 +1,12 @@
+/usr/bin/pinentry-gtk-2
+/usr/bin/xapm
+/usr/bin/gxditview
+/usr/bin/xtotroff
+/usr/sbin/gtk-lshw
+/root/jwm
+/root/runxserver
+/root/winmgr.sh
+/root/.xsession
+/root/.xinitrc
+/root/.config/geany/
+/root/.config/xfce*

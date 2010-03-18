@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<JWM>
+	<RootMenu height="20" onroot="123">
+		<Menu icon="folder_yellow.png" label="System">
+			<Program icon="gparted.png" label="GParted">gparted</Program>
+			<Program icon="partimage.png" label="Partimage">terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=partimage</Program>
+			<Program icon="testdisk.png" label="Testdisk">terminal --hide-toolbars --hide-menubar --geometry=80x25 --command=testdisk</Program>
+			<Program icon="" label="Lshw (hardware info)">gtk-lshw</Program>
+		</Menu>
+
+		<Menu icon="folder_yellow.png" label="Misc">
+			<Program icon="" label="Midnight Commander">terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=mc</Program>
+			<Program icon="" label="Epdfview PDF viewer">epdfview</Program>
+			<Program icon="" label="Dillo web browser">dillo</Program>
+			<Program icon="" label="File Archiver">xarchiver</Program>
+			<Program icon="" label="Hexadecimal editor">terminal --hide-toolbars --hide-menubar --geometry=90x35 --command=hexcurse</Program>
+		</Menu>
+
+		<Separator/>
+			<Program icon="gparted.png" label="GParted">gparted</Program>
+			<Program icon="terminal.png" label="xfce terminal">terminal</Program>
+			<Program icon="mrxvt.png" label="mrxvt terminal">LANG=en_US mrxvt</Program>
+			<Program icon="geany.png" label="Geany editor">geany</Program>
+			<Program icon="vim.png" label="GVim editor">gvim</Program> 
+			<Program icon="firefox.png" label="Firefox">firefox</Program> 
+			<Program icon="xfburn.png" label="CD/DVD Burner">xfburn</Program> 
+		<Separator/>
+		
+		<Menu icon="folder_yellow.png" label="Exit">
+			<Program icon="" label="Return to console">killall jwm</Program>
+			<Restart icon="" label="Restart Window Manager"/>
+		</Menu>
+	</RootMenu>
+
+	<Tray x="0" y="-1" height="50">
+		<TrayButton popup="Menu Options" icon="cdrom.png">root:1</TrayButton>
+		<TrayButton popup="Show Desktop" icon="desktop.png">showdesktop</TrayButton>
+		<TrayButton popup="GParted" icon="gparted.png">exec:gparted</TrayButton>
+		<TrayButton popup="Terminal" icon="terminal.png">exec:terminal</TrayButton>
+		<TrayButton popup="Firefox web browser" icon="firefox.png">exec:firefox</TrayButton>
+		<TrayButton popup="CD/DVD Burner" icon="xfburn.png">exec:xfburn</TrayButton>
+		<TrayButton popup="Geany editor" icon="geany.png">exec:geany</TrayButton>
+		<Pager-ignore/>
+		<TaskList/>
+		<Dock/>
+		<Clock format="%H:%M ">xclock</Clock>
+	</Tray>
+	
+	<IconPath>/root/icons/</IconPath>
+	
+	<Desktops count="4">
+		<Background type="tile">/root/jwm/wallpaper.png</Background>
+	</Desktops>
+
+	<!-- Double click speed (in milliseconds) -->
+	<DoubleClickSpeed>400</DoubleClickSpeed>
+	
+	<!-- Double click delta (in pixels) -->
+	<DoubleClickDelta>2</DoubleClickDelta>
+	
+	<!-- The focus model (sloppy or click) -->
+	<FocusModel>click</FocusModel>
+	
+	<!-- The snap mode (none, screen, or border) -->
+	<SnapMode distance="10">border</SnapMode>
+	
+	<!-- The move mode (outline or opaque) -->
+	<MoveMode>opaque</MoveMode>
+	
+	<!-- The resize mode (outline or opaque) -->
+	<ResizeMode>opaque</ResizeMode>
+	
+	<!-- Key bindings -->
+	<Key key="Up">up</Key>
+	<Key key="Down">down</Key>
+	<Key key="Right">right</Key>
+	<Key key="Left">left</Key>
+	<Key key="h">left</Key>
+	<Key key="j">down</Key>
+	<Key key="k">up</Key>
+	<Key key="l">right</Key>
+	<Key key="Return">select</Key>
+	<Key key="Escape">escape</Key>
+	
+	<Key mask="A" key="Tab">next</Key>
+	<Key mask="A" key="F4">close</Key>
+	<Key mask="A" key="#">desktop#</Key>
+	<Key mask="A" key="F1">root:1</Key>
+	<Key mask="A" key="F2">window</Key>
+	
+	<Key mask="SC" key="s">shade</Key>
+	<Key mask="SC" key="x">close</Key>
+	<Key mask="SC" key="m">maximize</Key>
+	<Key mask="SC" key="v">minimize</Key>
+	<Key mask="SC" key="d">desktop</Key>
+	<Key mask="SC" key="b">resize</Key>
+	<Key mask="SC" key="z">root:1</Key>
+	<Key mask="SC" key="n">move</Key>
+	
+	<Key mask="CA" key="r">restart</Key>
+	<Key mask="CA" key="Return">exec:aterm</Key>
+	<Key mask="CA" key="v">exec:aterm -T "vim" -e vi</Key>
+	
+	<!-- Visual Styles -->
+	<WindowStyle>
+		<Font antialias="false">-*-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1</Font>
+		<Width>4</Width>
+		<Height>20</Height>
+		<Active>
+			<Text>white</Text>
+			<Title>grey40:grey0</Title>
+			<Corner>grey44</Corner>
+			<Outline>grey13</Outline>
+		</Active>
+		<Inactive>
+			<Text>grey44</Text>
+			<Title>grey20:grey0</Title>
+			<Corner>grey44</Corner>
+			<Outline>grey13</Outline>
+		</Inactive>
+	</WindowStyle>
+
+	<TrayStyle>
+		<Font antialias="false">-*-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1</Font>
+		<Background>grey13</Background>
+		<Foreground>white</Foreground>
+	</TrayStyle>
+
+	<TaskListStyle>
+		<Font antialias="false">-*-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1</Font>
+		<ActiveForeground>white</ActiveForeground>
+		<ActiveBackground>grey50:grey30</ActiveBackground>
+		<Foreground>grey70</Foreground>
+		<Background>grey50:grey0</Background>
+	</TaskListStyle>
+</JWM>

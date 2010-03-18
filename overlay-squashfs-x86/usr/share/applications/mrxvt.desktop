@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=/usr/bin/mrxvt
+Icon=utilities-terminal
+StartupNotify=false
+Terminal=false
+Categories=System;
+Name=mrxvt
+Comment=alternative terminal

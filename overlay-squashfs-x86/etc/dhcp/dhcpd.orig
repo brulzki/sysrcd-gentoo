@@ -1,0 +1,34 @@
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.sample
+#
+
+ddns-update-style interim;
+ignore client-updates;
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+
+        option routers 192.168.1.254;
+        option subnet-mask 255.255.255.0;
+        option domain-name-servers 192.168.1.254;
+
+        range dynamic-bootp 192.168.1.100 192.168.1.150;
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+        # if we want to define an IP address for a mac address
+        #host pxeclient {
+        #        hardware ethernet      00:1C:C4:43:10:86;
+        #        fixed-address          192.168.1.86;
+        #}
+}
+
+allow booting;
+allow bootp;
+
+next-server 192.168.1.5; # IP addr of the TFTP server
+
+class "pxeclients" {
+   match if substring(option vendor-class-identifier, 0, 9) = "PXEClient";
+   filename "/pxelinux.0";
+}

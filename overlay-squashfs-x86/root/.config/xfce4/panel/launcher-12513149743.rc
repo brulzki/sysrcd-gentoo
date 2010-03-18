@@ -1,0 +1,12 @@
+[Global]
+MoveFirst=false
+ArrowPosition=0
+
+[Entry 0]
+Name=xfburn
+Comment=cd/dvd burning software
+Icon=/root/icons/xfburn.png
+Exec='/usr/bin/xfburn'
+Path=/root
+Terminal=false
+

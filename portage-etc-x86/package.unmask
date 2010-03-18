@@ -1,0 +1,5 @@
+# ------ SystemRescueCd package.unmask ------
+=sys-boot/grub-1.97*
+=sys-boot/grub-1.98*
+=sys-apps/parted-2.2*
+

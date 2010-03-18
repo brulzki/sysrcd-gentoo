@@ -1,0 +1,18 @@
+# /etc/conf.d/consolefont
+
+# CONSOLEFONT specifies the default font that you'd like Linux to use on the
+# console.  You can find a good selection of fonts in /usr/share/consolefonts;
+# you shouldn't specify the trailing ".psf.gz", just the font name below.
+# To use the default console font, comment out the CONSOLEFONT setting below.
+# This setting is used by the /etc/init.d/consolefont script (NOTE: if you do
+# not want to use it, run "rc-update del consolefont" as root).
+
+#CONSOLEFONT="default8x16"
+#CONSOLEFONT="lat1-16"
+CONSOLEFONT="ter-v16b"
+
+# CONSOLETRANSLATION is the charset map file to use.  Leave commented to use
+# the default one.  Have a look in /usr/share/consoletrans for a selection of
+# map files you can use.
+#CONSOLETRANSLATION="8859-1_to_uni"
+

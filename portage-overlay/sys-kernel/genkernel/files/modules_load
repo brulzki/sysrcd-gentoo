@@ -1,0 +1,21 @@
+# Module groups for genkernel initrd/initramfs
+
+MODULES_DEVMAPPER="dm-mod dm-mirror dm-multipath dm-snapshot dm-crypt raid0 raid1 raid456 raid5 raid6 raid10 faulty linear multipath"
+
+MODULES_BLOCK="aoe cciss cpqarray DAC960 nbd osdblk sx8 virtio_blk"
+
+MODULES_ATA="ata_generic pata_acpi pata_ali pata_amd pata_artop pata_atiixp pata_atp867x pata_cmd640 pata_cmd64x pata_cs5520 pata_cs5530 pata_cs5535 pata_cs5536 pata_cypress pata_efar pata_hpt366 pata_hpt37x pata_hpt3x2n pata_hpt3x3 pata_it8213 pata_it821x pata_jmicron pata_marvell pata_mpiix pata_netcell pata_ninja32 pata_ns87410 pata_ns87415 pata_oldpiix pata_optidma pata_opti pata_pcmcia pata_pdc2027x pata_pdc202xx_old pata_qdi pata_rdc pata_sch pata_serverworks pata_sil680 pata_sis pata_sl82c105 pata_triflex pata_via pdc_adma sata_inic162x sata_mv sata_nv sata_promise sata_qstor sata_sil24 sata_sil sata_sis sata_svw sata_sx4 sata_uli sata_via sata_vsc"
+
+MODULES_SCSI="aacraid raid_class fnic sym53c500_cs fdomain_cs aha152x_cs nsp_cs qlogic_cs aha152x scsi_tgt libsrp lpfc libfcoe fcoe BusLogic aic94xx libiscsi_tcp qla2xxx scsi_transport_fc ch scsi_transport_sas fdomain osd libosd hptiop atp870u iscsi_tcp scsi_transport_srp a100u2w aha1542 st be2iscsi qlogicfas408 arcmsr sym53c8xx megaraid_mm megaraid_mbox megaraid_sas tmscsim initio scsi_debug ppa 3w-xxxx mpt2sas imm aic7xxx_old scsi_wait_scan mvsas cxgb3i libiscsi qla4xxx scsi_transport_spi scsi_transport_iscsi qla1280 dc395x osst libfc aic7xxx aic79xx scsi_dh_alua scsi_dh_emc scsi_dh_rdac scsi_dh_hp_sw ips advansys bnx2i bfa stex pmcraid libsas gdth 3w-9xxx megaraid ses"
+
+MODULES_FUSION="mptbase mptctl mptfc mptlan mptsas mptscsih mptspi"
+
+MODULES_NET="vcan igb plusb dm9601 zaurus pegasus rndis_host usbnet rtl8150 mcs7830 net1080 cdc_ether kaweth cdc_subset gl620a asix catc atl1 atl1e atl1c atl2 ixgb mlx4_core skfp 8139too dl2k sungem starfire sunhme e1000 cxgb3 ixgbe fealnx dmfe xircom_cb de2104x uli526x tulip winbond-840 de4x5 typhoon ne2k-pci amd8111e qla3xxx hamachi skge sc92031 slhc sky2 slip r6040 tehuti epic100 b44 e1000e e100 atp cassini yellowfin ipg s2io mii netxen_nic niu sundance r8168 r8169 tg3 veth tun acenic natsemi macvlan via-velocity sis190 sungem_phy bnx2x de600 de620 ns83820 pcnet32 netconsole sis900 bnx2 plip 8390 via-rhine cxgb myri10ge 3c59x sb1000 8139cp forcedeth sfc bpqether virtio_net qlge vxge vmxnet3"
+
+MODULES_FIREWIRE="firewire-core firewire-net firewire-ohci firewire-sbp2"
+MODULES_PCMCIA="pcmcia pcmcia_core"
+MODULES_USB="ehci-hcd uhci usb-ohci hid usb-storage uhci-hcd ohci-hcd usbhid sl811-hcd"
+
+MODULES_SPEAKUP="speakup speakup_acntpc speakup_acntsa speakup_dtlk speakup_decext speakup_soft speakup_ltlk speakup_decpc speakup_dectlk speakup_audptr speakup_spkout speakup_dummy speakup_keypc speakup_txprt speakup_apollo speakup_bns"
+
+MODULES_MISC="edd"

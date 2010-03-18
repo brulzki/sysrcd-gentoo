@@ -1,0 +1,27 @@
+From: =?utf-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Date: Tue, 24 Jun 2008 16:38:38 +0200
+Subject: [PATCH] [kpartx] remove partitions in reverse order
+
+otherwise we try to remove the extended partition of MSDOS labels
+(/dev/mapper/mpathX-part[1-4]) before the logical partition
+/dev/mapper/mpathX-partY (Y>5) which fails.
+
+Signed-Off-By: Guido Guenther <agx@sigxcpu.org>
+---
+ kpartx/kpartx.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/kpartx/kpartx.c b/kpartx/kpartx.c
+index c1fe005..6771e41 100644
+--- a/kpartx/kpartx.c
++++ b/kpartx/kpartx.c
+@@ -401,7 +401,7 @@ main(int argc, char **argv){
+ 			break;
+ 
+ 		case DELETE:
+-			for (j = 0; j < n; j++) {
++			for (j = n-1; j >= 0; j--) {
+ 				if (safe_sprintf(partname, "%s%s%d",
+ 					     mapname, delim, j+1)) {
+ 					fprintf(stderr, "partname too small\n");
+-- 

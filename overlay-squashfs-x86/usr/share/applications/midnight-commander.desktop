@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=4.6.1
+Name=Midnight Commander
+Type=Application
+Comment=Norton Commander clone for Linux
+Exec=terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=mc
+Categories=ConsoleOnly;System;

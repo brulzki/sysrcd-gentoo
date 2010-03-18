@@ -1,0 +1,49 @@
+# ------ SystemRescueCd package.use ------
+sys-kernel/genkernel selinux
+xfce-base/xfce4-meta -session 
+xfce-base/xfdesktop menu-plugin
+xfce-base/xfce-utils dbus -lock
+app-cdr/xfburn -hal dbus xfce -gstreamer
+sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce -debug -gnome -kde 
+sys-apps/parted device-mapper readline
+sys-apps/smartmontools minimal
+sys-block/partimage ssl -nologin -nls pam -static
+app-arch/xz-utils threads -nls static-libs
+sys-fs/fsarchiver lzma lzo gcrypt static
+app-editors/vim -gpm -minimal bash-completion perl python
+app-editors/vim-core -livecd bash-completion
+app-misc/mc -gpm -ncurses -nls X slang samba 7zip
+sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
+sys-apps/util-linux crypt unicode loop-aes
+sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
+sys-fs/ntfs3g -external-fuse
+sys-fs/btrfs-progs -debug-utils
+app-text/poppler-bindings gtk -qt3 -qt4 -test
+net-print/cups -perl -python
+dev-util/git -perl
+net-wireless/wpa_supplicant -dbus
+media-libs/freetype -bindist
+app-text/ghostscript-gpl -cups
+sys-boot/grub multislot
+app-crypt/truecrypt -X
+x11-libs/wxGTK -X
+net-wireless/ndiswrapper usb
+sys-fs/squashfs-tools lzma
+www-client/chromium -ffmpeg
+media-fonts/terminus-font X
+dev-libs/libxml2 python
+net-misc/tigervnc server xorgmodule -opengl
+sys-apps/miscfiles minimal
+net-analyzer/tcpdump -samba
+dev-lang/python -berkdb
+dev-lang/perl minimal
+x11-apps/xinit minimal
+net-dialup/rp-pppoe -X
+net-analyzer/nmap -gtk
+net-dialup/ppp -gtk
+sys-fs/evms -gtk
+www-client/elinks -X
+sys-fs/mtools -X
+app-cdr/cdw -gtk
+x11-libs/cairo svg
+

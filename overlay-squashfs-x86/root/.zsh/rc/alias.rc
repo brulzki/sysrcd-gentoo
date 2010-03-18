@@ -1,0 +1,13 @@
+alias ll="ls -lah"
+alias rm="rm -i"
+alias cp="cp -i"
+alias ls="ls --color=auto"
+alias l="ls -ail"
+alias cl="clear"
+
+alias cvs="cvs -z3"
+
+alias reboot="shutdown -r now"
+
+# do a du -hs on each dir on current path
+alias lsdir="for dir in *;do;if [ -d \$dir ];then;du -hsL \$dir;fi;done"

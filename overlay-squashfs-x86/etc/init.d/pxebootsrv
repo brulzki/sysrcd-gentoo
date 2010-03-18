@@ -1,0 +1,182 @@
+#!/sbin/runscript
+# Distributed under the terms of the GNU General Public License, v2 or later
+
+bootdir='/livemnt/boot'
+
+depend() 
+{
+	need net
+}
+
+start()
+{
+	ebegin "Starting the pxe-boot-server"
+
+	# ---- check the cdrom files exist
+	for curfile in sysrcd.dat isolinux/rescuecd isolinux/initram.igz isolinux/isolinux.cfg
+	do
+		cur="${bootdir}/$curfile"
+		if [ ! -f $cur ]
+		then
+			eerror "File \"$cur\" does not exists. Cannot start the pxebootsrv daemon."
+			return 1
+		fi
+	done
+
+	# ---- check the config file exists
+	if [ ! -f /etc/conf.d/pxebootsrv ]
+	then
+		eerror "The pxebootsrv configuration file \"/etc/conf.d/pxebootsrv\" does not exists. Cannot continue."
+		return 1
+	fi
+
+	# ---- check the major options are set to 'yes' or 'no'
+	if [ $PXEBOOTSRV_DODHCPD != "yes" ] && [ $PXEBOOTSRV_DODHCPD != "no" ]
+	then
+		eerror "Invalid value for PXEBOOTSRV_DODHCPD. Must be \"yes\" or \"no\" (lowercase)."
+		return 1
+	fi
+
+	if [ $PXEBOOTSRV_DOTFTPD != "yes" ] && [ $PXEBOOTSRV_DOTFTPD != "no" ]
+	then
+		eerror "Invalid value for PXEBOOTSRV_DOTFTPD. Must be \"yes\" or \"no\" (lowercase)."
+		return 1
+	fi
+
+	if [ $PXEBOOTSRV_DOHTTPD != "yes" ] && [ $PXEBOOTSRV_DOHTTPD != "no" ]
+	then
+		eerror "Invalid value for PXEBOOTSRV_DOHTTPD. Must be \"yes\" or \"no\" (lowercase)."
+		return 1
+	fi
+
+	if [ $PXEBOOTSRV_DODHCPD == "yes" ]
+	then
+		# ---- prepare /etc/dhcp/dhcpd.conf from /etc/conf.d/pxebootsrv
+		[ -f /etc/dhcp/dhcpd.conf ] && cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.bak
+		cp /etc/dhcp/dhcpd.orig /etc/dhcp/dhcpd.conf
+	
+		if [ -z "$PXEBOOTSRV_SUBNET" -o -z "$PXEBOOTSRV_NETMASK" ]
+		then
+			eerror "Invalid values for PXEBOOTSRV_SUBNET or PXEBOOTSRV_NETMASK"
+			return 1
+		else
+			sed -i -e "s/subnet 192.168.1.0 netmask 255.255.255.0/subnet $PXEBOOTSRV_SUBNET netmask $PXEBOOTSRV_NETMASK/" /etc/dhcp/dhcpd.conf
+			sed -i -e "s/option subnet-mask 255.255.255.0;/option subnet-mask $PXEBOOTSRV_NETMASK;/" /etc/dhcp/dhcpd.conf
+		fi
+	
+		if [ -z "$PXEBOOTSRV_DEFROUTE" ]
+		then
+			eerror "The config variable PXEBOOTSRV_DEFROUTE is missing"
+			return 1
+		else
+			sed -i -e "s/option routers 192.168.1.254;/option routers $PXEBOOTSRV_DEFROUTE;/" /etc/dhcp/dhcpd.conf
+		fi
+	
+		if [ -z "$PXEBOOTSRV_DHCPRANGE" ]
+		then
+			eerror "The config variable PXEBOOTSRV_DHCPRANGE is missing"
+			return 1
+		else
+			sed -i -e "s/range dynamic-bootp 192.168.1.100 192.168.1.150;/range dynamic-bootp $PXEBOOTSRV_DHCPRANGE;/" /etc/dhcp/dhcpd.conf
+		fi
+	
+		if [ -z "$PXEBOOTSRV_TFTPSERVER" ]
+		then
+			eerror "The config variable PXEBOOTSRV_TFTPSERVER is missing"
+			return 1
+		else
+			sed -i -e "s/next-server 192.168.1.5;/next-server $PXEBOOTSRV_TFTPSERVER;/" /etc/dhcp/dhcpd.conf
+		fi
+	
+		if [ ! -z "$PXEBOOTSRV_DNS" ]
+		then
+			sed -i -e "s/option domain-name-servers 192.168.1.254;/option domain-name-servers $PXEBOOTSRV_DNS;/" /etc/dhcp/dhcpd.conf
+		fi
+	fi
+
+	if [ $PXEBOOTSRV_DOTFTPD == "yes" ]
+	then
+		# ---- copy all files in isolinux to /tftpboot/
+		for curfile in ${bootdir}/isolinux/*
+		do
+			if [ -f $curfile ] # if not a directory
+			then
+				cp $curfile /tftpboot/ --remove-destination
+				if [ ! "$?" -eq '0' ]
+				then
+					eerror "Cannot copy \"$curfile\" to /tftpboot/. Memory probably missing."
+					return 1
+				fi
+			fi
+		done
+
+		# ---- copy the bootdisks to /tftpboot/
+		cp -r --remove-destination ${bootdir}/bootdisk /tftpboot/
+		if [ ! "$?" -eq '0' ]
+		then
+			rm -rf /tftpboot/bootdisk
+			eerror "Cannot copy the bootdisk directory to /tftpboot/. Memory probably missing."
+			return 1
+		fi
+
+		# ---- prepare pxelinux config file
+		rm -f /tftpboot/pxelinux.cfg/default.bak
+		[ -f /tftpboot/pxelinux.cfg/default ] && mv /tftpboot/pxelinux.cfg/default /tftpboot/pxelinux.cfg/default.bak
+		cp ${bootdir}/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
+		#sed -i -e "s!cdroot!cdroot scandelay=5 boothttp=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
+		sed -i -e "s!append!append scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
+		cp ${bootdir}/isolinux/*.msg /tftpboot/
+		if [ ! "$?" -eq '0' ]
+		then
+			eerror "Cannot copy *.msg to /tftpboot/. Memory probably missing."
+			return 1
+		fi
+
+	fi
+
+	# ---- start the DHCPD service
+	if [ $PXEBOOTSRV_DODHCPD == "yes" ]
+	then
+		/etc/init.d/dhcpd restart
+		if [ "$?" != "0" ]
+		then
+			eerror "Cannot start /etc/init.d/dhcpd, check /var/log/messages"
+			return 1
+		fi 
+	fi
+
+	# ---- start the THTTPD service
+	if [ $PXEBOOTSRV_DOHTTPD == "yes" ]
+	then
+		/etc/init.d/thttpd restart
+		if [ "$?" != "0" ]
+		then
+			eerror "Cannot start /etc/init.d/thttpd"
+			return 1
+		fi 
+	fi
+
+	# ---- start the TFTPD service
+	if [ $PXEBOOTSRV_DOTFTPD == "yes" ]
+	then
+		/etc/init.d/in.tftpd restart
+		if [ "$?" != "0" ]
+		then
+			eerror "Cannot start /etc/init.d/in.tftpd"
+			return 1
+		fi 
+	fi
+	
+	return 0
+}
+
+stop()
+{
+	ebegin "Stopping the pxe-boot-server"
+
+	/etc/init.d/thttpd stop
+	/etc/init.d/in.tftpd stop
+	/etc/init.d/dhcpd stop
+
+	return 0
+}

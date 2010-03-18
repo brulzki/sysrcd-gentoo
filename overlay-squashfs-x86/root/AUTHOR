@@ -1,0 +1,20 @@
+         AUTHORS of SystemRescueCd (x86 edition):
+         ----------------------------------------
+
+Homepage:...........http://www.sysresccd.org/
+Forums:.............http://www.sysresccd.org/forums/
+
+* Main Author:
+  Francois Dupoux
+
+* Other contributors:
+  - Jean-Francois Tissoires (Oscar and many help for testing beta versions)
+  - Franck Ladurelle (many suggestions, and help for scripts)
+  - Pierre Dorgueil (reported many bugs and improvements)
+  - Matmas did the port of linuxrc for loadlin
+  - Gregory Nowak (tested the speakup)
+  - Fred alias Sleeper (Eagle driver)
+  - Thanks to Melkor for the help to port to unicode
+
+* Many thanks to Isaiah Salinas for update the SysResccd to
+  version 0.2.19 with linux-2.6.

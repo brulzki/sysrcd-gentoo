@@ -1,0 +1,94 @@
+# ------ SystemRescueCd package.keywords ------
+
+# System packages
+=sys-devel/gcc-4.4* ~*
+=sys-libs/glibc-2.11* ~*
+
+# Misc packages
+=sys-apps/net-tools-1.60_p2009* ~*
+=sys-apps/util-linux-2.17.1* ~*
+=www-client/firefox-bin-3.6* ~*
+=sys-block/mbuffer-20090113 ~*
+=sys-fs/udftools-1.0.0b-r9 ~*
+=net-misc/openvpn-2.1.0* ~*
+=app-portage/eix-0.19* ~*
+=sys-libs/slang-2.2.1* ~*
+=sys-fs/ddrescue-1.11* ~*
+=app-arch/p7zip-9.0* ~*
+=app-misc/mc-4.7.0* ~*
+dev-libs/libevent ~*
+app-admin/eselect ~*
+app-crypt/chntpw ~*
+sys-block/gpart ~*
+sys-libs/libstdc++-v3 ~*
+net-misc/ethercard-diag ~*
+app-admin/eselect-opengl ~*
+app-antivirus/clamav ~*
+app-shells/ksh ~*
+app-arch/rzip ~*
+sys-block/lsiutil ~*
+sys-libs/openipmi ~*
+app-forensics/foremost ~*
+app-backup/duplicity ~*
+sys-fs/diskdev_cmds ~*
+sys-block/open-iscsi ~*
+sys-block/iscsitarget ~*
+sys-boot/grub **
+sys-boot/syslinux ~*
+app-admin/eselect-news ~*
+sys-apps/lm_sensors ~*
+sys-block/scsiadd ~*
+sys-apps/gdisk ~*
+app-arch/pbzip2 ~*
+app-arch/lzip ~*
+app-arch/pigz ~*
+sys-fs/mtools ~*
+sys-apps/flashrom ~*
+sys-fs/dd-rhelp ~*
+x11-wm/jwm ~*
+sys-fs/lde ~*
+
+# kernel related packages
+sys-kernel/gentoo-sources ~*
+sys-kernel/linux-headers ~*
+app-accessibility/speakup ~*
+sys-kernel/linux-firmware ~*
+sys-kernel/genkernel ~*
+
+# disk and filesystems
+=sys-libs/e2fsprogs-libs-1.41.10* ~*
+=sys-fs/e2fsprogs-1.41.10* ~*
+=sys-cluster/drbd-kernel-8.3* ~*
+=sys-block/partimage-0.6.8* ~*
+=sys-fs/dmraid-1.0.0_rc16* ~*
+=sys-fs/mdadm-3.0* ~*
+=sys-fs/mdadm-3.1* ~*
+=sys-cluster/drbd-8.3* ~*
+=sys-fs/zfs-fuse-0.6.0* ~*
+=app-arch/dump-0.4.42* ~*
+=sys-fs/xfsprogs-3.0.3* ~*
+=sys-fs/xfsdump-3.0.1* ~*
+=sys-fs/fuse-2.8.1* ~*
+=sys-apps/parted-2.2* ~*
+sys-fs/fsarchiver ~*
+app-benchmarks/bonnie++ ~*
+app-admin/testdisk ~*
+app-crypt/truecrypt ~*
+sys-fs/btrfs-progs ~*
+sys-fs/reiserfsprogs ~*
+sys-fs/reiser4progs ~*
+sys-fs/cowloop ~*
+sys-fs/ntfs3g ~*
+
+# Wireless drivers
+net-wireless/ndiswrapper ~*
+net-wireless/b43-fwcutter ~*
+net-wireless/bcm43xx-fwcutter ~*
+net-wireless/atmel-firmware ~*
+net-wireless/madwifi-ng ~*
+net-wireless/madwifi-ng-tools ~*
+net-wireless/rt61-firmware ~*
+net-wireless/rt73-firmware ~*
+net-wireless/broadcom-sta ~*
+net-wireless/acx ~*
+

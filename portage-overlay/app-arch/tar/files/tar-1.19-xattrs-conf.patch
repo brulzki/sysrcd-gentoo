@@ -1,0 +1,799 @@
+diff -urNp tar-1.22-orig/config.hin tar-1.22/config.hin
+--- tar-1.22-orig/config.hin	2009-03-05 08:08:07.000000000 +0100
++++ tar-1.22/config.hin	2009-03-05 09:57:06.000000000 +0100
+@@ -131,6 +131,9 @@
+    */
+ #undef HAVE_ALLOCA_H
+ 
++/* Define to 1 if you have the <attr/xattr.h> header file. */
++#undef HAVE_ATTR_XATTR_H
++
+ /* Define to 1 if you have the `btowc' function. */
+ #undef HAVE_BTOWC
+ 
+@@ -372,12 +375,21 @@
+ /* Define to 1 if you have the <features.h> header file. */
+ #undef HAVE_FEATURES_H
+ 
++/* Define to 1 if you have the `fgetxattr' function. */
++#undef HAVE_FGETXATTR
++
++/* Define to 1 if you have the `flistxattr' function. */
++#undef HAVE_FLISTXATTR
++
+ /* Define to 1 if you have the <float.h> header file. */
+ #undef HAVE_FLOAT_H
+ 
+ /* Define to 1 if you have the `flockfile' function. */
+ #undef HAVE_FLOCKFILE
+ 
++/* Define to 1 if you have the `fsetxattr' function. */
++#undef HAVE_FSETXATTR
++
+ /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
+ #undef HAVE_FSEEKO
+ 
+@@ -423,6 +435,9 @@
+ /* Define to 1 if you have the `gettimeofday' function. */
+ #undef HAVE_GETTIMEOFDAY
+ 
++/* Define to 1 if you have the `getxattr' function. */
++#undef HAVE_GETXATTR
++
+ /* Define to 1 if you have the <grp.h> header file. */
+ #undef HAVE_GRP_H
+ 
+@@ -468,15 +483,30 @@
+ /* Define to 1 if you have the `lchown' function. */
+ #undef HAVE_LCHOWN
+ 
++/* Define to 1 if you have the `lgetxattr' function. */
++#undef HAVE_LGETXATTR
++
++/* Define to 1 if you have the `acl' library (-lacl). */
++#undef HAVE_LIBACL
++
+ /* Define to 1 if you have the <libintl.h> header file. */
+ #undef HAVE_LIBINTL_H
+ 
++/* Define to 1 if you have the `selinux' library (-lselinux). */
++#undef HAVE_LIBSELINUX
++
+ /* Define to 1 if you have the <linewrap.h> header file. */
+ #undef HAVE_LINEWRAP_H
+ 
+ /* Define to 1 if you have the <linux/fd.h> header file. */
+ #undef HAVE_LINUX_FD_H
+ 
++/* Define to 1 if you have the `listxattr' function. */
++#undef HAVE_LISTXATTR
++
++/* Define to 1 if you have the `llistxattr' function. */
++#undef HAVE_LLISTXATTR
++
+ /* Define to 1 if you have the <locale.h> header file. */
+ #undef HAVE_LOCALE_H
+ 
+@@ -486,6 +516,9 @@
+ /* Define to 1 if the system has the type `long long int'. */
+ #undef HAVE_LONG_LONG_INT
+ 
++/* Define to 1 if you have the `lsetxattr' function. */
++#undef HAVE_LSETXATTR
++
+ /* Define to 1 if you have the `lstat' function. */
+ #undef HAVE_LSTAT
+ 
+@@ -589,12 +622,18 @@
+ /* Define to 1 if you have the <search.h> header file. */
+ #undef HAVE_SEARCH_H
+ 
++/* Define to 1 if you have the <selinux/selinux.h> header file. */
++#undef HAVE_SELINUX_SELINUX_H
++
+ /* Define to 1 if you have the `setenv' function. */
+ #undef HAVE_SETENV
+ 
+ /* Define to 1 if you have the `setlocale' function. */
+ #undef HAVE_SETLOCALE
+ 
++/* Define to 1 if you have the `setxattr' function. */
++#undef HAVE_SETXATTR
++
+ /* Define to 1 if you have the <sgtty.h> header file. */
+ #undef HAVE_SGTTY_H
+ 
+@@ -734,6 +773,9 @@
+ /* Define to 1 if you have the <sysexits.h> header file. */
+ #undef HAVE_SYSEXITS_H
+ 
++/* Define to 1 if you have the <sys/acl.h> header file. */
++#undef HAVE_SYS_ACL_H
++
+ /* Define to 1 if you have the <sys/bitypes.h> header file. */
+ #undef HAVE_SYS_BITYPES_H
+ 
+@@ -891,6 +933,9 @@
+ /* Define if utimes works properly. */
+ #undef HAVE_WORKING_UTIMES
+ 
++/* Define if we have a working extended attributes */
++#undef HAVE_XATTRS
++
+ /* Define to 1 if the system has the type `_Bool'. */
+ #undef HAVE__BOOL
+ 
+diff -urNp tar-1.22-orig/configure tar-1.22/configure
+--- tar-1.22-orig/configure	2009-03-05 08:05:20.000000000 +0100
++++ tar-1.22/configure	2009-03-05 09:57:06.000000000 +0100
+@@ -2127,6 +2127,9 @@ ac_header_list="$ac_header_list sys/tpri
+ ac_header_list="$ac_header_list sys/tape.h"
+ ac_header_list="$ac_header_list unistd.h"
+ ac_header_list="$ac_header_list locale.h"
++ac_header_list="$ac_header_list selinux/selinux.h"
++ac_header_list="$ac_header_list attr/xattr.h"
++ac_header_list="$ac_header_list sys/acl.h"
+ ac_func_list="$ac_func_list flockfile"
+ ac_func_list="$ac_func_list funlockfile"
+ ac_header_list="$ac_header_list features.h"
+@@ -6022,7 +6025,14 @@ return strerror ();
+   return 0;
+ }
+ _ACEOF
+-rm -f conftest.$ac_objext conftest$ac_exeext
++for ac_lib in '' cposix; do
++  if test -z "$ac_lib"; then
++    ac_res="none required"
++  else
++    ac_res=-l$ac_lib
++    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
++  fi
++  rm -f conftest.$ac_objext conftest$ac_exeext
+ if { (ac_try="$ac_link"
+ case "(($ac_try" in
+   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+@@ -6040,25 +6050,35 @@ eval "echo \"\$as_me:$LINENO: $ac_try_ec
+ 	 test ! -s conftest.err
+        } && test -s conftest$ac_exeext &&
+        $as_test_x conftest$ac_exeext; then
+-  ac_cv_lib_cposix_strerror=yes
++  ac_cv_search_strerror=$ac_res
+ else
+   echo "$as_me: failed program was:" >&5
+ sed 's/^/| /' conftest.$ac_ext >&5
+ 
+-	ac_cv_lib_cposix_strerror=no
++
+ fi
+ 
+ rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+-      conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
++      conftest$ac_exeext
++  if test "${ac_cv_search_strerror+set}" = set; then
++  break
+ fi
+-{ echo "$as_me:$LINENO: result: $ac_cv_lib_cposix_strerror" >&5
+-echo "${ECHO_T}$ac_cv_lib_cposix_strerror" >&6; }
+-if test $ac_cv_lib_cposix_strerror = yes; then
+-  LIBS="$LIBS -lcposix"
++done
++if test "${ac_cv_search_strerror+set}" = set; then
++  :
++else
++  ac_cv_search_strerror=no
+ fi
++rm conftest.$ac_ext
++LIBS=$ac_func_search_save_LIBS
++fi
++{ echo "$as_me:$LINENO: result: $ac_cv_search_strerror" >&5
++echo "${ECHO_T}$ac_cv_search_strerror" >&6; }
++ac_res=$ac_cv_search_strerror
++if test "$ac_res" != no; then
++  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+ 
+-
++fi
+ 
+ { echo "$as_me:$LINENO: checking for inline" >&5
+ echo $ECHO_N "checking for inline... $ECHO_C" >&6; }
+@@ -38773,6 +38793,257 @@ _ACEOF
+ fi
+ done
+ 
++
++
++
++
++
++
++
++
++
++for ac_func in getxattr  fgetxattr  lgetxattr \
++               setxattr  fsetxattr  lsetxattr \
++               listxattr flistxattr llistxattr
++do
++as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
++{ echo "$as_me:$LINENO: checking for $ac_func" >&5
++echo $ECHO_N "checking for $ac_func... $ECHO_C" >&6; }
++if { as_var=$as_ac_var; eval "test \"\${$as_var+set}\" = set"; }; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++/* Define $ac_func to an innocuous variant, in case <limits.h> declares $ac_func.
++   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
++#define $ac_func innocuous_$ac_func
++
++/* System header to define __stub macros and hopefully few prototypes,
++    which can conflict with char $ac_func (); below.
++    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
++    <limits.h> exists even on freestanding compilers.  */
++
++#ifdef __STDC__
++# include <limits.h>
++#else
++# include <assert.h>
++#endif
++
++#undef $ac_func
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char $ac_func ();
++/* The GNU C library defines this for functions which it implements
++    to always fail with ENOSYS.  Some functions are actually named
++    something starting with __ and the normal name is an alias.  */
++#if defined __stub_$ac_func || defined __stub___$ac_func
++choke me
++#endif
++
++int
++main ()
++{
++return $ac_func ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext &&
++       $as_test_x conftest$ac_exeext; then
++  eval "$as_ac_var=yes"
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	eval "$as_ac_var=no"
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++fi
++ac_res=`eval echo '${'$as_ac_var'}'`
++	       { echo "$as_me:$LINENO: result: $ac_res" >&5
++echo "${ECHO_T}$ac_res" >&6; }
++if test `eval echo '${'$as_ac_var'}'` = yes; then
++  cat >>confdefs.h <<_ACEOF
++#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
++_ACEOF
++
++cat >>confdefs.h <<\_ACEOF
++#define HAVE_XATTRS
++_ACEOF
++
++fi
++done
++
++
++{ echo "$as_me:$LINENO: checking for getfilecon in -lselinux" >&5
++echo $ECHO_N "checking for getfilecon in -lselinux... $ECHO_C" >&6; }
++if test "${ac_cv_lib_selinux_getfilecon+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-lselinux  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char getfilecon ();
++int
++main ()
++{
++return getfilecon ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext &&
++       $as_test_x conftest$ac_exeext; then
++  ac_cv_lib_selinux_getfilecon=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_lib_selinux_getfilecon=no
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++LIBS=$ac_check_lib_save_LIBS
++fi
++{ echo "$as_me:$LINENO: result: $ac_cv_lib_selinux_getfilecon" >&5
++echo "${ECHO_T}$ac_cv_lib_selinux_getfilecon" >&6; }
++if test $ac_cv_lib_selinux_getfilecon = yes; then
++  cat >>confdefs.h <<_ACEOF
++#define HAVE_LIBSELINUX 1
++_ACEOF
++
++  LIBS="-lselinux $LIBS"
++
++fi
++
++
++{ echo "$as_me:$LINENO: checking for acl_get_fd in -lacl" >&5
++echo $ECHO_N "checking for acl_get_fd in -lacl... $ECHO_C" >&6; }
++if test "${ac_cv_lib_acl_acl_get_fd+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-lacl  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++
++/* Override any GCC internal prototype to avoid an error.
++   Use char because int might match the return type of a GCC
++   builtin and then its argument prototype would still apply.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++char acl_get_fd ();
++int
++main ()
++{
++return acl_get_fd ();
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_link") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest$ac_exeext &&
++       $as_test_x conftest$ac_exeext; then
++  ac_cv_lib_acl_acl_get_fd=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_cv_lib_acl_acl_get_fd=no
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
++      conftest$ac_exeext conftest.$ac_ext
++LIBS=$ac_check_lib_save_LIBS
++fi
++{ echo "$as_me:$LINENO: result: $ac_cv_lib_acl_acl_get_fd" >&5
++echo "${ECHO_T}$ac_cv_lib_acl_acl_get_fd" >&6; }
++if test $ac_cv_lib_acl_acl_get_fd = yes; then
++  cat >>confdefs.h <<_ACEOF
++#define HAVE_LIBACL 1
++_ACEOF
++
++  LIBS="-lacl $LIBS"
++
++fi
++
++
+ { echo "$as_me:$LINENO: checking whether getgrgid is declared" >&5
+ echo $ECHO_N "checking whether getgrgid is declared... $ECHO_C" >&6; }
+ if test "${ac_cv_have_decl_getgrgid+set}" = set; then
+@@ -40571,6 +40842,296 @@ fi
+ 
+ done
+ 
++
++for ac_header in selinux/selinux.h
++do
++as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  { echo "$as_me:$LINENO: checking for $ac_header" >&5
++echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++fi
++ac_res=`eval echo '${'$as_ac_Header'}'`
++	       { echo "$as_me:$LINENO: result: $ac_res" >&5
++echo "${ECHO_T}$ac_res" >&6; }
++else
++  # Is the header compilable?
++{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
++echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++$ac_includes_default
++#include <$ac_header>
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  ac_header_compiler=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_header_compiler=no
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
++echo "${ECHO_T}$ac_header_compiler" >&6; }
++
++# Is the header present?
++{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
++echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++#include <$ac_header>
++_ACEOF
++if { (ac_try="$ac_cpp conftest.$ac_ext"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } >/dev/null && {
++	 test -z "$ac_c_preproc_warn_flag$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       }; then
++  ac_header_preproc=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++  ac_header_preproc=no
++fi
++
++rm -f conftest.err conftest.$ac_ext
++{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
++echo "${ECHO_T}$ac_header_preproc" >&6; }
++
++# So?  What about this header?
++case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
++  yes:no: )
++    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
++echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
++echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
++    ac_header_preproc=yes
++    ;;
++  no:yes:* )
++    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
++echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
++echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
++echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
++echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
++echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
++echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
++    ( cat <<\_ASBOX
++## ------------------------------ ##
++## Report this to bug-tar@gnu.org ##
++## ------------------------------ ##
++_ASBOX
++     ) | sed "s/^/$as_me: WARNING:     /" >&2
++    ;;
++esac
++{ echo "$as_me:$LINENO: checking for $ac_header" >&5
++echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  eval "$as_ac_Header=\$ac_header_preproc"
++fi
++ac_res=`eval echo '${'$as_ac_Header'}'`
++	       { echo "$as_me:$LINENO: result: $ac_res" >&5
++echo "${ECHO_T}$ac_res" >&6; }
++
++fi
++if test `eval echo '${'$as_ac_Header'}'` = yes; then
++  cat >>confdefs.h <<_ACEOF
++#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
++_ACEOF
++
++fi
++
++done
++
++
++for ac_header in attr/xattr.h
++do
++as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  { echo "$as_me:$LINENO: checking for $ac_header" >&5
++echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++fi
++ac_res=`eval echo '${'$as_ac_Header'}'`
++	       { echo "$as_me:$LINENO: result: $ac_res" >&5
++echo "${ECHO_T}$ac_res" >&6; }
++else
++  # Is the header compilable?
++{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
++echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++$ac_includes_default
++#include <$ac_header>
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  ac_header_compiler=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	ac_header_compiler=no
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
++echo "${ECHO_T}$ac_header_compiler" >&6; }
++
++# Is the header present?
++{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
++echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
++cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++#include <$ac_header>
++_ACEOF
++if { (ac_try="$ac_cpp conftest.$ac_ext"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
++  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } >/dev/null && {
++	 test -z "$ac_c_preproc_warn_flag$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       }; then
++  ac_header_preproc=yes
++else
++  echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++  ac_header_preproc=no
++fi
++
++rm -f conftest.err conftest.$ac_ext
++{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
++echo "${ECHO_T}$ac_header_preproc" >&6; }
++
++# So?  What about this header?
++case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
++  yes:no: )
++    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
++echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
++echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
++    ac_header_preproc=yes
++    ;;
++  no:yes:* )
++    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
++echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
++echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
++echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
++echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
++echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
++    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
++echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
++    ( cat <<\_ASBOX
++## ------------------------------ ##
++## Report this to bug-tar@gnu.org ##
++## ------------------------------ ##
++_ASBOX
++     ) | sed "s/^/$as_me: WARNING:     /" >&2
++    ;;
++esac
++{ echo "$as_me:$LINENO: checking for $ac_header" >&5
++echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
++if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  eval "$as_ac_Header=\$ac_header_preproc"
++fi
++ac_res=`eval echo '${'$as_ac_Header'}'`
++	       { echo "$as_me:$LINENO: result: $ac_res" >&5
++echo "${ECHO_T}$ac_res" >&6; }
++
++fi
++if test `eval echo '${'$as_ac_Header'}'` = yes; then
++  cat >>confdefs.h <<_ACEOF
++#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
++_ACEOF
++
++fi
++
++done
++
+ { echo "$as_me:$LINENO: checking for iconv_t" >&5
+ echo $ECHO_N "checking for iconv_t... $ECHO_C" >&6; }
+ if test "${ac_cv_type_iconv_t+set}" = set; then
+diff -urNp tar-1.22-orig/src/Makefile.in tar-1.22/src/Makefile.in
+--- tar-1.22-orig/src/Makefile.in	2009-03-05 08:05:26.000000000 +0100
++++ tar-1.22/src/Makefile.in	2009-03-05 09:57:06.000000000 +0100
+@@ -143,7 +143,8 @@ am_tar_OBJECTS = buffer.$(OBJEXT) checkp
+ 	extract.$(OBJEXT) xheader.$(OBJEXT) incremen.$(OBJEXT) \
+ 	list.$(OBJEXT) misc.$(OBJEXT) names.$(OBJEXT) sparse.$(OBJEXT) \
+ 	suffix.$(OBJEXT) system.$(OBJEXT) tar.$(OBJEXT) \
+-	transform.$(OBJEXT) update.$(OBJEXT) utf8.$(OBJEXT)
++	transform.$(OBJEXT) update.$(OBJEXT) utf8.$(OBJEXT) \
++	xattrs.$(OBJEXT)
+ tar_OBJECTS = $(am_tar_OBJECTS)
+ am__DEPENDENCIES_1 =
+ am__DEPENDENCIES_2 = ../lib/libtar.a $(am__DEPENDENCIES_1) \
+@@ -653,7 +654,7 @@ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-noinst_HEADERS = arith.h common.h tar.h
++noinst_HEADERS = arith.h common.h tar.h xattrs.h
+ tar_SOURCES = \
+  buffer.c\
+  checkpoint.c\
+@@ -672,11 +673,12 @@ tar_SOURCES = \
+  tar.c\
+  transform.c\
+  update.c\
+- utf8.c
++ utf8.c\
++ xattrs.c
+ 
+ INCLUDES = -I$(top_srcdir)/lib -I../ -I../lib
+ LDADD = ../lib/libtar.a $(LIBINTL) $(LIBICONV)
+-tar_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
++tar_LDADD = $(LIBS) $(LDADD) $(LIB_CLOCK_GETTIME)
+ all: all-am
+ 
+ .SUFFIXES:
+@@ -776,6 +778,7 @@ distclean-compile:
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/update.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utf8.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xattrs.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xheader.Po@am__quote@
+ 
+ .c.o:
