@@ -123,7 +123,7 @@ sysresccd_chooseKeymap()
 
 sysresccd_terminal()
 {
-	# set terminal in utf8 mode
+	/bin/consolechars -f /usr/share/consolefonts/ter-v16b.psf
 	kbd_mode -u
 	#/bin/consolechars -f /lat0-sun16.psf
 	#dumpkeys | loadkeys --unicode
@@ -321,6 +321,9 @@ sysresccd_udev_stop()
 sysresccd_netconfig()
 {
 	good_msg "Performing the network configuration..."
+
+	# configure the loopback network interface anyway
+	/sbin/ifconfig lo 127.0.0.1
 
 	# ---- force dhcp if booting via pxe and no static configuration specified
 	if [ "${NETCONFIG}" = '1' ] && [ -z "${SETETHX}" ]
@@ -1041,6 +1044,21 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 			rm -f "${NEWROOT}/etc/runlevels/default/${initscr}"
 		done
 	fi
+
+	# blacklist modules passed to "noload=mod1,mod2,mod3"
+	for modname in ${BLACKLIST}
+	do
+		echo "blacklist ${modname}" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
+	done
+
+	# prevent fbcon module from loading (console could become unusable)
+	echo "blacklist fbcon" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
+
+	# manage services
+	chroot ${NEWROOT} /sbin/rc-update del spind default >/dev/null 2>&1
+	chroot ${NEWROOT} /sbin/rc-update del autoconfig default >/dev/null 2>&1
+	rm -f ${NEWROOT}/etc/init.d/crypto-loop
+	rm -f ${NEWROOT}/etc/init.d/drbd
 }
 
 sysresccd_stage3_rootsys() # mount the root partition on ${SQUASHFSMNT}
@@ -1397,15 +1415,17 @@ CONSOLE='/dev/console'
 CACHEDIR='/cache'
 CACHESIZE='size=512m'
 
+# Start with an empty list
+BLKDEVICES=""
+# Loopback devices (used for isoloop=xxx)
+BLKDEVICES="$BLKDEVICES /dev/loop0"
 # CDROM DEVICES
-BLKDEVICES="/dev/cdroms/* /dev/ide/cd/* /dev/sr*"
+BLKDEVICES="$BLKDEVICES /dev/cdroms/* /dev/ide/cd/* /dev/sr*"
 # USB Keychain/Storage
 BLKDEVICES="$BLKDEVICES /dev/sd*"
 # IDE devices
 BLKDEVICES="$BLKDEVICES /dev/hd*"
-# Loopback devices (used for isoloop=xxx)
-BLKDEVICES="$BLKDEVICES /dev/loop* /dev/loop/*"
-# USB using the USB Block Driver
+# USB Block Driver
 BLKDEVICES="$BLKDEVICES /dev/ubd* /dev/ubd/*"
 # iSeries devices
 BLKDEVICES="$BLKDEVICES /dev/iseries/vcd*"

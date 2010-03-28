@@ -23,7 +23,7 @@ chsh -s /bin/zsh root
 find /usr/lib -name "*.py?" -exec rm -f {} \; >/dev/null 2>&1
 
 # remove warning from clock service
-sed -i -e 's:#TIMEZONE="Factory":TIMEZONE="Europe/London":g' /etc/conf.d/clock
+[ -f /etc/conf.d/clock ] && sed -i -e 's:#TIMEZONE="Factory":TIMEZONE="Europe/London":g' /etc/conf.d/clock
 
 # remove warning from freshclam when clamd not running
 sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
@@ -36,7 +36,7 @@ sed -i -e 's/DHCP="yes"/DHCP="no"/' /etc/init.d/autoconfig
 sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF "speakup=" \&\& speakupopt=" -f" ; \[ -x /usr/sbin/hwsetup \] \&\& hwsetup ${speakupopt}!g' /etc/init.d/autoconfig
 
 # disable netplug
-sed -i -e 's/"netplugd"//' /etc/init.d/net.lo
+[ -f /etc/init.d/net.lo ] && sed -i -e 's/"netplugd"//' /etc/init.d/net.lo
 
 # make ssh-keygen silent in the sshd initscript
 sed -i -e 's!/usr/bin/ssh-keygen!/usr/bin/ssh-keygen -q!g' /etc/init.d/sshd
@@ -61,8 +61,8 @@ chown clamav:clamav /var/lib/clamav
 chown clamav:clamav /var/lib/clamav/*
 
 # remove warnings about files with a modification time in the future!
-sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
-sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /sbin/depscan.sh
+[ -f /etc/init.d/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
+[ -f /sbin/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /sbin/depscan.sh
 
 # don't overwrite /proc/sys/kernel/printk in /etc/init.d/autoconfig
 # http://www.sysresccd.org/forums/viewtopic.php?p=5800
@@ -174,13 +174,74 @@ ln -s ../usr/portage/profiles/default/linux/x86/10.0 /etc/make.profile
 echo "--> locate -u"
 locate -u >/dev/null 2>&1
 
-# create the apropos / whatis database
-echo "--> makewhatis"
-makewhatis >/dev/null 2>&1
+# create the apropos / whatis database (time consuming: only for final releases)
+if ! grep -q beta /root/version
+then
+	echo "--> makewhatis"
+	makewhatis >/dev/null 2>&1
+fi
 
 # create the locales:
 localedef -i /usr/share/i18n/locales/en_US -f UTF-8 /usr/lib/locale/en_US.utf8
 localedef -i /usr/share/i18n/locales/en_US -f ISO-8859-1 /usr/lib/locale/en_US
 localedef -i /usr/share/i18n/locales/de_DE -f ISO-8859-1 /usr/lib/locale/de_DE
 localedef -i /usr/share/i18n/locales/fr_FR -f ISO-8859-1 /usr/lib/locale/fr_FR
+
+# ----- OpenRC specific stuff
+if [ -d /usr/share/openrc ]
+then
+	# enable services
+	/sbin/rc-update add sshd default
+	/sbin/rc-update add sysresccd default
+	/sbin/rc-update add autorun default
+	/sbin/rc-update add netconfig2 default
+	/sbin/rc-update add tigervnc default
+	/sbin/rc-update add lvm boot
+
+	# remove services
+	/sbin/rc-update del urandom boot
+	/sbin/rc-update del consolefont boot
+	/sbin/rc-update del termencoding boot
+	/sbin/rc-update del keymaps boot
+	/sbin/rc-update del bootmisc boot
+	/sbin/rc-update del root boot
+	/sbin/rc-update del modules boot
+	/sbin/rc-update del netmount default
+	/sbin/rc-update del sysctl boot
+	/sbin/rc-update del local default
+
+	# remove services which don't make sense on a livecd
+	rm -f /etc/init.d/root
+	rm -f /etc/init.d/checkfs
+	rm -f /etc/init.d/checkroot
+	rm -f /etc/init.d/fsck
+
+	# remove network servics (replaced with netconfig2)
+	rm -f /etc/init.d/net.*
+	rm -f /etc/init.d/network
+	rm -f /etc/init.d/netmount
+	rm -f /etc/init.d/staticroute
+
+	# don't unmount /livemnt/* filesystems in localmount and mount-ro
+	sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/localmount
+	sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/mount-ro
+	sed -i -e "s!# Mount local filesystems!return 0 #!" /etc/init.d/localmount
+
+	# fix dependencies
+	sed -i -e 's!need root!!g' /etc/init.d/mtab
+	sed -i -e 's!need fsck!!g' /etc/init.d/localmount
+	sed -i -e 's!need hald!use hald!g' /etc/init.d/xdm
+
+	# unpack firmwares
+	if [ -e /lib/firmware.tar.bz2 ]
+	then
+		tar xfj /lib/firmware.tar.bz2 -C /lib/firmware
+		rm -f /lib/firmware.tar.bz2
+	fi
+
+	# no login in /etc/inittab
+	sed -i -e 's!agetty 38400!agetty -nl /bin/bashlogin 38400!g' ${NEWROOT}/etc/inittab
+fi
+
+echo "--> end of $0"
 

@@ -1,31 +1,27 @@
 # ------ SystemRescueCd package.keywords ------
 
 # System packages
+=sys-apps/baselayout-2.0* ~*
 =sys-devel/gcc-4.4* ~*
 =sys-libs/glibc-2.11* ~*
+=sys-apps/openrc-0.6* ~*
 
 # Misc packages
-=sys-apps/net-tools-1.60_p2009* ~*
-=sys-apps/util-linux-2.17.1* ~*
+=x11-drivers/xf86-video-intel-2.7* ~*
+=sys-block/open-iscsi-2.0.871* ~*
 =www-client/firefox-bin-3.6* ~*
 =sys-block/mbuffer-20090113 ~*
-=sys-fs/udftools-1.0.0b-r9 ~*
+=sys-apps/util-linux-2.17* ~*
 =net-misc/openvpn-2.1.0* ~*
-=app-portage/eix-0.19* ~*
-=sys-libs/slang-2.2.1* ~*
-=sys-fs/ddrescue-1.11* ~*
+=sys-fs/lvm2-2.02.56* ~*
 =app-arch/p7zip-9.0* ~*
-=app-misc/mc-4.7.0* ~*
-dev-libs/libevent ~*
 app-admin/eselect ~*
 app-crypt/chntpw ~*
-sys-block/gpart ~*
 sys-libs/libstdc++-v3 ~*
 net-misc/ethercard-diag ~*
 app-admin/eselect-opengl ~*
 app-antivirus/clamav ~*
 app-shells/ksh ~*
-app-arch/rzip ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 app-forensics/foremost ~*
@@ -56,11 +52,12 @@ sys-kernel/linux-firmware ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-libs/e2fsprogs-libs-1.41.10* ~*
-=sys-fs/e2fsprogs-1.41.10* ~*
+=sys-libs/e2fsprogs-libs-1.41.11* ~*
+=sys-fs/e2fsprogs-1.41.11* ~*
 =sys-cluster/drbd-kernel-8.3* ~*
 =sys-block/partimage-0.6.8* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
+=sys-fs/xfsprogs-2.10* ~*
 =sys-fs/mdadm-3.0* ~*
 =sys-fs/mdadm-3.1* ~*
 =sys-cluster/drbd-8.3* ~*

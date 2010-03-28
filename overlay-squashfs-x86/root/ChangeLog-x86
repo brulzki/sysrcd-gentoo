@@ -6,14 +6,23 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
-1.5.0 (2010-03-22)
+1.5.1 (2010-03-29)
 -----------------------------------------------------------------------------
-* initramfs: udevd used to load kernel modules that corresponds to the hardware
-* initramfs: /init bootscript rewritten ("rdinit=/initold" to use the old one)
-* initramfs: added firmwares required for ethernet and disk controller devices
-* initramfs: ability to boot systems with selinux enabled using root=/dev/xxx
-* initramfs: kernel modules are gzipped to save memory used by the initramfs
-* initramfs: print error when chrooting to a 64bit system from a 32bit kernel
+* Switched to OpenRC and optimized services to reduce boot time
+* Reverted blkpg in parted to avoid error ("failed to re-read the partition table")
+* New kernel configuration for rescuecd / rescue64
+* Fixed problems with the intel Xorg driver (x11-drivers/xf86-video-intel)
+* Updated sys-fs/e2fsprogs to 1.41.11 (ext2/ext3/ext4 filesystem tools)
+
+-----------------------------------------------------------------------------
+1.5.0 (2010-03-18)
+-----------------------------------------------------------------------------
+* Initramfs: udevd used to load kernel modules that corresponds to the hardware
+* Initramfs: /init bootscript rewritten ("rdinit=/initold" to use the old one)
+* Initramfs: added firmwares required for ethernet and disk controller devices
+* Initramfs: ability to boot systems with selinux enabled using root=/dev/xxx
+* Initramfs: kernel modules are gzipped to save memory used by the initramfs
+* Initramfs: print error when chrooting to a 64bit system from a 32bit kernel
 * Option for network boot changed to "netboot=proto://" (http, tftp, nfs, nbd)
 * Updated the standard kernels (rescuecd and rescue64) to linux-2.6.32.10
 * Updated util-linux to 2.17.1 (adds support of harddrives with 4k blocks)

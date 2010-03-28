@@ -6,6 +6,7 @@ depend()
 {
 	before xdm autorun
 	after sysresccd
+	provide net
 }
 
 log_netconfig2()
@@ -21,7 +22,7 @@ print_and_log_netconfig2()
 
 start()
 {
-	ebegin "Performing the network configuration..."
+	ebegin "Performing network configuration"
 
 	CMDLINE="$(cat /proc/cmdline)"
 

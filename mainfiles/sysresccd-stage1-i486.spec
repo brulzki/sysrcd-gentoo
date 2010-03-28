@@ -3,8 +3,8 @@ version_stamp: 1.5
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100315
-source_subpath: default/stage4-i386-20100306-01
+snapshot: 20100327
+source_subpath: default/stage4-i386-20100321-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -176,7 +176,6 @@ livecd/packages:
 	net-wireless/wpa_supplicant
 	sys-apps/acl
 	sys-apps/attr
-	sys-apps/baselayout
 	sys-apps/cciss_vol_status
 	sys-apps/coreutils
 	sys-apps/dcfldd
@@ -207,6 +206,7 @@ livecd/packages:
 	sys-apps/miscfiles
 	sys-apps/net-tools
 	sys-apps/netplug
+	sys-apps/openrc
 	sys-apps/parted
 	sys-apps/pciutils
 	sys-apps/pcmciautils

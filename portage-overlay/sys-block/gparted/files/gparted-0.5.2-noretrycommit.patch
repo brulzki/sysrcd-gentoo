@@ -1,0 +1,20 @@
+diff -urN gparted-0.5.2/src/GParted_Core.cc gparted-0.5.2-noretrycommit/src/GParted_Core.cc
+--- gparted-0.5.2/src/GParted_Core.cc	2010-03-08 16:22:52.000000000 +0000
++++ gparted-0.5.2-noretrycommit/src/GParted_Core.cc	2010-03-27 10:17:37.000000000 +0000
+@@ -2783,16 +2783,6 @@
+ 	else
+ 	{
+ 		succes = ped_disk_commit_to_os( lp_disk ) ;
+-#ifndef HAVE_LIBPARTED_2_2_0_PLUS
+-		//Work around to try to alleviate problems caused by
+-		//  bug #604298 - Failure to inform kernel of partition changes
+-		//  If not successful the first time, try one more time.
+-		if ( ! succes )
+-		{
+-			sleep( 1 ) ;
+-			succes = ped_disk_commit_to_os( lp_disk ) ;
+-		}
+-#endif
+ 	}
+ 
+ 	settle_device( timeout ) ;

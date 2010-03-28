@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.0"
+VERSION="1.5.1"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.0" 
+VOLNAME="sysrcd-1.5.1"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src

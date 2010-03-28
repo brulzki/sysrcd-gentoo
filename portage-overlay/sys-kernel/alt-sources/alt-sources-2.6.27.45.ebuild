@@ -26,6 +26,6 @@ src_unpack()
 	epatch ${FILESDIR}/alt-sources-2.6.27_06-ext4.patch.bz2 || die "ext4 patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.27_07-atl2.patch.bz2 || die "alt2 patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .45-alt150/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .45-alt151/" Makefile
 }
 

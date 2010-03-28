@@ -35,6 +35,7 @@ DEPEND="${common_depends}
 src_compile() 
 {
 	cd "${S}"
+	#epatch "${FILESDIR}/gparted-0.5.2-noretrycommit.patch"
 	econf --disable-scrollkeeper --disable-doc
 	emake all || die "make failed"
 }

@@ -25,6 +25,6 @@ src_unpack()
 	epatch ${FILESDIR}/std-sources-2.6.32_05-reiser4.patch.bz2 || die "std-sources reiser4 patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_06-loopaes.patch.bz2 || die "std-sources loopaes patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .10-std150/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .10-std151/" Makefile
 }
 

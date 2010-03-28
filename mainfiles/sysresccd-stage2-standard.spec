@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100315
+snapshot: 20100327
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -25,53 +25,51 @@ livecd/root_overlay: /worksrc/sysresccd-bin/overlay-squashfs-x86 /worksrc/sysres
 livecd/devmanager: udev
 livecd/users:
 livecd/volid: sysresccd
-livecd/rcadd: mkxf86config|default sshd|default portmap|default sysresccd|default autorun|default netconfig2|default tigervnc|default
-livecd/rcdel: nfsmount|default metalog|default consolefont|boot termencoding|boot spind|default lvm|default mdadm|default
 
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std150.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std151.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
-	app-accessibility/speakup
-	app-arch/tar
-	app-crypt/truecrypt
-	net-dialup/speedtouch-usb
-	net-dialup/rp-pppoe
-	net-dialup/hcfpcimodem
-	net-dialup/hsfmodem
-	net-dialup/globespan-adsl
-	net-misc/openswan
-	net-wireless/bcm43xx-fwcutter
-	net-wireless/b43-fwcutter
-	net-wireless/ipw2100-firmware
-	net-wireless/ipw2200-firmware
-	net-wireless/zd1201-firmware
-	net-wireless/zd1211-firmware
-	net-wireless/prism54-firmware
-	net-wireless/acx-firmware
-	net-wireless/madwifi-ng-tools
-	sys-apps/sysresccd-scripts
-	sys-block/aic94xx-firmware
-	sys-kernel/linux-firmware
-	sys-fs/lufs
-	sys-fs/lufis
-	sys-fs/sshfs-fuse
-	x11-wm/jwm
-	sys-block/iscsitarget
-	sys-cluster/drbd
-	sys-cluster/drbd-kernel
-	net-wireless/atmel-firmware
-	net-wireless/ndiswrapper
-	sys-apps/lm_sensors
-	=sys-boot/grub-1.98
-	net-wireless/broadcom-sta
-	sys-fs/zfs-fuse 
-	#sys-fs/cowloop
-	#sys-block/open-iscsi
-	#=sys-block/partimage-0.6.9_beta5
+        app-accessibility/speakup
+        app-arch/tar
+        app-crypt/truecrypt
+        net-dialup/speedtouch-usb
+        net-dialup/rp-pppoe
+        net-dialup/hcfpcimodem
+        net-dialup/hsfmodem
+        net-dialup/globespan-adsl
+        net-misc/openswan
+        net-wireless/bcm43xx-fwcutter
+        net-wireless/b43-fwcutter
+        net-wireless/ipw2100-firmware
+        net-wireless/ipw2200-firmware
+        net-wireless/zd1201-firmware
+        net-wireless/zd1211-firmware
+        net-wireless/prism54-firmware
+        net-wireless/acx-firmware
+        net-wireless/madwifi-ng-tools
+        sys-apps/sysresccd-scripts
+        sys-block/aic94xx-firmware
+        sys-kernel/linux-firmware
+        sys-fs/lufs
+        sys-fs/lufis
+        sys-fs/sshfs-fuse
+        x11-wm/jwm
+        sys-block/iscsitarget
+        sys-cluster/drbd
+        sys-cluster/drbd-kernel
+        net-wireless/atmel-firmware
+        net-wireless/ndiswrapper
+        sys-apps/lm_sensors
+        =sys-boot/grub-1.98
+        net-wireless/broadcom-sta
+        sys-block/open-iscsi
+        sys-fs/zfs-fuse
+        #=sys-block/partimage-0.6.9_beta5
+        #sys-fs/cowloop
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -112,7 +110,6 @@ livecd/unmerge:
 	dev-perl/module-build
 	dev-perl/yaml
 	perl-core/Scalar-List-Utils
-	media-libs/mesa
 	media-fonts/font-util
 	x11-apps/xclock
 	x11-apps/bdftopcf
@@ -163,8 +160,6 @@ livecd/unmerge:
 	app-text/docbook-xsl-stylesheets
 	app-text/docbook-xml-dtd
 	app-text/gnome-doc-utils
-	x11-apps/mesa-progs
-	media-libs/freeglut
 	app-admin/eselect-xvmc
 	dev-perl/Compress-Raw-Bzip2
 	dev-perl/IO-Compress-Bzip2
@@ -1655,7 +1650,7 @@ livecd/rm:
 	/usr/lib/groff
 	/usr/lib/xorg/modules/extensions
 	/usr/lib/xorg/modules/multimedia
-	/usr/lib/{libGL*,libIDL*}
+	/usr/lib/libIDL*
 	/usr/lib/gtkmm*
 	/usr/sbin/{ntpd,swat}
 	/usr/share/fonts/75dpi/{a*,b*,c*,d*,e*,f*,g*,i*,j*,k*,li*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
@@ -1677,7 +1672,7 @@ livecd/rm:
 	/usr/share/fonts/misc/{*ja*,*ko*,k14*}
 	/usr/share/i18n/charmaps/{GB18030.gz,EUC-TW.gz,CP949.gz,JOHAB.gz,GBK.gz,BIG5*,EUC*}
 	/usr/share/i18n/charmaps/{SHIFT*,ISO_10646.gz,GB2312.gz,WINDOWS-31J.gz}
-	/usr/lib/dri/*
+	/usr/lib/dri
 	/usr/share/ati/*
 	/opt/bin/amdcccle
 	/opt/bin/fglrxinfo

@@ -9,6 +9,7 @@
 >sys-kernel/linux-firmware-20090421
 
 # misc packages
+>=x11-drivers/xf86-video-intel-2.8.0
 <net-wireless/broadcom-sta-5.60.48.36
 >net-wireless/broadcom-sta-5.60.48.36
 >app-admin/testdisk-6.11
@@ -18,7 +19,6 @@
 >=app-text/poppler-bindings-0.8.8
 <sys-fs/dmraid-1.0.0_rc16
 <app-arch/tar-1.22-r1
-=sys-fs/xfsprogs-3.0.5*
 >=sys-apps/kbd-1.15
 sys-fs/device-mapper
 app-arch/lzma-utils
@@ -31,9 +31,7 @@ sys-apps/pcmcia-cs
 
 # fix problems
 =xfce-base/xfce4-panel-4.6.2
-=net-analyzer/nmap-5.21
 >=sys-devel/gettext-0.17-r1
->=x11-drivers/xf86-video-intel-2.7.0
+=net-analyzer/nmap-5.21
 >=sys-fs/mtools-4.0.0
->=sys-fs/udev-147
 
