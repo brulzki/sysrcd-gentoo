@@ -1,0 +1,99 @@
+default rescuecd
+append initrd=initram.igz
+timeout 300
+prompt 1
+display f1boot.msg
+F1 f1boot.msg
+F2 f2images.msg
+F3 f3params.msg
+F4 f4arun.msg
+F5 f5troubl.msg
+F6 f6pxe.msg
+F7 f7net.msg
+label rescue64
+  kernel rescue64
+  append initrd=initram.igz
+label altker32
+  kernel altker32
+  append initrd=initram.igz video=ofonly
+label altker64
+  kernel altker64
+  append initrd=initram.igz video=ofonly
+label vmlinuz2
+  kernel altker32
+  append initrd=initram.igz video=ofonly
+label vesa
+  kernel rescuecd
+  append initrd=initram.igz forcevesa
+label fr
+  kernel rescuecd
+  append initrd=initram.igz setkmap=fr
+label uk32
+  kernel rescuecd
+  append initrd=initram.igz setkmap=uk
+label uk64
+  kernel rescue64
+  append initrd=initram.igz setkmap=uk
+label us
+  kernel rescuecd
+  append initrd=initram.igz setkmap=us
+label nokeymap
+  kernel rescuecd
+  append initrd=initram.igz setkmap=us
+label minishell
+  kernel rescuecd
+  append initrd=initram.igz minishell=/bin/ash
+label rescuehd
+  kernel rescuecd
+  append init=/sbin/init
+label reschd32
+  kernel rescuecd
+  append init=/sbin/init
+label reschd64
+  kernel rescue64
+  append init=/sbin/init
+label memtest
+  kernel /bootdisk/memtestp
+  append -
+label freedos
+  kernel memdisk
+  append initrd=/bootdisk/freedos.img floppy
+label ranish
+  kernel memdisk
+  append initrd=/bootdisk/ranish.img floppy
+label aida
+  kernel memdisk
+  append initrd=/bootdisk/aida.img floppy
+label hdt
+  kernel memdisk
+  append initrd=/bootdisk/hdt.img floppy
+label ntpass
+  kernel /ntpasswd/vmlinuz
+  append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
+label ntpasswd
+  kernel /ntpasswd/vmlinuz
+  append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
+label gag
+  kernel memdisk
+  append initrd=/bootdisk/gag.img floppy
+label dban
+  kernel memdisk
+  append initrd=/bootdisk/dban.img floppy
+label mhdd
+  kernel memdisk
+  append initrd=/bootdisk/mhdd.img floppy
+label grubdisk
+  kernel memdisk
+  append initrd=/bootdisk/grubdisk.img floppy
+label netboot
+  kernel netboot
+  append -
+label disk1
+  localboot 0x80
+label disk2
+  localboot 0x81
+label floppy
+  localboot 0x00
+label nextboot
+  localboot -1
+

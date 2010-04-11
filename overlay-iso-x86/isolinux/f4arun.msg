@@ -1,5 +1,5 @@
  
-070FF107 | 0FF207 | 0FF307 | 0CF407 | 0FF507 | 0FF607 | 0FF707        0CSystemRescueCd07                09[autorun]07
+070FF107 | 0FF207 | 0FF307 | 0CF407 | 0FF507 | 0FF607 | 0FF707        0CSystemRescueCd07              09[autorun]07
 
 0CAutorun07 allows running your own shell scripts at system startup.
 

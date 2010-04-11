@@ -27,7 +27,7 @@ net-misc/rdesktop
 net-misc/tigervnc
 sys-apps/dbus
 sys-block/gparted
-www-client/mozilla-firefox-bin
+www-client/firefox-bin
 x11-apps/iceauth
 x11-apps/mkfontdir
 x11-apps/mkfontscale

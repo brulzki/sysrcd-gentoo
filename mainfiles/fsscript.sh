@@ -16,9 +16,6 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 # change the default shell
 chsh -s /bin/zsh root
 
-# remove .svn files
-#find / -name ".svn" -exec rm -rf {} \; >/dev/null 2>&1
-
 # Remove python precompiled files
 find /usr/lib -name "*.py?" -exec rm -f {} \; >/dev/null 2>&1
 
@@ -63,6 +60,7 @@ chown clamav:clamav /var/lib/clamav/*
 # remove warnings about files with a modification time in the future!
 [ -f /etc/init.d/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
 [ -f /sbin/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /sbin/depscan.sh
+[ -f /etc/init.d/savecache ] && sed -i -e 's!ewarn "WARNING: clock skew detected!#ewarn "WARNING: clock skew detected!g' /etc/init.d/savecache
 
 # don't overwrite /proc/sys/kernel/printk in /etc/init.d/autoconfig
 # http://www.sysresccd.org/forums/viewtopic.php?p=5800
@@ -191,12 +189,13 @@ localedef -i /usr/share/i18n/locales/fr_FR -f ISO-8859-1 /usr/lib/locale/fr_FR
 if [ -d /usr/share/openrc ]
 then
 	# enable services
+	/sbin/rc-update add lvm boot
 	/sbin/rc-update add sshd default
 	/sbin/rc-update add sysresccd default
 	/sbin/rc-update add autorun default
 	/sbin/rc-update add netconfig2 default
 	/sbin/rc-update add tigervnc default
-	/sbin/rc-update add lvm boot
+	/sbin/rc-update add dostartx default
 
 	# remove services
 	/sbin/rc-update del urandom boot

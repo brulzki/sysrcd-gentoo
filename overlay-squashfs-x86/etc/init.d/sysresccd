@@ -21,6 +21,9 @@ start()
 	# ---- create several directories
 	mkdir -p /var/cache/revdep-rebuild
 
+	# ---- disable screensaver in the console
+	setterm -blank 0 -powersave off
+
 	# ---- load the right keymap ----
 	keymap=$(grep '^XKEYBOARD=' /etc/sysconfig/keyboard 2>/dev/null | cut -d= -f2)
 	case "${keymap}" in
@@ -36,7 +39,6 @@ start()
 	[ -n "$(which mdadm)" ] && mdadm --auto-detect 2>&1
 	
 	# ---- change the root password if requested in cmdline ----
-	#[ -n "${newpass}" ] && ( echo root:${newpass} ) | chpasswd 1>/dev/null 2>&1
 	for curopt in ${CMDLINE}
 	do
 		if echo "${curopt}" | grep -q -E '^rootpass=[^ ]{1,32}$'
@@ -93,12 +95,11 @@ start()
 				displayopt="$(echo ${displayopt} | sed -e 's!^ !!g' | sed -e 's! $!!g')"
 			done
 			echo "DISPLAYS=\"${displayopt}\"" >> /etc/conf.d/tigervnc
-			#/etc/init.d/tigervnc start 
 		fi
 	done
 	
 	# ---- clean /etc/mtab ----
-	if cat /etc/mtab | grep -q -F 'tmpfs /newroot'
+	if grep -q -F 'tmpfs /newroot' /etc/mtab
 	then
 		rm -f /etc/mtab.bak
 		cp /etc/mtab /etc/mtab.bak

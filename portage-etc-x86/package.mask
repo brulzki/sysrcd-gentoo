@@ -9,15 +9,11 @@
 >sys-kernel/linux-firmware-20090421
 
 # misc packages
->=x11-drivers/xf86-video-intel-2.8.0
-<net-wireless/broadcom-sta-5.60.48.36
->net-wireless/broadcom-sta-5.60.48.36
+>=app-text/poppler-bindings-0.8.8
+<sys-fs/dmraid-1.0.0_rc16
 >app-admin/testdisk-6.11
 <sys-boot/grub-0.97-r9
 >sys-boot/grub-0.97-r9
->x11-drivers/ati-drivers-8.542
->=app-text/poppler-bindings-0.8.8
-<sys-fs/dmraid-1.0.0_rc16
 <app-arch/tar-1.22-r1
 >=sys-apps/kbd-1.15
 sys-fs/device-mapper
@@ -26,12 +22,23 @@ sys-apps/pcmcia-cs
 
 # modified packages
 >sys-fs/multipath-tools-0.4.8
->sys-fs/squashfs-tools-3.4
+>sys-fs/squashfs-tools-4.0
 >www-servers/thttpd-2.25b-r7
 
 # fix problems
-=xfce-base/xfce4-panel-4.6.2
->=sys-devel/gettext-0.17-r1
-=net-analyzer/nmap-5.21
+>=x11-drivers/xf86-video-intel-2.8.0
+>=x11-drivers/xf86-video-vmware-11.0
+>=x11-drivers/xf86-video-ati-6.12.6
+>=x11-drivers/xf86-video-nv-2.1.17
+>=xfce-base/xfce4-panel-4.6.2
+>=x11-base/xorg-server-1.7.0
+>=x11-base/xorg-drivers-1.7
+>=media-libs/mesa-7.6.0
+>=x11-libs/libXi-1.3.0
+>=x11-libs/libXt-1.0.8
 >=sys-fs/mtools-4.0.0
+
+#>=x11-libs/libXext-1.1.0
+#>=x11-libs/libXtst-1.1.0
+#>=x11-libs/libX11-1.3.0
 

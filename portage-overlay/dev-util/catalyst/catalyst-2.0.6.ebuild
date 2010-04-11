@@ -58,7 +58,7 @@ src_unpack() {
 		unpack ${A}
 		cd "${S}"
 	fi
-	cat "${FILESDIR}/catalyst-fd.patch" | patch -p1 || die "cannot apply patch"
+	epatch "${FILESDIR}/catalyst-2.0.6-sysresccd.patch" || die "patch failed"
 }
 
 src_install() {

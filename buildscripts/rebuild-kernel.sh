@@ -25,6 +25,8 @@ case ${imagename} in
 esac
 
 (cd /worksrc/sysresccd-src/mainfiles ; nice catalyst -a -f sysresccd-stage2-${imagename}.spec)
+echo "RESULT: $?"
+#[ $? -ne 0 ] && echo "ERROR: compilation failed" && exit 1
 
 targetdir="/worksrc/sysresccd-bin/overlay-squashfs-x86/${LIBDIR}/modules"
 rootkernel=$(ls -d /var/tmp/catalyst/builds/default/livecd-stage2-${ARCHNAME}-*-${KERTYPE}/isolinux)
@@ -35,9 +37,16 @@ echo "rootkernel=[${rootkernel}]"
 echo "rootmodule=[${rootmodule}]"
 echo "kerversion=[${rootmodule}]"
 
+if [ -z "${rootkernel}" ] || [ -z "${rootmodule}" ] || [ -z "${rootmodule}" ]
+then
+	echo "ERROR: invalid variables"
+	exit 1
+fi
+
 echo "cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin/kernels-x86/"
 cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin/kernels-x86/
 
+mkdir -p ${targetdir}
 echo "(cd ${rootmodule} ; tar cfj ${targetdir}/${kerversion}.tar.bz2 ${kerversion})"
 (cd ${rootmodule} ; tar cfj ${targetdir}/${kerversion}.tar.bz2 ${kerversion})
 

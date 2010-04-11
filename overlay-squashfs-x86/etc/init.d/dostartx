@@ -1,0 +1,31 @@
+#!/sbin/runscript
+
+DAEMON="/usr/bin/xinit"
+ARGS="/etc/X11/xinit/xinitrc"
+PIDFILE="/var/run/dostartx.pid"
+LOGFILE="/var/log/dostartx.log"
+CWD="/root"
+
+depend() {
+	after sysresccd
+}
+
+start() {
+	if grep -q "dostartx" /proc/cmdline
+	then
+		ebegin "Starting the graphical environment"
+		start-stop-daemon --start --quiet --user root --env SHELL="/bin/zsh" \
+			--pidfile $PIDFILE --exec $DAEMON --background --chdir $CWD \
+			--stdout $LOGFILE --make-pidfile -- $ARGS
+		eend $?
+	else
+		eend 0
+	fi
+}
+
+stop() {
+	ebegin "Stopping the graphical environment"
+	start-stop-daemon --stop --quiet --pidfile $PIDFILE --exec $DAEMON
+	eend $?
+}
+

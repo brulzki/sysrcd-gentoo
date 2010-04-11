@@ -1,7 +1,7 @@
  
-070FF107 | 0CF207 | 0FF307 | 0FF407 | 0FF507 | 0FF607 | 0FF707        0CSystemRescueCd07            09[boot images]07
+070FF107 | 0CF207 | 0FF307 | 0FF407 | 0FF507 | 0FF607 | 0FF707        0CSystemRescueCd07          09[boot images]07
 
-Type the image name choosen (followed by options if necessary) then press 0CEnter07
+Type the image name choosen (followed by options if needed) then press 0CEnter07
 For instance type 0Frescuecd docache07 to boot the default image with that option
 
 0C*07 0EMain images to boot linux from the livecd07:

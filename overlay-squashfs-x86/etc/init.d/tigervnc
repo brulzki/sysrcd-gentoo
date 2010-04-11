@@ -35,7 +35,7 @@ checkconfig() {
 
 start() {
 	checkconfig start || return 1
-	ebegin "Starting TigerVNC server"
+	[ -n "${DISPLAYS}" ] && ebegin "Starting TigerVNC server"
 	for user in $DISPLAYS; do
 		su ${user%%:*} -c "cd ~${user%%:*} && vncserver :${user##*:} $VNC_OPTS" &>/dev/null
 	done
@@ -44,7 +44,7 @@ start() {
 
 stop() {
 	checkconfig stop || return 2
-	ebegin "Stopping TigerVNC server"
+	[ -n "${DISPLAYS}" ] && ebegin "Stopping TigerVNC server"
 	for user in $DISPLAYS; do
 		su ${user%%:*} -c "vncserver -kill :${user##*:}" &>/dev/null
 	done

@@ -1,5 +1,5 @@
  
-070FF107 | 0FF207 | 0FF307 | 0FF407 | 0FF507 | 0CF607 | 0FF707        0CSystemRescueCd07               09[pxe boot]07
+070FF107 | 0FF207 | 0FF307 | 0FF407 | 0FF507 | 0CF607 | 0FF707        0CSystemRescueCd07             09[pxe boot]07
 
 This page tells you how to boot SystemRescueCd from the network using PXE. 
 

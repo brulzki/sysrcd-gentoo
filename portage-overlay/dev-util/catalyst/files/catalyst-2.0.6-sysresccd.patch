@@ -1,6 +1,6 @@
 diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modules/generic_stage_target.py
 --- catalyst-2.0.6-a/modules/generic_stage_target.py	2008-05-29 05:30:10.000000000 +0100
-+++ catalyst-2.0.6-b/modules/generic_stage_target.py	2009-11-01 10:42:17.000000000 +0000
++++ catalyst-2.0.6-b/modules/generic_stage_target.py	2010-04-03 15:46:58.000000000 +0100
 @@ -426,7 +426,7 @@
  
  	def set_snapshot_path(self):
@@ -10,15 +10,15 @@ diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modu
  
  		if os.path.exists(self.settings["snapshot_path"]):
  			self.settings["snapshot_path_hash"]=\
-@@ -684,7 +684,7 @@
- 					self.settings["source_path"]+"\nto "+\
- 					self.settings["chroot_path"]+\
- 						" (This may take some time) ...\n"
--				unpack_cmd="tar xjpf "+self.settings["source_path"]+" -C "+\
-+				unpack_cmd="tar xpf "+self.settings["source_path"]+" --lzma -C "+\
- 					self.settings["chroot_path"]
- 				error_msg="Tarball extraction of "+\
- 					self.settings["source_path"]+" to "+\
+@@ -809,7 +809,7 @@
+ 			cleanup_errmsg="Error removing existing snapshot directory."
+ 			cleanup_msg=\
+ 				"Cleaning up existing portage tree (This can take a long time)..."
+-			unpack_cmd="tar xjpf "+self.settings["snapshot_path"]+" -C "+\
++			unpack_cmd="tar xpf "+self.settings["snapshot_path"]+" --lzma -C "+\
+ 				self.settings["chroot_path"]+"/usr"
+ 			unpack_errmsg="Error unpacking snapshot"
+ 
 @@ -1055,6 +1055,13 @@
  			else:
  				myf.write('CXXFLAGS="${CFLAGS}"\n')
@@ -35,7 +35,7 @@ diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modu
  				myf.write('LDFLAGS="'+self.settings["LDFLAGS"]+'"\n')
 diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/snapshot_target.py
 --- catalyst-2.0.6-a/modules/snapshot_target.py	2008-05-29 05:30:11.000000000 +0100
-+++ catalyst-2.0.6-b/modules/snapshot_target.py	2009-11-01 10:42:17.000000000 +0000
++++ catalyst-2.0.6-b/modules/snapshot_target.py	2010-04-03 15:46:58.000000000 +0100
 @@ -17,7 +17,7 @@
  		self.settings["target_subpath"]="portage"
  		st=self.settings["storedir"]
@@ -47,30 +47,43 @@ diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/s
  			print "\nWarning!!!!"
 diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-b/targets/support/chroot-functions.sh
 --- catalyst-2.0.6-a/targets/support/chroot-functions.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/chroot-functions.sh	2009-11-01 10:42:17.000000000 +0000
-@@ -126,6 +126,7 @@
++++ catalyst-2.0.6-b/targets/support/chroot-functions.sh	2010-04-03 15:46:58.000000000 +0100
+@@ -126,6 +126,9 @@
  	else
  		clst_myemergeopts="--quiet"
  	fi
-+	clst_myemergeopts="${clst_myemergeopts} --jobs=4 --load-average=8"
++	# set "--keep-going" to bypass compilation errors and continue
++	clst_myemergeopts="${clst_myemergeopts} -u" # required with >=portage-2.1.7
++	clst_myemergeopts="${clst_myemergeopts} --jobs=1 --load-average=8" # workaround parallel build issues in stage1
  	if [ -n "${clst_FETCH}" ]
  	then
  		export bootstrap_opts="-f"
+diff -urN catalyst-2.0.6-a/targets/support/filesystem-functions.sh catalyst-2.0.6-b/targets/support/filesystem-functions.sh
+--- catalyst-2.0.6-a/targets/support/filesystem-functions.sh	2008-05-29 05:30:09.000000000 +0100
++++ catalyst-2.0.6-b/targets/support/filesystem-functions.sh	2010-04-03 15:48:05.000000000 +0100
+@@ -53,6 +53,7 @@
+ create_squashfs() {
+ 	echo "Creating squashfs..."
+ 	export loopname="image.squashfs"
++	find ${clst_destpath} -type f -name "*.py?" -exec rm -f {} \;
+ 	mksquashfs "${clst_destpath}" "$1/${loopname}" ${clst_fsops} -noappend \
+ 		|| die "mksquashfs failed, did you emerge squashfs-tools?"
+ }
 diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-b/targets/support/kmerge.sh
 --- catalyst-2.0.6-a/targets/support/kmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/kmerge.sh	2009-11-01 10:42:17.000000000 +0000
++++ catalyst-2.0.6-b/targets/support/kmerge.sh	2010-04-03 15:46:58.000000000 +0100
 @@ -99,7 +99,7 @@
  	fi
  	if [ "${clst_kernel_merge}" != "" ]
  	then
 -		genkernel --callback="emerge ${gk_callback_opts} ${clst_kernel_merge}" \
-+		genkernel --callback="emerge --jobs=4 --load-average=8 ${gk_callback_opts} ${clst_kernel_merge}" \
++		genkernel --callback="emerge -u --jobs=4 --load-average=8 --accept-properties=-interactive ${gk_callback_opts} ${clst_kernel_merge}" \
  			${GK_ARGS} || exit 1
  	else
  		genkernel ${GK_ARGS} || exit 1
 diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-b/targets/support/unmerge.sh
 --- catalyst-2.0.6-a/targets/support/unmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/unmerge.sh	2009-11-01 12:11:47.000000000 +0000
++++ catalyst-2.0.6-b/targets/support/unmerge.sh	2010-04-03 15:46:58.000000000 +0100
 @@ -2,6 +2,77 @@
  
  source /tmp/chroot-functions.sh

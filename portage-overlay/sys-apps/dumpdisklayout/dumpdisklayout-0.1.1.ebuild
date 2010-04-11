@@ -11,7 +11,7 @@ IUSE=""
 DEPEND=">=dev-lang/python-2.4.0
         >=sys-apps/pciutils-2.2.7
         >=sys-apps/iproute2-2.6.22
-        >=sys-apps/ethtool-6
+        >=sys-apps/ethtool-0.6
         >=sys-apps/usbutils-0.72"
 RDEPEND="${DEPEND}"
 

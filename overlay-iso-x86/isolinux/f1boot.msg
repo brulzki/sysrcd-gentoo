@@ -20,6 +20,6 @@
 
 02==>07 0EPress F5 for help if you have boot problems with SystemRescueCd 02<==07 
 
-Welcome to 0CSystemRescueCd07 for 0Cx86 07(i486+amd64)07 - version 0CVERSION
+Welcome to 0CSystemRescueCd07 for 0Cx86 07(i486+amd64)07 - version 0CSRCDVER
 0fF2,F3,F4,F5,F6,F707 for boot options and more help. 
 0fEnter07 to boot.

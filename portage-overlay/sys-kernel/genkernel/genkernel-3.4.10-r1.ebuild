@@ -63,7 +63,9 @@ src_unpack()
 
 	# ---- do not compile devmapper, it's part of lvm2
 	cd "${S}"
-	cp "${FILESDIR}/gen_compile.sh" gen_compile.sh
+	#epatch ${FILESDIR}/genkernel-3.4.10-sysrcd.patch
+	epatch ${FILESDIR}/genkernel-3.4.10-sysrcd.patch
+	#cp "${FILESDIR}/gen_compile.sh" gen_compile.sh
 	use selinux && sed -i 's/###//g' gen_compile.sh
 
 	# ---- enable the following options in busybox

@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.5.2 (2010-04-12)
+-----------------------------------------------------------------------------
+* Enabled framebuffer console to fix extended vga modes (boot with "vga=xxx")
+* Moved modules to embedded kernel initramfs to reduce memory requirement
+* Use lzma compression instead of gzip for initramfs.igz to save space
+* Updated alternative kernels to 2.6.33.02 (altker32 + altker64)
+* Updated standard kernels to 2.6.32.11 (rescuecd + rescue64)
+* Fixed the "dostartx" option that startx XOrg automatically
+* Fixed the Xorg auto-configuration script used by "wizard"
+* The default isolinux boot screen is now based on a menu
+* Updated squashfs to version 4.0 with lzma compression
+
+-----------------------------------------------------------------------------
 1.5.1 (2010-03-29)
 -----------------------------------------------------------------------------
 * Switched to OpenRC and optimized services to reduce boot time

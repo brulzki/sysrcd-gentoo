@@ -19,12 +19,11 @@ src_unpack()
 	mv linux-2.6.32 linux-${KV}
 	cd linux-${KV}
 	epatch ${FILESDIR}/std-sources-2.6.32_01-stable.patch.bz2 || die "std-sources stable patch failed."
-	epatch ${FILESDIR}/std-sources-2.6.32_02-nosquashfs.patch.bz2 || die "std-sources nosquashfs patch failed."
-	epatch ${FILESDIR}/std-sources-2.6.32_03-sqlzma34.patch.bz2 || die "std-sources sqlzma34 patch failed."
-	epatch ${FILESDIR}/std-sources-2.6.32_04-aufs2.patch.bz2 || die "std-sources aufs patch failed."
-	epatch ${FILESDIR}/std-sources-2.6.32_05-reiser4.patch.bz2 || die "std-sources reiser4 patch failed."
-	epatch ${FILESDIR}/std-sources-2.6.32_06-loopaes.patch.bz2 || die "std-sources loopaes patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_02-sqlzma40.patch.bz2 || die "std-sources sqlzma patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_03-aufs2.patch.bz2 || die "std-sources aufs patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_04-reiser4.patch.bz2 || die "std-sources reiser4 patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_05-loopaes.patch.bz2 || die "std-sources loopaes patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .10-std151/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .11-std152/" Makefile
 }
 

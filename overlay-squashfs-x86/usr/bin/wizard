@@ -4,57 +4,19 @@
 DIALOGOPTS='--backtitle SystemRescueCd'
 
 # ------------------------------- checks --------------------------------------
-[ -z "$(which dialog)" ] && exit 0
+[ -z "$(which dialog)" ] && echo "dialog is missing" && exit 1
 
 # ------------------------------- dialog --------------------------------------
-# "Xorg-gen" "Generate a default config for Xorg in /etc/X11/xorg.conf" \
 dialog ${DIALOGOPTS} --title "SystemRescueCd wizard" \
 	--menu "Please select and option and press Enter:" 0 0 0 \
-	"Xorg-run" "Graphical desktop using Xorg (optimal) auto-configuration" \
-	"Xorg-mkx" "Graphical desktop using Xorg (optimal) mkxf86config" \
-	"Xfbdev-run" "Graphical desktop using Xfbdev (alternative)" \
-	"Exit" "Exit this menu and return to shell" 2>/tmp/result
-res=$?
-[ "$res" != '0' ] && exit $res
+	"Xorg-run"   "Graphical desktop using Xorg auto-config (recommended)" \
+	"Xorg-mkx"   "Graphical desktop using Xorg mkxf86config (alternative)" \
+	"Xfbdev-run" "Graphical desktop using Xfbdev (requires Frame-Buffer)" \
+	"Xorg-gen"   "Generate /etc/X11/xorg.conf that can be edited manually" \
+	"Exit"       "Exit this menu and return to shell" 2>/tmp/result || exit 1
 
 choice="$(cat /tmp/result)"
 rm -f /tmp/result
-
-xfbdev_cfg()
-{
-	dialog	${DIALOGOPTS} --title "Xfbdev configuration" \
-		--menu "Select your screen configuration:" 0 0 0 \
-		"640x480x8"    "640x480   (8bits -  256 colors)" \
-		"640x480x24"   "640x480   (24bits - 16.7 millions colors)" \
-		"800x600x8"    "800x600   (8bits -  256 colors)" \
-		"800x600x24"   "800x600   (24bits - 16.7 millions colors)" \
-		"1024x768x8"   "1024x768  (8bits -  256 colors)" \
-		"1024x768x24"  "1024x768  (24bits - 16.7 millions colors)" \
-		"1280x1024x8"  "1280x1024 (8bits -  256 colors)" \
-		"1280x1024x24" "1280x1024 (24bits - 16.7 millions colors)" \
-		"1600x1200x8"  "1600x1200 (8bits -  256 colors)" \
-		"1600x1200x24" "1600x1200 (24bits - 16.7 millions colors)" 2>/tmp/result
-	if [ "$?" = '0' ]
-	then
-		choice="$(cat /tmp/result)"
-		echo "forcevesa=${choice}" > /root/xserver.cfg
-		return 0
-	else
-		echo "" > /root/xserver.cfg
-		return 1
-	fi
-}
-
-error_amd64()
-{
-	msg=''
-	msg="${msg}Sorry, Xfbdev does not work with 64bits\n"
-	msg="${msg}kernels (rescue64 and altker64).\n"
-	msg="${msg}You have to start SystemRescueCd using \n"
-	msg="${msg}either the rescuecd or the altker32 kernel.\n"
-	msg="${msg}You can also use Xorg that works on amd64.\n"
-	dialog --title "Error" --msgbox "${msg}" 10 55
-}
 
 # ------------------------------- functions ------------------------------------
 case "$choice" in
@@ -64,22 +26,24 @@ case "$choice" in
 		;;
 	Xorg-mkx)
 		echo "forcexorg" > /root/xserver.cfg
+		/usr/sbin/hwsetup
 		/usr/sbin/mkxf86config.sh
 		startx
 		;;
 	Xfbdev-run)
-		#if [ "$(uname -m)" = "x86_64" ]
-		#then
-		#	error_amd64 && exec "$0"
-		#else
+		if [ ! -c /dev/fb0 ]
+		then
+			dialog --title "Error" --msgbox "You have to start in framebuffer (high resolution) mode to use Xfbdev." 10 75
+			exit 1
+		fi
 		echo "forcevesa" > /root/xserver.cfg
 		startx
-		#fi
 		;;
 	Xorg-gen)
-		Xorg -configure >/dev/null 2>&1
 		[ -f /etc/X11/xorg.conf ] && mv /etc/X11/xorg.conf /etc/X11/xorg.old
+		Xorg -configure >/dev/null 2>&1
 		mv /root/xorg.conf.new /etc/X11/xorg.conf
+		dialog --title "Information" --msgbox "The XOrg configuration file has been generated in /etc/X11/xorg.conf" 10 75
 		;;
 	Exit)
 		exit 0

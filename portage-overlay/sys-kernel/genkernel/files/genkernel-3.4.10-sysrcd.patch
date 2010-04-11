@@ -1,0 +1,154 @@
+diff -urN genkernel-3.4.10-orig/gen_compile.sh genkernel-3.4.10-patch/gen_compile.sh
+--- genkernel-3.4.10-orig/gen_compile.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-patch/gen_compile.sh	2010-04-09 22:51:50.000000000 +0100
+@@ -406,69 +406,59 @@
+ }
+ 
+ compile_lvm() {
+-	compile_device_mapper
++	#compile_device_mapper
+ 	if [ ! -f "${LVM_BINCACHE}" ]
+ 	then
+ 		[ -f "${LVM_SRCTAR}" ] ||
+ 			gen_die "Could not find LVM source tarball: ${LVM_SRCTAR}! Please place it there, or place another version, changing /etc/genkernel.conf as necessary!"
+ 		cd "${TEMP}"
+ 		rm -rf ${LVM_DIR} > /dev/null
+-		/bin/tar -zxpf ${LVM_SRCTAR} ||
+-			gen_die 'Could not extract LVM source tarball!'
+-		[ -d "${LVM_DIR}" ] ||
+-			gen_die 'LVM directory ${LVM_DIR} is invalid!'
+-		rm -rf "${TEMP}/device-mapper" > /dev/null
+-		/bin/tar -jxpf "${DEVICE_MAPPER_BINCACHE}" -C "${TEMP}" ||
+-			gen_die "Could not extract device-mapper binary cache!";
++		/bin/tar -zxpf ${LVM_SRCTAR} || gen_die 'Could not extract LVM source tarball!'
++		[ -d "${LVM_DIR}" ] || gen_die 'LVM directory ${LVM_DIR} is invalid!'
++		#rm -rf "${TEMP}/device-mapper" > /dev/null
++		#/bin/tar -jxpf "${DEVICE_MAPPER_BINCACHE}" -C "${TEMP}" || gen_die "Could not extract device-mapper binary cache!";
+ 		
+ 		cd "${LVM_DIR}"
+ 		print_info 1 'lvm: >> Configuring...'
+-			LDFLAGS="-L${TEMP}/device-mapper/lib" \
+-			CFLAGS="-I${TEMP}/device-mapper/include" \
+-			CPPFLAGS="-I${TEMP}/device-mapper/include" \
+-			./configure --enable-static_link --prefix=${TEMP}/lvm >> ${LOGFILE} 2>&1 ||
+-				gen_die 'Configure of lvm failed!'
++			#LDFLAGS="-L${TEMP}/device-mapper/lib" \
++			#CFLAGS="-I${TEMP}/device-mapper/include" \
++			#CPPFLAGS="-I${TEMP}/device-mapper/include" \
++			./configure --enable-static_link --prefix=${TEMP}/lvm >> ${LOGFILE} 2>&1 || gen_die 'Configure of lvm failed!'
+ 		print_info 1 'lvm: >> Compiling...'
+ 			compile_generic '' utils
+ 			compile_generic 'install' utils
+ 
+ 		cd "${TEMP}/lvm"
+ 		print_info 1 '      >> Copying to bincache...'
+-		strip "sbin/lvm.static" ||
+-			gen_die 'Could not strip lvm.static!'
+-		/bin/tar -cjf "${LVM_BINCACHE}" sbin/lvm.static ||
+-			gen_die 'Could not create binary cache'
++		strip "sbin/lvm.static" || gen_die 'Could not strip lvm.static!'
++		/bin/tar -cjf "${LVM_BINCACHE}" sbin/lvm.static || gen_die 'Could not create binary cache'
+ 
+ 		cd "${TEMP}"
+-		rm -rf "${TEMP}/device-mapper" > /dev/null
++		#rm -rf "${TEMP}/device-mapper" > /dev/null
+ 		rm -rf "${LVM_DIR}" lvm
+ 	fi
+ }
+ 
+ compile_dmraid() {
+-	compile_device_mapper
++	#compile_device_mapper
+ 	if [ ! -f "${DMRAID_BINCACHE}" ]
+ 	then
+ 		[ -f "${DMRAID_SRCTAR}" ] ||
+ 			gen_die "Could not find DMRAID source tarball: ${DMRAID_SRCTAR}! Please place it there, or place another version, changing /etc/genkernel.conf as necessary!"
+ 		cd "${TEMP}"
+ 		rm -rf ${DMRAID_DIR} > /dev/null
+-		/bin/tar -jxpf ${DMRAID_SRCTAR} ||
+-			gen_die 'Could not extract DMRAID source tarball!'
+-		[ -d "${DMRAID_DIR}" ] ||
+-			gen_die 'DMRAID directory ${DMRAID_DIR} is invalid!'
+-		rm -rf "${TEMP}/device-mapper" > /dev/null
+-		/bin/tar -jxpf "${DEVICE_MAPPER_BINCACHE}" -C "${TEMP}" ||
+-			gen_die "Could not extract device-mapper binary cache!";
++		/bin/tar -jxpf ${DMRAID_SRCTAR} || gen_die 'Could not extract DMRAID source tarball!'
++		[ -d "${DMRAID_DIR}" ] || gen_die 'DMRAID directory ${DMRAID_DIR} is invalid!'
++		#rm -rf "${TEMP}/device-mapper" > /dev/null
++		#/bin/tar -jxpf "${DEVICE_MAPPER_BINCACHE}" -C "${TEMP}" || gen_die "Could not extract device-mapper binary cache!";
+ 		
+ 		cd "${DMRAID_DIR}"
+ 		print_info 1 'dmraid: >> Configuring...'
+ 		
+-		LDFLAGS="-L${TEMP}/device-mapper/lib" \
+-		CFLAGS="-I${TEMP}/device-mapper/include" \
+-		CPPFLAGS="-I${TEMP}/device-mapper/include" \
+-		./configure --enable-static_link --prefix=${TEMP}/dmraid >> ${LOGFILE} 2>&1 ||
+-			gen_die 'Configure of dmraid failed!'
++		#LDFLAGS="-L${TEMP}/device-mapper/lib" \
++		#CFLAGS="-I${TEMP}/device-mapper/include" \
++		#CPPFLAGS="-I${TEMP}/device-mapper/include" \
++		./configure --enable-static_link --prefix=${TEMP}/dmraid >> ${LOGFILE} 2>&1 || gen_die 'Configure of dmraid failed!'
+ 
+ 		# We dont necessarily have selinux installed yet... look into
+ 		# selinux global support in the future.
+@@ -483,11 +473,10 @@
+ 		install -m 0755 -s tools/dmraid "${TEMP}/dmraid/sbin/dmraid"
+ 		print_info 1 '      >> Copying to bincache...'
+ 		cd "${TEMP}/dmraid"
+-		/bin/tar -cjf "${DMRAID_BINCACHE}" sbin/dmraid ||
+-			gen_die 'Could not create binary cache'
++		/bin/tar -cjf "${DMRAID_BINCACHE}" sbin/dmraid || gen_die 'Could not create binary cache'
+ 
+ 		cd "${TEMP}"
+-		rm -rf "${TEMP}/device-mapper" > /dev/null
++		#rm -rf "${TEMP}/device-mapper" > /dev/null
+ 		rm -rf "${DMRAID_DIR}" dmraid
+ 	fi
+ }
+diff -urN genkernel-3.4.10-orig/gen_initramfs.sh genkernel-3.4.10-patch/gen_initramfs.sh
+--- genkernel-3.4.10-orig/gen_initramfs.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-patch/gen_initramfs.sh	2010-04-10 10:39:10.000000000 +0100
+@@ -460,13 +460,13 @@
+ 	echo | cpio ${CPIO_ARGS} -F "${CPIO}" 2>/dev/null \
+ 		|| gen_die "Could not create empty cpio at ${CPIO}"
+ 
+-	append_data 'base_layout'
+-	append_data 'auxilary'
+-	append_data 'busybox' "${BUSYBOX}"
+-	append_data 'lvm' "${LVM}"
+-	append_data 'dmraid' "${DMRAID}"
+-	append_data 'evms' "${EVMS}"
+-	append_data 'mdadm' "${MDADM}"
++	#append_data 'base_layout'
++	#append_data 'auxilary'
++	#append_data 'busybox' "${BUSYBOX}"
++	#append_data 'lvm' "${LVM}"
++	#append_data 'dmraid' "${DMRAID}"
++	#append_data 'evms' "${EVMS}"
++	#append_data 'mdadm' "${MDADM}"
+ 	
+ 	if [ "${NOINITRDMODULES}" -eq '0' ]
+ 	then
+@@ -489,8 +489,10 @@
+ 		append_data 'overlay'
+ 	fi
+ 
+-	gzip -9 "${CPIO}"
+-	mv -f "${CPIO}.gz" "${CPIO}"
++	#gzip -9 "${CPIO}"
++	#mv -f "${CPIO}.gz" "${CPIO}"
++	cat "${CPIO}" | lzma -5 > "${CPIO}.lzma"
++	mv -f "${CPIO}.lzma" "${CPIO}"
+ 
+ 	if isTrue "${INTEGRATED_INITRAMFS}"
+ 	then
+@@ -499,6 +501,8 @@
+ #		sed -i "s|^.*CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"${TMPDIR}/initramfs-${KV}.cpio.gz\"|" ${KERNEL_DIR}/.config
+ 		sed -i '/^.*CONFIG_INITRAMFS_SOURCE=.*$/d' ${KERNEL_DIR}/.config
+ 		echo -e "CONFIG_INITRAMFS_SOURCE=\"${TMPDIR}/initramfs-${KV}.cpio.gz\"\nCONFIG_INITRAMFS_ROOT_UID=0\nCONFIG_INITRAMFS_ROOT_GID=0" >> ${KERNEL_DIR}/.config
++		sed -i '/^.*CONFIG_INITRAMFS_COMPRESSION_LZMA.*/d' ${KERNEL_DIR}/.config
++		echo -e "CONFIG_INITRAMFS_COMPRESSION_LZMA=y" >> ${KERNEL_DIR}/.config
+ 	fi
+ 
+ 	if ! isTrue "${CMD_NOINSTALL}"

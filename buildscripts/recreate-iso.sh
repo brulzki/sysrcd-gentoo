@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.1"
+VERSION="1.5.2"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.1"
+VOLNAME="sysrcd-1.5.2"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -65,7 +65,10 @@ cp ${REPOSRC}/overlay-squashfs-x86/root/version ${TEMPDIR}
 
 # ========= integrate the version number in f1boot.msg =========================
 TXTVERSION=$(cat ${REPOSRC}/overlay-squashfs-x86/root/version)
-sed -i -e "s/VERSION/${TXTVERSION}${EXTRAVER}/" ${TEMPDIR}/isolinux/f1boot.msg
+for fixfile in isolinux.cfg f1boot.msg
+do
+	sed -i -e "s/SRCDVER/${TXTVERSION}${EXTRAVER}/" ${TEMPDIR}/isolinux/${fixfile}
+done
 
 # ========= merge (rescuecd.igz+rescue64.igz+altker32.igz) --> rescuecd.igz ====
 curdir="${TEMPDIR}/isolinux"
@@ -80,23 +83,23 @@ cp -a ${REPOBIN}/overlay-initramfs/* ${newramfs}/
 mkdir -p ${modulesdir}
 
 # extract the old ramdisks
-for ker in rescuecd rescue64 altker32 altker64
-do
-        oldimg="${REPOBIN}/kernels-x86/${ker}.igz"
-        newdir="${curdir}/${ker}-tmp"
-        echo "extracting ${oldimg}..."
-        mkdir -p "${newdir}"
-        ( cd "${newdir}" && cat ${oldimg} | gzip -d | cpio -id 2>/dev/null )
-done
+#for ker in rescuecd rescue64 altker32 altker64
+#do
+#        oldimg="${REPOBIN}/kernels-x86/${ker}.igz"
+#        newdir="${curdir}/${ker}-tmp"
+#        echo "extracting ${oldimg}..."
+#        mkdir -p "${newdir}"
+#        ( cd "${newdir}" && cat ${oldimg} | gzip -d | cpio -id 2>/dev/null )
+#done
 
 # copy {rescue64,altker32,altker64}/lib/modules to the new initramfs
-for ker in rescuecd rescue64 altker32 altker64
-do
-        cp -a ${curdir}/${ker}-tmp/lib/modules/* ${modulesdir}/
-done
+#for ker in rescuecd rescue64 altker32 altker64
+#do
+#        cp -a ${curdir}/${ker}-tmp/lib/modules/* ${modulesdir}/
+#done
 
 # copy custom busybox binary to the new initramfs
-cp ${curdir}/rescuecd-tmp/bin/busybox ${newramfs}/bin/
+#cp ${curdir}/rescuecd-tmp/bin/busybox ${newramfs}/bin/
 ( cd ${newramfs}/bin/ ; ln busybox sh )
 
 # update the init boot script in the initramfs
@@ -109,7 +112,7 @@ find ${modulesdir} -name "*.ko" -exec gzip '{}' \;
 
 # build new initramfs
 echo 'building the new initramfs...'
-( cd ${newramfs} && find . | cpio -H newc -o | gzip -9 > ${newinitrfs} )
+( cd ${newramfs} && find . | cpio -H newc -o | lzma -5 > ${newinitrfs} )
 
 # remove old igz-images and tmp-dirs
 [ -d ${newramfs} ] && rm -rf ${newramfs} 

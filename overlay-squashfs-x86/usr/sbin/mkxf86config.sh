@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /etc/profile
-source /sbin/functions.sh
+source /sbin/functions.bl1 # http://bugs.gentoo.org/285296
 
 # First, get the command line
 CMDLINE="$(</proc/cmdline)"

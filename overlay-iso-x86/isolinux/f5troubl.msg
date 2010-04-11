@@ -1,8 +1,8 @@
  
-070FF107 | 0FF207 | 0FF307 | 0FF407 | 0CF507 | 0FF607 | 0FF707      0CSystemRescueCd07          09[troubleshooting]07
+070FF107 | 0FF207 | 0FF307 | 0FF407 | 0CF507 | 0FF607 | 0FF707      0CSystemRescueCd07        09[troubleshooting]07
 
-This page tells you how to troubleshoot boot problems. Try these options if you
-cannot boot (error during the kernel initialisation, screen frozen, ... )
+This page tells you how to troubleshoot boot problems. Try these options if
+you cannot boot (error during the kernel initialisation, screen frozen, ... )
 For more help read the SystemRescueCd manual or find support in the forums:
 02www.sysresccd.org/Online-Manual-EN07 and 02http://www.sysresccd.org/forums/07
 

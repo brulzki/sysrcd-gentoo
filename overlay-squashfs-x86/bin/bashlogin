@@ -9,31 +9,6 @@ export path="/sbin /bin /usr/sbin /usr/bin"
 export MAIL=/var/mail/root
 export USER=root
 
-# ============ INITIALIZATIONS =========================
-
-if [ ! -f /var/run/bashlogin ] # do the setup only once
-then
-	touch /var/run/bashlogin # make that the setup has been done
-	
-	if echo ${CMDLINE} | grep -q "hdinstall"
-	then
-		/usr/sbin/knx-hdinstall
-	fi
-
-	# ---- clear screen is resolution 640x480 ----
-	cat /proc/cmdline | grep -q "vga=785" && clear
-	cat /proc/cmdline | grep -q "640x480" && clear
-	setterm -blank 0 -powersave off
-
-	# ---- run STARTX if asked on cmdline (dostartx) ----
-	cat /proc/cmdline | grep -q "dostartx"
-	if [ "$?" -eq 0 ]
-	then
-		sleep 3
-		startx >/var/log/startx1.log 2>/var/log/startx2.log &
-	fi
-fi
-
 # ============ PRINT MESSAGE ===========================
 lc1='\e[01;31m' # light red
 dc1='\e[00;31m' # dark red
@@ -72,15 +47,12 @@ fbecho
 echo -e "${dc1}*${dc2} Available console text editors : ${lc2}nano${dc2}, ${lc2}vim${dc2}, ${lc2}qemacs${dc2}, ${lc2}joe${dc2}."
 echo -e "${dc1}*${dc2} Web browser in the console: ${lc2}elinks www.web-site.org${dc2}."
 fbecho
-#echo -e "${dc1}*${lc1} WARNING${dc2} : Never mount anything on /mnt! It would freeze the system."
-#echo -e "   Use ${lc2}mkdir /mnt/mydir${dc2} and mount on /mnt/mydir instead."
-#fbecho
 echo -e "${dc1}*${lc1} Ntfs-3g${dc2} : If you need a full Read-Write NTFS access, use Ntfs-3g."
 echo -e "   Mount the disk: ${lc2}ntfs-3g /dev/sda1 /mnt/windows${dc2}"
 fbecho
 echo -e "${dc1}*${lc1} Graphical environment${dc2} : use either ${lc2}Xorg${dc2} or ${lc2}Xfbdev${dc2}."
 echo -e "   Type ${lc2}wizard${dc2} to run the graphical environment (or ${lc2}startx${dc2} but it may fail)"
-echo -e "   X.Org comes with Window-Maker and you can use several graphical tools:"
+echo -e "   X.Org comes with the XFCE environment and several graphical tools:"
 echo -e "   ${dc1}-${dc2} Partition manager:..${lc2}gparted${dc2}"
 echo -e "   ${dc1}-${dc2} Web browsers:.......${lc2}firefox-3.6${dc2}"
 echo -e "   ${dc1}-${dc2} Text editors:.......${lc2}gvim${dc2} and ${lc2}geany${dc2}"

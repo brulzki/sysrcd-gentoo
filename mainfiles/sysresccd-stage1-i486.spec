@@ -3,7 +3,7 @@ version_stamp: 1.5
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100327
+snapshot: 20100409
 source_subpath: default/stage4-i386-20100321-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -112,7 +112,9 @@ livecd/packages:
 	dev-util/geany
 	dev-util/intltool
 	dev-util/pkgconfig
+	dev-util/ltrace
 	dev-util/strace
+	lxde-base/lxrandr
 	media-fonts/terminus-font
 	net-analyzer/arping
 	net-analyzer/dnstracer
@@ -322,6 +324,7 @@ livecd/packages:
 	xfce-extra/xfce4-wavelan-plugin
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-datetime-plugin
+	xfce-extra/xfce4-xkb-plugin
 	sys-apps/iproute2
 	www-client/elinks
 	www-client/lynx

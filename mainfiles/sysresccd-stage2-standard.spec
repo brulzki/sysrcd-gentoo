@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100327
+snapshot: 20100409
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -15,7 +15,7 @@ livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
-livecd/gk_mainargs: --makeopts="-j5"
+livecd/gk_mainargs: --makeopts="-j5" --integrated-initramfs
 livecd/linuxrc: /worksrc/sysresccd-src/mainfiles/linuxrc
 livecd/type: generic-livecd
 livecd/readme:
@@ -29,7 +29,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std151.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std152.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -65,11 +65,9 @@ boot/kernel/rescuecd/packages:
         net-wireless/ndiswrapper
         sys-apps/lm_sensors
         =sys-boot/grub-1.98
-        net-wireless/broadcom-sta
         sys-block/open-iscsi
         sys-fs/zfs-fuse
         #=sys-block/partimage-0.6.9_beta5
-        #sys-fs/cowloop
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -1754,6 +1752,7 @@ livecd/rm:
 	/usr/share/vim/vim7*/ftplugin/{abaqus.vim,vb.vim,hamster.vim,aspvbs.vim,flexwiki.vim}
 	/usr/share/vim/vim7*/ftplugin/{verilog.vim,lprolog.vim,ishd.vim,xsd.vim,scheme.vim,occam.vim}
 	/usr/share/vim/vim7*/ftplugin/{mupad.vim,lua.vim,lisp.vim,aap.vim,pyrex.vim,matlab.vim}
+	/usr/share/xfce4/backdrops/{flower.png,xfce-*png}
 	/usr/share/xfce4/doc
 	/usr/share/alsa
 	/usr/share/icons/hicolor/icon-theme.cache
@@ -1770,4 +1769,5 @@ livecd/rm:
 	/usr/share/binutils-data/i486-pc-linux-gnu/*/{info,locale}
 	/usr/lib/mozilla-firefox/xpidl
 	/usr/bin/fgl_glxgears
+	/usr/include/{X11,sigc++*,python*}
 

@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100327
+snapshot: 20100409
 source_subpath: default/livecd-stage1-amd64-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -14,7 +14,7 @@ livecd/iso: /worksrc/isofiles/systemrescuecd-amd64-current.iso
 livecd/splash_type: 
 livecd/splash_theme: 
 livecd/bootargs: dokeymap
-livecd/gk_mainargs: --makeopts="-j5"
+livecd/gk_mainargs: --makeopts="-j5" --integrated-initramfs
 livecd/linuxrc: /worksrc/sysresccd-src/mainfiles/linuxrc
 livecd/type: generic-livecd
 livecd/readme:
@@ -29,7 +29,7 @@ livecd/volid: sysresccd
 boot/kernel: rescue64
 
 boot/kernel/rescue64/sources: sys-kernel/std-sources
-boot/kernel/rescue64/config: /worksrc/sysresccd-src/kernelcfg/config-amd64-2.6.32-std151.conf
+boot/kernel/rescue64/config: /worksrc/sysresccd-src/kernelcfg/config-amd64-2.6.32-std152.conf
 boot/kernel/rescue64/use: pcmcia usb -X png truetype 
 boot/kernel/rescue64/extraversion: amd64
 boot/kernel/rescue64/initramfs_overlay: /worksrc/sysresccd-src/overlay-initramfs
@@ -40,7 +40,4 @@ boot/kernel/rescue64/packages:
 	net-wireless/ndiswrapper
 	sys-block/iscsitarget
 	sys-cluster/drbd-kernel
-	#net-wireless/broadcom-sta
-	#sys-fs/cowloop
-	#sys-block/open-iscsi
-
+	sys-block/open-iscsi
