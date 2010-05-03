@@ -6,6 +6,17 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.5.3 (2010-05-03)
+-----------------------------------------------------------------------------
+* Added Network-Manager to make network configuration easier (especially wireless)
+* Updated alternative kernels to 2.6.33.03 (altker32 + altker64)
+* Updated standard kernels to 2.6.32.12 (rescuecd + rescue64)
+* Print name of kernel modules before they are loaded at startup
+* Added missing speakup kernel modules in the initramfs
+* Run livecd_fix_inittab() to allow use from a serial console
+* Updated btrfs-progs from upstream
+
+-----------------------------------------------------------------------------
 1.5.2 (2010-04-12)
 -----------------------------------------------------------------------------
 * Enabled framebuffer console to fix extended vga modes (boot with "vga=xxx")

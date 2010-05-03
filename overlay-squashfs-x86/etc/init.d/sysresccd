@@ -1,5 +1,7 @@
 #!/sbin/runscript
 
+source /sbin/livecd-functions.sh
+
 depend()
 {
 	before xdm autorun tigervnc
@@ -118,5 +120,9 @@ start()
 	then
 		cat /proc/config.gz | gzip -d > /root/kernel-$(uname -r).conf
 	fi
+
+	# ---- fix inittab for serial consoles
+	livecd_fix_inittab
+	/sbin/telinit q &>/dev/null
 }
 

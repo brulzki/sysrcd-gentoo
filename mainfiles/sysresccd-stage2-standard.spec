@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100409
+snapshot: 20100426
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -29,12 +29,11 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std152.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std153.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
         app-accessibility/speakup
-        app-arch/tar
         app-crypt/truecrypt
         net-dialup/speedtouch-usb
         net-dialup/rp-pppoe
@@ -80,7 +79,6 @@ livecd/unmerge:
 	sys-kernel/gentoo-sources
 	dev-lang/nasm
 	dev-libs/libassuan
-	dev-libs/libIDL
 	dev-libs/libxslt
 	dev-util/yacc
 	dev-util/gtk-doc
@@ -172,9 +170,6 @@ livecd/unmerge:
 	dev-libs/pkcs11-helper
 	app-admin/sudo
 	gnome-base/libgtop
-	gnome-base/orbit
-	gnome-base/gconf
-	gnome-base/gnome-keyring
 	media-fonts/dejavu
 	x11-libs/libgksu
 	x11-libs/gksu
@@ -195,6 +190,14 @@ livecd/unmerge:
 	x11-drivers/xf86-video-fbdev
 	app-admin/eselect-ruby
 	dev-lang/ruby
+	dev-util/gtk-doc-am
+	app-text/scrollkeeper-dtd
+	app-text/scrollkeeper
+	app-text/rarian
+	#gnome-base/orbit
+	#gnome-base/gconf
+	#gnome-base/gnome-keyring
+	#dev-libs/libIDL
 
 livecd/empty:
 	/etc/cron.daily
@@ -307,7 +310,7 @@ livecd/rm:
 	/usr/share/gtk-doc/html/vte*
 	/usr/portage/{*-*,virtual,packages,scripts,metadata,licenses,eclass,distfiles,skel*,header.txt}
 	/usr/portage/profiles/arch/{alpha,arm,hppa,ia64,m68k,mips,powerpc,ppc,ppc64,s390,sparc,x86-fbsd}
-	/usr/portage/profiles/{default/bsd,default-bsd,hardened,obsolete,selinux,uclibc}
+	/usr/portage/profiles/{default/bsd,default-bsd,hardened,obsolete,selinux,uclibc,ChangeLog}
 	/usr/portage/profiles/default/linux/{alpha,arm,hppa,ia64,m68k,mips,powerpc,ppc,ppc64,s390,sparc,x86-fbsd}
 	/usr/portage/profiles/default-linux/{alpha,arm,hppa,ia64,m68k,mips,powerpc,ppc,ppc64,s390,sparc,x86-fbsd}
 	/usr/lib/perl5/5.8.8/Memoize/SDBM_File.pm
@@ -1648,7 +1651,6 @@ livecd/rm:
 	/usr/lib/groff
 	/usr/lib/xorg/modules/extensions
 	/usr/lib/xorg/modules/multimedia
-	/usr/lib/libIDL*
 	/usr/lib/gtkmm*
 	/usr/sbin/{ntpd,swat}
 	/usr/share/fonts/75dpi/{a*,b*,c*,d*,e*,f*,g*,i*,j*,k*,li*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
@@ -1692,7 +1694,7 @@ livecd/rm:
 	/usr/share/i18n/locales/{id_*,is_*,ik_*,ig_*,it_*,iu_*,iw_*}
 	/usr/share/i18n/locales/{ta_*,te_*,tg_*,th_*,ti_*,tig*,tk_*,tl_*,tn_*,tr_*,ts_*,tt_*}
 	/usr/share/i18n/locales/*
-	/usr/share/X11/locale/{pt_BR*,el_GR*,zh*,ko*,ja*}
+	/usr/share/X11/locale/{fi*,pt_BR*,el_GR*,zh*,ko*,ja*}
 	/usr/share/groff/*/font/devlj4
 	/usr/share/zsh/*/functions/Completion/{AIX,Debian,Cygwin,Darwin,Mandriva,Redhat}
 	/usr/share/swig/*/{csharp,java,gcj,ruby,guile,modula3,php4}
@@ -1770,4 +1772,7 @@ livecd/rm:
 	/usr/lib/mozilla-firefox/xpidl
 	/usr/bin/fgl_glxgears
 	/usr/include/{X11,sigc++*,python*}
+	/usr/lib/cracklib_dict.*
+	/usr/share/dmraid
+	#/usr/lib/libIDL*
 

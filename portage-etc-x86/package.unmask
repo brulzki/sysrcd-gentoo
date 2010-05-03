@@ -1,4 +1,11 @@
 # ------ SystemRescueCd package.unmask ------
 =sys-apps/baselayout-2.0.1*
 =sys-boot/grub-1.98*
+=xfce-base/xfce4-panel-4.6.2-r1
+
+# XFCE
+#=xfce-base/xfce4-settings-4.7*
+#=xfce-base/xfce4-panel-4.7*
+#=xfce-base/xfconf-4.7*
+#=xfce-base/exo-0.5.2*
 

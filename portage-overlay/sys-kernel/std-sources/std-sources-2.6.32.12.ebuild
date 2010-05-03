@@ -23,7 +23,9 @@ src_unpack()
 	epatch ${FILESDIR}/std-sources-2.6.32_03-aufs2.patch.bz2 || die "std-sources aufs patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_04-reiser4.patch.bz2 || die "std-sources reiser4 patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_05-loopaes.patch.bz2 || die "std-sources loopaes patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_06-cciss-hpsa.patch.bz2 || die "std-sources cciss-hpsa patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_07-lsi-sw.patch.bz2 || die "std-sources lsi-sw patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .11-std152/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .12-std153/" Makefile
 }
 

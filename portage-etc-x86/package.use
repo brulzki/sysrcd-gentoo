@@ -1,5 +1,7 @@
 # ------ SystemRescueCd package.use ------
 sys-kernel/genkernel selinux
+xfce-base/exo -python
+xfce-base/xfconf -perl
 xfce-base/xfce4-meta -session 
 xfce-base/xfdesktop menu-plugin
 xfce-base/xfce-utils dbus -lock
@@ -12,7 +14,7 @@ app-arch/xz-utils threads -nls static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static
 app-editors/vim -gpm -minimal bash-completion perl python
 app-editors/vim-core -livecd bash-completion
-app-misc/mc -gpm -ncurses -nls X slang samba 7zip
+app-misc/mc -gpm -ncurses -nls -samba X slang 7zip
 sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
 sys-apps/util-linux crypt unicode loop-aes
 sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
@@ -22,7 +24,8 @@ sys-fs/btrfs-progs -debug-utils
 app-text/poppler-bindings gtk -qt3 -qt4 -test
 net-print/cups -perl -python
 dev-util/git -perl
-net-wireless/wpa_supplicant -dbus
+net-wireless/wpa_supplicant dbus
+net-misc/networkmanager -doc dhclient gnutls
 media-libs/freetype -bindist
 app-text/ghostscript-gpl -cups
 sys-boot/grub multislot

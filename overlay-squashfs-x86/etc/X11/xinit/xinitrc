@@ -61,7 +61,9 @@ then
     fi
 fi
 
-xset s off
-xset r 
-/usr/bin/terminal >/dev/null 2>&1 &
+[ -f /usr/bin/xset ] && /usr/bin/xset s off >/dev/null 2>&1 &
+[ -f /usr/bin/xset ] && /usr/bin/xset r >/dev/null 2>&1 &
+#[ -f /usr/bin/terminal ] && /usr/bin/terminal >/dev/null 2>&1 &
+[ -f /usr/bin/nm-applet ] && /usr/bin/nm-applet >/dev/null 2>&1 &
 exec /root/winmgr.sh >/dev/null 2>&1
+

@@ -196,6 +196,9 @@ then
 	/sbin/rc-update add netconfig2 default
 	/sbin/rc-update add tigervnc default
 	/sbin/rc-update add dostartx default
+	/sbin/rc-update add dbus default
+	/sbin/rc-update add hald default
+	/sbin/rc-update add NetworkManager default
 
 	# remove services
 	/sbin/rc-update del urandom boot
@@ -237,9 +240,6 @@ then
 		tar xfj /lib/firmware.tar.bz2 -C /lib/firmware
 		rm -f /lib/firmware.tar.bz2
 	fi
-
-	# no login in /etc/inittab
-	sed -i -e 's!agetty 38400!agetty -nl /bin/bashlogin 38400!g' ${NEWROOT}/etc/inittab
 fi
 
 echo "--> end of $0"

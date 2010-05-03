@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.2"
+VERSION="1.5.3"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.2"
+VOLNAME="sysrcd-1.5.3"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -60,7 +60,7 @@ umount /mnt/cdrom
 # ========= copy files from overlays ===========================================
 rsync -ax ${REPOBIN}/overlay-iso-x86/ "${TEMPDIR}/"
 rsync -ax ${REPOSRC}/overlay-iso-x86/isolinux/ "${TEMPDIR}/isolinux/"
-rsync -ax ${REPOBIN}/kernels-x86/ ${TEMPDIR}/isolinux/ --exclude='*.igz'
+rsync -ax ${REPOBIN}/kernels-x86/ ${TEMPDIR}/isolinux/
 cp ${REPOSRC}/overlay-squashfs-x86/root/version ${TEMPDIR}
 
 # ========= integrate the version number in f1boot.msg =========================
@@ -74,41 +74,18 @@ done
 curdir="${TEMPDIR}/isolinux"
 newramfs="${curdir}/initram-root"
 newinitrfs="${curdir}/initram.igz"
-modulesdir="${newramfs}/lib/modules"
 
 # prepare root of new initramfs
 [ -d ${newramfs} ] && rm -rf ${newramfs}
 mkdir -p ${newramfs}
 cp -a ${REPOBIN}/overlay-initramfs/* ${newramfs}/
-mkdir -p ${modulesdir}
-
-# extract the old ramdisks
-#for ker in rescuecd rescue64 altker32 altker64
-#do
-#        oldimg="${REPOBIN}/kernels-x86/${ker}.igz"
-#        newdir="${curdir}/${ker}-tmp"
-#        echo "extracting ${oldimg}..."
-#        mkdir -p "${newdir}"
-#        ( cd "${newdir}" && cat ${oldimg} | gzip -d | cpio -id 2>/dev/null )
-#done
-
-# copy {rescue64,altker32,altker64}/lib/modules to the new initramfs
-#for ker in rescuecd rescue64 altker32 altker64
-#do
-#        cp -a ${curdir}/${ker}-tmp/lib/modules/* ${modulesdir}/
-#done
 
 # copy custom busybox binary to the new initramfs
-#cp ${curdir}/rescuecd-tmp/bin/busybox ${newramfs}/bin/
 ( cd ${newramfs}/bin/ ; ln busybox sh )
 
 # update the init boot script in the initramfs
 cp ${REPOSRC}/mainfiles/linuxrc* ${newramfs}/
 cp ${REPOSRC}/mainfiles/linuxrc ${newramfs}/init
-
-# strip and compress kernel modules which are in the sysrcd.dat to save space
-find ${modulesdir} -name "*.ko" -exec strip --strip-unneeded '{}' \;
-find ${modulesdir} -name "*.ko" -exec gzip '{}' \;
 
 # build new initramfs
 echo 'building the new initramfs...'
@@ -116,11 +93,6 @@ echo 'building the new initramfs...'
 
 # remove old igz-images and tmp-dirs
 [ -d ${newramfs} ] && rm -rf ${newramfs} 
-for ker in rescuecd rescue64 altker32 altker64
-do
-        #[ -f "${curdir}/${ker}.igz" ] && rm -f "${curdir}/${ker}.igz"
-        [ -d "${curdir}/${ker}-tmp" ] && rm -rf "${curdir}/${ker}-tmp"
-done
 
 # ========= copy the new files to the pxe environment =========================
 if [ -d /tftpboot ]

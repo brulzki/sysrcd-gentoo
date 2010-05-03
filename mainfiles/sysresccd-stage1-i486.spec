@@ -3,8 +3,8 @@ version_stamp: 1.5
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100409
-source_subpath: default/stage4-i386-20100321-01
+snapshot: 20100426
+source_subpath: default/stage4-i386-20100426-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -46,6 +46,7 @@ livecd/packages:
 	app-arch/rpm2targz
 	app-arch/rzip
 	app-arch/sharutils
+	app-arch/tar
 	app-arch/unace
 	app-arch/unrar
 	app-arch/unzip
@@ -114,6 +115,7 @@ livecd/packages:
 	dev-util/pkgconfig
 	dev-util/ltrace
 	dev-util/strace
+	gnome-extra/nm-applet
 	lxde-base/lxrandr
 	media-fonts/terminus-font
 	net-analyzer/arping
@@ -143,7 +145,6 @@ livecd/packages:
 	sys-fs/mtd-utils
 	net-fs/mount-cifs
 	net-fs/nfs-utils
-	net-fs/samba
 	net-ftp/ftp
 	net-ftp/lftp
 	net-ftp/ncftp
@@ -158,6 +159,7 @@ livecd/packages:
 	net-misc/iperf
 	net-misc/iputils
 	net-misc/netkit-rsh
+	net-misc/networkmanager
 	net-misc/ntp
 	net-misc/openssh
 	net-misc/openvpn
@@ -238,6 +240,9 @@ livecd/packages:
 	sys-block/mtx
 	sys-block/nbd
 	sys-block/partclone
+	sys-block/tw_cli
+	sys-block/megarc
+	sys-block/megacli
 	=sys-block/partimage-0.6.8
 	sys-block/scsiadd
 	sys-boot/lilo
@@ -275,7 +280,6 @@ livecd/packages:
 	sys-fs/xfsprogs
 	sys-kernel/gentoo-sources
 	sys-kernel/linux-headers
-	sys-libs/libselinux
 	sys-libs/libstdc++-v3
 	sys-libs/openipmi
 	sys-libs/pam
@@ -324,10 +328,8 @@ livecd/packages:
 	xfce-extra/xfce4-wavelan-plugin
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-datetime-plugin
-	xfce-extra/xfce4-xkb-plugin
 	sys-apps/iproute2
 	www-client/elinks
-	www-client/lynx
 	www-client/firefox-bin
 	www-servers/thttpd
 

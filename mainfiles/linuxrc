@@ -225,13 +225,13 @@ sysresccd_speakup()
 
 		if [ -n "${SPEAKUP_QUIET}" ]
 		then
-			cmd="modprobe speakup quiet=${SPEAKUP_QUIET}"
+			cmd="/sbin/modprobe -b speakup quiet=${SPEAKUP_QUIET}"
 			${cmd}
 		fi
 
 		if [ -n "${SPEAKUP_SYNTH}" ]
 		then
-			cmd="modprobe speakup_${SPEAKUP_SYNTH} ${SPEAKUP_OPTIONS} start=1"
+			cmd="/sbin/modprobe -b speakup_${SPEAKUP_SYNTH} ${SPEAKUP_OPTIONS} start=1"
 			${cmd}
 		fi
 	fi
@@ -242,6 +242,9 @@ sysresccd_udev_start()
 	good_msg "Loading modules..."
 
 	echo '0' > /proc/sys/kernel/printk
+
+	# show name of modules being loaded
+	touch /showmodprobe
 
 	# Note that this only becomes /dev on the real filesystem if udev's scripts
 	# are used; which they will be, but it's worth pointing out
@@ -256,7 +259,7 @@ sysresccd_udev_start()
 	mkdir /dev/.initramfs
 
 	# Set modprobe env
-	export MODPROBE_OPTIONS="-qb"
+	#export MODPROBE_OPTIONS="-qb"
 
 	# delete the useless modules
 	ls /lib/modules | grep -v $(uname -r) | busybox xargs rm -rf
@@ -267,7 +270,7 @@ sysresccd_udev_start()
 	# load custom modules
 	for modname in ${MODLOAD}
 	do
-		modprobe ${modname}
+		/sbin/modprobe.sh -b ${modname}
 		if [ $? -eq 0 ]
 		then
 			good_msg "modprobe ${modname} successful"
@@ -279,7 +282,7 @@ sysresccd_udev_start()
 	# write blacklist to modprobe.d
 	for modname in ${BLACKLIST}
 	do
-		echo "blacklist ${modname}" >> /etc/modprobe.d/initramfs
+		echo "blacklist ${modname}" >> /etc/modprobe.d/initramfs.conf
 		good_msg "module ${modname} has been blacklisted"
 	done
 
@@ -304,7 +307,10 @@ sysresccd_udev_start()
 		modlist="${modlist}${modname}"
 		modcount=$((modcount+1))
 	done < /proc/modules
-	echo "${modlist}"
+	#echo "${modlist}"
+
+	# hide name of modules being loaded
+	rm -f /showmodprobe
 }
 
 sysresccd_udev_stop()
@@ -532,7 +538,7 @@ sysresccd_setup_volumes()
 		good_msg "Loading MD modules for software raid..."
 		for mod in linear multipath raid0 raid1 raid456 raid5 raid6 raid10
 		do
-			modprobe -q ${mod}
+			/sbin/modprobe -b ${mod}
 		done
 		good_msg "Starting mdadm (linux software raid)"
 		/sbin/mdadm -Es > /etc/mdadm.conf
@@ -912,7 +918,7 @@ sysresccd_stage2_nbd()
 		sysresccd_panic "Error: program ${NBD_PROG} not found"
 	fi
 
-	if ! modprobe nbd
+	if ! /sbin/modprobe -b nbd
 	then
 		sysresccd_panic "Error: cannot load nbd kernel module"
 	fi
@@ -1025,7 +1031,8 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 	# make directories
 	for curdir in /mnt/custom /mnt/gentoo /mnt/windows /mnt/floppy /mnt/backup \
 		/var/run/iptraf /var/log/iptraf /var/spool/cron /var/run/samba \
-		/var/log/samba /var/cache/samba /var/log/clamav /var/run/clamav
+		/var/log/samba /var/cache/samba /var/log/clamav /var/run/clamav \
+		/var/cache/hald /var/run/hald
 	do
 		mkdir -p "${NEWROOT}${curdir}"
 	done
@@ -1055,6 +1062,7 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 	echo "blacklist fbcon" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
 
 	# manage services
+	[ -n "${NONETMGR}" ] && chroot ${NEWROOT} /sbin/rc-update del NetworkManager default >/dev/null 2>&1
 	chroot ${NEWROOT} /sbin/rc-update del spind default >/dev/null 2>&1
 	chroot ${NEWROOT} /sbin/rc-update del autoconfig default >/dev/null 2>&1
 	rm -f ${NEWROOT}/etc/init.d/crypto-loop
@@ -1196,27 +1204,31 @@ sysresccd_parsecmdline()
 		init\=*)
 			INITPROG=`parse_opt "${x}"`
 			;;
-		ethx\=*)
-			SETETHX=`parse_opt "${x}"`
-			DODHCP=''
-			NETCONFIG='1'
-			;;
 		dodhcp)
 			DODHCP='1'
 			SETETHX=''
 			NETCONFIG='1'
 			;;
+		ethx\=*)
+			SETETHX=`parse_opt "${x}"`
+			DODHCP=''
+			NETCONFIG='1'
+			NONETMGR='1'
+			;;
 		dns\=*)
 			SETDNS=`parse_opt "${x}"`
 			NETCONFIG='1'
+			NONETMGR='1'
 			;;
 		gw\=*)
 			SETGW=`parse_opt "${x}"`
 			NETCONFIG='1'
+			NONETMGR='1'
 			;;
 		gateway\=*)
 			SETGW=`parse_opt "${x}"`
 			NETCONFIG='1'
+			NONETMGR='1'
 			;;
 		dhcphostname\=*)
 			DHCPHOSTNAME=`parse_opt "${x}"`
@@ -1414,6 +1426,7 @@ INITPROG='/sbin/init'
 CONSOLE='/dev/console'
 CACHEDIR='/cache'
 CACHESIZE='size=512m'
+NONETMGR=''
 
 # Start with an empty list
 BLKDEVICES=""
