@@ -1,0 +1,85 @@
+From: Colin Watson <cjwatson@ubuntu.com>
+Forwarded: no
+Last-Update: 2010-02-22
+Description: udev handling
+ Run udevadm settle around partition table rereads, to avoid races.
+ .
+ This should be replaced by a proper completion-notification mechanism
+ between the kernel and udev.
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -26,6 +26,7 @@
+ #include <parted/fdasd.h>
+ #endif
+ 
++#include <stdlib.h>
+ #include <ctype.h>
+ #include <errno.h>
+ #include <fcntl.h>
+@@ -2778,12 +2779,29 @@
+ static int
+ linux_disk_commit (PedDisk* disk)
+ {
++        int ret = 1;
++
+         if (!_has_partitions (disk))
+                 return 1;
+ 
++        /* Modern versions of udev may notice the write activity on
++         * partition devices caused by _flush_cache, and may decide to
++         * synthesise some change events as a result. These may in turn run
++         * programs that open partition devices, which will race with us
++         * trying to remove those devices. To avoid this, we need to wait
++         * until udevd has finished processing its event queue.
++         * TODO: for upstream submission, this should check whether udevadm
++         * exists on $PATH.
++         */
++        if (system ("udevadm settle") != 0) {
++                /* ignore failures */
++        }
++
+ #ifdef ENABLE_DEVICE_MAPPER
+-        if (disk->dev->type == PED_DEVICE_DM)
+-                return _dm_reread_part_table (disk);
++        if (disk->dev->type == PED_DEVICE_DM) {
++                ret = _dm_reread_part_table (disk);
++                goto out;
++        }
+ #endif
+         if (disk->dev->type != PED_DEVICE_FILE) {
+                 /* The ioctl() command BLKPG_ADD_PARTITION does not notify
+@@ -2795,14 +2813,27 @@
+                 /* Work around kernel dasd problem so we really do BLKRRPART */
+                 if (disk->dev->type != PED_DEVICE_DASD &&
+                     _have_blkpg () ) {
+-                        if (_disk_sync_part_table (disk))
+-                                return 1;
++                        if (_disk_sync_part_table (disk)) {
++                                ret = 1;
++                                goto out;
++                        }
+                 }
+ 
+-                return _kernel_reread_part_table (disk->dev);
++                ret = _kernel_reread_part_table (disk->dev);
++                goto out;
+         }
+ 
+-        return 1;
++out:
++        /* Now we wait for udevd to finish creating device nodes based on
++         * the above activity, so that callers can reliably use them.
++         * TODO: for upstream submission, this should check whether udevadm
++         * exists on $PATH.
++         */
++        if (system ("udevadm settle") != 0) {
++                /* ignore failures */
++        }
++
++        return ret;
+ }
+ 
+ #if USE_BLKID

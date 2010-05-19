@@ -16,6 +16,7 @@
 <sys-boot/grub-0.97-r9
 >sys-boot/grub-0.97-r9
 >=sys-apps/kbd-1.15
+app-text/scrollkeeper-dtd
 sys-fs/device-mapper
 app-arch/lzma-utils
 sys-apps/pcmcia-cs
@@ -34,6 +35,7 @@ sys-apps/pcmcia-cs
 >=xfce-base/xfce4-panel-4.6.2
 >=x11-base/xorg-server-1.7.0
 >=x11-base/xorg-drivers-1.7
+>=net-misc/tigervnc-1.0.1_pre1
 >=media-libs/mesa-7.6.0
 >=x11-libs/libXi-1.3.0
 >=x11-libs/libXt-1.0.8

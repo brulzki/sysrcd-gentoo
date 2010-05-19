@@ -14,7 +14,8 @@
 =sys-block/mbuffer-20090113 ~*
 =sys-apps/util-linux-2.17* ~*
 =net-misc/openvpn-2.1.0* ~*
-=sys-fs/lvm2-2.02.56* ~*
+=sys-fs/lvm2-2.02.64* ~*
+=sys-fs/udev-151* ~*
 =app-arch/p7zip-9.0* ~*
 =app-arch/tar-1.22* ~*
 app-admin/eselect ~*
@@ -34,6 +35,7 @@ sys-block/iscsitarget ~*
 sys-boot/grub **
 sys-boot/syslinux ~*
 app-admin/eselect-news ~*
+app-admin/procinfo-ng ~*
 sys-apps/lm_sensors ~*
 sys-block/scsiadd ~*
 sys-apps/gdisk ~*
@@ -62,7 +64,7 @@ sys-kernel/genkernel ~*
 =sys-cluster/drbd-kernel-8.3* ~*
 =sys-block/partimage-0.6.8* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
-=sys-fs/cryptsetup-1.1* ~*
+=sys-fs/cryptsetup-1.1.0* ~*
 =sys-fs/mdadm-3.0* ~*
 =sys-fs/mdadm-3.1* ~*
 =sys-cluster/drbd-8.3* ~*
@@ -91,6 +93,7 @@ net-wireless/madwifi-ng-tools ~*
 net-wireless/rt61-firmware ~*
 net-wireless/rt73-firmware ~*
 net-wireless/broadcom-sta ~*
+net-wireless/prism54-firmware ~*
 net-wireless/acx ~*
 
 # XFCE

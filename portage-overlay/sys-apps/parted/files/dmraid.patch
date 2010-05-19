@@ -1,0 +1,168 @@
+From: Luke Yelavich <themuso@ubuntu.com>
+Forwarded: no
+Description: DM-RAID handling
+ Ensure that device-mapper devices for DM-RAID arrays do not have extra
+ nodes created needlessly, and make sure that partition nodes for DM-RAID
+ devices are not probed.
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -266,6 +266,10 @@
+ 
+ static char* _device_get_part_path (PedDevice* dev, int num);
+ static int _partition_is_mounted_by_path (const char* path);
++#ifdef ENABLE_DEVICE_MAPPER
++static int _is_dmraid_device (char* devpath);
++static int _is_dmraid_major (char* devpath);
++#endif
+ 
+ static int
+ _read_fd (int fd, char **buf)
+@@ -483,8 +487,16 @@
+                if (stat (buf, &st) != 0)
+                        continue;
+ 
+-               if (_is_dm_major(major(st.st_rdev)))
+-                       _ped_device_probe (buf);
++               if (_is_dm_major(major(st.st_rdev))) {
++                       if (_is_dmraid_device (buf)) {
++                               if (_is_dmraid_major (buf)) {
++                                       _ped_device_probe (buf);
++                               }
++                       } else {
++                               _ped_device_probe (buf);
++                       }
++               }
++
+        }
+        closedir (mapper_dir);
+ 
+@@ -2187,6 +2199,10 @@
+         } else if (!strncmp (dev->path, "/dev/loop", 9)) {
+                 /* Loop devices can only have one partition. */
+                 strcpy (result, dev->path);
++#ifdef ENABLE_DEVICE_MAPPER
++        } else if (dev->type == PED_DEVICE_DM && _is_dmraid_device (dev->path)) {
++                snprintf (result, result_len, "%s%d", dev->path, num);
++#endif
+         } else if (dev->type == PED_DEVICE_DAC960
+                         || dev->type == PED_DEVICE_CPQARRAY
+                         || dev->type == PED_DEVICE_ATARAID
+@@ -2648,6 +2664,8 @@
+         char*           vol_name = NULL;
+         const char*     dev_name = NULL;
+         char*           params = NULL;
++        char*           dm_uuid = NULL;
++        int             uuid_len;
+         LinuxSpecific*  arch_specific = LINUX_SPECIFIC (disk->dev);
+ 
+         if (!_has_partitions(disk))
+@@ -2686,6 +2704,12 @@
+         dm_task_set_name (task, vol_name);
+         dm_task_add_target (task, 0, part->geom.length,
+                 "linear", params);
++        if (_is_dmraid_device (disk->dev->path)) {
++                uuid_len = (strlen (vol_name) + 8);
++                dm_uuid = (char*) ped_malloc (uuid_len);
++                snprintf (dm_uuid, uuid_len, "DMRAID-%s", vol_name);
++                dm_task_set_uuid (task, dm_uuid);
++        }
+         rc = dm_task_run (task);
+         if (rc >= 0) {
+                 //printf("0 %ld linear %s\n", part->geom.length, params);
+@@ -2693,6 +2717,7 @@
+                 dm_task_destroy(task);
+                 free(params);
+                 free(vol_name);
++                free(dm_uuid);
+                 return 1;
+         } else {
+                 _dm_remove_map_name(vol_name);
+@@ -2733,6 +2758,85 @@
+         }
+         return rc;
+ }
++
++/* Checks whether the given device-mapper device is part of a dmraid array,
++ * by checking for the string "DMRAID-" at the start of the UUID.
++ */
++static int
++_is_dmraid_device (char* devpath)
++{
++        struct dm_task* task = NULL;
++        int             rc = 0;
++        const char*     dmraid_uuid;
++        char*           dm_name = NULL;
++
++        dm_name = strrchr (devpath, '/');
++        if (dm_name && *dm_name && *(++dm_name))
++                dm_name = strdup (dm_name);
++        else
++                dm_name = strdup (devpath);
++        if (!dm_name)
++                return 0;
++
++        task = dm_task_create (DM_DEVICE_DEPS);
++        if (!task)
++                return 0;
++
++        dm_task_set_name (task, dm_name);
++        rc = dm_task_run (task);
++        if (rc < 0) {
++                rc = 0;
++                goto err;
++        }
++        rc = 0;
++
++        dmraid_uuid = dm_task_get_uuid (task);
++        if (strncmp (dmraid_uuid, "DMRAID-", 7) == 0) {
++                rc = 1;
++        }
++
++err:
++        free (dm_name);
++        dm_task_destroy (task);
++        return rc;
++}
++
++/* Checks whether the given dmraid device node is a partition node, or the
++ * master node. This is done by checking the /sys/block directory for the node
++ * in question, to determine whether it is a slave of another device-mapper
++ * device. The node should be confirmed as a dmraid device by calling
++ * _is_dmraid_device first.
++ */
++static int
++_is_dmraid_major (char* devpath)
++{
++        DIR*            sysfs_dir;
++        struct dirent*  dent;
++        char            dmraid_devpath [32];
++        struct stat     st;
++
++        if (stat (devpath, &st) != 0)
++                return 0;
++
++        snprintf (dmraid_devpath, 32, "/sys/block/dm-%d/slaves", minor (st.st_rdev));
++
++        sysfs_dir = opendir (dmraid_devpath);
++        if (!sysfs_dir)
++               return 0;
++
++        while ((dent = readdir (sysfs_dir))) {
++                if (strcmp (dent->d_name, ".")  == 0 ||
++                    strcmp (dent->d_name, "..") == 0)
++                       continue;
++
++                if (strncmp (dent->d_name, "dm-", 3) == 0)
++                        return 0;
++        }
++        closedir (sysfs_dir);
++
++        return 1;
++}
++
+ #endif
+ 
+ static int

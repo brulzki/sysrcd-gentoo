@@ -231,6 +231,8 @@ do_grow()
 case "$1" in
     create)
     	do_create "$2" "$3";;
+    growfs)
+    	do_grow "$2" "$3";;
     grow)
     	do_grow "$2" "$3";;
     *)

@@ -1,0 +1,29 @@
+Description: Always allow at least two sectors for extended boot record
+ Unless specifically told otherwise, the Linux kernel considers extended
+ boot records to be two sectors long, in order to "leave room for LILO".
+ When using anything other than cylinder alignment, libparted was only
+ allowing one sector in the minimum extended partition geometry, which in
+ some situations (e.g. following Phillip Susi's patch to reintroduce BLKPG)
+ could confuse the kernel into thinking that the EBR and the first logical
+ partition overlapped.
+Author: Colin Watson <cjwatson@ubuntu.com>
+Forwarded: http://lists.alioth.debian.org/pipermail/parted-devel/2010-March/003520.html
+Last-Update: 2010-03-29
+
+Index: b/libparted/labels/dos.c
+===================================================================
+--- a/libparted/labels/dos.c
++++ b/libparted/labels/dos.c
+@@ -1739,7 +1739,11 @@
+ 	min_geom = ped_geometry_duplicate (&walk->geom);
+ 	if (!min_geom)
+ 		return NULL;
+-	ped_geometry_set_start (min_geom, walk->geom.start - 1 * head_size);
++	/* We must always allow at least two sectors at the start, to leave
++	 * room for LILO.  See linux/fs/partitions/msdos.c.
++	 */
++	ped_geometry_set_start (min_geom,
++				walk->geom.start - PED_MAX (1 * head_size, 2));
+ 
+ 	for (walk = ext_part->part_list; walk; walk = walk->next) {
+ 		if (!ped_partition_is_active (walk) || walk->num == 5)

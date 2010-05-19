@@ -20,7 +20,7 @@ DEPEND="dev-util/pkgconfig
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}/fsarchiver-0.6.8-01-probe-lvm.patch"
+	#epatch "${FILESDIR}/fsarchiver-0.6.9-01-fix-ntfs-links.patch"
 	eautoconf
 }
 

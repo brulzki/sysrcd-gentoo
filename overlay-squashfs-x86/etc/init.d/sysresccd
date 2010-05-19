@@ -124,5 +124,8 @@ start()
 	# ---- fix inittab for serial consoles
 	livecd_fix_inittab
 	/sbin/telinit q &>/dev/null
+
+	# ---- mount tmpfs (important for backing store)
+	mount -t tmpfs tmpfs /tmp
 }
 

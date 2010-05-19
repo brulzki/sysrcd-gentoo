@@ -28,8 +28,22 @@ DEPEND=">=sys-fs/e2fsprogs-1.27
 	)"
 
 src_configure() {
-	#epatch "${FILESDIR}/parted-2.2-commit-usleep.patch" || die 'patch failed'
-	epatch "${FILESDIR}/parted-2.2-fix-commit-to-os.patch" || die 'patch failed'
+	#epatch "${FILESDIR}/parted-2.2-fix-commit-to-os.patch" || die 'patch failed'
+	epatch "${FILESDIR}/extended-geom.patch" || die 'patch failed'
+	epatch "${FILESDIR}/put-back-BLKPG.patch" || die 'patch failed'
+	epatch "${FILESDIR}/error-check-BLKPG.patch" || die 'patch failed'
+	epatch "${FILESDIR}/preserve-hidden-parts.patch" || die 'patch failed'
+	epatch "${FILESDIR}/update-ext4-code.patch" || die 'patch failed'
+	epatch "${FILESDIR}/linux-exports.patch" || die 'patch failed'
+	epatch "${FILESDIR}/kfreebsd-gnu.patch" || die 'patch failed'
+	epatch "${FILESDIR}/gptsync.patch" || die 'patch failed'
+	epatch "${FILESDIR}/loop-partitions.patch" || die 'patch failed'
+	epatch "${FILESDIR}/udevadm-settle.patch" || die 'patch failed'
+	epatch "${FILESDIR}/dmraid.patch" || die 'patch failed'
+	epatch "${FILESDIR}/limit-diagnostics.patch" || die 'patch failed'
+	epatch "${FILESDIR}/loop-limits.patch" || die 'patch failed'
+	epatch "${FILESDIR}/ext4-detection.patch" || die 'patch failed'
+	epatch "${FILESDIR}/update-abi-symbols.patch" || die 'patch failed'
 	econf \
 		$(use_with readline) \
 		$(use_enable nls) \

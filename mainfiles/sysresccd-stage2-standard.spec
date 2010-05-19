@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100426
+snapshot: 20100516
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -29,10 +29,11 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std153.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std154.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
+        sys-apps/sysresccd-scripts
         app-accessibility/speakup
         app-crypt/truecrypt
         net-dialup/speedtouch-usb
@@ -41,18 +42,17 @@ boot/kernel/rescuecd/packages:
         net-dialup/hsfmodem
         net-dialup/globespan-adsl
         net-misc/openswan
-        net-wireless/bcm43xx-fwcutter
-        net-wireless/b43-fwcutter
+        sys-block/aic94xx-firmware
+        net-wireless/acx-firmware
+        net-wireless/atmel-firmware
         net-wireless/ipw2100-firmware
         net-wireless/ipw2200-firmware
+        net-wireless/prism54-firmware
         net-wireless/zd1201-firmware
         net-wireless/zd1211-firmware
-        net-wireless/prism54-firmware
-        net-wireless/acx-firmware
         net-wireless/madwifi-ng-tools
-        sys-apps/sysresccd-scripts
-        sys-block/aic94xx-firmware
-        sys-kernel/linux-firmware
+        net-wireless/bcm43xx-fwcutter
+        net-wireless/b43-fwcutter
         sys-fs/lufs
         sys-fs/lufis
         sys-fs/sshfs-fuse
@@ -60,7 +60,6 @@ boot/kernel/rescuecd/packages:
         sys-block/iscsitarget
         sys-cluster/drbd
         sys-cluster/drbd-kernel
-        net-wireless/atmel-firmware
         net-wireless/ndiswrapper
         sys-apps/lm_sensors
         =sys-boot/grub-1.98

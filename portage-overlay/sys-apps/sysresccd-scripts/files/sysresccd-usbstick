@@ -354,11 +354,8 @@ do_copyfiles()
 		die "cannot move isolinux to syslinux, failed"
 	fi
 	
-	# remove the last lines which produces error messages 'bad keyword' with syslinux
-	sed -i -e '/label disk[1-2]$/d' -e '/label floppy$/d' -e '/label nextboot$/d' -e '/localboot/d' /mnt/usbstick/syslinux/syslinux.cfg
-	
 	# add scandelay option which allows the usb devices to be detected
-	sed -i -e 's!initrd=initram.igz!initrd=initram.igz scandelay=5!g' /mnt/usbstick/syslinux/syslinux.cfg
+	sed -i -e 's!scandelay=1!scandelay=5!g' /mnt/usbstick/syslinux/syslinux.cfg
 	
 	umount /mnt/usbstick
 }

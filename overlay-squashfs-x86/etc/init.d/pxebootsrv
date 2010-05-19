@@ -120,7 +120,8 @@ start()
 		fi
 
 		# ---- prepare pxelinux config file
-		rm -f /tftpboot/pxelinux.cfg/default.bak
+		[ ! -d /tftpboot/pxelinux.cfg ] && mkdir -p /tftpboot/pxelinux.cfg
+		[ -f /tftpboot/pxelinux.cfg/default.bak ] && rm -f /tftpboot/pxelinux.cfg/default.bak
 		[ -f /tftpboot/pxelinux.cfg/default ] && mv /tftpboot/pxelinux.cfg/default /tftpboot/pxelinux.cfg/default.bak
 		cp ${bootdir}/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
 		#sed -i -e "s!cdroot!cdroot scandelay=5 boothttp=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default

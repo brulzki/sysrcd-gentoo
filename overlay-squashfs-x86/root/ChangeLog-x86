@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.5.4 (2010-05-19):
+-----------------------------------------------------------------------------
+* Updated alternative kernels to 2.6.33.04 (altker32 + altker64)
+* Updated standard kernels to 2.6.32.13 (rescuecd + rescue64)
+* Updated fsarchiver to 0.6.10 (fixes several bugs)
+* Updated parted-2.2 with patches from ubuntu lucid
+* Updated the memtest86+ to 4.10 (memory tester and hardware info program)
+* Updated firmware package to linux-firmware-20100430.tar.bz2
+* Disable Network-Manager when PXE / network boot options are used
+* Fixed problem with firmware files in the initramfs (thanks to cm)
+* Fixed the pxe-boot-server service (empty directory was missing)
+
+-----------------------------------------------------------------------------
 1.5.3 (2010-05-03)
 -----------------------------------------------------------------------------
 * Added Network-Manager to make network configuration easier (especially wireless)

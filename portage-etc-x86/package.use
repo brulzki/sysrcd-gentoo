@@ -19,6 +19,7 @@ sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
 sys-apps/util-linux crypt unicode loop-aes
 sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
 gnome-extra/libgsf -python
+app-editors/qemacs -png
 sys-fs/ntfs3g -external-fuse
 sys-fs/btrfs-progs -debug-utils
 app-text/poppler-bindings gtk -qt3 -qt4 -test

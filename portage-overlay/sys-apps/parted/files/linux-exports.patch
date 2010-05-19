@@ -1,0 +1,27 @@
+From: Colin Watson <cjwatson@ubuntu.com>
+Forwarded: http://lists.alioth.debian.org/pipermail/parted-devel/2010-February/003438.html
+Last-Update: 2010-02-26
+Description: Don't export functions only used via linux_dev_ops.
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -2803,7 +2803,7 @@
+ }
+ 
+ #if USE_BLKID
+-PedAlignment*
++static PedAlignment*
+ linux_get_minimum_alignment(const PedDevice *dev)
+ {
+         blkid_topology tp = LINUX_SPECIFIC(dev)->topology;
+@@ -2821,7 +2821,7 @@
+                 blkid_topology_get_minimum_io_size(tp) / dev->sector_size);
+ }
+ 
+-PedAlignment*
++static PedAlignment*
+ linux_get_optimum_alignment(const PedDevice *dev)
+ {
+         blkid_topology tp = LINUX_SPECIFIC(dev)->topology;

@@ -1,0 +1,21 @@
+From: Colin Watson <cjwatson@ubuntu.com>
+Forwarded: no
+Last-Update: 2010-02-22
+Description: Loop device naming
+ Loop devices can only have one partition, so don't generate device names
+ such as "/dev/loop0p1".
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -2183,6 +2183,9 @@
+                 /* replace /disc with /path%d */
+                 strcpy (result, dev->path);
+                 snprintf (result + path_len - 5, 16, "/part%d", num);
++        } else if (!strncmp (dev->path, "/dev/loop", 9)) {
++                /* Loop devices can only have one partition. */
++                strcpy (result, dev->path);
+         } else if (dev->type == PED_DEVICE_DAC960
+                         || dev->type == PED_DEVICE_CPQARRAY
+                         || dev->type == PED_DEVICE_ATARAID
