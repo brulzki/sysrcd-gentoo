@@ -6,7 +6,24 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
-1.5.4 (2010-05-19):
+1.5.5 (2010-06-01)
+-----------------------------------------------------------------------------
+* Updated alternative kernels to 2.6.33.05 (altker32 + altker64)
+* Updated standard kernels to 2.6.32.14 (rescuecd + rescue64)
+* Updated ntfs3g to 2010.5.16 (driver that provides read-write access to ntfs)
+* New program to install SystemRescueCd on a usb/removable device from Windows
+* New script to install SystemRescueCd on a usb/removable device from Linux
+* sysresccd-usbstick can also be executed from a USB stick not just from cdrom
+* The ISO image is now hybrid so it can be copied to an usb stick using dd
+* Fixes in the /etc/init.d/pxebootsrv service (provide a PXE boot server)
+* Built-in support for NFS filesystem in rescue64 to fix PXE boot issues
+* pxebootsrv can be used as an NFS server for PXE booting SystemRescueCd
+* New boot option "nodhcp" to disable automatic dhcp in PXE boot (thanks to cm)
+* New boot option "nonm" to disable the Network-Manager service
+* Improved detection of the network link status for PXE network booting
+
+-----------------------------------------------------------------------------
+1.5.4 (2010-05-19)
 -----------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.33.04 (altker32 + altker64)
 * Updated standard kernels to 2.6.32.13 (rescuecd + rescue64)

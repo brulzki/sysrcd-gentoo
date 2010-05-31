@@ -27,7 +27,7 @@ start()
 	CMDLINE="$(cat /proc/cmdline)"
 
 	# ---- run DHCP if asked on cmdline (dodhcp) ----
-	# we must run dhcp from bashlogin even if it has already been done in linuxrc since it updates
+	# we must run dhcp from bashlogin even if it has already been done in the initramfs since it updates
 	# system files such as resolv.conf
 	if echo "${CMDLINE}" | grep -q -F 'dodhcp'
 	then

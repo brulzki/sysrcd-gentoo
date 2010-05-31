@@ -9,6 +9,8 @@ app-cdr/xfburn -hal dbus xfce -gstreamer
 sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce -debug -gnome -kde 
 sys-apps/parted device-mapper readline
 sys-apps/smartmontools minimal
+net-libs/webkit-gtk -gstreamer -doc -test
+www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 app-arch/xz-utils threads -nls static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static

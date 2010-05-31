@@ -4,4 +4,3 @@
 ####################################################
 tmpfs		/				tmpfs	defaults	0 0
 /dev/fd0	/mnt/floppy			auto	noauto		0 0
-#tmpfs		/lib/firmware			tmpfs	defaults	0 0

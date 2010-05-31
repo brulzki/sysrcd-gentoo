@@ -13,15 +13,11 @@ start()
 	ebegin "Starting the pxe-boot-server"
 
 	# ---- check the cdrom files exist
-	for curfile in sysrcd.dat isolinux/rescuecd isolinux/initram.igz isolinux/isolinux.cfg
-	do
-		cur="${bootdir}/$curfile"
-		if [ ! -f $cur ]
-		then
-			eerror "File \"$cur\" does not exists. Cannot start the pxebootsrv daemon."
-			return 1
-		fi
-	done
+	if ! ls -l ${bootdir}/sysrcd.dat ${bootdir}/???linux/???linux.cfg >/dev/null 2>&1
+	then
+		eerror "Files are missing, please check you are running a valid SystemRescueCd"
+		return 1
+	fi
 
 	# ---- check the config file exists
 	if [ ! -f /etc/conf.d/pxebootsrv ]
@@ -46,6 +42,12 @@ start()
 	if [ $PXEBOOTSRV_DOHTTPD != "yes" ] && [ $PXEBOOTSRV_DOHTTPD != "no" ]
 	then
 		eerror "Invalid value for PXEBOOTSRV_DOHTTPD. Must be \"yes\" or \"no\" (lowercase)."
+		return 1
+	fi
+
+	if [ $PXEBOOTSRV_DONFSD != "yes" ] && [ $PXEBOOTSRV_DONFSD != "no" ]
+	then
+		eerror "Invalid value for PXEBOOTSRV_DONFSD. Must be \"yes\" or \"no\" (lowercase)."
 		return 1
 	fi
 
@@ -96,44 +98,32 @@ start()
 
 	if [ $PXEBOOTSRV_DOTFTPD == "yes" ]
 	then
-		# ---- copy all files in isolinux to /tftpboot/
-		for curfile in ${bootdir}/isolinux/*
-		do
-			if [ -f $curfile ] # if not a directory
-			then
-				cp $curfile /tftpboot/ --remove-destination
-				if [ ! "$?" -eq '0' ]
-				then
-					eerror "Cannot copy \"$curfile\" to /tftpboot/. Memory probably missing."
-					return 1
-				fi
-			fi
-		done
-
-		# ---- copy the bootdisks to /tftpboot/
-		cp -r --remove-destination ${bootdir}/bootdisk /tftpboot/
-		if [ ! "$?" -eq '0' ]
-		then
-			rm -rf /tftpboot/bootdisk
-			eerror "Cannot copy the bootdisk directory to /tftpboot/. Memory probably missing."
-			return 1
-		fi
-
 		# ---- prepare pxelinux config file
 		[ ! -d /tftpboot/pxelinux.cfg ] && mkdir -p /tftpboot/pxelinux.cfg
+		[ ! -f /tftpboot/pxelinux.0 ] && cp /usr/share/syslinux/pxelinux.0 /tftpboot/
 		[ -f /tftpboot/pxelinux.cfg/default.bak ] && rm -f /tftpboot/pxelinux.cfg/default.bak
 		[ -f /tftpboot/pxelinux.cfg/default ] && mv /tftpboot/pxelinux.cfg/default /tftpboot/pxelinux.cfg/default.bak
-		cp ${bootdir}/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
-		#sed -i -e "s!cdroot!cdroot scandelay=5 boothttp=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
-		sed -i -e "s!append!append scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
-		cp ${bootdir}/isolinux/*.msg /tftpboot/
+		cp --remove-destination ${bootdir}/???linux/{*msg,*c32,*.0,memdisk,netboot} /tftpboot/
+		cp --remove-destination ${bootdir}/???linux/???linux.cfg /tftpboot/pxelinux.cfg/default
+		sed -i -e "s!scandelay=1!scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
 		if [ ! "$?" -eq '0' ]
 		then
 			eerror "Cannot copy *.msg to /tftpboot/. Memory probably missing."
 			return 1
 		fi
-
 	fi
+
+	# ---- start the NFS server
+	if [ $PXEBOOTSRV_DONFSD == "yes" ]
+	then
+		# ---- nfs export /tftpboot
+		touch /etc/exports
+		sed -i -e 's!^/tftpboot!#/tftpboot!g' /etc/exports
+		echo "/tftpboot *(fsid=0,ro,no_subtree_check,all_squash,insecure,anonuid=1000,anongid=1000)" >> /etc/exports
+	fi
+
+	# ---- stop network manager to avoid conflicts
+	/etc/init.d/NetworkManager stop
 
 	# ---- start the DHCPD service
 	if [ $PXEBOOTSRV_DODHCPD == "yes" ]
@@ -166,6 +156,18 @@ start()
 			eerror "Cannot start /etc/init.d/in.tftpd"
 			return 1
 		fi 
+	fi
+
+	# ---- start the NFS server
+	if [ $PXEBOOTSRV_DONFSD == "yes" ]
+	then
+                /etc/init.d/nfs restart
+		if [ "$?" != "0" ]
+		then
+			eerror "Cannot start /etc/init.d/nfs"
+			return 1
+		fi
+
 	fi
 	
 	return 0

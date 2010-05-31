@@ -13,7 +13,10 @@
 =xfce-base/xfce4-panel-4.6.1 **
 =sys-block/mbuffer-20090113 ~*
 =sys-apps/util-linux-2.17* ~*
+=x11-terms/terminal-0.4.5* ~*
+=sys-devel/binutils-2.19* ~*
 =net-misc/openvpn-2.1.0* ~*
+=www-client/midori-0.2.5* ~*
 =sys-fs/lvm2-2.02.64* ~*
 =sys-fs/udev-151* ~*
 =app-arch/p7zip-9.0* ~*
@@ -55,7 +58,6 @@ sys-fs/lde ~*
 sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
-sys-kernel/linux-firmware ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems

@@ -17,11 +17,11 @@ start()
 	# ---- create file /var/log/lastlog so that ssh does not complain in the logs ----
 	touch /var/log/lastlog
 
-	# ---- create dir /var/log/samba so that samba is happy ----
+	# ---- create various directories ----
 	mkdir -p /var/log/samba
-	
-	# ---- create several directories
 	mkdir -p /var/cache/revdep-rebuild
+	mkdir -p /var/run/dhcp
+	chown dhcp:dhcp /var/run/dhcp
 
 	# ---- disable screensaver in the console
 	setterm -blank 0 -powersave off

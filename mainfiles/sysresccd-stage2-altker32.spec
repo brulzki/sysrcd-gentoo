@@ -3,7 +3,7 @@ version_stamp: 1.5-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100516
+snapshot: 20100525
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -15,7 +15,6 @@ livecd/splash_type:
 livecd/splash_theme: 
 livecd/bootargs: dokeymap
 livecd/gk_mainargs: --makeopts="-j5" --integrated-initramfs
-livecd/linuxrc: /worksrc/sysresccd-src/mainfiles/linuxrc
 livecd/type: generic-livecd
 livecd/readme:
 livecd/motd: 
@@ -29,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: altker32
 
 boot/kernel/altker32/sources: sys-kernel/alt-sources
-boot/kernel/altker32/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.33-alt154.conf
+boot/kernel/altker32/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.33-alt155.conf
 boot/kernel/altker32/use: pcmcia usb -X png truetype 
 boot/kernel/altker32/extraversion: i386
 boot/kernel/altker32/initramfs_overlay: /worksrc/sysresccd-src/overlay-initramfs

@@ -30,6 +30,8 @@ PXEBOOTSRV_DODHCPD="yes"
 PXEBOOTSRV_DOTFTPD="yes"
 # Set to "yes" if you want this machine to act as an HTTP server
 PXEBOOTSRV_DOHTTPD="yes"
+# Set to "yes" if you want this machine to act as an NFS server
+PXEBOOTSRV_DONFSD="no"
 
 # Here is a typical PXE-Boot configuration --> update with your settings
 PXEBOOTSRV_SUBNET="192.168.1.0"                    # Used only if PXEBOOTSRV_DODHCPD="yes"

@@ -125,8 +125,6 @@ sysresccd_terminal()
 {
 	/bin/consolechars -f /usr/share/consolefonts/ter-v16b.psf
 	kbd_mode -u
-	#/bin/consolechars -f /lat0-sun16.psf
-	#dumpkeys | loadkeys --unicode
 }
 
 sysresccd_debug()
@@ -258,9 +256,6 @@ sysresccd_udev_start()
 	> /dev/.initramfs-tools
 	mkdir /dev/.initramfs
 
-	# Set modprobe env
-	#export MODPROBE_OPTIONS="-qb"
-
 	# delete the useless modules
 	ls /lib/modules | grep -v $(uname -r) | busybox xargs rm -rf
 
@@ -307,7 +302,6 @@ sysresccd_udev_start()
 		modlist="${modlist}${modname}"
 		modcount=$((modcount+1))
 	done < /proc/modules
-	#echo "${modlist}"
 
 	# hide name of modules being loaded
 	rm -f /showmodprobe
@@ -332,7 +326,7 @@ sysresccd_netconfig()
 	/sbin/ifconfig lo 127.0.0.1
 
 	# ---- force dhcp if booting via pxe and no static configuration specified
-	if [ "${NETCONFIG}" = '1' ] && [ -z "${SETETHX}" ]
+	if [ "${NETCONFIG}" = '1' ] && [ -z "${SETETHX}${NODHCP}" ]
 	then
 		DODHCP='1'
 	fi
@@ -477,13 +471,21 @@ sysresccd_netconfig()
 			do
 				# Try to find whether or not the link is connected
 				mac=$(ifconfig ${cureth} | grep HWaddr | awk '{print $5}')
-				if [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qF 'link ok'
+				linkstate=''
+				if [ -z "${linkstate}" ] && [ -f /sbin/ethtool ] && /sbin/ethtool ${cureth} 2>/dev/null | grep -qiF 'Link detected: yes'
 				then
 					linkstate='link-ok'
-				elif [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qF 'no link'
+				fi
+				if [ -z "${linkstate}" ] && [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qiF 'link ok'
+				then
+					linkstate='link-ok'
+				fi
+				if [ -z "${linkstate}" ] && [ -f /sbin/mii-tool ] && /sbin/mii-tool ${cureth} 2>/dev/null | grep -qiF 'no link'
 				then
 					linkstate='no-link'
-				else # if not sure, set linkstate='unknown'
+				fi
+				if [ -z "${linkstate}" ]
+				then
 					linkstate='unknown'
 				fi
 				echo "--- ${cureth}: link=${linkstate}, mac=${mac}"
@@ -879,13 +881,13 @@ sysresccd_stage1_normal()
 			SUBDIR=''
 
 			# cache other files if possible
-			if [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/isolinux ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
+			if [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
 			then
-				good_msg "Copying isolinux + bootdisk + ntpasswd for caching..."
-				if ! cp -a ${BOOTPATH}/${SUBDIR}/isolinux ${BOOTPATH}/${SUBDIR}/bootdisk ${BOOTPATH}/${SUBDIR}/ntpasswd ${CACHEDIR}/ #2>/dev/null
+				good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd for caching..."
+				if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk ${BOOTPATH}/${SUBDIR}/ntpasswd ${CACHEDIR}/
 				then
-				    rm -rf ${CACHEDIR}/{isolinux,bootdisk,ntpasswd}
-				    bad_msg "Cannot cache isolinux and bootdisk. Likely due to lack of memory"
+				    rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd
+				    bad_msg "Cannot cache these directories (required only for pxebootsrv). Likely due to lack of memory"
 				fi
 			fi
 
@@ -1024,8 +1026,39 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 	autoruns="$(ls -d ${CACHEDIR}/autorun* 2>/dev/null)"
 	[ "$autoruns" != "" ] && cp $autoruns ${NEWROOT}/var/autorun/cdrom
 
+	# 5. create the aufs filesystem for /tftpboot
+	TFTPBOOT_MEM='/tftpmem'
+	TFTPBOOT_DIR='/tftpboot'
+	mkdir -p ${TFTPBOOT_MEM}
+	mkdir -p ${TFTPBOOT_DIR}
+	if ! mount -t tmpfs tmpfs ${TFTPBOOT_MEM} -o size=512m
+	then
+		sysresccd_panic "Fatal error: cannot mount tmp filesystem on ${TFTPBOOT_MEM}"
+	fi
+
+	if ! mount -t aufs none ${TFTPBOOT_DIR} -o dirs=${TFTPBOOT_MEM}=rw:${BOOTPATH}=ro
+	then
+		bad_msg "Cannot prepare ${TFTPBOOT_DIR} for pxebootsrv"
+	fi
+
+	if [ -f ${BOOTPATH}/isolinux/isolinux.cfg ]
+	then
+		isolinux_dir="isolinux"
+	elif [ -f ${BOOTPATH}/syslinux/syslinux.cfg ]
+	then
+		isolinux_dir="syslinux"
+	fi
+
+	if [ -n "${isolinux_dir}" ]
+	then
+		for curfile in initram.igz rescuecd rescue64 altker32 altker64
+		do
+			ln -s ${isolinux_dir}/${curfile} ${TFTPBOOT_DIR}/${curfile}
+		done
+	fi
+
 	# 5. move filesystems mount points to the newroot
-	for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE}
+	for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE} ${TFTPBOOT_MEM}
 	do
 		targetdir="${NEWROOT}/livemnt/${mntdir}"
 		if cat /proc/mounts | awk '{print $2}' | grep -q "^${mntdir}$"
@@ -1038,6 +1071,11 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 			fi
 		fi
 	done
+	
+	if ! mount -n --move ${TFTPBOOT_DIR} ${NEWROOT}${TFTPBOOT_DIR}
+	then
+		bad_msg "Cannot move [${TFTPBOOT_DIR}] -> [${NEWROOT}${TFTPBOOT_DIR}]"
+	fi
 
 	# make directories
 	for curdir in /mnt/custom /mnt/gentoo /mnt/windows /mnt/floppy /mnt/backup \
@@ -1221,6 +1259,9 @@ sysresccd_parsecmdline()
 			NETCONFIG='1'
 			NONETMGR='1'
 			;;
+		nodhcp)
+			NODHCP='1'
+			;;
 		ethx\=*)
 			SETETHX=`parse_opt "${x}"`
 			DODHCP=''
@@ -1323,6 +1364,12 @@ sysresccd_parsecmdline()
 		minishell)
 			MINISHELL='1'
 			;;
+		nonm)
+			NONETMGR='1'
+			;;
+		nonetman)
+			NONETMGR='1'
+			;;
 		httpboot\=*) # for compatibility only
 			HTTPBOOT=`parse_opt "${x}"`
 			STAGE0='http'
@@ -1374,9 +1421,9 @@ sysresccd_init()
 	# only run as an init program
 	if [ "$$" != '1' ]
 	then
-		echo '/linuxrc has to be run as the init process as the one'
-		echo 'with a PID of 1. Try adding init="/linuxrc" to the'
-		echo 'kernel command line or running "exec /linuxrc".'
+		echo '/init has to be run as the init process as the one'
+		echo 'with a PID of 1. Try adding init="/init" to the'
+		echo 'kernel command line or running "exec /init".'
 		exit 1
 	fi
 
@@ -1430,6 +1477,7 @@ NBDBOOT=''
 ISOLOOP=''
 ISOLOOPDEV=''
 DODHCP=''
+NODHCP=''
 ROOTFS=''
 SUBDIR=''
 SPEAKUP=''

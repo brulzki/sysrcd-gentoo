@@ -24,6 +24,6 @@ src_unpack()
 	epatch ${FILESDIR}/alt-sources-2.6.33_04-reiser4.patch.bz2 || die "reiser4 patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.33_05-loopaes.patch.bz2 || die "loopaes patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .04-alt154/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .05-alt155/" Makefile
 }
 

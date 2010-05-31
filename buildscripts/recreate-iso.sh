@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.4"
+VERSION="1.5.5"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.4"
+VOLNAME="sysrcd-1.5.5"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -59,7 +59,7 @@ umount /mnt/cdrom
 
 # ========= copy files from overlays ===========================================
 rsync -ax ${REPOBIN}/overlay-iso-x86/ "${TEMPDIR}/"
-rsync -ax ${REPOSRC}/overlay-iso-x86/isolinux/ "${TEMPDIR}/isolinux/"
+rsync -ax ${REPOSRC}/overlay-iso-x86/ "${TEMPDIR}/"
 rsync -ax ${REPOBIN}/kernels-x86/ ${TEMPDIR}/isolinux/
 cp ${REPOSRC}/overlay-squashfs-x86/root/version ${TEMPDIR}
 
@@ -84,8 +84,7 @@ cp -a ${REPOBIN}/overlay-initramfs/* ${newramfs}/
 ( cd ${newramfs}/bin/ ; ln busybox sh )
 
 # update the init boot script in the initramfs
-cp ${REPOSRC}/mainfiles/linuxrc* ${newramfs}/
-cp ${REPOSRC}/mainfiles/linuxrc ${newramfs}/init
+cp ${REPOSRC}/mainfiles/init ${newramfs}/init
 
 # build new initramfs
 echo 'building the new initramfs...'
@@ -108,6 +107,7 @@ ISOFILE="${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.iso"
 if [ "${CURARCH}" = "x86" ] || [ "${CURARCH}" = "amd64" ]
 then
 	mkisofs -J -l -V ${VOLNAME} -input-charset utf-8 -o ${ISOFILE} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ${TEMPDIR}
+	/usr/bin/isohybrid ${ISOFILE}
 fi
 
 if [ "${CURARCH}" = "sparc" ]
