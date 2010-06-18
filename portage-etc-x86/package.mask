@@ -1,9 +1,12 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
+>=dev-lang/python-3.0
 >=sys-kernel/std-sources-2.6.33
+>=sys-kernel/alt-sources-2.6.35
+<sys-kernel/alt-sources-2.6.34
 >=sys-kernel/gentoo-sources-2.6.33
->=sys-kernel/linux-headers-2.6.33
+>=sys-kernel/linux-headers-2.6.35
 <sys-kernel/genkernel-3.4.10-r1
 >sys-kernel/genkernel-3.4.10-r1
 
@@ -15,6 +18,7 @@
 <sys-boot/grub-0.97-r9
 >sys-boot/grub-0.97-r9
 >=sys-apps/kbd-1.15
+>=sys-apps/parted-2.3
 app-text/scrollkeeper-dtd
 sys-fs/device-mapper
 app-arch/lzma-utils
@@ -26,6 +30,7 @@ sys-apps/pcmcia-cs
 >www-servers/thttpd-2.25b-r7
 
 # fix problems
+>=x11-drivers/xf86-video-geode-2.11.4
 >=x11-drivers/xf86-video-intel-2.8.0
 >=x11-drivers/xf86-video-vmware-11.0
 >=x11-drivers/xf86-video-ati-6.12.6

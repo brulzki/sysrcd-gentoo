@@ -126,13 +126,13 @@ do_extract()
 	rm -rf /mnt/custom/customcd/isoroot/*
 	
 	# ---- copy critical files and directories
-	for curfile in version isolinux 
+	for curfile in version isolinux
 	do
 		cp -a /livemnt/boot/${curfile} /mnt/custom/customcd/isoroot/ || die "copy: cannot copy ${curfile} to /mnt/custom/customcd/isoroot/"
 	done
 	
 	# ---- copy optionnal files and directories
-	for curfile in bootprog bootdisk ntpasswd
+	for curfile in bootprog bootdisk ntpasswd usb_inst usb_inst.sh usbstick.htm
 	do
 		if ! cp -a /livemnt/boot/${curfile} /mnt/custom/customcd/isoroot/ 2>/dev/null
 		then
@@ -206,7 +206,7 @@ do_setkmap()
 
 	# Set keymap in isolinux.cfg
 	cp /mnt/custom/customcd/isoroot/isolinux/isolinux.cfg /mnt/custom/customcd/isoroot/isolinux/isolinux.bak
-	sed -i -r -e "s:setkmap=[a-z0-9]+ ::g ; s:append:append setkmap=${KEYMAP}:g" /mnt/custom/customcd/isoroot/isolinux/isolinux.cfg
+	sed -i -r -e "s: setkmap=[a-z0-9]+::g ; s:APPEND:APPEND setkmap=${KEYMAP}:gi" /mnt/custom/customcd/isoroot/isolinux/isolinux.cfg
 } 
 
 ## MAIN FUNCTIONS: Create the new ISO image

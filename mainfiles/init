@@ -293,16 +293,16 @@ sysresccd_udev_start()
 	sleep 3 # sleep 3 seconds anyway: most USB devices just need it to initialize
 	[ -n "${SCANDELAY}" ] && good_msg "Waiting ${SCANDELAY} seconds..." && sleep ${SCANDELAY}
 
-	# show list of modules which have been loaded
-	modcount=0
-	modlist=''
-	while read modname details
-	do
-		[ ${modcount} -ge 1 ] && modlist="${modlist}, "
-		modlist="${modlist}${modname}"
-		modcount=$((modcount+1))
-	done < /proc/modules
-
+	# reload the tg3 driver (https://bugzilla.redhat.com/show_bug.cgi?id=525966#c19)
+	if grep -q ^tg3 /proc/modules && grep -q reload /proc/cmdline
+	then
+		echo "Reloading module tg3 ..."
+		modprobe -r tg3
+		modprobe broadcom
+		modprobe tg3
+		echo "Module tg3 has been reloaded"
+	fi
+	
 	# hide name of modules being loaded
 	rm -f /showmodprobe
 }
@@ -883,10 +883,11 @@ sysresccd_stage1_normal()
 			# cache other files if possible
 			if [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
 			then
-				good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd for caching..."
-				if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk ${BOOTPATH}/${SUBDIR}/ntpasswd ${CACHEDIR}/
+				good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd + usb_inst for caching..."
+				if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk \
+					${BOOTPATH}/${SUBDIR}/ntpasswd ${BOOTPATH}/${SUBDIR}/usb_inst* ${CACHEDIR}/
 				then
-				    rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd
+				    rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd ${CACHEDIR}/usb_inst*
 				    bad_msg "Cannot cache these directories (required only for pxebootsrv). Likely due to lack of memory"
 				fi
 			fi
@@ -1166,6 +1167,7 @@ sysresccd_stage0_isoloop() # losetup the iso image on /dev/loop0
 	if losetup /dev/loop0 ${ISOSTORE}/${SUBDIR}/${ISOLOOP}
 	then
 		good_msg "Loopback device configured with ${ISOSTORE}/${SUBDIR}/${ISOLOOP}"
+		BLKDEVICES="$BLKDEVICES /dev/loop0"
 	else
 		bad_msg "Cannot configure /dev/loop0 with ${ISOSTORE}/${SUBDIR}/${ISOLOOP}"
 	fi
@@ -1500,8 +1502,6 @@ NONETMGR=''
 
 # Start with an empty list
 BLKDEVICES=""
-# Loopback devices (used for isoloop=xxx)
-BLKDEVICES="$BLKDEVICES /dev/loop0"
 # CDROM DEVICES
 BLKDEVICES="$BLKDEVICES /dev/cdroms/* /dev/ide/cd/* /dev/sr*"
 # USB Keychain/Storage

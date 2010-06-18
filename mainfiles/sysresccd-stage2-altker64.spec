@@ -3,7 +3,7 @@ version_stamp: 1.5-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100525
+snapshot: 20100611
 source_subpath: default/livecd-stage1-amd64-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -28,14 +28,14 @@ livecd/volid: sysresccd
 boot/kernel: altker64
 
 boot/kernel/altker64/sources: sys-kernel/alt-sources
-boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-amd64-2.6.33-alt155.conf
+boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-amd64-2.6.34-alt156.conf
 boot/kernel/altker64/use: pcmcia usb -X png truetype 
 boot/kernel/altker64/extraversion: amd64
 boot/kernel/altker64/initramfs_overlay: /worksrc/sysresccd-src/overlay-initramfs
 boot/kernel/altker64/packages:
-	app-accessibility/speakup
 	net-dialup/hsfmodem
 	net-dialup/globespan-adsl
 	net-misc/openswan
 	net-wireless/ndiswrapper
+	#app-accessibility/speakup
 

@@ -90,7 +90,7 @@ start()
 			sed -i -e "s/next-server 192.168.1.5;/next-server $PXEBOOTSRV_TFTPSERVER;/" /etc/dhcp/dhcpd.conf
 		fi
 	
-		if [ ! -z "$PXEBOOTSRV_DNS" ]
+		if [ -n "$PXEBOOTSRV_DNS" ]
 		then
 			sed -i -e "s/option domain-name-servers 192.168.1.254;/option domain-name-servers $PXEBOOTSRV_DNS;/" /etc/dhcp/dhcpd.conf
 		fi
@@ -105,12 +105,11 @@ start()
 		[ -f /tftpboot/pxelinux.cfg/default ] && mv /tftpboot/pxelinux.cfg/default /tftpboot/pxelinux.cfg/default.bak
 		cp --remove-destination ${bootdir}/???linux/{*msg,*c32,*.0,memdisk,netboot} /tftpboot/
 		cp --remove-destination ${bootdir}/???linux/???linux.cfg /tftpboot/pxelinux.cfg/default
-		sed -i -e "s!scandelay=1!scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER!g" /tftpboot/pxelinux.cfg/default
-		if [ ! "$?" -eq '0' ]
+		if [ -n "$PXEBOOTSRV_TIMEOUT" ]
 		then
-			eerror "Cannot copy *.msg to /tftpboot/. Memory probably missing."
-			return 1
+			sed -i -e "s!^TIMEOUT .*!TIMEOUT $PXEBOOTSRV_TIMEOUT!i" /tftpboot/pxelinux.cfg/default
 		fi
+		sed -i -e "s!scandelay=1!scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER ${PXEBOOTSRV_EXTRA}!g" /tftpboot/pxelinux.cfg/default
 	fi
 
 	# ---- start the NFS server

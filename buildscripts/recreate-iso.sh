@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.5"
+VERSION="1.5.6"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.5"
+VOLNAME="sysrcd-1.5.6"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -107,7 +107,7 @@ ISOFILE="${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.iso"
 if [ "${CURARCH}" = "x86" ] || [ "${CURARCH}" = "amd64" ]
 then
 	mkisofs -J -l -V ${VOLNAME} -input-charset utf-8 -o ${ISOFILE} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ${TEMPDIR}
-	/usr/bin/isohybrid ${ISOFILE}
+	#/usr/bin/isohybrid ${ISOFILE}
 fi
 
 if [ "${CURARCH}" = "sparc" ]
@@ -116,5 +116,9 @@ then
 fi
 
 # ========= prepare the backup ==================================================
-tar cfjp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.bz2" /worksrc/sysresccd-src /worksrc/sysresccd-bin --exclude='.git'
+tar cfjp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.bz2" /worksrc/sysresccd-{src,bin,win*} --exclude='.git'
+
+# ========= force recompilation of sys-apps/sysresccd-scripts ===================
+rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-apps/sysresccd-*.tbz2
+rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-kernel/genkernel-*.tbz2
 

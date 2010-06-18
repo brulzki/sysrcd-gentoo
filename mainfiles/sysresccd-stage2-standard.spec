@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100525
+snapshot: 20100611
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std155.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std156.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -274,7 +274,7 @@ livecd/rm:
 	/usr/share/gtk-2.0
 	/usr/bin/{addr2line,as,bashcomp-config,gfortran*,gmsgfmt,gprof}
 	/usr/bin/{idle,ifnames,kernel-config,lex}
-	/usr/bin/{pydoc,rc-config,readelf,rpm2tar,size,tclsh,wish}
+	/usr/bin/{pydoc,rc-config,rpm2tar,size,tclsh,wish}
 	/usr/bin/{yacc,gtk-demo,cdda2wav,readcd,htmltopng}
 	/usr/bin/{repoman,tbz2tool,xpak}
 	/usr/lib/{libltdl.so,libtcl*,libtk*}
@@ -1768,5 +1768,4 @@ livecd/rm:
 	/usr/include/{X11,sigc++*,python*}
 	/usr/lib/cracklib_dict.*
 	/usr/share/dmraid
-	#/usr/lib/libIDL*
 

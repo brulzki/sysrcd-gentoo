@@ -46,3 +46,8 @@ PXEBOOTSRV_LOCALIP="192.168.1.5"
 PXEBOOTSRV_TFTPSERVER="$PXEBOOTSRV_LOCALIP"        # IP address of the TFTP server if PXEBOOTSRV_DODHCPD="yes"
 PXEBOOTSRV_HTTPSERVER="http://$PXEBOOTSRV_LOCALIP/sysrcd.dat" # download URL
 
+# Set a low value to boot faster. Default, wait 900 deciseconds (1min30sec)
+PXEBOOTSRV_TIMEOUT="50"                           # Used only if PXEBOOTSRV_DOTFTPD="yes"
+# You can append extra parameters
+PXEBOOTSRV_EXTRA=""                               # Used only if PXEBOOTSRV_DOTFTPD="yes"
+

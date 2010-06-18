@@ -3,18 +3,24 @@
 # (C) 2010 Francois Dupoux
 # This scipt is available under the GPL-2 license
 
-## HELP AND BASIC ARGUMENT PROCESSING
-#####################################
+###############################################################################
 
-# minimal size required for sysresccd in mega-bytes
+logfile="/tmp/usb_inst.log"
+TMPDIR="/tmp/usb_inst.tmp"
 MINSIZEMB=300
-PROG="${0}"
+PROGIMG="${0}"
+PROGLOC="$(dirname ${0})"
+CDFILES=('sysrcd.dat' 'sysrcd.md5' 'version' '???linux/initram.igz' 
+	'???linux/rescuecd' '???linux/rescue64' '???linux/f1boot.msg'
+	'???linux/???linux.bin' '???linux/???linux.cfg')
+
+###############################################################################
 
 usage()
 {
 	cat <<EOF
-${PROG}: SystemRescueCd installation script for USB-sticks
-Syntax: ${PROG} <command> ...
+${PROGIMG}: SystemRescueCd installation script for USB-sticks
+Syntax: ${PROGIMG} <command> ...
 
 Please, read the manual for help about how to use this script.
 http://www.sysresccd.org/Online-Manual-EN
@@ -23,7 +29,7 @@ You can either run all sub-commands in the appropriate order, or you
 can just use the semi-graphical menu which requires less effort:
 
 A) Semi-graphical installation (easy to use):
-   Just run "${PROG} dialog" and select the USB device
+   Just run "${PROGIMG} dialog" and select the USB device
 
 B) Sub-commands for manual installation (execute in that order):
    1) listdev               Show the list of removable media
@@ -39,14 +45,8 @@ Distributed under the GNU Public License version 2 - http://www.sysresccd.org
 EOF
 }
 
-cdfiles=('sysrcd.dat' 'sysrcd.md5' 'version' '???linux/initram.igz' 
-	'???linux/rescuecd' '???linux/rescue64' '???linux/f1boot.msg'
-	'???linux/???linux.bin' '???linux/???linux.cfg')
+###############################################################################
 
-## MISC FUNCTIONS: Many utilities functions
-###########################################
-
-# show the error message ($1 = first line of the message)
 help_readman()
 {
 	echo "$1"
@@ -55,68 +55,28 @@ help_readman()
 	exit 1
 }
 
-## Main
-###########################################
-
-if [ "$(basename $0)" == 'usb_inst.sh' ]
-then
-    RUN_FROM_ISOROOT='1'
-    LOCATION="$(dirname ${PROG})"
-    PROG_PARTED="${LOCATION}/usb_inst/parted"
-    PROG_INSTMBR="${LOCATION}/usb_inst/install-mbr"
-    PROG_MKVFATFS="${LOCATION}/usb_inst/mkfs.vfat"
-    PROG_SYSLINUX="${LOCATION}/usb_inst/syslinux"
-    PROG_DIALOG="${LOCATION}/usb_inst/dialog"
-else
-    LOCATION="/livemnt/boot"
-    PROG_PARTED="$(which parted)"
-    PROG_INSTMBR="$(which install-mbr)"
-    PROG_MKVFATFS="$(which mkfs.vfat)"
-    PROG_SYSLINUX="$(which syslinux)"
-    PROG_DIALOG="$(which dialog)"
-fi
-
-if [ "$1" = "-h" ] || [ "$1" = "--help" ]
-then
-	usage
-	exit 1
-fi
-
-if [ "$(whoami)" != "root" ]
-then
-	help_readman "$0: This script requires root privileges to operate."
-fi
-
-if [ -z "${RUN_FROM_ISOROOT}" ] && ! cat /proc/mounts | awk '{print $2}' | grep -q -F '/memory'
-then
-	help_readman "$0: This script must be executed from SystemRescueCd"
-	exit 1
-fi
-
-if [ -n "${RUN_FROM_ISOROOT}" ] && [ -z "${1}" ]
-then
-    COMMAND='dialog'
-else
-    COMMAND="${1}"
-    shift
-fi
-
-## ERROR HANDLING
-#####################################
+cleanup_tmpdir()
+{
+	if [ -d "${TMPDIR}" ]
+	then
+		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,dialog}
+		rmdir ${TMPDIR}
+	fi
+}
 
 die()
 {
 	if [ -n "$1" ]
 	then
-		echo "$(basename ${PROG}): error: $1"
+		echo "$(basename ${PROGIMG}): error: $1"
 	else
-		echo "$(basename ${PROG}): aborting."
+		echo "$(basename ${PROGIMG}): aborting."
 	fi
+	cleanup_tmpdir
 	exit 1
 }
 
-## MISC FUNCTIONS: Many utilities functions
-###########################################
+###############################################################################
 
 # check that there is one partition and one only on block-device $1
 find_first_partition()
@@ -198,7 +158,7 @@ check_sysresccd_files()
 {
     rootdir="$1"
     [ -z "${rootdir}" ] && die "invalid rootdir"
-	for curfile in ${cdfiles[*]}
+	for curfile in ${CDFILES[*]}
 	do
 		curcheck="${rootdir}/${curfile}"
 		if ! ls ${curcheck} >/dev/null 2>&1
@@ -240,8 +200,11 @@ check_sizeof_dev()
 check_disk_freespace()
 {
 	freespace=$(\df -m -P ${1} | grep " ${1}$" | tail -n 1 | awk '{print $4}')
-	echo "Free space on ${1} is ${freespace}MB"
-	if [ "${freespace}" -lt "${MINSIZEMB}" ]
+	sysrcdspc=$(\du -csm ${1}/{sysrcd.dat,bootdisk,bootprog,isolinux,ntpasswd,usb_inst} 2>/dev/null | grep total$ | awk '{print $1}')
+	realfreespace=$((freespace+sysrcdspc))
+	echo "DEBUG: diskspace($1): freespace=${freespace}, sysrcdspc=${sysrcdspc}, realfreespace=${realfreespace}"
+	echo "Free space on ${1} is ${realfreespace}MB"
+	if [ "${realfreespace}" -lt "${MINSIZEMB}" ]
 	then
 		die "There is not enough free space on the USB-stick to copy the SystemRescuecd files."
 	fi
@@ -353,7 +316,8 @@ do_copyfiles()
 	
 	check_disk_freespace "/mnt/usbstick"
 	
-	if cp -r --remove-destination ${LOCATION}/* /mnt/usbstick/ && sync
+	echo "cp -v -r --remove-destination ${LOCATION}/* /mnt/usbstick/"	
+	if cp -v -r --remove-destination ${LOCATION}/* /mnt/usbstick/ && sync
 	then
 		echo "Files have been successfully copied to ${partname}"
 	else
@@ -423,9 +387,9 @@ do_dialog()
     then
         die "Program dialog not found, cannot run the semi-graphical installation program"
     fi
-	lwselection="$(mktemp /tmp/lwselection.XXXX)"
-	selection='${PROG_DIALOG} --backtitle "Select USB-Stick" --checklist "Select USB-Stick (current data will be lost)" 20 70 5'
-	devcnt=0
+	devsallcnt=0
+	devsmntcnt=0
+	devsokcnt=0
 	for curpath in /sys/block/*
 	do
 		curdev="$(basename ${curpath})"
@@ -441,34 +405,93 @@ do_dialog()
 			echo "Device [${devname}] detected as [${vendor} ${model}] is removable${sizemsg}"
 			if is_dev_mounted "${devname}"
 			then
-				echo "Device [${devname}] is mounted: cannot use it"
+				echo "* Device [${devname}] is mounted: cannot use it"
+				devsmnttxt="${devsmnttxt} * Device [${devname}] is mounted: cannot use it"
+				devsmntcnt=$((devsmntcnt+1))
+				devsallcnt=$((devsallcnt+1))
 			else
-				echo "Device [${devname}] is not mounted"
-				selection="$selection \"${devname}\" \"[${vendor} ${model}] ${sizemsg}\" off"
-				devcnt=$((devcnt+1))
+				echo "* Device [${devname}] is not mounted"
+				devsoktxt="${devsoktxt} \"${devname}\" \"[${vendor} ${model}] ${sizemsg}\" off"
+				devsokcnt=$((devsokcnt+1))
+				devsallcnt=$((devsallcnt+1))
 			fi
 		fi
 	done
-	if [ "${devcnt}" = '0' ]
+	if [ ${devsallcnt} -eq 0 ]
 	then
-		echo "No valid USB-stick has been detected."
-	else
-		eval $selection 2>$lwselection
-		if test -s $lwselection
-		then
-			for devname2 in $(cat $lwselection  | tr -d \" | sort)
-			do
-				do_writembr ${devname2}
-				sleep 5
-				find_first_partition ${devname2}
-				devname2="${devname2}$?"
-				do_format ${devname2}
-				do_copyfiles ${devname2}
-				do_syslinux ${devname2}
-			done
-		fi
+		echo "No valid USB/Removable device has been detected on your system"
+		return 1	
+	fi
+	if [ ${devsokcnt} -eq 0 ]
+	then
+		echo "All valid USB/Removable devices are currently mounted, unmount these devices first"
+		return 1
+	fi
+
+	if [ ${devsmntcnt} -gt 0 ]
+        then
+		message="${message}The following USB/Removable devices cannot be used:\n"
+		message="${message}${devsmnttxt}\n\n"
+	fi
+	message="${message}Select the USB/Removable devices where you want to install it.\n"
+	message="${message}Files on these devices will be lost if you continue.\n"
+
+	lwselection="/tmp/usb_inst_$$.tmp"
+	[ ! -d /tmp ] && mkdir -p /tmp
+	[ -f ${lwselection} ] && rm -f ${lwselection}
+	selection='${PROG_DIALOG} --backtitle "Select USB/Removable device" --checklist "${message}" 20 70 5'
+	eval "${selection} ${devsoktxt}" 2>$lwselection
+	if [ -s $lwselection ]
+	then
+		status=""
+		output=""
+		echo "" > ${logfile}
+		for devname2 in $(cat $lwselection | tr -d \" | sort)
+		do
+			echo "Installation on ${devname2} at $(date +%Y-%m-%d_%H:%M)" >> ${logfile}
+			status="${status}Installation on ${devname2} in progress\n\n"
+			status="${status}details will be written in ${logfile}\n"
+			dialog_status "${status}"
+			status="${status}* Writing MBR on ${devname2}\n"
+			dialog_status "${status}"
+			do_writembr ${devname2} >> ${logfile} 2>&1
+			[ $? -ne 0 ] && dialog_die "Failed to write the MBR on ${devname2}"
+			output="$(find_first_partition ${devname2})\n"
+			devname2="${devname2}$?"
+			dialog_status "${status}"
+			sleep 5
+			status="${status}* Creating filesystem on ${devname2}...\n"
+			dialog_status "${status}"
+			do_format ${devname2} >> ${logfile} 2>&1
+			[ $? -ne 0 ] && dialog_die "Failed to create the filesystem on ${devname2}"
+			status="${status}* Copying files (please wait)...\n"
+			dialog_status "${status}"
+			do_copyfiles ${devname2} >> ${logfile} 2>&1
+			[ $? -ne 0 ] && dialog_die "Failed to copy files on ${devname2}"
+			status="${status}* Installing the boot loader on ${devname2}...\n"
+			dialog_status "${status}"
+			do_syslinux ${devname2} >> ${logfile} 2>&1
+			[ $? -ne 0 ] && dialog_die "Failed to install the boot loader ${devname2}"
+			status="${status}* Installation on ${devname2} successfully completed\n"
+			dialog_status "${status}"
+			sleep 5
+		done
+		${PROG_DIALOG} --title "Success" --msgbox "Installation successfully completed" 10 50
 	fi
 	rm -f $lwselection
+}
+
+dialog_status()
+{
+	${PROG_DIALOG} --infobox "$1" 20 75
+}
+
+dialog_die()
+{
+	readlog="Read the logfile (${logfile}) for more details"
+	${PROG_DIALOG} --title "Error" --msgbox "$1\n${readlog}" 20 70
+	cleanup_tmpdir
+	exit 1
 }
 
 do_listdev()
@@ -510,8 +533,62 @@ do_listdev()
 	fi
 }
 
-## MAIN SHELL FUNCTION
-########################################################
+## Main
+###############################################################################
+
+if [ "$(basename $0)" = 'usb_inst.sh' ] && [ -d "${PROGLOC}/usb_inst" ]
+then
+	RUN_FROM_ISOROOT='1'
+
+	# copy programs to a temp dir on the disk since exec from cdrom may fail
+	cleanup_tmpdir
+	mkdir -p ${TMPDIR} || die "Cannot create temp directory: ${TMPDIR}"
+	if ! cp -r ${PROGLOC}/usb_inst/* ${TMPDIR}/
+	then
+		rm -rf ${TMPDIR} 2>/dev/null
+		die "Cannot write programs in temp directory: ${TMPDIR}"
+	else
+		chmod 777 ${TMPDIR}/*
+	fi
+	LOCATION="${PROGLOC}"
+	PROG_PARTED="${TMPDIR}/parted"
+	PROG_INSTMBR="${TMPDIR}/install-mbr"
+	PROG_MKVFATFS="${TMPDIR}/mkfs.vfat"
+	PROG_SYSLINUX="${TMPDIR}/syslinux"
+	PROG_DIALOG="${TMPDIR}/dialog"
+else
+	LOCATION="/livemnt/boot"
+	PROG_PARTED="$(which parted)"
+	PROG_INSTMBR="$(which install-mbr)"
+	PROG_MKVFATFS="$(which mkfs.vfat)"
+	PROG_SYSLINUX="$(which syslinux)"
+	PROG_DIALOG="$(which dialog)"
+fi
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+	usage
+	exit 1
+fi
+
+if [ "$(whoami)" != "root" ]
+then
+	help_readman "$0: This script requires root privileges to operate."
+fi
+
+if [ -z "${RUN_FROM_ISOROOT}" ] && ! cat /proc/mounts | awk '{print $2}' | grep -q -F '/memory'
+then
+	help_readman "$0: This script must be executed from SystemRescueCd"
+	exit 1
+fi
+
+if [ -n "${RUN_FROM_ISOROOT}" ] && [ -z "${1}" ]
+then
+    COMMAND='dialog'
+else
+    COMMAND="${1}"
+    shift
+fi
 
 case "${COMMAND}" in
 	listdev)
@@ -537,4 +614,6 @@ case "${COMMAND}" in
 		exit 1
 		;;
 esac
+cleanup_tmpdir
 exit 0
+

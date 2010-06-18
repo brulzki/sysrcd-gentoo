@@ -6,6 +6,21 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.5.6 (2010-06-18)
+-----------------------------------------------------------------------------
+* Updated standard kernels to 2.6.32.15 (rescuecd + rescue64)
+* Updated alternative kernels to 2.6.34 (altker32 + altker64)
+* Updated GParted to 0.6.0 (support for devices with sectors > 512 bytes)
+* Updated xfsprogs to 3.1.2 (XFS filesystem userspace utilities)
+* Updated ethernet network drivers in the standard kernels (tg3, bnx2x, e1000e)
+* Fixed problems with the tg3 ethernet driver (mostly used by Broadcom cards)
+* Recompiled usb_inst/parted so that it works on system with glibc < 2.11
+* Improved usb_inst.sh (sysresccd usb installer script for linux)
+* Added customization options to the sysresccd usb installer for windows
+* Disabled isohybrid which breaks isoloop and which is not really necessary
+* Added two options to pxebootsrv (PXEBOOTSRV_TIMEOUT and PXEBOOTSRV_EXTRA)
+
+-----------------------------------------------------------------------------
 1.5.5 (2010-06-01)
 -----------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.33.05 (altker32 + altker64)
