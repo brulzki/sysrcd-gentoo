@@ -2,43 +2,32 @@
 
 # System packages
 =sys-apps/baselayout-2.0* ~*
-=sys-devel/gcc-4.4* ~*
-=sys-libs/glibc-2.11* ~*
 =sys-apps/openrc-0.6* ~*
-
+=sys-devel/gcc-4.4* ~*
 
 # Misc packages
 =x11-drivers/xf86-video-intel-2.7* ~*
-=sys-block/gparted-0.6.0_beta1 ~*
 =sys-block/open-iscsi-2.0.871* ~*
-=www-client/firefox-bin-3.6* ~*
-=xfce-base/xfce4-panel-4.6.1 **
-=sys-block/mbuffer-20090113 ~*
 =sys-apps/util-linux-2.17* ~*
+=sys-block/gparted-0.6.0* ~*
 =x11-terms/terminal-0.4.5* ~*
 =net-misc/openvpn-2.1.0* ~*
-=www-client/midori-0.2.5* ~*
 =sys-fs/lvm2-2.02.64* ~*
 =sys-fs/udev-154* ~*
 =app-arch/p7zip-9.0* ~*
 =app-arch/tar-1.22* ~*
-app-admin/eselect ~*
+sys-boot/grub **
+sys-fs/ext3grep ~*
 app-crypt/chntpw ~*
-sys-libs/libstdc++-v3 ~*
+app-forensics/afflib ~*
 net-misc/ethercard-diag ~*
-app-admin/eselect-opengl ~*
 app-antivirus/clamav ~*
 app-shells/ksh ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 app-forensics/foremost ~*
-app-backup/duplicity ~*
 sys-fs/diskdev_cmds ~*
 sys-block/open-iscsi ~*
-sys-block/iscsitarget ~*
-sys-boot/grub **
-sys-boot/syslinux ~*
-app-admin/eselect-news ~*
 app-admin/procinfo-ng ~*
 sys-apps/lm_sensors ~*
 sys-block/scsiadd ~*
@@ -46,13 +35,11 @@ sys-apps/gdisk ~*
 app-arch/pbzip2 ~*
 app-arch/lzip ~*
 app-arch/pigz ~*
-sys-fs/mtools ~*
 sys-block/megarc ~*
 sys-block/megacli ~*
 sys-block/tw_cli ~*
 sys-apps/flashrom ~*
 sys-fs/dd-rhelp ~*
-x11-wm/jwm ~*
 sys-fs/lde ~*
 
 # kernel related packages
@@ -62,29 +49,22 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-libs/e2fsprogs-libs-1.41.11* ~*
-=sys-fs/e2fsprogs-1.41.11* ~*
 =sys-cluster/drbd-kernel-8.3* ~*
 =sys-block/partimage-0.6.8* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/cryptsetup-1.1.0* ~*
-=sys-fs/mdadm-3.0* ~*
-=sys-fs/mdadm-3.1* ~*
-=sys-cluster/drbd-8.3* ~*
 =sys-fs/zfs-fuse-0.6.9* ~*
 =app-arch/dump-0.4.42* ~*
-=sys-fs/xfsdump-3.0.1* ~*
+=sys-cluster/drbd-8.3* ~*
 =sys-fs/xfsprogs-3.1* ~*
-=sys-fs/fuse-2.8.1* ~*
 =sys-apps/parted-2.2* ~*
+=sys-fs/mdadm-3.1* ~*
 sys-fs/fsarchiver ~*
-app-benchmarks/bonnie++ ~*
 app-admin/testdisk ~*
 app-crypt/truecrypt ~*
 sys-fs/btrfs-progs ~*
 sys-fs/reiserfsprogs ~*
 sys-fs/reiser4progs ~*
-sys-fs/cowloop ~*
 sys-fs/ntfs3g ~*
 
 # Wireless drivers
@@ -98,16 +78,8 @@ net-wireless/rt61-firmware ~*
 net-wireless/rt73-firmware ~*
 net-wireless/broadcom-sta ~*
 net-wireless/prism54-firmware ~*
-net-wireless/acx ~*
 
 # XFCE
 =xfce-base/xfce4-settings-4.6.4* ~*
 =xfce-base/xfce4-panel-4.6.2-r1 ~*
-
-#=xfce-base/xfce4-settings-4.7* ~*
-#=xfce-base/xfce4-panel-4.7* ~*
-#=xfce-base/xfconf-4.7* ~*
-#=xfce-base/exo-0.5.2* ~*
-#=xfce-base/garcon-0.1.1 ~*
-#=xfce-base/libxfce4ui-4.7* ~*
 

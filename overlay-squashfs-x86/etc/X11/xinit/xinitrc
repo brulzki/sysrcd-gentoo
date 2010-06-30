@@ -38,7 +38,7 @@ then
 	[ $KEYMAP = "pl" -o $KEYMAP = "28" ] && KEYMAP="pl"
 	[ $KEYMAP = "pt" -o $KEYMAP = "29" ] && KEYMAP="pt"
 	[ $KEYMAP = "ro" -o $KEYMAP = "30" ] && KEYMAP="ro"
-	[ $KEYMAP = "ru" -o $KEYMAP = "31" ] && KEYMAP="ru"
+	[ $KEYMAP = "ru" -o $KEYMAP = "31" ] && KEYMAP="us,ru(winkeys) -option grp:ctrl_shift_toggle,lctrl_shift_toggle"
 	[ $KEYMAP = "se" -o $KEYMAP = "32" ] && KEYMAP="se"
 	[ $KEYMAP = "sg" -o $KEYMAP = "33" ] && KEYMAP="sg"
 	[ $KEYMAP = "sk-y" -o $KEYMAP = "34" ] && KEYMAP="sk"
@@ -63,7 +63,6 @@ fi
 
 [ -f /usr/bin/xset ] && /usr/bin/xset s off >/dev/null 2>&1 &
 [ -f /usr/bin/xset ] && /usr/bin/xset r >/dev/null 2>&1 &
-#[ -f /usr/bin/terminal ] && /usr/bin/terminal >/dev/null 2>&1 &
 [ -f /usr/bin/nm-applet ] && /usr/bin/nm-applet >/dev/null 2>&1 &
 exec /root/winmgr.sh >/dev/null 2>&1
 

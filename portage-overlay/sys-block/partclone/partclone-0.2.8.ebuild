@@ -2,12 +2,12 @@ inherit eutils
 
 DESCRIPTION="Partition cloning tool"
 HOMEPAGE="http://partclone.org"
-SRC_URI="mirror://sourceforge/partclone/partclone_0.1.9-2.tar.gz"
+SRC_URI="mirror://sourceforge/partclone/partclone-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="xfs reiserfs reiser4 hfs fat ntfs "
+IUSE="xfs reiserfs reiser4 hfs fat ntfs"
 
 RDEPEND="${common_depends}
 	>=sys-fs/e2fsprogs-1.41.4

@@ -25,6 +25,6 @@ src_unpack()
 	epatch ${FILESDIR}/alt-sources-2.6.34_05-phylib-autoload.patch.bz2 || die "phylib-autoload patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.34_06-loopaes.patch.bz2 || die "loopaes patch failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .00-alt156/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .00-alt157/" Makefile
 }
 

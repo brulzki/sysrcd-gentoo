@@ -1516,6 +1516,8 @@ BLKDEVICES="$BLKDEVICES /dev/iseries/vcd*"
 BLKDEVICES="$BLKDEVICES /dev/cciss* /dev/cciss/*"
 # devmapper
 BLKDEVICES="$BLKDEVICES /dev/dm* /dev/mapper/*"
+# md raid
+BLKDEVICES="$BLKDEVICES /dev/md* /dev/md/*"
 
 # =============================================================================
 

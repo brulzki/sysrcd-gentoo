@@ -45,9 +45,6 @@ sed -i -e 's/NFS="yes"/NFS="no"/' /etc/init.d/autoconfig
 sed -i -e 's/PCMCIA="yes"/PCMCIA="no"/' /etc/init.d/autoconfig
 sed -i -e 's/Skipping ALSA detection as requested on command line .../Skipping ALSA detection .../' /etc/init.d/autoconfig
 
-# /etc/udev/rules.d/75-persistent-net-generator.rules conflicts with the sysresccd "nameif=xxx" option
-#sed -i -e 's!^ENV{INTERFACE_NEW}!#ENV{INTERFACE_NEW}!g' /etc/udev/rules.d/75-persistent-net-generator.rules
-
 # /sbin/livecd-functions.sh expect 'cdroot' in /proc/cmdline (we removed cdroot)
 sed -i -e 's!for x in ${CMDLINE}!for x in ${CMDLINE} cdroot!g' /sbin/livecd-functions.sh
 
@@ -104,18 +101,22 @@ rm -f /var/cache/revdep-rebuild/*
 [ ! -f /usr/bin/unsquashfs-lzma ] && ln -s /usr/bin/unsquashfs /usr/bin/unsquashfs-lzma
 
 # create link for reiserfsck
+echo "==> creating /sbin/fsck.reiserfs"
 [ ! -f /sbin/fsck.reiserfs ] && ln /sbin/reiserfsck /sbin/fsck.reiserfs
 
 # prevent the /etc/init.d/net.eth* from being run --> they break the network (done via "ethx, dns, gateway")
+echo "==> removing old net.eth*"
 rm -f /etc/init.d/net.eth*
 
 # remove xfce icons for missing programs
+echo "==> removing desktop files for missing programs"
 rm -f /usr/share/applications/{xfce4-file-manager.desktop,xfce4-help.desktop}
 
 # fix the "xfce4-logout" entry in the menu
 sed -i -e 's!xfce4-session-logout!killall xinit!g' /usr/share/applications/xfce4-logout.desktop
 
 # decompress oscar files
+echo "==> extracting oscar"
 if [ -f /usr/share/oscar/oscar.tar.gz ]
 then
 	tar xfzp /usr/share/oscar/oscar.tar.gz -C /usr/share/oscar
@@ -123,13 +124,24 @@ then
 fi
 
 # prepare the runxserver script
+echo "==> replacing /usr/bin/X"
 rm -f /usr/bin/X
 ln -s /root/runxserver /usr/bin/X
 
 # for programs that expect syslog
+echo "==> creating /usr/sbin/syslog "
 ln -s /usr/sbin/syslog-ng /usr/sbin/syslog
 
-# install the 32bits kernel modules
+# uncompress gzip/bzip2 files (double compression with squashfs-lzma makes the ISO bigger)
+echo "==> uncompressing gzipped fonts and keymaps"
+for curdir in '/usr/share/consolefonts' '/usr/share/consoletrans' '/usr/share/fonts' '/usr/share/i18n/charmaps' '/usr/share/keymaps'
+do
+	echo "find ${curdir} -name "*.gz" -exec gzip -d {} \;"
+	find ${curdir} -name "*.gz" -exec gzip -d {} \;
+done
+
+# install 32bit kernel modules
+echo "==> installing 32bit kernel modules"
 for modtar in /lib/modules/*.tar.bz2
 do
 	echo '--------------------------------------------------------------'
@@ -142,7 +154,8 @@ do
 	echo '--------------------------------------------------------------'
 done
 
-# install the 64bits kernel modules
+# install 64bit kernel modules
+echo "==> installing 64bit kernel modules"
 for modtar in /lib64/modules/*.tar.bz2
 do
 	echo '--------------------------------------------------------------'
@@ -157,35 +170,36 @@ do
 	echo '--------------------------------------------------------------'
 done
 
-# workaround for new libexpat version
-[ -h /usr/lib/libexpat.so.0 ] || ln -s /usr/lib/libexpat.so /usr/lib/libexpat.so.0
-
 # strip kernel modules which are in the sysrcd.dat to save space
+echo "==> strip kernel modules"
 find /lib/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
 find /lib64/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
 
 # update /etc/make.profile
+echo "==> updating /etc/make.profile"
 rm -rf /etc/make.profile
 ln -s ../usr/portage/profiles/default/linux/x86/10.0 /etc/make.profile
 
 # update the database for locate
-echo "--> locate -u"
+echo "==> locate -u"
 locate -u >/dev/null 2>&1
 
 # create the apropos / whatis database (time consuming: only for final releases)
 if ! grep -q beta /root/version
 then
-	echo "--> makewhatis"
+	echo "==> running makewhatis"
 	makewhatis >/dev/null 2>&1
 fi
 
 # create the locales:
+echo "==> creating main locales"
 localedef -i /usr/share/i18n/locales/en_US -f UTF-8 /usr/lib/locale/en_US.utf8
 localedef -i /usr/share/i18n/locales/en_US -f ISO-8859-1 /usr/lib/locale/en_US
 localedef -i /usr/share/i18n/locales/de_DE -f ISO-8859-1 /usr/lib/locale/de_DE
 localedef -i /usr/share/i18n/locales/fr_FR -f ISO-8859-1 /usr/lib/locale/fr_FR
 
 # ----- OpenRC specific stuff
+echo "==> OpenRC adjustments"
 if [ -d /usr/share/openrc ]
 then
 	# enable services
@@ -199,6 +213,7 @@ then
 	/sbin/rc-update add dbus default
 	/sbin/rc-update add hald default
 	/sbin/rc-update add NetworkManager default
+	/sbin/rc-update add load-fonts-keymaps default
 
 	# remove services
 	/sbin/rc-update del urandom boot
@@ -242,5 +257,6 @@ then
 	fi
 fi
 
-echo "--> end of $0"
+echo "==> end of $0"
+echo "----"
 

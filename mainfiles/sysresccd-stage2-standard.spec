@@ -3,7 +3,7 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100611
+snapshot: 20100626
 source_subpath: default/livecd-stage1-i386-1.5
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std156.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std157.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -64,7 +64,7 @@ boot/kernel/rescuecd/packages:
         =sys-boot/grub-1.98
         sys-block/open-iscsi
         sys-fs/zfs-fuse
-        #=sys-block/partimage-0.6.9_beta5
+        =sys-block/partimage-0.6.9_beta5
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -257,7 +257,7 @@ livecd/rm:
 	/usr/lib/scons*
 	/usr/share/doc/scons-*
 	/usr/share/man/{man0p,man2,man3,man3p,man4,man6,man7,man9}
-	/usr/share/man/{fr*,it*,pl*,ru*,sk*}
+	/usr/share/man/{ca*,fr*,gl*,id*,hu*,it*,jp*,pl*,pt*,ru*,sk*,ug*,zh*}
 	/usr/share/man/man1/{perl*,zshall.1.gz,ssl-*,openssl*}
 	/usr/share/man/man5/{groff*,lj4*}
 	/usr/sbin/archive-conf
@@ -1768,4 +1768,5 @@ livecd/rm:
 	/usr/include/{X11,sigc++*,python*}
 	/usr/lib/cracklib_dict.*
 	/usr/share/dmraid
+	/usr/bin/{net,rpcclient,smbget,smbcacls,smbcquotas,smbclient,smbtree,smbmount,smbumount,smbspool}
 

@@ -5,7 +5,7 @@ source /sbin/livecd-functions.sh
 depend()
 {
 	before xdm autorun tigervnc
-	after pwgen sshd lvm portmap hald
+	after pwgen sshd portmap hald
 }
 
 start()
@@ -26,17 +26,6 @@ start()
 	# ---- disable screensaver in the console
 	setterm -blank 0 -powersave off
 
-	# ---- load the right keymap ----
-	keymap=$(grep '^XKEYBOARD=' /etc/sysconfig/keyboard 2>/dev/null | cut -d= -f2)
-	case "${keymap}" in
-		fr)
-			loadkeys fr-latin9
-			;;
-		uk)
-			loadkeys uk
-			;;
-	esac
-	
 	# ---- auto-detect software raid ----
 	[ -n "$(which mdadm)" ] && mdadm --auto-detect 2>&1
 	
@@ -75,29 +64,44 @@ start()
 	# eg: "rescuecd vncserver=2:mYpAsWd" will create two vnc displays (display=1 on port 5900 and display=2 on port 5901)
 	# and the two displays will use the same password and the root user account (password=mYpAsWd)
 	# this option should be used only once, but in case of multiple usages the last vncserver option overwrite the previous ones
+	vnclog='/var/log/vncserver.log'
 	for curopt in ${CMDLINE}
 	do
-		if echo "${curopt}" | grep -q -E '^vncserver=[1-9]:[^ ]{5,8}$'
-		then
-			rm -f /root/.vnc/passwd
-			sed -i -e 's!^DISPLAYS=.*!!g' /etc/conf.d/tigervnc
-			displaycnt="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{5,8})$!\1!g')"
-			password="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{5,8})$!\2!g')"
-			echo "vncserver: found option ${curopt} (will create ${displaycnt} displays" >| /var/log/vncserver.log
-			mkdir -p /root/.vnc/
-			echo -e "${password}\n${password}\n" | vncpasswd /root/.vnc/passwd >/dev/null 2>&1
-			chmod 600 /root/.vnc/passwd
-			echo "exec /usr/bin/startxfce4 >/dev/null 2>&1" >| /root/.vnc/xstartup
-			chmod 700 /root/.vnc/xstartup
-			displayopt=''
-			for ((i=1; i <= displaycnt; i++))
-			do
-				echo "vncserver: preparing display number $i" >> /var/log/vncserver.log
-				displayopt="${displayopt} root:$i"
-				displayopt="$(echo ${displayopt} | sed -e 's!^ !!g' | sed -e 's! $!!g')"
-			done
-			echo "DISPLAYS=\"${displayopt}\"" >> /etc/conf.d/tigervnc
-		fi
+		case "${curopt}" in
+			vncserver\=*)
+				echo '' >| ${vnclog}
+				vncopt="$(echo ${curopt} | cut -d= -f2)"
+				echo "vncserver: found option vncserver=${vncopt}" | tee -a ${vnclog}
+				if echo "${vncopt}" | grep -q -E '^[1-9]:[^ ]{6,12}$'
+				then
+					[ -f /root/.vnc/passwd ] && rm -f /root/.vnc/passwd
+					[ ! -d /root/.vnc ] && mkdir -p /root/.vnc
+					sed -i -e 's!^DISPLAYS=.*!!g' /etc/conf.d/tigervnc
+					displaycnt="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{6,12})$!\1!g')"
+					password="$(echo ${curopt} | sed -r -e 's!^vncserver=([1-9]):([^ ]{6,12})$!\2!g')"
+					echo "vncserver: ${displaycnt} displays will be created" | tee -a ${vnclog}
+					echo "vncserver: creating password file in /root/.vnc/passwd:" >>${vnclog}
+					echo -e "${password}\n${password}\n" | vncpasswd /root/.vnc/passwd >>${vnclog} 2>&1
+
+					chmod 600 /root/.vnc/passwd
+					echo "exec /usr/bin/startxfce4 >/dev/null 2>&1" >| /root/.vnc/xstartup
+					chmod 700 /root/.vnc/xstartup
+					displayopt=''
+					for ((i=1; i <= displaycnt; i++))
+					do
+						echo "vncserver: preparing display number $i" | tee -a ${vnclog}
+						displayopt="${displayopt} root:$i"
+						displayopt="$(echo ${displayopt} | sed -e 's!^ !!g' | sed -e 's! $!!g')"
+					done
+					echo "DISPLAYS=\"${displayopt}\"" >> /etc/conf.d/tigervnc
+				else
+					echo "vncserver: invalid syntax (expected \"vncserver=x:mYpAsWd\")"
+					echo "           where x is the number of displays (1 or 2 in general)"
+					echo "           mYpAsWd is a password (between 6 and 12 characters)"
+					sleep 2
+				fi
+				;;
+		esac
 	done
 	
 	# ---- clean /etc/mtab ----

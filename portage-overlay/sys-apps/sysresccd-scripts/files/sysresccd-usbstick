@@ -5,8 +5,8 @@
 
 ###############################################################################
 
-logfile="/tmp/usb_inst.log"
-TMPDIR="/tmp/usb_inst.tmp"
+logfile="/var/tmp/usb_inst.log"
+TMPDIR="/var/tmp/usb_inst.tmp"
 MINSIZEMB=300
 PROGIMG="${0}"
 PROGLOC="$(dirname ${0})"
@@ -59,7 +59,7 @@ cleanup_tmpdir()
 {
 	if [ -d "${TMPDIR}" ]
 	then
-		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,dialog}
+		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,dialog,mtools,mcopy,mattrib,mmove}
 		rmdir ${TMPDIR}
 	fi
 }
@@ -361,12 +361,16 @@ do_syslinux()
 		die "syslinux not found on your system, please install syslinux first."
 	fi
 	
-	if ${PROG_SYSLINUX} ${partname} && sync
+	${PROG_SYSLINUX} ${partname}
+	res=$?
+	sync
+	if [ ${res} -eq 0 ]
 	then
 		echo "syslinux has successfully prepared ${partname}"
 	else
 		echo "syslinux failed to prepare ${partname}"
 	fi
+	return ${res}
 }
 
 is_dev_mounted()
@@ -551,11 +555,17 @@ then
 		chmod 777 ${TMPDIR}/*
 	fi
 	LOCATION="${PROGLOC}"
+	# programs directly used by this script
 	PROG_PARTED="${TMPDIR}/parted"
 	PROG_INSTMBR="${TMPDIR}/install-mbr"
 	PROG_MKVFATFS="${TMPDIR}/mkfs.vfat"
 	PROG_SYSLINUX="${TMPDIR}/syslinux"
 	PROG_DIALOG="${TMPDIR}/dialog"
+	# syslinux requires mtools
+	ln -s mtools ${TMPDIR}/mcopy
+	ln -s mtools ${TMPDIR}/mmove
+	ln -s mtools ${TMPDIR}/mattrib
+	export PATH=${TMPDIR}:${PATH}
 else
 	LOCATION="/livemnt/boot"
 	PROG_PARTED="$(which parted)"

@@ -29,7 +29,9 @@ src_unpack()
 	epatch ${FILESDIR}/std-sources-2.6.32_09-phylib-autoload.patch.bz2 || die "std-sources phylib-autoload failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_10-update-bnx2.patch.bz2 || die "std-sources update-bnx2 failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_11-update-e1000e-ich9.patch.bz2 || die "std-sources update-e1000e failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_12-libata-trim.patch.bz2 || die "std-sources libata-trim failed."
+	epatch ${FILESDIR}/std-sources-2.6.32_13-btrfs-fixes.patch.bz2 || die "std-sources btrfs-fixes failed."
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .15-std156/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .15-std157/" Makefile
 }
 

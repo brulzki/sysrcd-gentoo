@@ -13,7 +13,7 @@ if [[ ${PV} == "9999" ]] ; then
 	SRC_URI=""
 	EXTRA_DEPEND="sys-devel/gettext dev-util/cvs >=sys-devel/libtool-2" #272880 286068
 else
-	MY_P="xz-4.999.9beta-142-gd8b4"
+	MY_P="xz-4.999.9beta-143-g3e49"
 	SRC_URI="http://tukaani.org/xz/${MY_P}.tar.gz"
 	KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86 ~sparc-fbsd ~x86-fbsd"
 	S=${WORKDIR}/${MY_P}

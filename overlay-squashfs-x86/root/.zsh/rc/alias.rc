@@ -11,3 +11,12 @@ alias reboot="shutdown -r now"
 
 # do a du -hs on each dir on current path
 alias lsdir="for dir in *;do;if [ -d \$dir ];then;du -hsL \$dir;fi;done"
+
+if [ -x /usr/libexec/mc/mc-wrapper.sh ]
+then
+	alias mc='. /usr/libexec/mc/mc-wrapper.sh'
+fi
+
+# required in certain cases (eg: russian users)
+alias startx='startx;unicode_start'
+

@@ -44,6 +44,7 @@ src_configure() {
 	epatch "${FILESDIR}/loop-limits.patch" || die 'patch failed'
 	epatch "${FILESDIR}/ext4-detection.patch" || die 'patch failed'
 	epatch "${FILESDIR}/update-abi-symbols.patch" || die 'patch failed'
+	epatch "${FILESDIR}/fix-dmraid-regression.patch" || die 'patch failed'
 	econf \
 		$(use_with readline) \
 		$(use_enable nls) \

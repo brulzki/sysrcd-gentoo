@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.5.6"
+VERSION="1.5.7"
 EXTRAVER=""
-VOLNAME="sysrcd-1.5.6"
+VOLNAME="cd-1.5.7-beta"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -114,6 +114,10 @@ if [ "${CURARCH}" = "sparc" ]
 then
 	mkisofs -G /boot/isofs.b -J -V ${VOLNAME} -B ... -r -o ${ISOFILE} ${TEMPDIR}
 fi
+
+# ========= copy list of packages ===============================================
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-*-std/root/sysresccd-eix.txt /worksrc/sysresccd-src/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-*-std/root/sysresccd-pkg.txt /worksrc/sysresccd-src/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
 
 # ========= prepare the backup ==================================================
 tar cfjp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.bz2" /worksrc/sysresccd-{src,bin,win*} --exclude='.git'

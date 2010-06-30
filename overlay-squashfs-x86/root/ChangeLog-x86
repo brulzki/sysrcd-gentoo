@@ -6,6 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.5.7 (2010-07-01)
+-----------------------------------------------------------------------------
+* Updated ntfs3g to 2010.5.22 (driver that provides read-write access to ntfs)
+* Reintroduced samba server (version 3.0.37 with minimal options to save space)
+* Added sys-fs/ext3grep-0.10.1 (recover deleted files on an ext3 file system)
+* Added missing firmwares required by bnx2 (broadcom network driver)
+* Fixed keymap init initramfs and load appropriate font for russian users
+* Fixed dependency problems in usb_inst.sh (sysresccd USB installer for Linux)
+* Fixed the "vncserver=x:MyPaSsWd" option (password len between 8 and 12 char)
+* Patched parted-2.2 to fix problem with dmraid devices
+
+-----------------------------------------------------------------------------
 1.5.6 (2010-06-18)
 -----------------------------------------------------------------------------
 * Updated standard kernels to 2.6.32.15 (rescuecd + rescue64)

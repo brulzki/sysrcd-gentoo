@@ -1,0 +1,75 @@
+From: Phillip Susi <psusi@cfl.rr.com>
+Description: Lucid released with a serious regression that
+ prevents installation on dmraid disks.  This was caused
+ by upstream commit ID 162ac17e40ed35d216d755cb8b51434b971a64a9
+ "linux: use devicemapper task name instead of device node name"
+ which adds a 'p' in the partition device name between the base
+ name and the partition number.  This patch reverts that change.
+ Note: this is likely to be reverted in Maverick once udev/lvm2 switch
+ to the new naming scheme.
+Forwarded: http://lists.alioth.debian.org/pipermail/parted-devel/2010-May/003657.html
+Last-Update: 2010-06-14
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -2660,41 +2660,38 @@
+ static int
+ _dm_add_partition (PedDisk* disk, PedPartition* part)
+ {
++        struct stat     dev_stat;
++        struct dm_task *task = NULL;
+         int             rc;
+         char*           vol_name = NULL;
+-        const char*     dev_name = NULL;
++        char*           dev_name = NULL;
+         char*           params = NULL;
+         char*           dm_uuid = NULL;
+         int             uuid_len;
+-        LinuxSpecific*  arch_specific = LINUX_SPECIFIC (disk->dev);
+ 
+         if (!_has_partitions(disk))
+                 return 0;
+ 
+-        /* Get map name from devicemapper */
+-        struct dm_task *task = dm_task_create (DM_DEVICE_INFO);
+-        if (!task)
+-                goto err;
++        dev_name = _device_get_part_path (disk->dev, part->num);
++        if (!dev_name)
++                return 0;
+ 
+-        if (!dm_task_set_major_minor (task, arch_specific->major,
+-                                      arch_specific->minor, 0))
+-                goto err;
++        vol_name = strrchr (dev_name, '/');
++        if (vol_name && *vol_name && *(++vol_name))
++                vol_name = strdup (vol_name);
++        else
++                vol_name = strdup (dev_name);
++        if (!vol_name)
++                return 0;
+ 
+-        rc = dm_task_run(task);
+-        if (rc < 0)
++        if (!_device_stat (disk->dev, &dev_stat))
+                 goto err;
+ 
+-        dev_name = dm_task_get_name (task);
+-
+-        if (asprintf (&vol_name, "%sp%d", dev_name, part->num) == -1)
++        if (asprintf (&params, "%d:%d %lld", major (dev_stat.st_rdev),
++                      minor (dev_stat.st_rdev), part->geom.start) == -1)
+                 goto err;
+ 
+-        /* Caution: dm_task_destroy frees dev_name.  */
+-        dm_task_destroy (task);
+-        task = NULL;
+-
+-        if (asprintf (&params, "%d:%d %lld", arch_specific->major,
+-                      arch_specific->minor, part->geom.start) == -1)
++        if (!params)
+                 goto err;
+ 
+         task = dm_task_create (DM_DEVICE_CREATE);

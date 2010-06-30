@@ -14,15 +14,16 @@ www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 app-arch/xz-utils threads -nls static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static
-app-editors/vim -gpm -minimal bash-completion perl python
+app-editors/vim -X -gpm -minimal bash-completion perl python
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba X slang 7zip
 sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
 sys-apps/util-linux crypt unicode loop-aes
+net-fs/samba -ipv6 -client -smbclient -cups -netapi -pam -fam -kernel_linux acl readline server syslog examples
 sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
 gnome-extra/libgsf -python
 app-editors/qemacs -png
-sys-fs/ntfs3g -external-fuse
+sys-fs/ntfs3g -external-fuse -acl
 sys-fs/btrfs-progs -debug-utils
 app-text/poppler-bindings gtk -qt3 -qt4 -test
 net-print/cups -perl -python

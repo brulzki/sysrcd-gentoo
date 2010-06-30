@@ -3,8 +3,8 @@ version_stamp: 1.5
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100611
-source_subpath: default/stage4-i386-20100612-02
+snapshot: 20100626
+source_subpath: default/stage4-i386-20100619-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -80,6 +80,7 @@ livecd/packages:
 	app-editors/vim
 	app-editors/vim-core
 	app-editors/zile
+	app-forensics/afflib
 	app-forensics/chkrootkit
 	app-forensics/cmospwd
 	app-forensics/foremost
@@ -101,7 +102,6 @@ livecd/packages:
 	app-shells/zsh
 	app-text/dos2unix
 	app-text/epdfview
-	app-text/unix2dos
 	dev-lang/perl
 	dev-libs/expat
 	dev-libs/libconfig
@@ -146,6 +146,7 @@ livecd/packages:
 	sys-fs/mtd-utils
 	net-fs/mount-cifs
 	net-fs/nfs-utils
+	net-fs/samba
 	net-ftp/ftp
 	net-ftp/lftp
 	net-ftp/ncftp
@@ -259,6 +260,7 @@ livecd/packages:
 	sys-fs/diskdev_cmds
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
+	sys-fs/ext3grep
 	sys-fs/fsarchiver
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
@@ -280,7 +282,6 @@ livecd/packages:
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
 	sys-kernel/gentoo-sources
-	sys-kernel/linux-headers
 	sys-libs/libstdc++-v3
 	sys-libs/openipmi
 	sys-libs/pam
