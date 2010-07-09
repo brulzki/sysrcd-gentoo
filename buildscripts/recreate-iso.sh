@@ -1,12 +1,12 @@
 #!/bin/sh
 
-VERSION="1.5.7"
+VERSION="1.5.8"
 EXTRAVER=""
-VOLNAME="cd-1.5.7-beta"
+VOLNAME="sysrcd-1.5.8"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
-REPOSRC=/worksrc/sysresccd-src
-REPOBIN=/worksrc/sysresccd-bin
+REPOSRC=/worksrc/sysresccd-src-1.5
+REPOBIN=/worksrc/sysresccd-bin-1.5
 
 # ==================================================================
 # ==================================================================
@@ -116,13 +116,12 @@ then
 fi
 
 # ========= copy list of packages ===============================================
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-*-std/root/sysresccd-eix.txt /worksrc/sysresccd-src/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-*-std/root/sysresccd-pkg.txt /worksrc/sysresccd-src/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-1.5-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-1.5-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
 
 # ========= prepare the backup ==================================================
-tar cfjp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.bz2" /worksrc/sysresccd-{src,bin,win*} --exclude='.git'
+tar cfjp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.bz2" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'
 
 # ========= force recompilation of sys-apps/sysresccd-scripts ===================
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-apps/sysresccd-*.tbz2
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-kernel/genkernel-*.tbz2
-

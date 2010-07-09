@@ -24,7 +24,9 @@ src_unpack()
 	epatch ${FILESDIR}/alt-sources-2.6.34_04-reiser4.patch.bz2 || die "reiser4 patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.34_05-phylib-autoload.patch.bz2 || die "phylib-autoload patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.34_06-loopaes.patch.bz2 || die "loopaes patch failed."
+	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
+	sed -i -e ${sedlockdep} include/linux/lockdep.h
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .00-alt157/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .01-alt158/" Makefile
 }
 

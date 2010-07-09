@@ -31,7 +31,9 @@ src_unpack()
 	epatch ${FILESDIR}/std-sources-2.6.32_11-update-e1000e-ich9.patch.bz2 || die "std-sources update-e1000e failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_12-libata-trim.patch.bz2 || die "std-sources libata-trim failed."
 	epatch ${FILESDIR}/std-sources-2.6.32_13-btrfs-fixes.patch.bz2 || die "std-sources btrfs-fixes failed."
+	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
+	sed -i -e ${sedlockdep} include/linux/lockdep.h
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = .15-std157/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = .16-std158/" Makefile
 }
 

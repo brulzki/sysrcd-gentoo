@@ -3,10 +3,10 @@ version_stamp: 1.5
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100626
+snapshot: 20100707
 source_subpath: default/stage4-i386-20100619-01
-portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src/portage-overlay
+portage_confdir: /worksrc/sysresccd-src-1.5/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src-1.5/portage-overlay
 
 livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir -pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multislot -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb
 

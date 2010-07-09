@@ -3,15 +3,15 @@ version_stamp: 1.5-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100626
+snapshot: 20100707
 source_subpath: default/livecd-stage1-i386-1.5
-portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src/portage-overlay
+portage_confdir: /worksrc/sysresccd-src-1.5/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src-1.5/portage-overlay
 
 livecd/fstype: squashfs
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-cdtar.tar.bz2
 livecd/iso: /worksrc/isofiles/systemrescuecd-x86-current.iso
-livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript.sh
+livecd/fsscript: /worksrc/sysresccd-src-1.5/mainfiles/fsscript.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
@@ -20,7 +20,7 @@ livecd/type: generic-livecd
 livecd/readme:
 livecd/motd:
 livecd/modblacklist:
-livecd/root_overlay: /worksrc/sysresccd-bin/overlay-squashfs-x86 /worksrc/sysresccd-src/overlay-squashfs-x86
+livecd/root_overlay: /worksrc/sysresccd-src-1.5/overlay-squashfs-x86 /worksrc/sysresccd-bin-1.5/overlay-squashfs-x86
 livecd/devmanager: udev
 livecd/users:
 livecd/volid: sysresccd
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-x86-2.6.32-std157.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.5/kernelcfg/config-x86-2.6.32-std158.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -64,7 +64,8 @@ boot/kernel/rescuecd/packages:
         =sys-boot/grub-1.98
         sys-block/open-iscsi
         sys-fs/zfs-fuse
-        =sys-block/partimage-0.6.9_beta5
+	sys-fs/ntfs3g
+	sys-block/gparted
 
 livecd/unmerge:
 	app-admin/eselect-opengl
