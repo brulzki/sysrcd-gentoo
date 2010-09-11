@@ -24,6 +24,8 @@ start()
 {
 	ebegin "Performing network configuration"
 
+	log_netconfig2 "Starting netconfig2..."
+
 	CMDLINE="$(cat /proc/cmdline)"
 
 	# ---- run DHCP if asked on cmdline (dodhcp) ----

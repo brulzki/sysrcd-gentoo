@@ -1,17 +1,17 @@
 subarch: i386
-version_stamp: 1.5-std
+version_stamp: 1.6-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100707
-source_subpath: default/livecd-stage1-i386-1.5
-portage_confdir: /worksrc/sysresccd-src-1.5/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src-1.5/portage-overlay
+snapshot: 20100910
+source_subpath: default/livecd-stage1-i386-1.6
+portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
 
 livecd/fstype: squashfs
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-cdtar.tar.bz2
 livecd/iso: /worksrc/isofiles/systemrescuecd-x86-current.iso
-livecd/fsscript: /worksrc/sysresccd-src-1.5/mainfiles/fsscript.sh
+livecd/fsscript: /worksrc/sysresccd-src-1.6/mainfiles/fsscript.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
@@ -20,7 +20,7 @@ livecd/type: generic-livecd
 livecd/readme:
 livecd/motd:
 livecd/modblacklist:
-livecd/root_overlay: /worksrc/sysresccd-src-1.5/overlay-squashfs-x86 /worksrc/sysresccd-bin-1.5/overlay-squashfs-x86
+livecd/root_overlay: /worksrc/sysresccd-src-1.6/overlay-squashfs-x86 /worksrc/sysresccd-bin-1.6/overlay-squashfs-x86
 livecd/devmanager: udev
 livecd/users:
 livecd/volid: sysresccd
@@ -28,12 +28,11 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.5/kernelcfg/config-x86-2.6.32-std158.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.35-std160.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
         sys-apps/sysresccd-scripts
-        app-accessibility/speakup
         app-crypt/truecrypt
         net-dialup/speedtouch-usb
         net-dialup/rp-pppoe
@@ -57,15 +56,14 @@ boot/kernel/rescuecd/packages:
         sys-fs/sshfs-fuse
         x11-wm/jwm
         sys-block/iscsitarget
-        sys-cluster/drbd
-        sys-cluster/drbd-kernel
-        net-wireless/ndiswrapper
         sys-apps/lm_sensors
         =sys-boot/grub-1.98
         sys-block/open-iscsi
         sys-fs/zfs-fuse
-	sys-fs/ntfs3g
-	sys-block/gparted
+        sys-cluster/drbd
+	x11-drivers/xf86-video-ati
+        net-wireless/ndiswrapper
+	sys-apps/shadow
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -77,7 +75,6 @@ livecd/unmerge:
 	sys-kernel/std-sources
 	sys-kernel/gentoo-sources
 	dev-lang/nasm
-	dev-libs/libassuan
 	dev-libs/libxslt
 	dev-util/yacc
 	dev-util/gtk-doc
@@ -193,6 +190,7 @@ livecd/unmerge:
 	app-text/scrollkeeper-dtd
 	app-text/scrollkeeper
 	app-text/rarian
+	x11-drivers/xf86-video-vmware
 
 livecd/empty:
 	/etc/cron.daily
@@ -1644,18 +1642,13 @@ livecd/rm:
 	/usr/bin/{code2color,devdump}
 	/usr/bin/{html2png,afmtodit,grolj4,oldfind}
 	/usr/lib/groff
-	/usr/lib/xorg/modules/extensions
 	/usr/lib/xorg/modules/multimedia
 	/usr/lib/gtkmm*
 	/usr/sbin/{ntpd,swat}
 	/usr/share/fonts/75dpi/{a*,b*,c*,d*,e*,f*,g*,i*,j*,k*,li*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/share/fonts/75dpi/helv*ISO8859-1.pcf.gz
 	/usr/share/zoneinfo
-	/usr/share/locale/{a*,b*,c*,g*,h*,i*,j*,k*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
-	/usr/share/locale/{li*,lt*,lv*}
-	/usr/share/locale/{da,dz,fa,fi}
-	/usr/share/locale/{en_CA,eo,es,et,eu,el,es_MX}
-	/usr/share/locale/{de,en_GB,en,fr}
+	/usr/share/locale/{a*,b*,c*,d*,e*,f*,g*,h*,i*,j*,k*,lb,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/lib/locale/{a*,b*,c*,g*,h*,i*,j*,k*,l*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/lib/locale/{da*,de_AT*,de_BE*,de_CH*,de_LU*,de_DE@euro,dz*}
 	/usr/lib/locale/{en_AU*,en_BW*,en_CA*,en_DK*,en_HK*,en_IE*,en_IN*,en_NG*,en_NZ*,en_PH*,en_SG*,en_ZA*,en_ZW*}
@@ -1667,7 +1660,6 @@ livecd/rm:
 	/usr/share/fonts/misc/{*ja*,*ko*,k14*}
 	/usr/share/i18n/charmaps/{GB18030.gz,EUC-TW.gz,CP949.gz,JOHAB.gz,GBK.gz,BIG5*,EUC*}
 	/usr/share/i18n/charmaps/{SHIFT*,ISO_10646.gz,GB2312.gz,WINDOWS-31J.gz}
-	/usr/lib/dri
 	/usr/share/ati/*
 	/opt/bin/amdcccle
 	/opt/bin/fglrxinfo
@@ -1743,7 +1735,7 @@ livecd/rm:
 	/usr/share/vim/vim7*/autoload/{README.txt,ada.vim,adacomplete.vim,decada.vim,gnat.vim}
 	/usr/share/vim/vim7*/autoload/{spellfile.vim,phpcomplete.vim,netrw.vim,javascriptcomplete.vim}
 	/usr/share/vim/vim7*/lang/menu_{ja*,ru*,vi*,zh*,sr*,sl*,ch*,it*,ca*,es*,pl*,po*,pt*}
-	/usr/share/vim/vim7*/lang/menu_{cs*,cz*,sr*,hu*,no*,sv*,nl*,ko*,af*,sk/usr/share/icons*}
+	/usr/share/vim/vim7*/lang/menu_{cs*,cz*,sr*,hu*,no*,sv*,nl*,ko*,af*,sk*}
 	/usr/share/vim/vim7*/macro/{hanoi*,life*,maze*,urm*}
 	/usr/share/vim/vim7*/ftplugin/{ocaml.vim,cobol.vim,ada.vim,Append*,vhdl.vim,eruby.vim}
 	/usr/share/vim/vim7*/ftplugin/{abaqus.vim,vb.vim,hamster.vim,aspvbs.vim,flexwiki.vim}
@@ -1754,6 +1746,7 @@ livecd/rm:
 	/usr/share/alsa
 	/usr/share/icons/hicolor/icon-theme.cache
 	/usr/share/icons/gnome/scalable
+	/usr/share/icons/gnome/256x256
 	/usr/include/{alsa,nspr,OpenIPMI,nss,xorg,hunspell,xulrunner*,netlink,xfce4,exo*}
 	/usr/lib/portage/pym/cache/{*.pyo,*.pyc}
 	/usr/lib/portage/pym/elog_modules/{*.pyo,*.pyc}
@@ -1770,4 +1763,7 @@ livecd/rm:
 	/usr/lib/cracklib_dict.*
 	/usr/share/dmraid
 	/usr/bin/{net,rpcclient,smbget,smbcacls,smbcquotas,smbclient,smbtree,smbmount,smbumount,smbspool}
+	/usr/lib/xorg/modules/extensions/libglx.so
+	/usr/lib/opengl/xorg-x11/extensions/libglx.so
+	/usr/lib/dri
 

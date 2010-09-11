@@ -346,7 +346,7 @@ do_copyfiles()
 	fi
 	
 	# add scandelay option which allows the usb devices to be detected
-	sed -i -e 's!scandelay=1!scandelay=5!g' /mnt/usbstick/syslinux/syslinux.cfg
+	sed -i -e 's!scandelay=.!scandelay=5!g' /mnt/usbstick/syslinux/syslinux.cfg
 	
 	umount /mnt/usbstick
 }

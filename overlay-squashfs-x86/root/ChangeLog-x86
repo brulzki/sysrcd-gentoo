@@ -6,11 +6,23 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -----------------------------------------------------------------------------
+1.6.0 (2010-09-13)
+-----------------------------------------------------------------------------
+* Rebased standard kernels on 2.6.35.4 (rescuecd + rescue64)
+* Rebased alternative kernels on 2.6.32.21 (altker32 + altker64)
+* Updated xorg-server to version 1.8.2 (graphical server and drivers)
+* Updated ntfs3g to 2010.8.8 (driver that provides read-write access to ntfs)
+* Added keymaps in isolinux (eg: just type 'de' to get a german keyboard map)
+* Kernel-Mode-Settings graphic drivers (intel, radeon)
+* Updated GParted to version 0.6.2
+* Updated partimage to 0.6.9 
+
+-----------------------------------------------------------------------------
 1.5.8 (2010-07-09)
 -----------------------------------------------------------------------------
-* Updated standard kernels to 2.6.32.16 (rescuecd + rescue64)
+* Updated standard kernels to 2.6.33.06 (rescuecd + rescue64)
 * Updated alternative kernels to 2.6.34.01 (altker32 + altker64)
-* Updated GParted to 0.6.1 (fixes two critical bugs)
+* Updated GParted to version 0.6.1 (fixes two critical bugs)
 
 -----------------------------------------------------------------------------
 1.5.7 (2010-07-01)

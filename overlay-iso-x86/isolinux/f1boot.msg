@@ -6,7 +6,7 @@
 |____/ \__, |___/\__\___|_| |_| |_|_| \_\___||___/\___|\__,_|\___|\____\__,_|
        |___/                                                                 
 07
-0C*07 Linux kernel-2.6.32 (with ext4, reiser4, btrfs filesystems support)
+0C*07 Linux kernel-2.6.35 (with ext4, reiser4, btrfs filesystems support)
 0C*07 Both 32bits (IA32) and 64bits (AMD64/EM64T) are supported
 0C*07 GParted graphical partitioning tool (partition magic clone)
 0C*07 File systems tools (ext3, ext4, reiserfs, ntfs, btrfs, ...) and LVM2

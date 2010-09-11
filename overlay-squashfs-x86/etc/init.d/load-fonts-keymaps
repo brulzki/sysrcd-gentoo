@@ -25,6 +25,10 @@ start()
 			loadkeys ru
 			setfont LatArCyrHeb-16
 			;;
+		pl|28)
+			loadkeys pl
+			setfont -m 8859-2
+			;;
 	esac
 }
 

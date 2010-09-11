@@ -30,4 +30,5 @@ MODULES_NET_PHY="broadcom cicada davicom et1011c icplus libphy lxt marvell mdio-
 MODULES_ALT_PATA="pata_acpi pata_cmd640 pata_cs5535 pata_cs5536 pata_cypress pata_hpt366 pata_hpt37x pata_hpt3x2n pata_hpt3x3 pata_it8213 pata_it821x pata_ninja32 pata_optidma pata_opti pata_pcmcia pata_qdi pata_sl82c105"
 MODULES_ALT_NET="atl1c atl2 be2net bonding enic igbvf mlx4_en qlge skfp uli526x vmxnet3 vxge 3c509 8390p acenic amd8111e atp bnx2x cassini de600 de620 dnet dummy ethoc ewrk3 hamachi ifb jme macvlan ne r6040 sb1000 sc92031 sis190 smc-ultra smsc9420 veth virtio_net"
 MODULES_ALT_SCSI="vmw_pvscsi pm8001"
+MODULES_GPU="nouveau i915 drm_kms_helper radeon drm ttm"
 

@@ -140,6 +140,13 @@ do
 	find ${curdir} -name "*.gz" -exec gzip -d {} \;
 done
 
+# renaming nouveau_drv.so (currently broken)
+echo "==> renaming nouveau_drv.so"
+if [ -f /usr/lib/xorg/modules/drivers/nouveau_drv.so ]
+then
+	mv /usr/lib/xorg/modules/drivers/nouveau_drv.so /usr/lib/xorg/modules/drivers/nouveau_drv.disabled
+fi
+
 # install 32bit kernel modules
 echo "==> installing 32bit kernel modules"
 for modtar in /lib/modules/*.tar.bz2

@@ -63,4 +63,4 @@ digests="md5 sha1"
 # GENTOO_MIRRORS, or any other environment variables needed for building.
 # The envscript file sets environment variables like so:
 # export FOO="bar"
-envscript="/worksrc/sysresccd-src-1.5/mainfiles/catalyst-env.sh"
+envscript="/worksrc/sysresccd-src-1.6/mainfiles/catalyst-env.sh"

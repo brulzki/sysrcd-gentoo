@@ -3,24 +3,29 @@ sys-kernel/genkernel selinux
 xfce-base/exo -python
 xfce-base/xfconf -perl
 xfce-base/xfce4-meta -session 
-xfce-base/xfdesktop menu-plugin
+xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
 app-cdr/xfburn -hal dbus xfce -gstreamer
 sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce -debug -gnome -kde 
-sys-apps/parted device-mapper readline
+sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
 www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 app-arch/xz-utils threads -nls static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static
+sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal bash-completion perl python
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba X slang 7zip
 sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
+sys-fs/udev extras
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba -ipv6 -client -smbclient -cups -netapi -pam -fam -kernel_linux acl readline server syslog examples
 sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
+nfs-utils/nfs-utils nfsv4
+sys-auth/consolekit policykit
+sys-fs/ecryptfs-utils -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -png
 sys-fs/ntfs3g -external-fuse -acl
@@ -54,4 +59,3 @@ www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo svg
-

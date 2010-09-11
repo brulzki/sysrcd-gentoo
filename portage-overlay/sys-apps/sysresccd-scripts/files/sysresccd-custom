@@ -136,9 +136,8 @@ do_extract()
 	do
 		if ! cp -a /livemnt/boot/${curfile} /mnt/custom/customcd/isoroot/ 2>/dev/null
 		then
-			echo "cannot copy ${curfile} to /mnt/custom/customcd/isoroot/ (non critical error)"
+			echo "cannot copy ${curfile} to /mnt/custom/customcd/isoroot/ (non critical error, maybe be caused by \"docache\")"
 			rm -rf /mnt/custom/customcd/isoroot/${curfile}
-			break
 		fi
 	done
 	

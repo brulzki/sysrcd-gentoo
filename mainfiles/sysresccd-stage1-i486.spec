@@ -1,17 +1,17 @@
 subarch: i386
-version_stamp: 1.5
+version_stamp: 1.6
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100707
-source_subpath: default/stage4-i386-20100619-01
-portage_confdir: /worksrc/sysresccd-src-1.5/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src-1.5/portage-overlay
+snapshot: 20100910
+source_subpath: default/stage4-i386-20100827-01
+portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
 
-livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir -pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multislot -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb
+livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir -pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multislot -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4
 
 livecd/packages:
-	=sys-boot/grub-0.97-r9
+	=sys-boot/grub-0.97-r10
 	app-accessibility/speakup-utils
 	app-admin/ide-smart
 	app-admin/hddtemp
@@ -53,6 +53,7 @@ livecd/packages:
 	app-arch/unzip
 	app-arch/zip
 	app-arch/xarchiver
+	app-cdr/isomaster
 	app-misc/beep
 	app-misc/emelfm2
 	app-vim/gentoo-syntax
@@ -109,7 +110,6 @@ livecd/packages:
 	dev-libs/openssl
 	dev-libs/popt
 	dev-libs/pkcs11-helper
-	dev-python/pyparted
 	dev-util/cmake
 	dev-util/geany
 	dev-util/intltool
@@ -118,6 +118,7 @@ livecd/packages:
 	dev-util/strace
 	gnome-extra/nm-applet
 	lxde-base/lxrandr
+	media-fonts/font-util
 	media-fonts/terminus-font
 	net-analyzer/arping
 	net-analyzer/dnstracer
@@ -176,7 +177,6 @@ livecd/packages:
 	net-misc/wget
 	net-misc/whois
 	net-misc/wput
-	net-nds/portmap
 	net-wireless/iw
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
@@ -213,7 +213,6 @@ livecd/packages:
 	sys-apps/net-tools
 	sys-apps/netplug
 	sys-apps/openrc
-	sys-apps/parted
 	sys-apps/pciutils
 	sys-apps/pcmciautils
 	sys-apps/pv
@@ -235,6 +234,7 @@ livecd/packages:
 	sys-auth/pambase
 	sys-block/gpart
 	sys-block/gparted
+	sys-block/parted
 	sys-block/lsiutil
 	sys-block/mbuffer
 	sys-block/mpt-status
@@ -245,7 +245,7 @@ livecd/packages:
 	sys-block/tw_cli
 	sys-block/megarc
 	sys-block/megacli
-	=sys-block/partimage-0.6.8
+	sys-block/partimage
 	sys-block/scsiadd
 	sys-boot/lilo
 	sys-boot/syslinux
@@ -256,11 +256,12 @@ livecd/packages:
 	sys-fs/cryptsetup
 	sys-fs/dd-rescue
 	sys-fs/ddrescue
-	sys-fs/dmraid
 	sys-fs/diskdev_cmds
+	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
 	sys-fs/ext3grep
+	sys-fs/extundelete
 	sys-fs/fsarchiver
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
@@ -270,6 +271,7 @@ livecd/packages:
 	sys-fs/lvm2
 	sys-fs/mdadm
 	sys-fs/multipath-tools
+	sys-fs/nilfs-utils
 	sys-fs/ntfs3g
 	sys-fs/ntfsprogs
 	sys-fs/ntfsreloc
@@ -313,6 +315,7 @@ livecd/packages:
 	x11-drivers/xf86-input-mouse
 	x11-drivers/xf86-input-vmmouse
 	x11-libs/wxGTK
+	x11-proto/dri2proto
 	x11-proto/glproto
 	x11-proto/xf86driproto
 	x11-proto/inputproto
@@ -320,6 +323,7 @@ livecd/packages:
 	x11-proto/xineramaproto
 	x11-proto/xextproto
 	x11-misc/mkxf86config
+	net-misc/networkmanager-vpnc
 	x11-misc/read-edid
 	x11-misc/util-macros
 	x11-misc/xkeyboard-config
@@ -330,7 +334,6 @@ livecd/packages:
 	xfce-extra/xfce4-wavelan-plugin
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-datetime-plugin
-	xfce-extra/xfce4-sensors-plugin
 	sys-apps/iproute2
 	www-client/elinks
 	www-client/firefox-bin

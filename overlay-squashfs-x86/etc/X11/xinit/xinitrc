@@ -56,8 +56,8 @@ then
 	[ $KEYMAP = "de_CH" -o $KEYMAP = "46" ] && KEYMAP="ch"
 	[ $KEYMAP = "sg-lat1" -o $KEYMAP = "47" ] && KEYMAP="ch" 
 
-	setxkbmap -layout $KEYMAP
 	echo "setxkbmap -layout $KEYMAP" > /var/log/xorg-keymap.log
+	setxkbmap -layout $KEYMAP >> /var/log/xorg-keymap.log 2>&1
     fi
 fi
 

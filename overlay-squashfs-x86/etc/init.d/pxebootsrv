@@ -51,6 +51,18 @@ start()
 		return 1
 	fi
 
+	if [ $PXEBOOTSRV_DONBD != "yes" ] && [ $PXEBOOTSRV_DONBD != "no" ]
+	then
+		eerror "Invalid value for PXEBOOTSRV_DONBD. Must be \"yes\" or \"no\" (lowercase)."
+		return 1
+	fi
+
+	if [ $PXEBOOTSRV_DONBD = "yes" ] && [ $PXEBOOTSRV_DONFSD = "yes" ]
+	then
+		eerror "You must choose between NFS and NBD server, they cannot be enabled in the same time."
+		return 1
+	fi
+
 	if [ $PXEBOOTSRV_DODHCPD == "yes" ]
 	then
 		# ---- prepare /etc/dhcp/dhcpd.conf from /etc/conf.d/pxebootsrv
@@ -109,7 +121,14 @@ start()
 		then
 			sed -i -e "s!^TIMEOUT .*!TIMEOUT $PXEBOOTSRV_TIMEOUT!i" /tftpboot/pxelinux.cfg/default
 		fi
-		sed -i -e "s!scandelay=1!scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER ${PXEBOOTSRV_EXTRA}!g" /tftpboot/pxelinux.cfg/default
+		if [ $PXEBOOTSRV_DOHTTPD == "yes" ]
+		then
+			sed -i -e "s!scandelay=.!scandelay=5 netboot=$PXEBOOTSRV_HTTPSERVER ${PXEBOOTSRV_EXTRA}!g" /tftpboot/pxelinux.cfg/default
+		fi
+		if [ $PXEBOOTSRV_DONBD == "yes" ]
+		then
+			sed -i -e "s!scandelay=.!scandelay=5 netboot=nbd://$PXEBOOTSRV_LOCALIP:2000!g" /tftpboot/pxelinux.cfg/default
+		fi
 	fi
 
 	# ---- start the NFS server
@@ -119,6 +138,13 @@ start()
 		touch /etc/exports
 		sed -i -e 's!^/tftpboot!#/tftpboot!g' /etc/exports
 		echo "/tftpboot *(fsid=0,ro,no_subtree_check,all_squash,insecure,anonuid=1000,anongid=1000)" >> /etc/exports
+	fi
+
+	# ---- start the NBD server
+	if [ $PXEBOOTSRV_DONBD == "yes" ]
+	then
+		PXEBOOTSRV_DOHTTPD="no"
+		/usr/bin/nbd-server $PXEBOOTSRV_LOCALIP:2000 /tftpboot/sysrcd.dat -r
 	fi
 
 	# ---- stop network manager to avoid conflicts
