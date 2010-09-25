@@ -3,8 +3,8 @@ version_stamp: 1.6
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100910
-source_subpath: default/stage4-i386-20100827-01
+snapshot: 20100923
+source_subpath: default/stage4-i386-20100914-02
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
 
@@ -16,6 +16,7 @@ livecd/packages:
 	app-admin/ide-smart
 	app-admin/hddtemp
 	app-admin/hwreport
+	app-admin/mcelog
 	sys-boot/mbr
 	app-admin/passook
 	app-admin/procinfo-ng

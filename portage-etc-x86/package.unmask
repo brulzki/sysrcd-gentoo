@@ -1,5 +1,4 @@
 # ------ SystemRescueCd package.unmask ------
 =sys-apps/baselayout-2.0.1*
-=sys-fs/xfsprogs-3.1*
 =sys-boot/grub-1.98*
 

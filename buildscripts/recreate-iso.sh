@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="1.6.0"
+VERSION="1.6.1"
 EXTRAVER=""
-VOLNAME="cd-1.6.0-beta"
+VOLNAME="sysrcd-1.6.1"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src-1.6

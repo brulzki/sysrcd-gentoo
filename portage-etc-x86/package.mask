@@ -8,18 +8,15 @@
 >=sys-kernel/linux-headers-2.6.36
 <sys-kernel/genkernel-3.4.10-r1
 >sys-kernel/genkernel-3.4.10-r1
->sys-devel/binutils-2.19.1-r1
-<sys-devel/binutils-2.19.1-r1
 
 # misc packages
 >=net-misc/networkmanager-0.8
 >=net-misc/networkmanager-vpnc-0.8
 >=gnome-extra/nm-applet-0.8
->=app-text/poppler-bindings-0.8.8
->=sys-boot/syslinux-4.00
-=sys-fs/lvm2-2.02.73*
+<=app-text/poppler-0.12.0
 <sys-fs/dmraid-1.0.0_rc16-r2
 <sys-fs/btrfs-progs-0.19-r1
+>=sys-boot/syslinux-4.00
 >app-admin/testdisk-6.11
 <sys-boot/grub-0.97-r10
 >sys-boot/grub-0.97-r10
@@ -39,16 +36,16 @@ sys-apps/pcmcia-cs
 >net-fs/samba-3.2.0
 
 # fix problems
+<x11-drivers/xf86-input-vmmouse-12.6.9
+>x11-drivers/xf86-input-vmmouse-12.6.9
 <=sys-apps/shadow-4.1.4.2-r4
->=sys-devel/binutils-2.20
 >=sys-fs/mtools-4.0.0
 <=net-fs/nfs-utils-1.2.0
 
 # xorg
->x11-base/xorg-server-1.8.2
->=x11-base/xorg-server-1.9.0
->=x11-base/xorg-drivers-1.9
->=x11-drivers/xf86-input-vmmouse-12.6.9
-<net-misc/tigervnc-1.0.1_p20100529-r2
->net-misc/tigervnc-1.0.1_p20100529-r2
+<x11-base/xorg-server-1.9
+<x11-base/xorg-drivers-1.9
+>=x11-base/xorg-server-1.10
+>=x11-base/xorg-drivers-1.10
+<net-misc/tigervnc-1.0.1_p20100914-r2
 

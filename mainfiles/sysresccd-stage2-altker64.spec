@@ -3,7 +3,7 @@ version_stamp: 1.6-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100910
+snapshot: 20100923
 source_subpath: default/livecd-stage1-amd64-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -26,7 +26,7 @@ livecd/users:
 boot/kernel: altker64
 
 boot/kernel/altker64/sources: sys-kernel/alt-sources
-boot/kernel/altker64/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-amd64-2.6.32-alt160.conf
+boot/kernel/altker64/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-amd64-2.6.32-alt162.conf
 boot/kernel/altker64/use: pcmcia usb -X png truetype 
 boot/kernel/altker64/extraversion: amd64
 boot/kernel/altker64/packages:

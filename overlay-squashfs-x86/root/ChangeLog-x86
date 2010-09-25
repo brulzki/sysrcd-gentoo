@@ -5,9 +5,18 @@ Homepage:.......http://www.sysresccd.org/
 Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+1.6.1
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.35.5 (rescuecd + rescue64)
+* Updated alternative kernels to 2.6.32.22 (altker32 + altker64)
+* Updated xorg-server to version 1.9.0 (graphical server and drivers)
+* Fixed boot from external USB cdrom drives (thanks to argonavis)
+* Updated GParted to version 0.6.3 (bug fixes and improves BIOS RAID support)
+
+-------------------------------------------------------------------------------
 1.6.0 (2010-09-13)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Rebased standard kernels on 2.6.35.4 (rescuecd + rescue64)
 * Rebased alternative kernels on 2.6.32.21 (altker32 + altker64)
 * Updated xorg-server to version 1.8.2 (graphical server and drivers)
@@ -17,16 +26,16 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated GParted to version 0.6.2
 * Updated partimage to 0.6.9 
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.8 (2010-07-09)
------------------------------------------------------------------------------
-* Updated standard kernels to 2.6.33.06 (rescuecd + rescue64)
-* Updated alternative kernels to 2.6.34.01 (altker32 + altker64)
-* Updated GParted to version 0.6.1 (fixes two critical bugs)
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.32.16 (rescuecd + rescue64)
+* Updated alternative kernels to 2.6.34.1 (altker32 + altker64)
+* Updated GParted to 0.6.1 (fixes two critical bugs)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.7 (2010-07-01)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated ntfs3g to 2010.5.22 (driver that provides read-write access to ntfs)
 * Reintroduced samba server (version 3.0.37 with minimal options to save space)
 * Added sys-fs/ext3grep-0.10.1 (recover deleted files on an ext3 file system)
@@ -36,9 +45,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed the "vncserver=x:MyPaSsWd" option (password len between 8 and 12 char)
 * Patched parted-2.2 to fix problem with dmraid devices
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.6 (2010-06-18)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.32.15 (rescuecd + rescue64)
 * Updated alternative kernels to 2.6.34 (altker32 + altker64)
 * Updated GParted to 0.6.0 (support for devices with sectors > 512 bytes)
@@ -51,9 +60,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Disabled isohybrid which breaks isoloop and which is not really necessary
 * Added two options to pxebootsrv (PXEBOOTSRV_TIMEOUT and PXEBOOTSRV_EXTRA)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.5 (2010-06-01)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.33.05 (altker32 + altker64)
 * Updated standard kernels to 2.6.32.14 (rescuecd + rescue64)
 * Updated ntfs3g to 2010.5.16 (driver that provides read-write access to ntfs)
@@ -68,9 +77,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * New boot option "nonm" to disable the Network-Manager service
 * Improved detection of the network link status for PXE network booting
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.4 (2010-05-19)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.33.04 (altker32 + altker64)
 * Updated standard kernels to 2.6.32.13 (rescuecd + rescue64)
 * Updated fsarchiver to 0.6.10 (fixes several bugs)
@@ -81,9 +90,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed problem with firmware files in the initramfs (thanks to cm)
 * Fixed the pxe-boot-server service (empty directory was missing)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.3 (2010-05-03)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Added Network-Manager to make network configuration easier (especially wireless)
 * Updated alternative kernels to 2.6.33.03 (altker32 + altker64)
 * Updated standard kernels to 2.6.32.12 (rescuecd + rescue64)
@@ -92,9 +101,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Run livecd_fix_inittab() to allow use from a serial console
 * Updated btrfs-progs from upstream
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.2 (2010-04-12)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Enabled framebuffer console to fix extended vga modes (boot with "vga=xxx")
 * Moved modules to embedded kernel initramfs to reduce memory requirement
 * Use lzma compression instead of gzip for initramfs.igz to save space
@@ -105,18 +114,18 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * The default isolinux boot screen is now based on a menu
 * Updated squashfs to version 4.0 with lzma compression
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.1 (2010-03-29)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Switched to OpenRC and optimized services to reduce boot time
 * Reverted blkpg in parted to avoid error ("failed to re-read the partition table")
 * New kernel configuration for rescuecd / rescue64
 * Fixed problems with the intel Xorg driver (x11-drivers/xf86-video-intel)
 * Updated sys-fs/e2fsprogs to 1.41.11 (ext2/ext3/ext4 filesystem tools)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.5.0 (2010-03-18)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Initramfs: udevd used to load kernel modules that corresponds to the hardware
 * Initramfs: /init bootscript rewritten ("rdinit=/initold" to use the old one)
 * Initramfs: added firmwares required for ethernet and disk controller devices
@@ -131,9 +140,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated ntfs3g to 2010.3.6 (driver that provides read-write access to ntfs)
 * Updated gdisk to 0.6.5 (fdisk utility for GPT based hard disks)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.4.0 (2010-03-01)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to linux-2.6.32.9
 * Updated the alternative kernels to Linux-2.6.27.45
 * Updated mozilla-firefox to 3.6
@@ -144,9 +153,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * New boot option "nfsboot=ip:/path" to boot sysresccd from NFS (network filesystem)
 * New boot option "isoloop=xxx" to boot sysresccd from an ISO on the disk with grub2
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.5 (2010-01-25)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to linux-2.6.31.12 with btrfs update from 2.6.32
 * Updated fsarchiver to 0.6.5 (bug fixes, progress info, "--exclude" option)
 * Updated GParted to version 0.5.1 (with workaround for partition resizing problems)
@@ -156,9 +165,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Downgraded mtools to version 3.9.11 to fix problems
 * Updated ntfs3g to 2010.01.16 (bug fix release)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.4 (2009-12-28)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to linux-2.6.31.9 with btrfs update from 2.6.32
 * Updated the alternative kernels to Linux-2.6.27.41
 * Updated xorg-server to version 1.6.5 (graphical server and drivers)
@@ -171,18 +180,18 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * memtest+ 4.00 is now booted as a kernel to fix issues (thx to argonavis)
 * Replaced aida with hdt-0.3.6 (Hardware-Detection-Tool floppy disk image)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.3 (2009-12-07)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.31.6 with btrfs update from 2.6.32
 * Added Grub2-beta (version 1.97.1), Grub-legacy (0.97) is still there anyway
 * Patched parted-1.9.0 to fix multiple problems (GParted bug 601574)
 * Updated gparted to version 0.5.0 (adds support for Linux software RAID)
 * dmraid-1.0.0-rc16 fixes (Gentoo bug #275451)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.2 (2009-11-09)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.31.5 with btrfs update from 2.6.32
 * Updated the alternative kernels to Linux-2.6.27.38
 * Updated dmraid to 1.0.0-rc16 and mdadm to 3.0.2 (hardware and software raid)
@@ -194,9 +203,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated gparted to 0.4.8 (Graphical Partitionning tool)
 * Added Super Grub Disk version 1.21 (includes GRUB-1.96)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.1 (2009-10-04)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.31.1
 * Updated the alternative kernels to Linux-2.6.27.35
 * Updated sys-fs/ntfs3g to version 2009.4.4-AR19 (ntfs-3g advanced release)
@@ -208,9 +217,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed dns in the initramfs (required to boot from an url using an hostname)
 * Added app-benchmarks/iozone-3.242 (filesystem benchmarking program)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.3.0 (2009-09-14)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.31.0
 * Updated sys-fs/fsarchiver to 0.5.9 (better ntfs support)
 * Updated sys-fs/ntfs3g to version 2009.4.4-AR17 (ntfs-3g advanced release)
@@ -221,9 +230,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated python to version 2.6.2
 * Updated mozilla-firefox to 3.5.2
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.2.3 (2009-08-10)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the alternative kernels to Linux-2.6.27.29
 * Updated sys-fs/e2fsprogs to 1.41.8 (ext2/ext3/ext4 filesystem tools)
 * Updated app-arch/dump to 0.4b42 (better support for ext4)
@@ -233,9 +242,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated sys-block/gparted to 0.4.6
 * Updated sys-apps/parted to 1.9.0
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.2.2 (2009-07-13)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.29.6
 * Updated the alternative kernels to Linux-2.6.27.25
 * Updated the sysresccd-cleansys script with the new packages list
@@ -248,9 +257,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * pxe boot fix: allow thttpd to send files with the execution permission
 * Added mdadm support in the initial boot process 
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.2.1 (2009-06-15)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.29.4
 * Updated the alternative kernels to Linux-2.6.27.24
 * Updated sys-fs/e2fsprogs to 1.41.6 (ext2/ext3/ext4 filesystem tools)
@@ -260,9 +269,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated sys-apps/parted to 1.8.8-git-20080324
 * Added cowloop-3.1 (Copy On Write block device)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.2.0 (released 20090512)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.29.3 (more drivers and new btrfs)
 * Updated the alternative kernels to Linux-2.6.27.22 with reiser4 and ext4
 * Changed the default desktop environment to xfce4 (it was jwm before)
@@ -273,9 +282,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated GNU tar archiver to 1.22 (adds option -J to compress with lzma)
 * GParted-0.4.5 with better dmraid and crypt-luks support (special thanks to Curtis)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.7 (released 20090406)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernels (standard and alternative) to Linux-2.6.27.21
 * Updated sys-fs/ntfs3g to version 2009.3.8 (ntfs-3g advanced release)
 * Updated sys-fs/fsarchiver to 0.4.7 (filesystems backup/deployment tool)
@@ -285,9 +294,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed a problem related to the bootdisk images in sysresccd-custom (thanks to jtournier)
 * Updated sys-block/gparted to 0.4.4
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.6 (released 20090302)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.27.19 with reiser4 and ext4
 * Updated the alternative kernels to Linux-2.6.27.19 with reiser4 and ext4
 * Updated sys-fs/ntfs3g to version 2009.2.1 (ntfs-3g advanced release)
@@ -299,9 +308,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added xfburn-0.4.0 (simple CD/DVD burning software, still in development)
 * Updated sys-block/gparted to 0.4.3
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.5 (released 20090209)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.27.14 with reiser4 and ext4
 * Recent ext4 kernel updates backported from linux-2.6.29-rc
 * Updated sys-fs/fsarchiver to 0.4.1 (filesystems backup/deployment tool)
@@ -315,9 +324,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Created the whatis / locate databases (useful to find a file quickly and help)
 * Repaired sysresccd-cleansys which was broken on portage-2.2
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.4 (released 20090105)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.27.10 with Reiser4
 * Updated the alternative kernels to Linux-2.6.27.09 with Reiser4
 * Updated sys-fs/fsarchiver to 0.2.3 (filesystems backup/deployment tool)
@@ -329,9 +338,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added sys-process/atop-1.21 to monitor processes
 * Added support for floppy disks in the kernel
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.3 (released 20081208)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.27.7 with Reiser4
 * Updated the alternative kernels to Linux-2.6.27.7 with Reiser4
 * Updated squashfs with lzma support (kernel driver and tools) to 3.4
@@ -344,17 +353,17 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed bug with the permissions which prevents thttpd from working
 * Fixed bug in the pxe network boot to get a dynamic address
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.2 (released 20081117)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Fixed a problem in the ISO filesystem that may prevent the disc from booting
 * Updated the standard kernels to Linux-2.6.26.08 with Reiser4
 * Added fsarchiver-0.1.2 (tool to backup linux filesystems)
 * Ability to uninstall all the graphical tools using sysresccd-cleansys
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.1 (released 20081110)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the standard kernels to Linux-2.6.26.07 with Reiser4
 * Updated the alternative kernels to Linux-2.6.26.07 with Reiser4
 * Updated the speakup kernel modules (thanks to Gregory Nowak)
@@ -370,9 +379,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added network drivers: atl1e, at76_usb
 * Added firmware for Ralink rt73-based WiFi USB adapters
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.1.0 (released 20080908)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Swapped the two kernel sources: standard-kernel and alternative-kernels
 * Most drivers are compiled as module in the standard kernels (2.6.25.16)
 * Most drivers are built-in the alternative kernels (2.6.25.14)
@@ -398,9 +407,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated sys-block/gparted to 0.3.8
 * Updated the freedos bootdisk image
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.0.4 (released 20080630)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the default kernels to Linux-2.6.25.07 with Reiser4 
 * Fixed problem with samba due to bad case in the utf8 charset
 * Fixed the lvm package: the lvm1 support was broken
@@ -411,9 +420,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added option "root=auto" to boot the first linux system found on an hard drive
 * Added "mhdd" boot floppy disk image (low-level hard-disk diagnostic tool)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.0.3 (released 20080526)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the default kernels to Linux-2.6.25.04 with Reiser4 
 * Updated the alternative kernels to Linux-2.6.24.07 with Reiser4
 * Switched from unionfs to aufs (another union file system)
@@ -427,9 +436,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added a PDF viewer (app-text/epdfview-0.1.6-r1)
 * Fixed shell problem with the serial console
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.0.2 (released 20080428)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Enabled unicode by default (thanks to Melkor for his help)
 * Updated the default kernel to Linux-2.6.24.05 with Reiser4
 * Updated sys-block/partimage and sys-block/partimage-ssl to 0.6.7
@@ -453,9 +462,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated e2fsprogs to 1.40.8 (fix the wrong value for the inode size)
 * Added several drivers for 56k modems
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.0.1 (released 20080331)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Using JWM-2.0.1 as default Window-Manager instead of Window-Maker
 * Using unionfs-2.2.4 as the root filesystem (all files are now writable)
 * Updated sys-block/gparted to 0.3.6 (add support for the labels)
@@ -476,9 +485,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed problems with udhcpc client when multiple ethernet interfaces exists
 * Prevents multiple setkmap when "sysresccd-custom setkmap" used several times
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 1.0.0 (released 20080303)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * A processor >= i686 is not required anymore (programs are now compiled for i486)
 * Added Xvesa to fix problems with the graphical environment on some hardware
 * Added a 64bits alternative kernel (altker64)
@@ -511,9 +520,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed name resolution that was broken in the pxe boot process due to libc
 * Updated the memtest86+ floppy disk image to 2.00 (memtestp boot entry)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.4.3 (released 20080122)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.23.14 with Reiser4 (rescuecd + rescue64)
 * Updated the alternative kernel to Linux-2.6.22.16 with Reiser4 (vmlinuz2)
 * Patched the kernel with a fix for sis190 network driver
@@ -530,9 +539,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added app-arch/lzma-utils-4.32.2 (compression tools based on LZMA)
 * Added the missing mount-cifs tool (mount-cifs supports smbfs)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.4.2 (released 20071205)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.23.08 with Reiser4 (rescuecd + rescue64)
 * Updated the alternative kernel to Linux-2.6.22.12 with Reiser4 (vmlinuz2)
 * Updated sys-fs/ntfs3g to 1.1120 (ntfs full read-write support)
@@ -550,9 +559,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fix: the default-route was ignored by the dhcp client on pxe booting
 * Fix: the dns-server was ignored by the dhcp client on pxe booting
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.4.1 (released 20071101)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated sys-fs/ntfs3g to 1.1004
 * Updated sys-apps/parted to 1.8.8
 * New sources for the default kernel (rescuecd and rescue64)
@@ -564,9 +573,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added raid monitoring tools (mpt-status and cciss_vol_status)
 * Improved the wireless support
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.4.0 (released 20071004)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Added PXE-Network booting support (boot sysresccd from the network)
 * Added a 64bits kernel (rescue64) to chroot on a 64bits linux
 * Added a 32bits alternative kernel (vmlinuz2) based on 2.6.20.19
@@ -582,9 +591,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated sys-fs/ntfs3g to 1.913
 * Added lm_sensors-2.10.1
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.8 (released 20070905)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.22.06 with Reiser4
 * Updated sys-fs/ntfs3g to 1.826
 * Updated sys-block/partimage to 0.6.6
@@ -594,9 +603,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Improved the welcome screen (removed images for serial console)
 * Updated Oscar (French tool to backup computers)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.7 (released 20070718)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.20.15 with Reiser4
 * Updated sys-fs/ntfs3g to 1.710
 * Updated app-admin/testdisk to 6.7
@@ -606,9 +615,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added sys-fs/lde-2.6.1 (Linux Disk Editor)
 * Updated Oscar (French tool to backup computers)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.6 (released 20070611)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.20.11 with Reiser4
 * Updated sys-fs/ntfs3g to 1.516
 * Updated X-Window-System to 1.3.0
@@ -618,9 +627,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added option "rescuehd" to boot linux on hard disk
 * Updated Oscar (French tool to backup computers)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.5 (released 20070419)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.20.7 with Reiser4
 * Updated sys-fs/ntfs3g to 1.417
 * Updated X.Org to 7.2 (better graphical mode support)
@@ -629,9 +638,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added sys-boot/ms-sys
 * Added vncviewer (app-misc/vnc)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.4 (released 20070320)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.19.7 with Reiser4
 * Improved the compression level for squashfs with lzma to save space
 * Added sys-block/mtx, app-arch/mt-st, app-benchmarks/cpuburn
@@ -640,9 +649,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed boot problems on laptops (thanks to markmarques for his tests)
 * Updated Oscar (French tool to backup computers)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.3 (released 20070301)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.19.2 with Reiser4
 * Updated sys-fs/ntfs3g to 1.0
 * Updated sys-block/gparted to 0.3.4
@@ -655,9 +664,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added sys-devel/bc (calculator)
 * Fixed hangs problems at boot time
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.2 (released 20070110)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated sys-apps/testdisk to 6.5
 * Updated sys-fs/ntfs3g beta to 20070102
 * Updated ntfsresize to 1.13.1.1 (for win-vista)
@@ -672,9 +681,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Improved support for hardware
 * Improved keymaps support (fr_CH and speakup)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.1 (released 20070101)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.18.6 with Reiser4
 * Updated ntfs3g-beta to 20061218 (full NTFS Read/Write)
 * Optimized space usage to reduce the size of the disc
@@ -683,9 +692,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added sys-apps/lshw (hardware lister)
 * Improved support for hardware
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.3.0 (released 20061220)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.18.5 with Reiser4
 * Added xorg graphical environment with WindowMaker
 * Added gparted-0.3.3 to replace qtparted
@@ -696,9 +705,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated the system (glibc, clamav, ...)
 * Updated the bootdisks
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.19 (released 20060501)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.16.10
 * Option to boot sysresccd from the harddisk
 * Fixed problems with SCSI cdrom devices
@@ -708,9 +717,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated the manual
 * Added rsnapshot
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.18 (released 20060401)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.15.6
 * Fixed important problems with USB-stick installation 
 * Fixed bugs with ftp that was broken
@@ -720,9 +729,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated Oscar scripts
 * Other minor fixes and updates
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.17 (released 20060301)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.15.4 
 * Updated CaptiveNtfs to 1.1.7
 * Fixed boot from an USB stick
@@ -730,9 +739,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added Oscar (Outil Complet d'Assistance Reseau)
 * Updated the manual
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.16 (released 20060201)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.6.15.1 
 * Updated the system (udev-080, hotplug-20040923, coldplug-20040920) 
 * Updated LVM tools (evms-2.5.3, device-mapper-1.01.03) 
@@ -745,9 +754,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated ClamAV virus definitions 
 * Many thanks to Isaiah Salinas for his help
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.15 (released 20040818)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.4.27
 * Added missing LVM tools (Volume Manager tools)
 * Added Oscar (build an advanced customized disc)
@@ -764,9 +773,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Udded udpcast (allows mulitcast transfers)
 * Many minor updates
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.14 (released 20040818)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Added menu that help choosing boot options (contrib from Jernej Simoncic)
 * Allow to boot harddisk and floppy at prompt
 * Compressed bootdisk images (saved a lot of space)
@@ -779,9 +788,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Removed the warning at startup
 * Many minor updates 
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.13 (released 20040607)
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.4.26 (patched with SATA support)
 * Improved FrameBuffer support (should work with dell laptops)
 * Updated the FreeDos bootdisk
@@ -799,9 +808,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Better SCSI hardware autodetection
 * Many minor updates 
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.12
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.4.25
 * Updated EVMS VolumeManager to 2.3.0
 * Enabled the NTFS Read/Write support in the kernel (uncomplete but safe)
@@ -812,9 +821,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated memtest+ to 1.11
 * Many minor updates
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.11
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated EVMS to 2.2.2 patched
 * Added Dban bootdisk (tool that wipes all data of a computer)
 * Added pppconfig (configure PPP)
@@ -826,9 +835,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated Reiserfsprogs to 3.6.12
 * Many minor updates
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.10
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.4.24
 * Improved the EVMS support
 * Added CaptiveNtfs-1.1.5
@@ -842,9 +851,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated partimage to 0.6.3 final
 * Many minor updates
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.9
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated the kernel to Linux-2.4.23
 * Added LDE (Linux Disk editor)
 * Added sys-apps/ms-sys (Like the DOS "sys" command)
@@ -854,9 +863,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Many minor updates
 * Added Floppy images: FreeDOS, Memtest, Gag
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.8
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * The system can be installed on an USB stick (128 MB or better)
 * Added network tools: iptraf, nmap, pppoeconf, netcat
 * Added support for i810-FrameBuffer (for Dell laptops)
@@ -872,9 +881,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * An HTML version of the manual is available from the CDRom
 * Fixed problems in the FI (finish) keymap
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.7
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Updated QtEmbedded to 3.2.2 (bugfixes related to the mouse support)
 * Kernel: added LVM/RAID support
 * Added iptables tools (firewall)
@@ -889,9 +898,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Script for installation of the system on the hard disk
 * Generated detailed list of packages on the system
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.6
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Added autorun script feature
 * Added bind-tools (nslookup, ...)
 * Added sys-apps/lsof (list processes)
@@ -904,9 +913,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated ClamAv virus definitions
 * Updated partimage-0.6.3 (bugfixes)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.5
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Update: kernel-2.4.22 (xfs, ntfs, speakup, packet writing)
 * Used cloop instead of gcloop (more stable)
 * Fixed links (strings, for chkrootkit)
@@ -917,9 +926,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added HFS+ tools (mac file system)
 * Big cleanup: removed bad symlinks, and garbage files
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.4
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Major bugfix: downgraded kernel
 * Personnalization script simpler
 * No password required for all consoles
@@ -928,9 +937,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Many minor bugfixes (symlinks, ...)
 * Removed IDE error messages kernel bug
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.3
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Added net-ftp/lftp
 * Added app-admin/chkrootkit
 * Added sys-apps/dar
@@ -943,9 +952,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Updated kernel -> 2.4.22-xfs
 * Bugfixes: vim, fsck.reiser4
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.2
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 * Removed many garbage files (reduce size of packages)
 * Run numlock in the default runlevel
 * Added sys-apps/convertfs (unstable)
@@ -957,9 +966,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added THC secure-delete tools
 * Added VCHE (hex editor)
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.1
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-08-01   
 * Added a script (eagle-config) in order to make adsl easy with eagle modems
 * Updated QtParted-0.4.0_pre, reiserfsprogs, reiser4progs, e2fsprogs
@@ -968,9 +977,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Added net-fs/samba, net-fs/nfs-utils, net-fs/ftpfs
 * released 0.2.1
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.2.0
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-27   
 * Fixed bug: speakup-1.5 (soft for blind) keeps its keymap
 * New: added Reiser4Progs, that manage ReiserFs-4 partitions (beta)
@@ -984,9 +993,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * Fixed bug: no more error messages at startup with hardware detection
 * Added system utilities: gpart, dd_rescue, dump/restore
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.1.4
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-23   
 * added new tools: md5deep, coreutils, wipe
 * make Zsh the default shell
@@ -997,9 +1006,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * added some tools: md5deep, aide
 * resolved many errors at startup
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.1.3
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-21   
 * hardware detection with hotplug
 * add backup scripts in /root
@@ -1010,9 +1019,9 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * no more error message destroying the QtEmbedded screen
 * more details about FrameBuffer in text files 
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.1.2
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-20   
 * released 0.1.2
  
@@ -1020,18 +1029,18 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 * QtEmbedded support with uic and no QtDesigner
 * QtParted-0.4.0_pre3 and PartGui-0.2.3_pre1
 
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.1.1
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-18   
 * made the isolinux configuration (help.msg, bootlogo)
 * mylivecd script: now uses PORTAGE_OVERLAY
 * The partimage server can start
 * release 0.1.1
  
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 0.1.0
------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 2003-07-17   
 * added many programs:
   - vim

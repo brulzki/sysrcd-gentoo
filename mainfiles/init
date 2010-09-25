@@ -80,7 +80,7 @@ sysresccd_setup_keymap()
 
 		sysresccd_chooseKeymap
 
-		[ "${DEVBIND}" -eq '1' ] && umount /dev
+		[ "${DEVBIND:-0}" -eq '1' ] && umount /dev
 	else # "setkmap=xx" option was used
 		sysresccd_useKeymap $SETKMAP
 	fi

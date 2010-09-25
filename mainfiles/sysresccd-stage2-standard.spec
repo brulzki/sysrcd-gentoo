@@ -3,7 +3,7 @@ version_stamp: 1.6-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100910
+snapshot: 20100923
 source_subpath: default/livecd-stage1-i386-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -51,6 +51,7 @@ boot/kernel/rescuecd/packages:
         net-wireless/madwifi-ng-tools
         net-wireless/bcm43xx-fwcutter
         net-wireless/b43-fwcutter
+        net-wireless/ndiswrapper
         sys-fs/lufs
         sys-fs/lufis
         sys-fs/sshfs-fuse
@@ -62,8 +63,6 @@ boot/kernel/rescuecd/packages:
         sys-fs/zfs-fuse
         sys-cluster/drbd
 	x11-drivers/xf86-video-ati
-        net-wireless/ndiswrapper
-	sys-apps/shadow
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -193,6 +192,7 @@ livecd/unmerge:
 	x11-drivers/xf86-video-vmware
 
 livecd/empty:
+	/var/cache/revdep-rebuild
 	/etc/cron.daily
 	/etc/cron.hourly
 	/etc/cron.monthly
@@ -283,6 +283,7 @@ livecd/rm:
 	/usr/lib/{libbsd.a,libcurses.a,libpng.a}
 	/usr/*/lib/{libbfd.a,libiberty.a,libopcodes.a}
 	/usr/lib/binutils/*/*/libbfd.{a,la}
+	/usr/lib/binutils/*/*/libopcodes.{a,la}
 	/usr/include/GL
 	/var/mail
 	/make*

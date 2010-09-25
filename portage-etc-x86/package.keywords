@@ -9,21 +9,25 @@
 # Misc packages
 =net-misc/networkmanager-vpnc-0.7* ~*
 =net-misc/networkmanager-0.7* ~*
-=net-firewall/iptables-1.4.9* ~*
+=sys-apps/smartmontools-5.39* ~*
 =sys-block/open-iscsi-2.0.871* ~*
+=net-firewall/iptables-1.4.9* ~*
 =sys-apps/shadow-4.1.4.2-r5 ~*
+=sys-apps/iproute2-2.6.35* ~*
 =sys-apps/util-linux-2.18* ~*
 =sys-auth/consolekit-0.4* ~*
-=sys-block/gparted-0.6.0* ~*
+=app-text/epdfview-0.1.7* ~*
 =net-misc/openvpn-2.1.0* ~*
 =net-fs/nfs-utils-1.2.2* ~*
-=net-nds/rpcbind-0.2.0* ~*
 =dev-util/strace-4.5.20* ~*
-=sys-fs/udev-160* ~*
+=net-nds/rpcbind-0.2.0* ~*
+=app-misc/mc-4.7.4* ~*
+=sys-fs/udev-162* ~*
 sys-boot/grub **
 sys-fs/ext3grep ~*
 sys-apps/ethtool ~*
 app-crypt/chntpw ~*
+sys-block/gparted ~*
 sys-fs/nilfs-utils ~*
 app-forensics/afflib ~*
 net-misc/ethercard-diag ~*
@@ -56,16 +60,12 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-fs/e2fsprogs-1.41.12* ~*
-=sys-libs/e2fsprogs-libs-1.41.12* ~*
 =sys-cluster/drbd-kernel-8.3* ~*
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/dosfstools-3.0.9* ~*
-=sys-fs/cryptsetup-1.1.0* ~*
 =sys-fs/zfs-fuse-0.6.9* ~*
 =app-arch/dump-0.4.42* ~*
-=sys-cluster/drbd-8.3* ~*
 =sys-fs/xfsdump-3.0.4* ~*
 =sys-fs/xfsprogs-3.1* ~*
 =sys-fs/mdadm-3.1* ~*
@@ -80,19 +80,17 @@ sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
 
 # XOrg packages
-=x11-drivers/xf86-video-siliconmotion-1.7.4* ~*
+=x11-base/xorg-server-1.9.0* ~*
+=x11-base/xorg-drivers-1.9* ~*
+=net-misc/tigervnc-1.0.1_p20100914* ~*
+=x11-drivers/xf86-video-sisusb-0.9.4* ~*
+=x11-drivers/xf86-video-dummy-0.3.4* ~*
 =x11-drivers/xf86-video-intel-2.12* ~*
-=x11-base/xorg-server-1.8.2* ~*
-=x11-base/xorg-drivers-1.8* ~*
-=net-misc/tigervnc-1.0.1_p20100529-r2 ~*
->net-misc/tigervnc-1.0.1_p20100529-r2 ~*
-=media-fonts/font-util-1.1.1* ~*
-=x11-apps/xinit-1.2.1* ~*
-=media-libs/mesa-7.8* ~*
+=x11-drivers/xf86-video-apm-1.2.3* ~*
 =x11-libs/libdrm-2.4.21* ~*
+=x11-apps/xinit-1.2.1* ~*
 
 # Wireless drivers
-net-wireless/ndiswrapper ~*
 net-wireless/b43-fwcutter ~*
 net-wireless/bcm43xx-fwcutter ~*
 net-wireless/atmel-firmware ~*
@@ -100,6 +98,5 @@ net-wireless/madwifi-ng ~*
 net-wireless/madwifi-ng-tools ~*
 net-wireless/rt61-firmware ~*
 net-wireless/rt73-firmware ~*
-net-wireless/broadcom-sta ~*
 net-wireless/prism54-firmware ~*
 

@@ -3,8 +3,8 @@ version_stamp: 1.6-cache
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100910
-source_subpath: default/stage4-i386-20100815-01
+snapshot: 20100923
+source_subpath: default/stage4-i386-20100914-02
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
 
@@ -176,7 +176,6 @@ livecd/packages:
 	net-misc/wget
 	net-misc/whois
 	net-misc/wput
-	net-nds/portmap
 	net-wireless/iw
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
