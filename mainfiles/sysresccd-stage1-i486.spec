@@ -3,7 +3,7 @@ version_stamp: 1.6
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100923
+snapshot: 20101009
 source_subpath: default/stage4-i386-20100914-02
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -54,6 +54,7 @@ livecd/packages:
 	app-arch/unzip
 	app-arch/zip
 	app-arch/xarchiver
+	app-benchmarks/systester
 	app-cdr/isomaster
 	app-misc/beep
 	app-misc/emelfm2
@@ -119,6 +120,8 @@ livecd/packages:
 	dev-util/strace
 	gnome-extra/nm-applet
 	lxde-base/lxrandr
+	media-fonts/font-bh-type1
+	media-fonts/font-bh-ttf
 	media-fonts/font-util
 	media-fonts/terminus-font
 	net-analyzer/arping
@@ -335,8 +338,10 @@ livecd/packages:
 	xfce-extra/xfce4-wavelan-plugin
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-datetime-plugin
+	xfce-extra/xfce4-battery-plugin
 	sys-apps/iproute2
 	www-client/elinks
 	www-client/firefox-bin
 	www-servers/thttpd
+	#media-fonts/corefonts
 

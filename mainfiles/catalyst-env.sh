@@ -1,4 +1,4 @@
-export VIDEO_CARDS="vesa nv ati dummy glint intel i128 i740 mach64 mga r128 rendition s3 s3virge siliconmotion trident sis savage cirrus voodoo openchrome sisusb ast tdfx"
+export VIDEO_CARDS="vesa nv radeon dummy glint intel i128 i740 mach64 mga r128 rendition s3 s3virge siliconmotion trident sis savage cirrus voodoo openchrome sisusb ast tdfx"
 export INPUT_DEVICES="keyboard vmmouse mouse evdev synaptics"
 export FEATURES="parallel parallel-fetch -collision-protect -protect-owned"
 export MAKEOPTS="-j5 --load-average=8"

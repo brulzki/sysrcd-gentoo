@@ -20,7 +20,7 @@ DEPEND="dev-util/pkgconfig
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	#epatch "${FILESDIR}/fsarchiver-0.6.9-01-fix-ntfs-links.patch"
+	epatch "${FILESDIR}/fsarchiver-0.6.10-01-update-supported-btrfs-compat-flags.patch"
 	eautoconf
 }
 

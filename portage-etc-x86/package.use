@@ -59,4 +59,5 @@ sys-fs/evms -gtk
 www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
-x11-libs/cairo svg
+x11-libs/cairo svg cleartype lcdfilter
+

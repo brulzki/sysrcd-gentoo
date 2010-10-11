@@ -50,6 +50,6 @@ PXEBOOTSRV_HTTPSERVER="http://$PXEBOOTSRV_LOCALIP/sysrcd.dat" # download URL
 
 # Set a low value to boot faster. Default, wait 900 deciseconds (1min30sec)
 PXEBOOTSRV_TIMEOUT="50"                           # Used only if PXEBOOTSRV_DOTFTPD="yes"
-# You can append extra parameters
-PXEBOOTSRV_EXTRA=""                               # Used only if PXEBOOTSRV_DOTFTPD="yes"
+# You can append extra parameters such as "rootpass=xxx" or "ar_source=xxx"
+PXEBOOTSRV_EXTRA=""
 

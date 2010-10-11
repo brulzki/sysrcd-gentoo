@@ -127,7 +127,11 @@ start()
 		fi
 		if [ $PXEBOOTSRV_DONBD == "yes" ]
 		then
-			sed -i -e "s!scandelay=.!scandelay=5 netboot=nbd://$PXEBOOTSRV_LOCALIP:2000!g" /tftpboot/pxelinux.cfg/default
+			sed -i -e "s!scandelay=.!scandelay=5 netboot=nbd://$PXEBOOTSRV_LOCALIP:2000 ${PXEBOOTSRV_EXTRA}!g" /tftpboot/pxelinux.cfg/default
+		fi
+		if [ $PXEBOOTSRV_DONFSD == "yes" ]
+		then
+			sed -i -e "s!scandelay=.!scandelay=5 netboot=nfs://$PXEBOOTSRV_LOCALIP:/tftpboot ${PXEBOOTSRV_EXTRA}!g" /tftpboot/pxelinux.cfg/default
 		fi
 	fi
 

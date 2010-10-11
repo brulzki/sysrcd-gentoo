@@ -41,11 +41,15 @@ sys-apps/pcmcia-cs
 <=sys-apps/shadow-4.1.4.2-r4
 >=sys-fs/mtools-4.0.0
 <=net-fs/nfs-utils-1.2.0
+>=net-dialup/lrzsz-0.12.20-r3
+>=sys-devel/gettext-0.18.1.1-r1
 
 # xorg
 <x11-base/xorg-server-1.9
 <x11-base/xorg-drivers-1.9
 >=x11-base/xorg-server-1.10
 >=x11-base/xorg-drivers-1.10
-<net-misc/tigervnc-1.0.1_p20100914-r2
+<x11-base/xorg-server-1.9.0.901
+>x11-base/xorg-server-1.9.0.901
+<net-misc/tigervnc-1.0.1_p20100914-r3
 

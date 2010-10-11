@@ -7,7 +7,7 @@
 ## the startup-dir of thttpd is the docroot, so we specify it here
 ## and the init-script does a "cd" prior to startup:
 #THTTPD_DOCROOT="/var/www/localhost"
-THTTPD_DOCROOT="/livemnt/boot"
+THTTPD_DOCROOT="/tftpboot"
 
 ## There are 2 ways to configure thttpd:
 ##	1) specify all params on the cmd-line

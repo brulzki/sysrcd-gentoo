@@ -3,7 +3,7 @@ version_stamp: 1.6-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100923
+snapshot: 20101009
 source_subpath: default/livecd-stage1-i386-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.35-std160.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.35-std162.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -57,12 +57,11 @@ boot/kernel/rescuecd/packages:
         sys-fs/sshfs-fuse
         x11-wm/jwm
         sys-block/iscsitarget
-        sys-apps/lm_sensors
         =sys-boot/grub-1.98
         sys-block/open-iscsi
         sys-fs/zfs-fuse
         sys-cluster/drbd
-	x11-drivers/xf86-video-ati
+        sys-apps/lm_sensors
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -190,6 +189,8 @@ livecd/unmerge:
 	app-text/scrollkeeper
 	app-text/rarian
 	x11-drivers/xf86-video-vmware
+	xfce-extra/xfce4-clipman-plugin
+	media-fonts/corefonts
 
 livecd/empty:
 	/var/cache/revdep-rebuild
@@ -1646,8 +1647,6 @@ livecd/rm:
 	/usr/lib/xorg/modules/multimedia
 	/usr/lib/gtkmm*
 	/usr/sbin/{ntpd,swat}
-	/usr/share/fonts/75dpi/{a*,b*,c*,d*,e*,f*,g*,i*,j*,k*,li*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
-	/usr/share/fonts/75dpi/helv*ISO8859-1.pcf.gz
 	/usr/share/zoneinfo
 	/usr/share/locale/{a*,b*,c*,d*,e*,f*,g*,h*,i*,j*,k*,lb,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/lib/locale/{a*,b*,c*,g*,h*,i*,j*,k*,l*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
@@ -1767,4 +1766,6 @@ livecd/rm:
 	/usr/lib/xorg/modules/extensions/libglx.so
 	/usr/lib/opengl/xorg-x11/extensions/libglx.so
 	/usr/lib/dri
+	#/usr/share/fonts/75dpi/{a*,b*,c*,d*,e*,f*,g*,i*,j*,k*,li*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
+	#/usr/share/fonts/75dpi/helv*ISO8859-1.pcf.gz
 

@@ -31,9 +31,11 @@ src_unpack()
 	epatch ${FILESDIR}/alt-sources-2.6.32_11-update-e1000e-ich9.patch.bz2 || die "alt-sources update-e1000e failed."
 	epatch ${FILESDIR}/alt-sources-2.6.32_12-libata-trim.patch.bz2 || die "alt-sources libata-trim failed."
 	epatch ${FILESDIR}/alt-sources-2.6.32_13-drbd.patch.bz2 || die "alt-sources drbd failed."
+	epatch ${FILESDIR}/alt-sources-2.6.32_14-xz-20100702.patch.bz2 || die "alt-sources drbd failed."
+	epatch ${FILESDIR}/alt-sources-2.6.32_15-atl1c-update.bz2 || die "alt-sources atl1c failed."
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e ${sedlockdep} include/linux/lockdep.h
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt161/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt162/" Makefile
 }
 

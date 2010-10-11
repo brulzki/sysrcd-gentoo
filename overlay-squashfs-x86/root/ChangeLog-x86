@@ -6,7 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
-1.6.1
+1.6.2 (2010-10-11)
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.35.6 (rescuecd + rescue64)
+* Updated alternative kernels to 2.6.32.23 (altker32 + altker64)
+* Updated GParted to 0.6.4 (fix: partition was 1 MiB larger than requested)
+* Updated ntfs3g to 2010.10.2 (driver that provides read-write access to ntfs)
+* Patched fsarchiver-0.6.10 to make it work on recent btrfs filesystems
+* Updated xorg-server to 1.9.0.901 and xf86-video-nv to 2.1.18 (nvidia driver)
+* Added more fonts (font-adobe-75dpi, font-bh-ttf, font-bh-type1)
+
+-------------------------------------------------------------------------------
+1.6.1 (2010-09-27)
 -------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.35.5 (rescuecd + rescue64)
 * Updated alternative kernels to 2.6.32.22 (altker32 + altker64)

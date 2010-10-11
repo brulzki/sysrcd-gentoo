@@ -3,7 +3,7 @@ version_stamp: 1.6-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20100923
+snapshot: 20101009
 source_subpath: default/livecd-stage1-amd64-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -26,7 +26,7 @@ livecd/users:
 boot/kernel: rescue64
 
 boot/kernel/rescue64/sources: sys-kernel/std-sources
-boot/kernel/rescue64/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-amd64-2.6.35-std160.conf
+boot/kernel/rescue64/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-amd64-2.6.35-std162.conf
 boot/kernel/rescue64/use: pcmcia usb -X png truetype 
 boot/kernel/rescue64/extraversion: amd64
 boot/kernel/rescue64/packages:
