@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+1.6.3 (2010-11-01)
+-------------------------------------------------------------------------------
+* Updated alternative kernels to 2.6.32.25 (altker32 + altker64)
+* Updated truecrypt to 7.0a (data encryption program)
+* Updated xorg-server to 1.9.1 (graphical server and drivers)
+* Updated GParted to 0.7.0 (initial support for btrfs + bug fixes)
+* Updated perl language to 5.12.2 (Practical Extraction and Report Language)
+* Added app-misc/scrub 2.2 (write patterns on disk/file)
+
+-------------------------------------------------------------------------------
 1.6.2 (2010-10-11)
 -------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.35.6 (rescuecd + rescue64)

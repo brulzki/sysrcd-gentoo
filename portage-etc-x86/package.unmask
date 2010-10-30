@@ -1,4 +1,8 @@
 # ------ SystemRescueCd package.unmask ------
 =sys-apps/baselayout-2.0.1*
+=gnome-extra/nm-applet-0.7*
+=net-misc/networkmanager-0.7*
+=net-misc/networkmanager-vpnc-0.7*
+=sys-fs/dd-rhelp-0.0.6*
 =sys-boot/grub-1.98*
 

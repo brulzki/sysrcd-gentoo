@@ -3,7 +3,7 @@ version_stamp: 1.6
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101009
+snapshot: 20101029
 source_subpath: default/stage4-amd64-20100829-01
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay

@@ -6,7 +6,7 @@ EAPI="1"
 
 inherit eutils toolchain-funcs multilib autotools
 
-XSERVER_VERSION="1.9.0.901"
+XSERVER_VERSION="1.9.1"
 OPENGL_DIR="xorg-x11"
 
 DESCRIPTION="Remote desktop viewer display system"

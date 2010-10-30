@@ -3,7 +3,7 @@ version_stamp: 1.6-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101009
+snapshot: 20101029
 source_subpath: default/livecd-stage1-i386-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -26,15 +26,10 @@ livecd/users:
 boot/kernel: altker32
 
 boot/kernel/altker32/sources: sys-kernel/alt-sources
-boot/kernel/altker32/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.32-alt162.conf
+boot/kernel/altker32/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.32-alt163.conf
 boot/kernel/altker32/use: pcmcia usb -X png truetype 
 boot/kernel/altker32/extraversion: i386
 boot/kernel/altker32/packages:
 	app-accessibility/speakup
-	net-dialup/speedtouch-usb
-	net-dialup/hcfpcimodem
-	net-dialup/hsfmodem
-	net-dialup/globespan-adsl
-	net-misc/openswan
 	net-wireless/ndiswrapper
 

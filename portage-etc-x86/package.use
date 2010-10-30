@@ -15,7 +15,7 @@ sys-block/partimage ssl -nologin -nls pam -static
 app-arch/xz-utils threads -nls static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static
 sys-fs/xfsprogs -readline
-app-editors/vim -X -gpm -minimal bash-completion perl python
+app-editors/vim -X -gpm -minimal -perl bash-completion python
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba X slang 7zip
 sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
@@ -50,7 +50,6 @@ net-misc/tigervnc server xorgmodule -opengl
 sys-apps/miscfiles minimal
 net-analyzer/tcpdump -samba
 dev-lang/python -berkdb
-dev-lang/perl minimal
 x11-apps/xinit minimal
 net-dialup/rp-pppoe -X
 net-analyzer/nmap -gtk
