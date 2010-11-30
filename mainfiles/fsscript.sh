@@ -19,6 +19,9 @@ chsh -s /bin/zsh root
 # Remove python precompiled files
 find /usr/lib -name "*.py?" -exec rm -f {} \; >/dev/null 2>&1
 
+# Remove old files
+find /etc -name "._cfg*" -exec rm -f {} \; >/dev/null 2>&1
+
 # remove warning from clock service
 [ -f /etc/conf.d/clock ] && sed -i -e 's:#TIMEZONE="Factory":TIMEZONE="Europe/London":g' /etc/conf.d/clock
 

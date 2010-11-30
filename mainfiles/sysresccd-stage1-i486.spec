@@ -3,8 +3,8 @@ version_stamp: 1.6
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101029
-source_subpath: default/stage4-i386-20101028-02
+snapshot: 20101127
+source_subpath: default/stage4-i386-20101120-01
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
 
@@ -105,6 +105,7 @@ livecd/packages:
 	app-text/dos2unix
 	app-text/epdfview
 	app-vim/gentoo-syntax
+	dev-lang/perl
 	dev-lang/ruby
 	dev-libs/expat
 	dev-libs/libconfig
@@ -152,6 +153,7 @@ livecd/packages:
 	net-dialup/rp-pppoe
 	net-dialup/speedtouch-usb
 	net-dns/bind-tools
+	net-firewall/ipsec-tools
 	net-firewall/iptables
 	net-fs/mount-cifs
 	net-fs/nfs-utils
@@ -171,6 +173,7 @@ livecd/packages:
 	net-misc/iputils
 	net-misc/netkit-rsh
 	net-misc/networkmanager
+	net-misc/networkmanager-openvpn
 	net-misc/networkmanager-vpnc
 	net-misc/ntp
 	net-misc/openssh
@@ -200,6 +203,7 @@ livecd/packages:
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
 	net-wireless/zd1211-firmware
+	perl-core/Encode
 	sys-apps/acl
 	sys-apps/attr
 	sys-apps/cciss_vol_status

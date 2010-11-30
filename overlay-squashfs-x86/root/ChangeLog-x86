@@ -6,6 +6,14 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+1.6.4 (2010-12-01)
+-------------------------------------------------------------------------------
+* Updated alternative kernels to 2.6.32.26 (altker32 + altker64)
+* Updated standard kernels to 2.6.35.9 (rescuecd + rescue64)
+* Updated xorg-server to 1.9.2 (graphical server and drivers)
+* Patched fsarchiver-0.6.11 (support for recent btrfs + interactive password)
+
+-------------------------------------------------------------------------------
 1.6.3 (2010-11-01)
 -------------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.32.25 (altker32 + altker64)

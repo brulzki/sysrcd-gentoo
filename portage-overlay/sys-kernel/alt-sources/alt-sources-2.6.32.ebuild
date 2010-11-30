@@ -36,6 +36,6 @@ src_unpack()
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e ${sedlockdep} include/linux/lockdep.h
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt163/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt164/" Makefile
 }
 

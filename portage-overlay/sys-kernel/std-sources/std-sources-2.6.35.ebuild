@@ -18,7 +18,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	mv linux-2.6.35 linux-${KV}
 	cd linux-${KV}
-	epatch ${FILESDIR}/std-sources-2.6.35_01-fc14-048.patch.bz2 || die "std-sources fc14 patch failed."
+	epatch ${FILESDIR}/std-sources-2.6.35_01-fc14-062.patch.bz2 || die "std-sources fc14 patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.35_02-sqlzma40.patch.bz2 || die "std-sources sqlzma40 patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.35_03-aufs2.patch.bz2 || die "std-sources aufs2 patch failed."
 	epatch ${FILESDIR}/std-sources-2.6.35_04-reiser4.patch.bz2 || die "std-sources reiser4 patch failed."
@@ -28,6 +28,6 @@ src_unpack()
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e ${sedlockdep} include/linux/lockdep.h
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -std163/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std164/" Makefile
 }
 

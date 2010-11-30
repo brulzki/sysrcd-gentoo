@@ -3,7 +3,7 @@ version_stamp: 1.6-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101029
+snapshot: 20101127
 source_subpath: default/livecd-stage1-i386-1.6
 portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.35-std163.conf
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-x86-2.6.35-std164.conf
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i386
 boot/kernel/rescuecd/packages:
@@ -37,7 +37,6 @@ boot/kernel/rescuecd/packages:
         sys-block/iscsitarget
         sys-block/open-iscsi
 	=sys-boot/grub-1.98
-	app-arch/xz-utils
         x11-wm/jwm
 
 livecd/unmerge:
@@ -67,20 +66,6 @@ livecd/unmerge:
 	sys-fs/progsreiserfs
 	dev-python/pycrypto
 	dev-python/python-fchksum
-	dev-perl/Archive-Tar
-	dev-perl/Compress-Raw-Zlib
-	dev-perl/Compress-Zlib
-	dev-perl/ExtUtils-CBuilder
-	dev-perl/IO-Compress-Base
-	dev-perl/IO-Compress-Zlib
-	dev-perl/IO-String
-	dev-perl/IO-Zlib
-	dev-perl/XML-Parser
-	dev-perl/extutils-parsexs
-	dev-perl/module-build
-	dev-perl/yaml
-	perl-core/PodParser
-	perl-core/Scalar-List-Utils
 	media-fonts/font-util
 	x11-apps/xclock
 	x11-apps/bdftopcf
@@ -132,9 +117,6 @@ livecd/unmerge:
 	app-text/docbook-xml-dtd
 	app-text/gnome-doc-utils
 	app-admin/eselect-xvmc
-	dev-perl/Compress-Raw-Bzip2
-	dev-perl/IO-Compress-Bzip2
-	perl-core/Package-Constants
 	dev-util/unifdef
 	net-mail/mailbase
 	mail-mta/ssmtp
@@ -148,15 +130,6 @@ livecd/unmerge:
 	media-fonts/dejavu
 	x11-libs/libgksu
 	x11-libs/gksu
-	dev-perl/XML-NamespaceSupport
-	perl-core/Storable
-	perl-core/Test-Simple
-	dev-perl/XML-LibXML-Common
-	dev-perl/XML-SAX
-	virtual/perl-Test-Simple
-	virtual/perl-Storable
-	dev-perl/XML-LibXML
-	dev-perl/XML-Simple
 	games-misc/fortune-mod
 	media-fonts/font-adobe-100dpi
 	app-text/recode
@@ -169,8 +142,27 @@ livecd/unmerge:
 	app-text/scrollkeeper-dtd
 	app-text/scrollkeeper
 	app-text/rarian
-	x11-drivers/xf86-video-vmware
-	xfce-extra/xfce4-clipman-plugin
+	perl-core/Encode
+	dev-perl/Archive-Tar
+	dev-perl/Compress-Raw-Zlib
+	dev-perl/Compress-Zlib
+	dev-perl/ExtUtils-CBuilder
+	dev-perl/IO-Compress-Base
+	dev-perl/IO-Compress-Zlib
+	dev-perl/IO-String
+	dev-perl/IO-Zlib
+	dev-perl/XML-Parser
+	dev-perl/extutils-parsexs
+	dev-perl/module-build
+	dev-perl/Compress-Raw-Bzip2
+	dev-perl/IO-Compress-Bzip2
+	dev-perl/yaml
+	dev-perl/XML-NamespaceSupport
+	dev-perl/XML-LibXML-Common
+	dev-perl/XML-SAX
+	dev-perl/YAML-Tiny
+	dev-perl/XML-LibXML
+	dev-perl/XML-Simple
 
 livecd/empty:
 	/var/cache/revdep-rebuild
@@ -238,7 +230,7 @@ livecd/rm:
 	/usr/share/doc/scons-*
 	/usr/share/man/{man0p,man2,man3,man3p,man4,man6,man7,man9}
 	/usr/share/man/{ca*,fr*,gl*,id*,hu*,it*,jp*,pl*,pt*,ru*,sk*,ug*,zh*}
-	/usr/share/man/man1/{perl*,zshall.1.gz,ssl-*,openssl*}
+	/usr/share/man/man1/{zshall.1.gz,ssl-*,openssl*}
 	/usr/share/man/man5/{groff*,lj4*}
 	/usr/sbin/archive-conf
 	/usr/sbin/bootsplash*
@@ -262,6 +254,7 @@ livecd/rm:
 	/usr/lib/nss/*.a
 	/usr/lib/nspr/*.a
 	/usr/lib/{libbsd.a,libcurses.a,libpng.a}
+	/usr/lib/libipsec.la
 	/usr/*/lib/{libbfd.a,libiberty.a,libopcodes.a}
 	/usr/lib/binutils/*/*/libbfd.{a,la}
 	/usr/lib/binutils/*/*/libopcodes.{a,la}
@@ -279,7 +272,7 @@ livecd/rm:
 	/etc/X11/xinit/.svn
 	/etc/udev/.svn
 	/etc/udev/rules.d/.svn
-	/usr/bin/{s2p,pod2text,perlcc,xsubpp,splain,h2xs,perlbug,psed,piconv,instmodsh,dprofpp,perldoc}
+	/usr/bin/{s2p,perlcc,xsubpp,splain,h2xs,perlbug,psed,piconv,instmodsh,dprofpp,perldoc}
 	/usr/bin/{pl2pm,perlivp,a2p,libnetcfg,find2perl,enc2xs,pstruct,pod2latex,cpan,c2ph}
 	/usr/share/doc/{lrzsz*,minicom*,vte*,ckermit*}
 	/usr/share/gtk-doc/html/vte*

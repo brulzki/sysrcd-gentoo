@@ -7,6 +7,7 @@
 =sys-devel/gcc-4.4* ~*
 
 # Misc packages
+=net-misc/networkmanager-openvpn-0.7* ~*
 =net-misc/networkmanager-vpnc-0.7* ~*
 =www-client/firefox-bin-3.6.12* ~*
 =dev-util/dialog-1.1.20100428* ~*
@@ -21,10 +22,11 @@
 =dev-util/strace-4.5.20* ~*
 =net-nds/rpcbind-0.2.0* ~*
 =app-arch/xz-utils-5.0* ~*
-=dev-lang/perl-5.12.2-r1 ~*
+=sys-apps/slocate-3.1* ~*
 =app-editors/vim-core-7.3* ~*
 =app-editors/vim-7.3* ~*
 =app-editors/gvim-7.3* ~*
+=dev-lang/perl-5.12* ~*
 =app-misc/mc-4.7.4* ~*
 =sys-fs/udev-162* ~*
 sys-boot/grub **
@@ -33,10 +35,12 @@ dev-util/geany ~*
 sys-fs/ext3grep ~*
 sys-apps/ethtool ~*
 app-crypt/chntpw ~*
+perl-core/Encode ~*
 sys-block/gparted ~*
 sys-fs/nilfs-utils ~*
 app-forensics/afflib ~*
 sys-apps/smartmontools ~*
+net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
 app-antivirus/clamav ~*
@@ -72,7 +76,6 @@ sys-kernel/genkernel ~*
 =app-arch/dump-0.4.42* ~*
 =sys-fs/xfsdump-3.0.4* ~*
 =sys-fs/xfsprogs-3.1* ~*
-=sys-fs/mdadm-3.1* ~*
 sys-fs/extundelete ~*
 sys-fs/fsarchiver ~*
 app-admin/testdisk ~*
@@ -82,19 +85,16 @@ sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
 
 # XOrg packages
-=x11-base/xorg-server-1.9.0* ~*
-=x11-base/xorg-drivers-1.9* ~*
-=x11-base/xorg-server-1.9.1* ~*
+=x11-apps/xinit-1.3* ~*
 =x11-libs/libdrm-2.4.22* ~*
-=x11-apps/xinit-1.2.1* ~*
+=x11-base/xorg-drivers-1.9* ~*
+=x11-base/xorg-server-1.9.2* ~*
 =net-misc/tigervnc-1.0.1_p20100914* ~*
 =x11-drivers/xf86-video-sisusb-0.9.4* ~*
 =x11-drivers/xf86-video-dummy-0.3.4* ~*
 =x11-drivers/xf86-video-intel-2.13* ~*
 =x11-drivers/xf86-video-apm-1.2.3* ~*
 =x11-drivers/xf86-video-nv-2.1.18* ~*
-=x11-drivers/xf86-video-virtualbox-3.2* ~*
-=x11-drivers/xf86-input-virtualbox-3.2* ~*
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*
