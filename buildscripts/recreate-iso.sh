@@ -1,12 +1,12 @@
 #!/bin/sh
 
-VERSION="1.6.4"
+VERSION="2.0.0"
 EXTRAVER=""
-VOLNAME="sysrcd-1.6.4"
+VOLNAME="sysrcd-2.0.0"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
-REPOSRC=/worksrc/sysresccd-src-1.6
-REPOBIN=/worksrc/sysresccd-bin-1.6
+REPOSRC=/worksrc/sysresccd-src
+REPOBIN=/worksrc/sysresccd-bin
 
 # ==================================================================
 # ==================================================================
@@ -116,8 +116,8 @@ then
 fi
 
 # ========= copy list of packages ===============================================
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-1.6-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i386-1.6-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
+cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
 
 # ========= prepare the backup ==================================================
 tar cfJp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.xz" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'

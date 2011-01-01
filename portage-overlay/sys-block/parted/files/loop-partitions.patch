@@ -9,7 +9,7 @@ Index: b/libparted/arch/linux.c
 ===================================================================
 --- a/libparted/arch/linux.c
 +++ b/libparted/arch/linux.c
-@@ -2183,6 +2183,9 @@
+@@ -2189,6 +2189,9 @@
                  /* replace /disc with /path%d */
                  strcpy (result, dev->path);
                  snprintf (result + path_len - 5, 16, "/part%d", num);

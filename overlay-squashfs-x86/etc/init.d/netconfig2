@@ -34,6 +34,7 @@ start()
 	if echo "${CMDLINE}" | grep -q -F 'dodhcp'
 	then
 		DHCPHOSTNAME="$(hostname)"
+		DHCPDEVICES="$(awk -F: '/eth.:|tr.:|ath.:|wlan.:/{print $1}' /proc/net/dev 2>/dev/null)"
 		for opt in ${CMDLINE}
 		do
 			if echo "${opt}" | grep -q -F 'dhcphostname'
@@ -41,9 +42,13 @@ start()
 				DHCPHOSTNAME=$(echo "${opt}" | cut -d= -f2)
 				print_and_log_netconfig2 "DHCPHOSTNAME=${DHCPHOSTNAME}"
 			fi
+			if echo "${opt}" | grep -q -F 'dodhcp='
+			then
+				DHCPDEVICES="$(echo ${opt} | cut -d= -f2 | sed -e 's/,/ /g')"
+				print_and_log_netconfig2 "DHCPDEVICES=${DHCPDEVICES}"
+			fi
 		done
 		
-		NETDEVICES="$(awk -F: '/eth.:|tr.:|ath.:|wlan.:/{print $1}' /proc/net/dev 2>/dev/null)"
 		dhcpstate=''
 		attempts=1
 		maxattempts=25

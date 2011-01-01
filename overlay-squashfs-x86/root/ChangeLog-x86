@@ -6,6 +6,26 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.0.0 (2011-01-01)
+-------------------------------------------------------------------------------
+* Standard kernels based on the Long-Term-Supported 2.6.35 kernel (2.6.35.10)
+* Alternative kernels based on the more recent linux-2.6.36 kernel (2.6.36.2)
+* The squash filesystem is now compressed using XZ instead of LZMA
+* Updated firmwares in both the initramfs and in the main filesystem
+* xf86-video-nouveau is the new default video driver for Nvidia cards
+* Updated GNU Parted to version 2.3 with patches from Ubuntu-10.10
+* Updated GParted to 0.7.1 (fixes names with dmraid and mount points paths) 
+* Updated fsarchiver to 0.6.12 (fixes possible problems to save the rootfs)
+* Updated initramfs software (programs involved in the boot process)
+* Updated aufs filesystem to version 2.1 (another union filesystem)
+* Updated xorg-server to 1.9.3 (graphical server and drivers)
+* Updated Network-Manager programs to new major version 0.8.x
+* Dropped alternative graphical server (Xfbdev) which is not supported
+* Added a 64bit version of memtester (/usr/sbin/memtester-64bit)
+* Added app-misc/tmux (Terminal multiplexer: fork of the GNU Screen project)
+* Option "dodhcp" accepts comma-separated interfaces (eg: "dodhcp=eth0,eth2")
+
+-------------------------------------------------------------------------------
 1.6.4 (2010-12-01)
 -------------------------------------------------------------------------------
 * Updated alternative kernels to 2.6.32.26 (altker32 + altker64)

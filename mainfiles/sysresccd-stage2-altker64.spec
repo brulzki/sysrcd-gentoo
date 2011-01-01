@@ -1,12 +1,12 @@
 subarch: amd64
-version_stamp: 1.6-alt
+version_stamp: default-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101127
-source_subpath: default/livecd-stage1-amd64-1.6
-portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
+snapshot: 20101229
+source_subpath: default/livecd-stage1-amd64-default
+portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
 livecd/fstype: none
 livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-cdtar.tar.bz2
@@ -19,17 +19,17 @@ livecd/type: generic-livecd
 livecd/readme:
 livecd/motd: 
 livecd/modblacklist:
-livecd/overlay: /worksrc/sysresccd-src-1.6/overlay-iso-x86
+livecd/overlay: /worksrc/sysresccd-src/overlay-iso-x86
 livecd/devmanager: udev
 livecd/users:
 
 boot/kernel: altker64
 
 boot/kernel/altker64/sources: sys-kernel/alt-sources
-boot/kernel/altker64/config: /worksrc/sysresccd-src-1.6/kernelcfg/config-amd64-2.6.32-alt164.conf
+boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.36-alt200.x86_64
 boot/kernel/altker64/use: pcmcia usb -X png truetype 
 boot/kernel/altker64/extraversion: amd64
 boot/kernel/altker64/packages:
-	app-accessibility/speakup
 	net-wireless/ndiswrapper
+	#app-accessibility/speakup
 

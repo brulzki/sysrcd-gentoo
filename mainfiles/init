@@ -256,9 +256,6 @@ sysresccd_udev_start()
 	> /dev/.initramfs-tools
 	mkdir /dev/.initramfs
 
-	# delete the useless modules
-	ls /lib/modules | grep -v $(uname -r) | busybox xargs rm -rf
-
 	# process module dependencies
 	depmod -a
 
@@ -328,7 +325,7 @@ sysresccd_netconfig()
 	# ---- force dhcp if booting via pxe and no static configuration specified
 	if [ "${NETCONFIG}" = '1' ] && [ -z "${SETETHX}${NODHCP}" ]
 	then
-		DODHCP='1'
+		DODHCP='all'
 	fi
 
 	# ---- create the /etc/nsswitch.conf file (it must exist for both dns and static) ----
@@ -460,9 +457,14 @@ sysresccd_netconfig()
 	fi
 
 	# ---- configure the network via dhcp ----
-	if [ "${DODHCP}" = '1' ]
+	if [ -n "${DODHCP}" ]
 	then
-		ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
+		if [ "${DODHCP}" = 'all' ]
+		then
+			ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
+		else
+			ethlist="$(echo ${DODHCP} | sed -e 's!,! !g')" # (eg: eth0 eth2)
+		fi
 
 		dhcpstate=''
 		while [ "${dhcpstate}" != 'ok' ] # retry until we get a dhcp address on at least one interface
@@ -870,9 +872,10 @@ sysresccd_stage1_normal()
 		cp -a ${BOOTPATH}/${SUBDIR}/version ${CACHEDIR}/ 2>/dev/null
 		cp -a ${BOOTPATH}/${SUBDIR}/${LOOPMD5} ${CACHEDIR}/${LOOPMD5} 2>/dev/null
 		good_msg "Copying ${LOOPDAT} file for caching (size: $squashfssizekb KB)..."
-		if [ -x /bin/rsync ]
+		if [ -x /bin/pv ]
 		then
-			/bin/rsync -aP ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT}
+			/bin/pv -p < ${BOOTPATH}/${SUBDIR}/${LOOPDAT} > ${CACHEDIR}/${LOOPDAT}
+			#/bin/rsync -aP ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT}
 		else
 			cp -a ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT} 2>/dev/null
 		fi
@@ -1267,7 +1270,13 @@ sysresccd_parsecmdline()
 			INITPROG=`parse_opt "${x}"`
 			;;
 		dodhcp)
-			DODHCP='1'
+			DODHCP='all'
+			SETETHX=''
+			NETCONFIG='1'
+			NONETMGR='1'
+			;;
+		dodhcp\=*)
+			DODHCP=`parse_opt "${x}"`
 			SETETHX=''
 			NETCONFIG='1'
 			NONETMGR='1'

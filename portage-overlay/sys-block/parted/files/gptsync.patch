@@ -30,7 +30,7 @@ Index: b/libparted/labels/gpt.c
  #include <fcntl.h>
  #include <unistd.h>
  #include <uuid/uuid.h>
-@@ -273,6 +280,212 @@
+@@ -282,6 +289,212 @@
  
  static PedDiskType gpt_disk_type;
  
@@ -243,7 +243,7 @@ Index: b/libparted/labels/gpt.c
  static inline uint32_t
  pth_get_size (const PedDevice *dev)
  {
-@@ -467,6 +680,9 @@
+@@ -476,6 +689,9 @@
    if (!gpt_sig_found)
      return 0;
  
@@ -253,7 +253,7 @@ Index: b/libparted/labels/gpt.c
    void *label;
    if (!ptt_read_sector (dev, 0, &label))
      return 0;
-@@ -877,6 +1093,10 @@
+@@ -889,6 +1105,10 @@
   *  warn if it's not there, and treat the disk as MSDOS, with a note
   *  for users to use Parted to "fix up" their disk if they
   *  really want it to be considered GPT.
@@ -264,7 +264,7 @@ Index: b/libparted/labels/gpt.c
   ************************************************************/
  static int
  gpt_read (PedDisk *disk)
-@@ -1084,6 +1304,100 @@
+@@ -1096,6 +1316,100 @@
  }
  
  static int
@@ -365,7 +365,7 @@ Index: b/libparted/labels/gpt.c
  _generate_header (const PedDisk *disk, int alternate, uint32_t ptes_crc,
                    GuidPartitionTableHeader_t **gpt_p)
  {
-@@ -1189,9 +1503,15 @@
+@@ -1201,9 +1515,15 @@
  
    ptes_crc = efi_crc32 (ptes, ptes_size);
  
@@ -384,7 +384,7 @@ Index: b/libparted/labels/gpt.c
  
    /* Write PTH and PTEs */
    /* FIXME: Caution: this code is nearly identical to what's just below. */
-@@ -1746,6 +2066,21 @@
+@@ -1790,6 +2110,21 @@
    PED_ASSERT (sizeof (GuidPartitionEntry_t) == 128, return);
  
    ped_disk_type_register (&gpt_disk_type);

@@ -1,14 +1,14 @@
-subarch: i386
-version_stamp: 1.6
+subarch: i686
+version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101127
-source_subpath: default/stage4-i386-20101120-01
-portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
+snapshot: 20101229
+source_subpath: default/stage4-i386-20101225-01
+portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
-livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4
+livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4
 
 livecd/packages:
 	app-accessibility/speakup-utils
@@ -93,6 +93,7 @@ livecd/packages:
 	app-misc/screen
 	app-misc/scrub
 	app-misc/symlinks
+	app-misc/tmux
 	app-misc/vlock
 	app-misc/wipe
 	app-portage/eix
@@ -104,6 +105,7 @@ livecd/packages:
 	app-shells/zsh
 	app-text/dos2unix
 	app-text/epdfview
+	app-text/tree
 	app-vim/gentoo-syntax
 	dev-lang/perl
 	dev-lang/ruby
@@ -226,6 +228,7 @@ livecd/packages:
 	sys-apps/gawk
 	sys-apps/gdisk
 	sys-apps/groff
+	sys-apps/hal
 	sys-apps/hdparm
 	sys-apps/hwsetup
 	sys-apps/ipmitool
@@ -236,6 +239,7 @@ livecd/packages:
 	sys-apps/man-pages
 	sys-apps/memtester
 	sys-apps/miscfiles
+	sys-apps/mlocate
 	sys-apps/netplug
 	sys-apps/net-tools
 	sys-apps/openrc
@@ -250,7 +254,6 @@ livecd/packages:
 	sys-apps/setserial
 	sys-apps/sg3_utils
 	sys-apps/shadow
-	sys-apps/slocate
 	sys-apps/smartmontools
 	sys-apps/tcp-wrappers
 	sys-apps/usbutils
@@ -274,6 +277,7 @@ livecd/packages:
 	sys-block/partimage
 	sys-block/scsiadd
 	sys-block/tw_cli
+	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r10
 	sys-boot/lilo
 	sys-boot/mbr
@@ -364,13 +368,12 @@ livecd/packages:
 	x11-proto/xf86driproto
 	x11-proto/xf86miscproto
 	x11-proto/xineramaproto
-	x11-terms/mrxvt
 	x11-terms/terminal
 	x11-themes/gnome-icon-theme
 	x11-wm/jwm
 	xfce-base/xfce4-meta
-	xfce-extra/xfce4-battery-plugin
-	xfce-extra/xfce4-datetime-plugin
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
+	xfce-extra/xfce4-datetime-plugin
+	xfce-extra/xfce4-battery-plugin
 

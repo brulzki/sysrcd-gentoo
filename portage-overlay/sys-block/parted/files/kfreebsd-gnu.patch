@@ -4,51 +4,29 @@ Author: Robert Millan <rmh@aybabtu.com>
 Author: Colin Watson <cjwatson@debian.org>
 Bug-Debian: http://bugs.debian.org/363381
 Forwarded: no
-Last-Update: 2010-03-25
+Last-Update: 2010-04-09
 
 Index: b/configure.ac
 ===================================================================
 --- a/configure.ac
 +++ b/configure.ac
-@@ -60,6 +60,8 @@
+@@ -60,6 +60,7 @@
  	linux*) OS=linux ;;
  	gnu*)	OS=gnu ;;
  	beos*)	OS=beos ;;
-+	freebsd* | kfreebsd*-gnu)
-+			OS=freebsd ;;
++	freebsd* | kfreebsd*-gnu)	OS=freebsd ;;
  	*)	AC_MSG_ERROR([Unknown or unsupported OS "$host_os".  Only "linux", "gnu" and "beos" are supported in this version of GNU Parted.]) ;;
  esac
  AC_SUBST([OS])
-@@ -280,6 +282,7 @@
+@@ -281,6 +282,7 @@
  	#include <sys/types.h>
  	#include <unistd.h>
  ])
 +AC_CHECK_TYPE([loff_t], [long long])
  
  AM_ENABLE_SHARED
- if test "$OS" = linux -a $ac_cv_sizeof_off_t -lt 8; then
-@@ -498,6 +501,20 @@
- 	OS_LIBS="$OS_LIBS -lsocket"
- fi
- 
-+dnl FreeBSD (and GNU/kFreeBSD):
-+if test "$OS" = freebsd; then
-+dnl    CFLAGS="$CFLAGS -D_GNU_SOURCE=1"
-+
-+dnl libgeom
-+	AC_CHECK_LIB([geom], [gctl_get_handle],
-+		OS_LIBS="$OS_LIBS -lgeom",
-+		AC_MSG_ERROR(
-+[GNU Parted requires libgeom when running on FreeBSD or derivative systems.]
-+		)
-+		exit
-+	)
-+fi
-+
- AC_SUBST([OS_LIBS])
- 
- dnl One day, gettext might support libtool...
-@@ -517,7 +534,7 @@
+ if test "$OS" = linux && test $ac_cv_sizeof_off_t -lt 8; then
+@@ -518,7 +520,7 @@
          http://web.mit.edu/tytso/www/linux/e2fsprogs.html])]
  )
  
@@ -57,7 +35,7 @@ Index: b/configure.ac
  
  dnl required for libparted/llseek.c  (TODO: make linux-x86 only)
  if test "$OS" = linux; then
-@@ -576,7 +593,9 @@
+@@ -577,7 +579,9 @@
  AC_C_RESTRICT
  
  dnl Checks for library functions.
@@ -72,16 +50,15 @@ Index: b/configure
 ===================================================================
 --- a/configure
 +++ b/configure
-@@ -3727,6 +3727,8 @@
+@@ -3766,6 +3766,7 @@
  	linux*) OS=linux ;;
  	gnu*)	OS=gnu ;;
  	beos*)	OS=beos ;;
-+	freebsd* | kfreebsd*-gnu)
-+			OS=freebsd ;;
- 	*)	as_fn_error "Unknown or unsupported OS \"$host_os\".  Only \"linux\", \"gnu\" and \"beos\" are supported in this version of GNU Parted." "$LINENO" 5 ;;
++	freebsd* | kfreebsd*-gnu)	OS=freebsd ;;
+ 	*)	as_fn_error $? "Unknown or unsupported OS \"$host_os\".  Only \"linux\", \"gnu\" and \"beos\" are supported in this version of GNU Parted." "$LINENO" 5 ;;
  esac
  
-@@ -20995,6 +20997,17 @@
+@@ -22042,6 +22043,17 @@
  _ACEOF
  
  
@@ -99,63 +76,7 @@ Index: b/configure
  
  # Check whether --enable-shared was given.
  if test "${enable_shared+set}" = set; then :
-@@ -30102,6 +30115,55 @@
- 			OS_LIBS="$OS_LIBS -lsocket"
- fi
- 
-+if test "$OS" = freebsd; then
-+
-+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gctl_get_handle in -lgeom" >&5
-+$as_echo_n "checking for gctl_get_handle in -lgeom... " >&6; }
-+if test "${ac_cv_lib_geom_gctl_get_handle+set}" = set; then :
-+  $as_echo_n "(cached) " >&6
-+else
-+  ac_check_lib_save_LIBS=$LIBS
-+LIBS="-lgeom  $LIBS"
-+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-+/* end confdefs.h.  */
-+
-+/* Override any GCC internal prototype to avoid an error.
-+   Use char because int might match the return type of a GCC
-+   builtin and then its argument prototype would still apply.  */
-+#ifdef __cplusplus
-+extern "C"
-+#endif
-+char gctl_get_handle ();
-+int
-+main ()
-+{
-+return gctl_get_handle ();
-+  ;
-+  return 0;
-+}
-+_ACEOF
-+if ac_fn_c_try_link "$LINENO"; then :
-+  ac_cv_lib_geom_gctl_get_handle=yes
-+else
-+  ac_cv_lib_geom_gctl_get_handle=no
-+fi
-+rm -f core conftest.err conftest.$ac_objext \
-+    conftest$ac_exeext conftest.$ac_ext
-+LIBS=$ac_check_lib_save_LIBS
-+fi
-+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_geom_gctl_get_handle" >&5
-+$as_echo "$ac_cv_lib_geom_gctl_get_handle" >&6; }
-+if test "x$ac_cv_lib_geom_gctl_get_handle" = x""yes; then :
-+  OS_LIBS="$OS_LIBS -lgeom"
-+else
-+  as_fn_error "GNU Parted requires libgeom when running on FreeBSD or derivative systems.
-+		" "$LINENO" 5
-+		exit
-+
-+fi
-+
-+fi
-+
- 
- 
- 
-@@ -30121,12 +30183,14 @@
+@@ -31169,12 +31181,14 @@
  
  
  
@@ -174,7 +95,7 @@ Index: b/configure
  _ACEOF
  
  fi
-@@ -30974,7 +31038,8 @@
+@@ -32022,7 +32036,8 @@
   esac
  
  
@@ -184,7 +105,7 @@ Index: b/configure
  do :
    ac_fn_c_check_func "$LINENO" "sigaction" "ac_cv_func_sigaction"
  if test "x$ac_cv_func_sigaction" = x""yes; then :
-@@ -30985,6 +31050,7 @@
+@@ -32033,6 +32048,7 @@
  fi
  done
  
@@ -196,7 +117,7 @@ Index: b/lib/config.h.in
 ===================================================================
 --- a/lib/config.h.in
 +++ b/lib/config.h.in
-@@ -226,6 +226,9 @@
+@@ -347,6 +347,9 @@
  /* Define to 1 if you have the `dup2' function. */
  #undef HAVE_DUP2
  
@@ -206,7 +127,7 @@ Index: b/lib/config.h.in
  /* Define if you have the declaration of environ. */
  #undef HAVE_ENVIRON_DECL
  
-@@ -784,6 +787,9 @@
+@@ -935,6 +938,9 @@
  /* Define to 1 if you have the <sys/bitypes.h> header file. */
  #undef HAVE_SYS_BITYPES_H
  
@@ -216,7 +137,7 @@ Index: b/lib/config.h.in
  /* Define to 1 if you have the <sys/inttypes.h> header file. */
  #undef HAVE_SYS_INTTYPES_H
  
-@@ -1126,6 +1132,9 @@
+@@ -1287,6 +1293,9 @@
  /* Define to rpl_localtime if the replacement function should be used. */
  #undef localtime
  
@@ -244,7 +165,7 @@ Index: b/libparted/Makefile.in
 ===================================================================
 --- a/libparted/Makefile.in
 +++ b/libparted/Makefile.in
-@@ -897,7 +897,8 @@
+@@ -931,7 +931,8 @@
  EXTRA_libparted_la_SOURCES = arch/linux.c	\
  				arch/linux.h	\
  				arch/gnu.c	\
@@ -254,7 +175,7 @@ Index: b/libparted/Makefile.in
  
  libparted_la_LIBADD = \
    fs/libfs.la		\
-@@ -996,6 +997,7 @@
+@@ -1030,6 +1031,7 @@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disk.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exception.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filesys.Plo@am__quote@
@@ -262,7 +183,7 @@ Index: b/libparted/Makefile.in
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/geom.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gnu.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libparted.Plo@am__quote@
-@@ -1074,6 +1076,13 @@
+@@ -1108,6 +1110,13 @@
  @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
  @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o beos.lo `test -f 'arch/beos.c' || echo '$(srcdir)/'`arch/beos.c
  
@@ -280,10 +201,10 @@ Index: b/libparted/arch/freebsd.c
 ===================================================================
 --- /dev/null
 +++ b/libparted/arch/freebsd.c
-@@ -0,0 +1,1237 @@
+@@ -0,0 +1,1254 @@
 +/*
 +    libparted - a library for manipulating disk partitions
-+    Copyright (C) 1999 - 2005 Free Software Foundation, Inc.
++    Copyright (C) 1999 - 2009 Free Software Foundation, Inc.
 +
 +    This program is free software; you can redistribute it and/or modify
 +    it under the terms of the GNU General Public License as published by
@@ -304,7 +225,6 @@ Index: b/libparted/arch/freebsd.c
 +
 +#include <parted/parted.h>
 +#include <parted/debug.h>
-+#include <parted/unit.h>
 +
 +#include <ctype.h>
 +#include <errno.h>
@@ -314,16 +234,17 @@ Index: b/libparted/arch/freebsd.c
 +#include <string.h>
 +#include <unistd.h>
 +#include <paths.h>
-+#include <libgeom.h>
 +#include <sys/param.h>
-+#include <sys/ucred.h>
 +#include <sys/mount.h>
 +#include <sys/ioctl.h>
 +#include <sys/sysctl.h>
 +#include <sys/stat.h>
-+#include <sys/types.h>
 +#include <sys/disk.h>
 +#include <sys/ata.h>
++#include <cam/cam.h>
++#include <cam/scsi/scsi_pass.h>
++
++#include "../architecture.h"
 +
 +#if ENABLE_NLS
 +#  include <libintl.h>
@@ -331,8 +252,6 @@ Index: b/libparted/arch/freebsd.c
 +#else
 +#  define _(String) (String)
 +#endif /* ENABLE_NLS */
-+
-+#include "../architecture.h"
 +
 +#if !defined(__FreeBSD_version) && defined(__FreeBSD_kernel_version)
 +#define __FreeBSD_version __FreeBSD_kernel_version
@@ -343,10 +262,6 @@ Index: b/libparted/arch/freebsd.c
 +typedef	struct _FreeBSDSpecific	FreeBSDSpecific;
 +
 +struct _FreeBSDSpecific {
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+	unsigned char channel;
-+	unsigned char device;
-+#endif
 +	int	fd;
 +};
 +
@@ -379,223 +294,121 @@ Index: b/libparted/arch/freebsd.c
 +_device_probe_type (PedDevice* dev)
 +{
 +	struct stat		dev_stat;
-+	char *np;
-+	PedExceptionOption	ex_status;
-+
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+#endif
++	char 			*np;
 +
 +	if (!_device_stat (dev, &dev_stat))
 +		return 0;
-+
++	
 +	if (!S_ISCHR(dev_stat.st_mode)) {
 +		dev->type = PED_DEVICE_FILE;
 +		return 1;
 +	}
 +
-+	/* On FreeBSD ad0 ist the ATA device */
 +	np = strrchr(dev->path, '/');
-+	if(np == NULL)
-+	{
++	if (np == NULL) {
 +		dev->type = PED_DEVICE_UNKNOWN;
 +		return 0;
 +	}
 +	np += 1; /* advance past '/' */
-+
-+	if(strncmp(np, "ad", 2) == 0)
-+	{
++	
++	if(strncmp(np, "ad", 2) == 0) {
 +		dev->type = PED_DEVICE_IDE;
-+
-+		/* ad0 -> channel 0, master
-+		 * ad1 -> channel 0, slave
-+		 * ad2 -> channel 1, master
-+		 * ad3 -> channel 1, slave
-+		 */
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+		switch(*(np+3))
-+		{
-+		case 0:
-+			arch_specific->channel = 0;
-+			arch_specific->device = 0;
-+			break;
-+		case 1:
-+			arch_specific->channel = 0;
-+			arch_specific->device = 1;
-+			break;
-+		case 2:
-+			arch_specific->channel = 1;
-+			arch_specific->device = 0;
-+			break;
-+		case 4:
-+			arch_specific->channel = 1;
-+			arch_specific->device = 1;
-+			break;
-+		}
-+#endif
-+
-+	}
-+	else
-+	{
++	} else if (strncmp(np, "da", 2) == 0) {
++		dev->type = PED_DEVICE_SCSI;
++	} else if (strncmp(np, "acd", 2) == 0 ||
++		   strncmp(np, "cd", 2) == 0) {
++		/* ignore CD-ROM drives */
++		dev->type = PED_DEVICE_UNKNOWN;
++		return 0;
++	} else {
 +		dev->type = PED_DEVICE_UNKNOWN;
 +	}
-+
++	
 +	return 1;
 +}
 +
-+static int
-+_device_get_sector_size (PedDevice* dev)
++static void
++_device_set_sector_size (PedDevice* dev)
 +{
 +	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+	u_int sector_size = PED_SECTOR_SIZE_DEFAULT; /*makes Valgrind happy*/
++	int sector_size;
 +
-+	PED_ASSERT (dev->open_count, return 0);
++	dev->sector_size = PED_SECTOR_SIZE_DEFAULT;
++	dev->phys_sector_size = PED_SECTOR_SIZE_DEFAULT;
 +
-+	if (ioctl (arch_specific->fd, DIOCGSECTORSIZE, &sector_size) == -1)
-+		return PED_SECTOR_SIZE_DEFAULT;
++	PED_ASSERT (dev->open_count, return);
 +
-+	if (sector_size != PED_SECTOR_SIZE_DEFAULT) {
-+		if (ped_exception_throw (
-+			PED_EXCEPTION_BUG,
-+			PED_EXCEPTION_IGNORE_CANCEL,
-+			_("The sector size on %s is %d bytes.  Parted is known "
-+			"not to work properly with drives with sector sizes "
-+			"other than %d bytes."),
-+			dev->path,
-+			sector_size,
-+			PED_SECTOR_SIZE_DEFAULT)
-+				== PED_EXCEPTION_IGNORE)
-+			return sector_size;
-+		else
-+			return PED_SECTOR_SIZE_DEFAULT;
++	if (ioctl (arch_specific->fd, DIOCGSECTORSIZE, &sector_size)) {
++		ped_exception_throw (
++			PED_EXCEPTION_WARNING,
++			PED_EXCEPTION_OK,
++			_("Could not determine sector size for %s: %s.\n"
++			  "Using the default sector size (%lld)."),
++			dev->path, strerror (errno), PED_SECTOR_SIZE_DEFAULT);
++	} else {
++		dev->sector_size = (long long)sector_size;;
 +	}
 +
-+	return sector_size;
++	if (sector_size != PED_SECTOR_SIZE_DEFAULT) {
++		ped_exception_throw (
++			PED_EXCEPTION_WARNING,
++			PED_EXCEPTION_OK,
++			_("Device %s has a logical sector size of %lld.  Not "
++			  "all parts of GNU Parted support this at the moment, "
++			  "and the working code is HIGHLY EXPERIMENTAL.\n"),
++			dev->path, dev->sector_size);
++	}
 +}
 +
 +static PedSector
 +_device_get_length (PedDevice* dev)
 +{
-+	FreeBSDSpecific* arch_specific = FREEBSD_SPECIFIC (dev);
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +	off_t bytes = 0;
 +
 +	PED_ASSERT (dev->open_count > 0, return 0);
++	PED_ASSERT (dev->sector_size % PED_SECTOR_SIZE_DEFAULT == 0, return 0);
 +
-+	if(ioctl(arch_specific->fd, DIOCGMEDIASIZE, &bytes) == 0) {
-+		return bytes / PED_SECTOR_SIZE_DEFAULT;
++	if(ioctl(arch_specific->fd, DIOCGMEDIASIZE, &bytes) != 0) {
++		ped_exception_throw (
++			PED_EXCEPTION_BUG,
++			PED_EXCEPTION_CANCEL,
++			_("Unable to determine the size of %s (%s)."),
++			dev->path,
++			strerror (errno));
++		return 0;
 +	}
-+
-+	return 0;
++	
++	return bytes / dev->sector_size;
 +}
 +
-+
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+# define freebsd_get_ata_params freebsd_get_ata_params_compat5
-+#elif (__FreeBSD_version >= 600000)
-+# define freebsd_get_ata_params freebsd_get_ata_params_compat6
-+#else
-+# error "parted currently compiles on FreeBSD 5.X and 6.X only"
-+#endif
-+
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+
-+static int freebsd_get_ata_params_compat5(PedDevice *dev,
-+										  struct ata_params *ap)
-+{
-+	struct ata_cmd iocmd;
-+	int fd, ret;
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
-+
-+	if ((fd = open("/dev/ata", O_RDWR)) == -1)
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not get open /dev/ata."));
-+
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	bzero(&iocmd, sizeof(struct ata_cmd));
-+	iocmd.channel = arch_specific->channel;
-+	iocmd.device = arch_specific->device;
-+	iocmd.cmd = ATAGPARM;
-+
-+	if (ioctl(fd, IOCATA, &iocmd) == -1)
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not get ATA parameters. Please"
-+			  "contact the maintainer."));
-+
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	if (iocmd.u.param.type[arch_specific->device]) {
-+		*ap = iocmd.u.param.params[arch_specific->device];
-+	} else
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not get ATA parameters. Please"
-+			  "contact the maintainer."));
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	close(fd);
-+
-+	return ret;
-+}
-+
-+#elif __FreeBSD_version >= 600000
-+
-+static int freebsd_get_ata_params_compat6(PedDevice *dev,
-+										  struct ata_params *ap)
-+{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
-+
-+	return ioctl (arch_specific->fd, IOCATAGPARM, &ap);
-+}
-+
-+#endif
 +
 +static int
 +_device_probe_geometry (PedDevice* dev)
 +{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +	struct stat		dev_stat;
-+	struct ata_params ap;
++	struct ata_params 	params;
 +
 +	if (!_device_stat (dev, &dev_stat))
 +		return 0;
 +	PED_ASSERT (S_ISCHR (dev_stat.st_mode), return 0);
 +
++	_device_set_sector_size (dev);
++
 +	dev->length = _device_get_length (dev);
 +	if (!dev->length)
-+		return 0;
-+
-+	dev->sector_size = _device_get_sector_size (dev);
-+	if (!dev->sector_size)
 +		return 0;
 +
 +	dev->bios_geom.sectors = 63;
 +	dev->bios_geom.heads = 255;
 +	dev->bios_geom.cylinders
-+	       	= dev->length / (63 * 255)
-+	       		/ (dev->sector_size / PED_SECTOR_SIZE_DEFAULT);
++		= dev->length / (63 * 255);
 +
-+	if (freebsd_get_ata_params (dev, &ap) == 0) {
-+		dev->hw_geom.sectors = ap.sectors;
-+		dev->hw_geom.heads = ap.heads;
-+		dev->hw_geom.cylinders = ap.cylinders;
++	if (ioctl (arch_specific->fd, IOCATAGPARM, &params) != 0) {
++		dev->hw_geom.sectors = params.sectors;
++		dev->hw_geom.heads = params.heads;
++		dev->hw_geom.cylinders = params.cylinders;
 +	} else {
 +		dev->hw_geom = dev->bios_geom;
 +	}
@@ -623,11 +436,11 @@ Index: b/libparted/arch/freebsd.c
 +static int
 +init_ide (PedDevice* dev)
 +{
-+	FreeBSDSpecific* arch_specific = FREEBSD_SPECIFIC(dev);
-+	struct stat	dev_stat;
-+	struct ata_params ap;
-+	PedExceptionOption ex_status;
-+	char vendor_buf[64];
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
++	struct stat		dev_stat;
++	struct ata_params 	params;
++	PedExceptionOption 	ex_status;
++	char 			vendor_buf[64];
 +
 +	if (!_device_stat (dev, &dev_stat))
 +		goto error;
@@ -635,23 +448,27 @@ Index: b/libparted/arch/freebsd.c
 +	if (!ped_device_open (dev))
 +		goto error;
 +
-+	if (freebsd_get_ata_params (dev, &ap) == -1) {
++	if (ioctl (arch_specific->fd, IOCATAGPARM, &params) != 0) {
 +		ex_status = ped_exception_throw (
 +			PED_EXCEPTION_WARNING,
 +			PED_EXCEPTION_IGNORE_CANCEL,
 +			_("Could not get identity of device %s - %s"),
 +			dev->path, strerror (errno));
 +		switch (ex_status) {
-+		case PED_EXCEPTION_CANCEL:
-+			goto error_close_dev;
++			case PED_EXCEPTION_CANCEL:
++				goto error_close_dev;
 +
-+		case PED_EXCEPTION_UNHANDLED:
-+			ped_exception_catch ();
-+		case PED_EXCEPTION_IGNORE:
-+			dev->model = strdup(_("IDE"));
++			case PED_EXCEPTION_UNHANDLED:
++				ped_exception_catch ();
++			case PED_EXCEPTION_IGNORE:
++				dev->model = strdup(_("Generic IDE"));
++				break;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +	} else {
-+		snprintf(vendor_buf, 64, "%.40s/%.8s", ap.model, ap.revision);
++		snprintf(vendor_buf, 64, "%.40s/%.8s", params.model, params.revision);
 +		dev->model = strip_name (vendor_buf);
 +	}
 +
@@ -667,11 +484,142 @@ Index: b/libparted/arch/freebsd.c
 +	return 0;
 +}
 +
++static char *
++_scsi_pass_dev (PedDevice* dev)
++{
++	union ccb	ccb;
++	int		fd;
++	char		result[64];
++
++	if (sscanf (dev->path, "/dev/%2s%u", ccb.cgdl.periph_name, &ccb.cgdl.unit_number) != 2)
++		goto error;
++
++	if ((fd = open("/dev/xpt0", O_RDWR)) < 0)
++		goto error;
++
++        ccb.ccb_h.func_code = XPT_GDEVLIST;
++	if (ioctl(fd, CAMGETPASSTHRU, &ccb) != 0)
++		goto error_close_dev;
++
++	snprintf(result, sizeof(result), "/dev/%s%d", ccb.cgdl.periph_name, ccb.cgdl.unit_number);
++        close(fd);
++	return strdup(result);
++
++error_close_dev:
++	close(fd);
++error:
++	return NULL;
++}
++
++static int
++init_scsi (PedDevice* dev)
++{
++	PedExceptionOption 	ex_status;
++	struct stat		dev_stat;
++	char*			pass_dev;
++	int			pass_fd;
++	union ccb		ccb;
++	
++	if (!_device_stat (dev, &dev_stat))
++		goto error;
++
++	if (!ped_device_open (dev))
++		goto error;
++
++	pass_dev = _scsi_pass_dev(dev);
++	if (!pass_dev)
++		goto error_close_dev;
++	
++	pass_fd = open(pass_dev, O_RDWR);
++	if (pass_fd < 0) {
++		dev->host = 0;
++		dev->did = 0;
++		if (ped_exception_throw (
++			PED_EXCEPTION_ERROR,
++			PED_EXCEPTION_IGNORE_CANCEL,
++		        _("Error initialising SCSI device %s - %s"),
++			dev->path, strerror (errno))
++                        	!= PED_EXCEPTION_IGNORE)
++			goto error_close_dev;
++		if (!_device_probe_geometry (dev))
++		        goto error_close_dev;
++                ped_device_close (dev);
++                return 1;
++	}
++
++        ccb.ccb_h.func_code = XPT_GDEVLIST;
++        if (ioctl(pass_fd, CAMGETPASSTHRU, &ccb) != 0) {
++		ex_status = ped_exception_throw (
++			PED_EXCEPTION_WARNING,
++			PED_EXCEPTION_IGNORE_CANCEL,
++		        _("Could not get ID of devices %s - %s"),
++			dev->path, strerror (errno));
++		switch (ex_status) {
++			case PED_EXCEPTION_CANCEL:
++				goto error_close_fd_dev;
++
++			case PED_EXCEPTION_UNHANDLED:
++				ped_exception_catch ();
++			case PED_EXCEPTION_IGNORE:
++				dev->host = 0;
++				dev->did = 0;
++				break;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
++			}
++        }
++
++	dev->host = ccb.ccb_h.target_id;
++	dev->did = ccb.ccb_h.target_lun;
++
++        ccb.ccb_h.func_code = XPT_GDEV_TYPE;
++        if (ioctl(pass_fd, CAMIOCOMMAND, &ccb) != 0) {
++		ex_status = ped_exception_throw (
++			PED_EXCEPTION_WARNING,
++			PED_EXCEPTION_IGNORE_CANCEL,
++			_("Could not get identity of device %s - %s"),
++			dev->path, strerror (errno));
++		switch (ex_status) {
++			case PED_EXCEPTION_CANCEL:
++				goto error_close_fd_dev;
++
++			case PED_EXCEPTION_UNHANDLED:
++				ped_exception_catch ();
++			case PED_EXCEPTION_IGNORE:
++				dev->model = strdup(_("Generic SCSI"));
++				break;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
++		}
++	} else {
++		dev->model = (char*) ped_malloc (8 + 16 + 2);
++		if (!dev->model)
++			goto error_close_fd_dev;
++		sprintf (dev->model, "%.8s %.16s", ccb.cgd.inq_data.vendor, ccb.cgd.inq_data.product);
++	}
++
++	if (!_device_probe_geometry (dev))
++		goto error_close_fd_dev;
++
++	close (pass_fd);
++	ped_device_close (dev);
++	return 1;
++
++error_close_fd_dev:
++	close (pass_fd);
++error_close_dev:
++	ped_device_close (dev);
++error:
++	return 0;
++}
++
 +static int
 +init_file (PedDevice* dev)
 +{
 +	struct stat	dev_stat;
-+
++ 
 +	if (!_device_stat (dev, &dev_stat))
 +		goto error;
 +	if (!ped_device_open (dev))
@@ -698,8 +646,10 @@ Index: b/libparted/arch/freebsd.c
 +	dev->bios_geom.heads = 4;
 +	dev->bios_geom.sectors = 32;
 +	dev->hw_geom = dev->bios_geom;
-+	dev->sector_size = 512;
++	dev->sector_size = PED_SECTOR_SIZE_DEFAULT;
++	dev->phys_sector_size = PED_SECTOR_SIZE_DEFAULT;
 +	dev->model = strdup ("");
++
 +	return 1;
 +
 +error_close_dev:
@@ -741,7 +691,10 @@ Index: b/libparted/arch/freebsd.c
 +			case PED_EXCEPTION_UNHANDLED:
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_IGNORE:
-+				; // just workaround for gcc 3.0
++				break;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +
 +		/* what should we stick in here? */
@@ -750,6 +703,7 @@ Index: b/libparted/arch/freebsd.c
 +		dev->bios_geom.heads = 4;
 +		dev->bios_geom.sectors = 32;
 +		dev->sector_size = PED_SECTOR_SIZE_DEFAULT;
++		dev->phys_sector_size = PED_SECTOR_SIZE_DEFAULT;
 +	}
 +
 +	dev->model = strdup (model_name);
@@ -791,15 +745,22 @@ Index: b/libparted/arch/freebsd.c
 +
 +	if (!_device_probe_type (dev))
 +		goto error_free_arch_specific;
-+
++	
 +	switch (dev->type) {
 +	case PED_DEVICE_IDE:
 +		if (!init_ide (dev))
 +			goto error_free_arch_specific;
 +		break;
-+
++	case PED_DEVICE_SCSI:
++		if (!init_scsi (dev))
++			goto error_free_arch_specific;
++		break;
 +	case PED_DEVICE_FILE:
 +		if (!init_file (dev))
++			goto error_free_arch_specific;
++		break;
++	case PED_DEVICE_UNKNOWN:
++		if (!init_generic (dev, _("Unknown")))
 +			goto error_free_arch_specific;
 +		break;
 +
@@ -855,101 +816,39 @@ Index: b/libparted/arch/freebsd.c
 +	return 0;
 +}
 +
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+# define _flush_cache freebsd_flush_cache_compat5
-+#elif (__FreeBSD_version >= 600000)
-+# define _flush_cache freebsd_flush_cache_compat6
-+#else
-+# error "parted currently compiles on FreeBSD 5.X and 6.X only"
-+#endif
-+
-+#if (__FreeBSD_version >= 500000) && (__FreeBSD_version < 600000)
-+
-+static void
-+freebsd_flush_cache_compat5 (PedDevice* dev)
++static void 
++_flush_cache (PedDevice* dev)
 +{
 +	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+	int fd;
-+	struct ata_cmd iocmd;
-+
-+	if (dev->type != PED_DEVICE_IDE)
-+		return;
-+
-+	if (freebsd_is_busy(dev))
-+		printf("FreeBSD: Device %s is mounted. Not flushing cache.\n",
-+			   dev->path);
-+
-+	if ((fd = open("/dev/ata", O_RDWR)) == -1)
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not open /dev/ata."));
-+
-+		goto out;
-+	}
-+
-+	if (dev->read_only)
-+		goto out;
-+	dev->dirty = 0;
-+
-+	bzero(&iocmd, sizeof(struct ata_cmd));
-+	iocmd.channel = arch_specific->channel;
-+	iocmd.device = arch_specific->device;
-+	iocmd.cmd = ATAREQUEST;
-+	iocmd.u.request.u.ata.command = ATA_FLUSHCACHE;
-+
-+	if (ioctl(fd, IOCATA, &iocmd) == -1)
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not flush cache."));
-+
-+		goto out;
-+	}
-+
-+out:
-+	close (fd);
-+
-+	return;
-+}
-+
-+#elif __FreeBSD_version >= 600000
-+
-+static void
-+freebsd_flush_cache_compat6 (PedDevice* dev)
-+{
-+	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+	struct ata_ioc_request ioreq;
-+
-+	if (dev->type != PED_DEVICE_IDE)
-+		return;
-+
-+	if (freebsd_is_busy(dev))
-+		printf("FreeBSD: Device %s is mounted. Not flushing cache.\n",
-+			   dev->path);
 +
 +	if (dev->read_only)
 +		return;
 +	dev->dirty = 0;
 +
-+	bzero(&ioreq, sizeof(struct ata_ioc_request));
-+	ioreq.u.ata.command = ATA_FLUSHCACHE;
-+
-+	if (ioctl(arch_specific->fd, IOCATAREQUEST, &ioreq) == -1)
-+	{
-+		ped_exception_throw (
-+			PED_EXCEPTION_ERROR,
-+			PED_EXCEPTION_CANCEL,
-+			_("Could not flush cache."));
-+		return;
++	if (dev->type == PED_DEVICE_FILE) {
++		if (fsync(arch_specific->fd) != 0) {
++			ped_exception_throw (
++				PED_EXCEPTION_WARNING,
++				PED_EXCEPTION_OK,
++				_("Could not flush cache of file %s - %s."),
++				dev->path,
++				strerror (errno));
++			return;
++		}
++	} else {
++		if (ioctl (arch_specific->fd, DIOCGFLUSH) != 0) {
++			ped_exception_throw (
++				PED_EXCEPTION_WARNING,
++				PED_EXCEPTION_OK,
++				_("Could not flush cache of device %s - %s."),
++				dev->path,
++				strerror (errno));
++			return;
++		}
 +	}
 +
 +	return;
 +}
-+
-+#endif
 +
 +/* By default, kernel of FreeBSD does not allow overwriting MBR */
 +#define GEOM_SYSCTL    "kern.geom.debugflags"
@@ -958,45 +857,55 @@ Index: b/libparted/arch/freebsd.c
 +freebsd_open (PedDevice* dev)
 +{
 +	int old_flags, flags;
-+	size_t sizeof_int = sizeof (int);
++	size_t flagssize;
 +	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +
 +retry:
-+	if (sysctlbyname (GEOM_SYSCTL, &old_flags, &sizeof_int, NULL, 0) != 0)
-+		ped_exception_throw (PED_EXCEPTION_WARNING, PED_EXCEPTION_OK,
-+							 _("Unable to get %s sysctl (%s)."), GEOM_SYSCTL,
-+							 strerror (errno));
++	flagssize = sizeof (old_flags);
 +
-+	if ((old_flags & 0x10) == 0)
-+	{
++	if (sysctlbyname (GEOM_SYSCTL, &old_flags, &flagssize, NULL, 0) != 0) {
++		ped_exception_throw (
++			PED_EXCEPTION_WARNING, 
++			PED_EXCEPTION_OK,
++			_("Unable to get %s sysctl (%s)."), 
++			GEOM_SYSCTL,
++			strerror (errno));
++	}
++
++	if ((old_flags & 0x10) == 0) {
 +		/* "allow foot shooting", see geom(4) */
 +		flags = old_flags | 0x10;
-+
-+		if (sysctlbyname (GEOM_SYSCTL, NULL, NULL, &flags, sizeof (int)) != 0)
-+		{
++		
++		if (sysctlbyname (GEOM_SYSCTL, NULL, NULL, &flags, sizeof (int)) != 0) {
 +			flags = old_flags;
-+			ped_exception_throw (PED_EXCEPTION_WARNING, PED_EXCEPTION_OK,
-+								 _("Unable to set %s sysctl (%s)."), GEOM_SYSCTL,
-+								 strerror (errno));
++			ped_exception_throw (
++				PED_EXCEPTION_WARNING, 
++				PED_EXCEPTION_OK,
++				_("Unable to set %s sysctl (%s)."), 
++				GEOM_SYSCTL,
++				strerror (errno));
 +		}
-+	}
-+	else
++	} else
 +		flags = old_flags;
-+
++	
 +	arch_specific->fd = open (dev->path, O_RDWR);
 +
-+	if (flags != old_flags)
-+	{
-+		if (sysctlbyname (GEOM_SYSCTL, NULL, NULL, &old_flags, sizeof (int)) != 0)
-+			ped_exception_throw (PED_EXCEPTION_WARNING, PED_EXCEPTION_OK,
-+								 _("Unable to set %s sysctl (%s)."), GEOM_SYSCTL,
-+								 strerror (errno));
++	if (flags != old_flags) {
++		if (sysctlbyname (GEOM_SYSCTL, NULL, NULL, &old_flags, sizeof (int)) != 0) {
++			ped_exception_throw (
++				PED_EXCEPTION_WARNING, 
++				PED_EXCEPTION_OK,
++				_("Unable to set %s sysctl (%s)."),
++				GEOM_SYSCTL,
++				strerror (errno));
++		}
 +	}
-+
++	
 +	if (arch_specific->fd == -1) {
 +		char*	rw_error_msg = strerror (errno);
 +
 +		arch_specific->fd = open (dev->path, O_RDONLY);
++
 +		if (arch_specific->fd == -1) {
 +			if (ped_exception_throw (
 +				PED_EXCEPTION_ERROR,
@@ -1035,7 +944,7 @@ Index: b/libparted/arch/freebsd.c
 +static int
 +freebsd_close (PedDevice* dev)
 +{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +
 +	if (dev->dirty)
 +		_flush_cache (dev);
@@ -1056,23 +965,27 @@ Index: b/libparted/arch/freebsd.c
 +{
 +	FreeBSDSpecific*	arch_specific;
 +	off_t	pos;
-+
++	
++	PED_ASSERT (dev->sector_size % PED_SECTOR_SIZE_DEFAULT == 0, return 0);
 +	PED_ASSERT (dev != NULL, return 0);
 +	PED_ASSERT (!dev->external_mode, return 0);
-+
++	
 +	arch_specific = FREEBSD_SPECIFIC (dev);
 +
-+	pos = sector * PED_SECTOR_SIZE_DEFAULT;
++	pos = sector * dev->sector_size;
 +	return lseek (arch_specific->fd, pos, SEEK_SET) == pos;
 +}
 +
 +static int
-+freebsd_read (const PedDevice* dev, void* buffer, PedSector start, PedSector count)
++freebsd_read (const PedDevice* dev, void* buffer, PedSector start, 
++	      PedSector count)
 +{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
-+	int			status;
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +	PedExceptionOption	ex_status;
-+	size_t			read_length = count * PED_SECTOR_SIZE_DEFAULT;
++	void*			diobuf = NULL;
++
++        PED_ASSERT (dev != NULL, return 0);
++        PED_ASSERT (dev->sector_size % PED_SECTOR_SIZE_DEFAULT == 0, return 0);
 +
 +	while (1) {
 +		if (_device_seek (dev, start))
@@ -1095,15 +1008,26 @@ Index: b/libparted/arch/freebsd.c
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_CANCEL:
 +				return 0;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +	}
++	
++	size_t read_length = count * dev->sector_size;
++	if (posix_memalign (&diobuf, dev->sector_size, read_length) != 0)
++		return 0;
 +
 +	while (1) {
-+		status = read (arch_specific->fd, buffer, read_length);
-+		if (status == count * PED_SECTOR_SIZE_DEFAULT) break;
++		ssize_t status = read (arch_specific->fd, diobuf, read_length);
++		if (status > 0) {
++			memcpy(buffer, diobuf, status);
++		}
++		if (status == (ssize_t) read_length)
++			break;
 +		if (status > 0) {
 +			read_length -= status;
-+			buffer += status;
++			buffer = (char *) buffer + status;
 +			continue;
 +		}
 +
@@ -1125,8 +1049,13 @@ Index: b/libparted/arch/freebsd.c
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_CANCEL:
 +				return 0;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +	}
++
++	free (diobuf);
 +
 +	return 1;
 +}
@@ -1135,10 +1064,12 @@ Index: b/libparted/arch/freebsd.c
 +freebsd_write (PedDevice* dev, const void* buffer, PedSector start,
 +	     PedSector count)
 +{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
-+	int			status;
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +	PedExceptionOption	ex_status;
-+	size_t			write_length = count * PED_SECTOR_SIZE_DEFAULT;
++	void*			diobuf;
++	void*			diobuf_start;
++
++	PED_ASSERT(dev->sector_size % PED_SECTOR_SIZE_DEFAULT == 0, return 0);
 +
 +	if (dev->read_only) {
 +		if (ped_exception_throw (
@@ -1172,6 +1103,9 @@ Index: b/libparted/arch/freebsd.c
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_CANCEL:
 +				return 0;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +	}
 +
@@ -1179,13 +1113,18 @@ Index: b/libparted/arch/freebsd.c
 +	printf ("ped_device_write (\"%s\", %p, %d, %d)\n",
 +		dev->path, buffer, (int) start, (int) count);
 +#else
++	size_t write_length = count * dev->sector_size;
 +	dev->dirty = 1;
++	if (posix_memalign(&diobuf, dev->sector_size, write_length) != 0)
++		return 0;
++	memcpy(diobuf, buffer, write_length);
++	diobuf_start = diobuf;
 +	while (1) {
-+		status = write (arch_specific->fd, buffer, write_length);
++		ssize_t status = write (arch_specific->fd, diobuf, write_length);
 +		if (status == count * PED_SECTOR_SIZE_DEFAULT) break;
 +		if (status > 0) {
 +			write_length -= status;
-+			buffer += status;
++			diobuf = (char *) diobuf + status;
 +			continue;
 +		}
 +
@@ -1206,8 +1145,12 @@ Index: b/libparted/arch/freebsd.c
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_CANCEL:
 +				return 0;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
 +	}
++	free(diobuf_start);
 +#endif /* !READ_ONLY */
 +	return 1;
 +}
@@ -1218,18 +1161,26 @@ Index: b/libparted/arch/freebsd.c
 +freebsd_check (PedDevice* dev, void* buffer, PedSector start, PedSector count)
 +{
 +	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+	PedSector	done = 0;
-+	int		status;
++	PedSector		done = 0;
++	int			status;
++	void*			diobuf;
 +
 +	if (!_device_seek (dev, start))
 +		return 0;
 +
-+	for (done = 0; done < count; done += status / PED_SECTOR_SIZE_DEFAULT) {
-+		status = read (arch_specific->fd, buffer,
-+			       (size_t) ((count-done) * PED_SECTOR_SIZE_DEFAULT));
++	if (posix_memalign(&diobuf, PED_SECTOR_SIZE_DEFAULT,
++			   count * PED_SECTOR_SIZE_DEFAULT) != 0)
++		return 0;
++
++	for (done = 0; done < count; done += status / dev->sector_size) {
++		status = read (arch_specific->fd, diobuf,
++				(size_t) ((count-done) * dev->sector_size));
++		if (status > 0)
++			memcpy(buffer, diobuf, status);
 +		if (status < 0)
 +			break;
 +	}
++	free(diobuf);
 +
 +	return done;
 +}
@@ -1237,7 +1188,7 @@ Index: b/libparted/arch/freebsd.c
 +static int
 +_do_fsync (PedDevice* dev)
 +{
-+	FreeBSDSpecific*		arch_specific = FREEBSD_SPECIFIC (dev);
++	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
 +	int			status;
 +	PedExceptionOption	ex_status;
 +
@@ -1262,8 +1213,11 @@ Index: b/libparted/arch/freebsd.c
 +				ped_exception_catch ();
 +			case PED_EXCEPTION_CANCEL:
 +				return 0;
++			default:
++				PED_ASSERT (0, (void) 0);
++				break;
 +		}
-+	}
++	} 
 +	return 1;
 +}
 +
@@ -1295,56 +1249,54 @@ Index: b/libparted/arch/freebsd.c
 +	return 1;
 +}
 +
-+/* XXX code from /usr/src/lib/libdisk/disk.c */
 +static int
 +_probe_standard_devices ()
 +{
-+	char		dev_name [16];
-+	char		dev_type [16];
-+	char		fullpath [256];
-+	int 		ret;
-+	char*		conftxt;
-+	char*		cptr;
-+	size_t		txtsize;
++	/* Add standard devices that are not autodetected here. */
++	return 1;
++}
 +
++static int
++_probe_kern_disks ()
++{
++	size_t listsize;
++	char *disklist, *pdisklist, *psave;
 +
-+	ret = sysctlbyname("kern.geom.conftxt", NULL, &txtsize, NULL, 0);
-+	if (ret) {
-+		printf("kern.geom.conftxt sysctl not available, giving up!");
-+		return 0;
-+	}
-+	conftxt = ped_malloc(txtsize+1);
-+	if (conftxt == NULL) {
-+		printf("cannot malloc memory for conftxt");
-+		return 0;
-+	}
-+	ret = sysctlbyname("kern.geom.conftxt", conftxt, &txtsize, NULL, 0);
-+	if (ret) {
-+		printf("error reading kern.geom.conftxt from the system");
-+		free (conftxt);
++	if (sysctlbyname("kern.disks", NULL, &listsize, NULL, 0) != 0) {
++		ped_exception_throw (
++			PED_EXCEPTION_WARNING,
++			PED_EXCEPTION_OK,
++			_("Could not get the list of devices through kern.disks sysctl."));
 +		return 0;
 +	}
 +
-+	cptr = conftxt;
++	if (listsize == 0)
++		return 0;
 +
-+	while (sscanf (cptr, "%*d %s %s",
-+				   dev_type, dev_name) != EOF) {
-+		if (strcmp(dev_type, "DISK") == 0)
-+		{
-+			strcpy (fullpath, _PATH_DEV);
-+			strcat (fullpath, dev_name);
-+			printf("FreeBSD: probing %s...\n", fullpath);
-+			_ped_device_probe (fullpath);
-+		}
++	disklist = ped_malloc(listsize + 1);
++	if (!disklist)
++		return 0;
++	
++	if (sysctlbyname("kern.disks", disklist, &listsize, NULL, 0) != 0) {
++		free(disklist);
++		return 0;
++	}
++	
++	for (pdisklist = disklist ; ; pdisklist = NULL) {
++		char dev_name [256];
++		char *token;
 +
-+		cptr = strchr(cptr, '\n');
-+		if (!cptr)
++		token = strtok_r(pdisklist, " ", &psave);
++		if (token == NULL)
 +			break;
-+		cptr++;
++
++		strncpy (dev_name, _PATH_DEV, sizeof(dev_name));
++		strncat (dev_name, token, sizeof(dev_name) - strlen(_PATH_DEV) - 1);
++		dev_name[sizeof(dev_name) - 1] = '\0';
++		_ped_device_probe (dev_name);
 +	}
 +
-+	free(conftxt);
-+
++	free(disklist);
 +	return 1;
 +}
 +
@@ -1352,6 +1304,8 @@ Index: b/libparted/arch/freebsd.c
 +freebsd_probe_all ()
 +{
 +	_probe_standard_devices ();
++
++	_probe_kern_disks ();
 +}
 +
 +static char*
@@ -1377,7 +1331,7 @@ Index: b/libparted/arch/freebsd.c
 +
 +	/* append slice number (ad0, partition 1 => ad0s1)*/
 +	snprintf (result, result_len, is_gpt ? "%sp%d" : "%ss%d", dev->path, num);
-+
++	
 +	return result;
 +}
 +
@@ -1387,22 +1341,15 @@ Index: b/libparted/arch/freebsd.c
 +	return _device_get_part_path (part->disk->dev, part->num);
 +}
 +
-+/* XXX code from /usr/src/sbin/mount/mount.c:getmntpt() */
 +static int
-+_partition_is_mounted_by_path (const char *path)
++_partition_is_mounted_by_dev (dev_t dev)
 +{
-+	struct stat part_stat, mntdevstat;
++	struct stat mntdevstat;
 +	struct statfs *mntbuf, *statfsp;
 +	char *devname;
 +	char device[256];
 +	int mntsize, i;
-+
-+	if (stat (path, &part_stat) != 0)
-+		return 0;
-+
-+	if (!S_ISCHR(part_stat.st_mode))
-+		return 0;
-+
++	
 +	mntsize = getmntinfo(&mntbuf, MNT_NOWAIT);
 +	for (i = 0; i < mntsize; i++) {
 +		statfsp = &mntbuf[i];
@@ -1413,7 +1360,7 @@ Index: b/libparted/arch/freebsd.c
 +			strcpy(statfsp->f_mntfromname, device);
 +		}
 +		if (stat(devname, &mntdevstat) == 0 &&
-+			mntdevstat.st_rdev == part_stat.st_rdev)
++			mntdevstat.st_rdev == dev)
 +			return 1;
 +	}
 +
@@ -1421,13 +1368,30 @@ Index: b/libparted/arch/freebsd.c
 +}
 +
 +static int
++_partition_is_mounted_by_path (const char *path)
++{
++	struct stat part_stat;
++	if (stat (path, &part_stat) != 0)
++		return 0;
++	if (!S_ISCHR(part_stat.st_mode))
++		return 0;
++	return _partition_is_mounted_by_dev (part_stat.st_rdev);
++}
++
++static int
 +_partition_is_mounted (const PedPartition *part)
 +{
-+	dev_t dev;
++	int status;
++	char* part_name;
++
 +	if (!ped_partition_is_active (part))
 +		return 0;
-+
-+	return _partition_is_mounted_by_path (part->disk->dev->path);
++	part_name = _device_get_part_path (part->disk->dev, part->num);
++	if (!part_name)
++		return 0;
++	status = _partition_is_mounted_by_path (part_name);
++	free (part_name);
++	return status;
 +}
 +
 +static int
@@ -1448,38 +1412,12 @@ Index: b/libparted/arch/freebsd.c
 +	return 0;
 +}
 +
-+/* XXX maybe read the MBR again and hand it over to geom? */
 +static int
 +_kernel_reread_part_table (PedDevice* dev)
 +{
-+	FreeBSDSpecific*	arch_specific = FREEBSD_SPECIFIC (dev);
-+	int		retry_count = 5;
-+	struct gctl_req *grq;
-+	char mbr_buf[512];
-+	const char *q;
-+
-+	sync();
-+
-+	freebsd_read (dev, mbr_buf, 0, 1);
-+
-+	grq = gctl_get_handle();
-+	gctl_ro_param(grq, "verb", -1, "write MBR");
-+	gctl_ro_param(grq, "class", -1, "MBR");
-+	q = strrchr(dev->path, '/');
-+	if (q == NULL)
-+		q = dev->path;
-+	else
-+		q++;
-+	gctl_ro_param(grq, "geom", -1, q);
-+	gctl_ro_param(grq, "data", dev->sector_size, mbr_buf);
-+	q = gctl_issue(grq);
-+	if (q == NULL) {
-+		gctl_free(grq);
-+		return(0);
-+	}
-+
-+	gctl_free(grq);
-+
++	/* The FreeBSD kernel (at least the 7.x series) automatically
++	   monitors the partition tables and re-read them if they 
++	   change. */
 +	return 1;
 +}
 +
@@ -1493,19 +1431,19 @@ Index: b/libparted/arch/freebsd.c
 +}
 +
 +static PedDeviceArchOps freebsd_dev_ops = {
-+	_new:			freebsd_new,
-+	destroy:		freebsd_destroy,
-+	is_busy:		freebsd_is_busy,
-+	open:			freebsd_open,
++	_new:		freebsd_new,
++	destroy:	freebsd_destroy,
++	is_busy:	freebsd_is_busy,
++	open:		freebsd_open,
 +	refresh_open:	freebsd_refresh_open,
-+	close:			freebsd_close,
++	close:		freebsd_close,
 +	refresh_close:	freebsd_refresh_close,
-+	read:			freebsd_read,
-+	write:			freebsd_write,
-+	check:			freebsd_check,
-+	sync:			freebsd_sync,
-+	sync_fast:		freebsd_sync_fast,
-+	probe_all:		freebsd_probe_all
++	read:		freebsd_read,
++	write:		freebsd_write,
++	check:		freebsd_check,
++	sync:		freebsd_sync,
++	sync_fast:	freebsd_sync_fast,
++	probe_all:	freebsd_probe_all
 +};
 +
 +PedDiskArchOps freebsd_disk_ops =  {

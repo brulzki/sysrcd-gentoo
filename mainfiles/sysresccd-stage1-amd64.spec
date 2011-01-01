@@ -1,12 +1,12 @@
 subarch: amd64
-version_stamp: 1.6
+version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101127
+snapshot: 20101229
 source_subpath: default/stage4-amd64-20101109-01
-portage_confdir: /worksrc/sysresccd-src-1.6/portage-etc-x86
-portage_overlay: /worksrc/sysresccd-src-1.6/portage-overlay
+portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
+portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
 livecd/use: -* X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib jfs ntfs reiserfs xfs fat reiser4 gtk2 png jpeg -svg -opengl xorg usb pdf acl nologin -dri -glx minimal atm -berkdb -gdbm slang -fortran -nls
 
@@ -34,7 +34,7 @@ livecd/packages:
 	sys-apps/pciutils
 	sys-apps/sed
 	sys-apps/shadow
-	sys-apps/slocate
+	sys-apps/mlocate
 	sys-apps/util-linux
 	sys-apps/which
 	sys-fs/lvm2

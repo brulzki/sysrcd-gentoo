@@ -12,7 +12,7 @@ Index: b/libparted/labels/dos.c
 ===================================================================
 --- a/libparted/labels/dos.c
 +++ b/libparted/labels/dos.c
-@@ -1180,13 +1180,18 @@
+@@ -1185,13 +1185,18 @@
  	if (!table->mbr_signature)
  		table->mbr_signature = generate_random_id();
  

@@ -11,7 +11,6 @@ dialog ${DIALOGOPTS} --title "SystemRescueCd wizard" \
 	--menu "Please select and option and press Enter:" 0 0 0 \
 	"Xorg-run"   "Graphical desktop using Xorg auto-config (recommended)" \
 	"Xorg-mkx"   "Graphical desktop using Xorg mkxf86config (alternative)" \
-	"Xfbdev-run" "Graphical desktop using Xfbdev (requires Frame-Buffer)" \
 	"Xorg-gen"   "Generate /etc/X11/xorg.conf that can be edited manually" \
 	"Exit"       "Exit this menu and return to shell" 2>/tmp/result || exit 1
 
@@ -28,15 +27,6 @@ case "$choice" in
 		echo "forcexorg" > /root/xserver.cfg
 		/usr/sbin/hwsetup
 		/usr/sbin/mkxf86config.sh
-		startx
-		;;
-	Xfbdev-run)
-		if [ ! -c /dev/fb0 ]
-		then
-			dialog --title "Error" --msgbox "You have to start in framebuffer (high resolution) mode to use Xfbdev." 10 75
-			exit 1
-		fi
-		echo "forcevesa" > /root/xserver.cfg
 		startx
 		;;
 	Xorg-gen)

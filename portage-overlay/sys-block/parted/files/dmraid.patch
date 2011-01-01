@@ -9,7 +9,7 @@ Index: b/libparted/arch/linux.c
 ===================================================================
 --- a/libparted/arch/linux.c
 +++ b/libparted/arch/linux.c
-@@ -266,6 +266,10 @@
+@@ -268,6 +268,10 @@
  
  static char* _device_get_part_path (PedDevice* dev, int num);
  static int _partition_is_mounted_by_path (const char* path);
@@ -20,7 +20,7 @@ Index: b/libparted/arch/linux.c
  
  static int
  _read_fd (int fd, char **buf)
-@@ -483,8 +487,16 @@
+@@ -485,8 +489,16 @@
                 if (stat (buf, &st) != 0)
                         continue;
  
@@ -39,7 +39,7 @@ Index: b/libparted/arch/linux.c
         }
         closedir (mapper_dir);
  
-@@ -2187,6 +2199,10 @@
+@@ -2193,6 +2205,10 @@
          } else if (!strncmp (dev->path, "/dev/loop", 9)) {
                  /* Loop devices can only have one partition. */
                  strcpy (result, dev->path);
@@ -50,7 +50,7 @@ Index: b/libparted/arch/linux.c
          } else if (dev->type == PED_DEVICE_DAC960
                          || dev->type == PED_DEVICE_CPQARRAY
                          || dev->type == PED_DEVICE_ATARAID
-@@ -2648,6 +2664,8 @@
+@@ -2695,6 +2711,8 @@
          char*           vol_name = NULL;
          const char*     dev_name = NULL;
          char*           params = NULL;
@@ -59,7 +59,7 @@ Index: b/libparted/arch/linux.c
          LinuxSpecific*  arch_specific = LINUX_SPECIFIC (disk->dev);
  
          if (!_has_partitions(disk))
-@@ -2686,6 +2704,12 @@
+@@ -2732,12 +2750,19 @@
          dm_task_set_name (task, vol_name);
          dm_task_add_target (task, 0, part->geom.length,
                  "linear", params);
@@ -69,10 +69,9 @@ Index: b/libparted/arch/linux.c
 +                snprintf (dm_uuid, uuid_len, "DMRAID-%s", vol_name);
 +                dm_task_set_uuid (task, dm_uuid);
 +        }
-         rc = dm_task_run (task);
-         if (rc >= 0) {
+         if (dm_task_run (task)) {
                  //printf("0 %ld linear %s\n", part->geom.length, params);
-@@ -2693,6 +2717,7 @@
+                 dm_task_update_nodes();
                  dm_task_destroy(task);
                  free(params);
                  free(vol_name);
@@ -80,7 +79,7 @@ Index: b/libparted/arch/linux.c
                  return 1;
          } else {
                  _dm_remove_map_name(vol_name);
-@@ -2733,6 +2758,85 @@
+@@ -2778,6 +2803,85 @@
          }
          return rc;
  }

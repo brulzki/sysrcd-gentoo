@@ -1,34 +1,50 @@
 # ------ SystemRescueCd package.keywords ------
 
 # System packages
+=sys-fs/squashfs-tools-4.1* ~*
 =sys-apps/baselayout-2.0* ~*
 =sys-libs/glibc-2.12* ~*
 =sys-apps/openrc-0.6* ~*
 =sys-devel/gcc-4.4* ~*
 
+# Network Manager
+=net-misc/networkmanager-openvpn-0.8 ~*
+=net-misc/networkmanager-vpnc-0.8 ~*
+=net-misc/modemmanager-0.4* ~*
+
+# XFCE 4.8 beta
+#=xfce-base/exo-0.5* ~*
+#=xfce-base/garcon-0.1* ~*
+#=xfce-base/libxfce4ui-4.7* ~*
+#=xfce-base/libxfce4util-4.7* ~*
+#=xfce-base/xfce4-settings-4.7* ~*
+#=xfce-base/xfce4-panel-4.7* ~*
+#=xfce-base/xfce4-meta-4.8_pre* ~*
+#=xfce-base/xfce4-panel-4.7* ~*
+#=xfce-base/xfdesktop-4.7* ~*
+#=xfce-base/xfce-utils-4.7* ~*
+#=xfce-base/xfconf-4.7* ~*
+#=xfce-base/xfwm4-4.7* ~*
+
 # Misc packages
-=net-misc/networkmanager-openvpn-0.7* ~*
-=net-misc/networkmanager-vpnc-0.7* ~*
-=www-client/firefox-bin-3.6.12* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
 =sys-apps/iproute2-2.6.35* ~*
 =sys-apps/util-linux-2.18* ~*
-=sys-auth/consolekit-0.4* ~*
 =app-text/epdfview-0.1.7* ~*
 =dev-util/kbuild-0.1.5_p2 ~*
 =net-fs/nfs-utils-1.2.2* ~*
 =dev-util/strace-4.5.20* ~*
 =net-nds/rpcbind-0.2.0* ~*
 =app-arch/xz-utils-5.0* ~*
-=sys-apps/slocate-3.1* ~*
 =app-editors/vim-core-7.3* ~*
 =app-editors/vim-7.3* ~*
 =app-editors/gvim-7.3* ~*
+=net-dialup/ppp-2.4.5* ~*
 =dev-lang/perl-5.12* ~*
 =app-misc/mc-4.7.4* ~*
-=sys-fs/udev-162* ~*
+=sys-fs/udev-164* ~*
 sys-boot/grub **
 app-misc/scrub ~*
 dev-util/geany ~*
@@ -38,7 +54,9 @@ app-crypt/chntpw ~*
 perl-core/Encode ~*
 sys-block/gparted ~*
 sys-fs/nilfs-utils ~*
+sys-apps/memtester ~*
 app-forensics/afflib ~*
+x11-misc/xdg-user-dirs ~*
 sys-apps/smartmontools ~*
 net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
@@ -47,6 +65,8 @@ app-antivirus/clamav ~*
 app-shells/ksh ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
+sys-fs/dd-rescue ~*
+sys-boot/efibootmgr ~*
 app-forensics/foremost ~*
 sys-fs/diskdev_cmds ~*
 sys-block/open-iscsi ~*
@@ -85,16 +105,7 @@ sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
 
 # XOrg packages
-=x11-apps/xinit-1.3* ~*
-=x11-libs/libdrm-2.4.22* ~*
-=x11-base/xorg-drivers-1.9* ~*
-=x11-base/xorg-server-1.9.2* ~*
-=net-misc/tigervnc-1.0.1_p20100914* ~*
-=x11-drivers/xf86-video-sisusb-0.9.4* ~*
-=x11-drivers/xf86-video-dummy-0.3.4* ~*
-=x11-drivers/xf86-video-intel-2.13* ~*
-=x11-drivers/xf86-video-apm-1.2.3* ~*
-=x11-drivers/xf86-video-nv-2.1.18* ~*
+=x11-base/xorg-server-1.9* ~*
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*

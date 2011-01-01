@@ -17,6 +17,3 @@ then
 	alias mc='. /usr/libexec/mc/mc-wrapper.sh'
 fi
 
-# required in certain cases (eg: russian users)
-alias startx='startx;unicode_start'
-

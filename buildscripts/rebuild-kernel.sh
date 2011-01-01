@@ -10,7 +10,7 @@ case ${imagename} in
 		;;
 	altker32)
 		KERTYPE=alt
-		ARCHNAME=i386
+		ARCHNAME=i686
 		LIBDIR=lib
 		;;
 	altker64)
@@ -24,10 +24,10 @@ case ${imagename} in
 		;;
 esac
 
-(cd /worksrc/sysresccd-src-1.6/mainfiles ; nice catalyst -a -f sysresccd-stage2-${imagename}.spec)
+(cd /worksrc/sysresccd-src/mainfiles ; nice catalyst -a -f sysresccd-stage2-${imagename}.spec)
 sleep 2
 
-targetdir="/worksrc/sysresccd-bin-1.6/overlay-squashfs-x86/${LIBDIR}/modules"
+targetdir="/worksrc/sysresccd-bin/overlay-squashfs-x86/${LIBDIR}/modules"
 rootkernel=$(ls -d /var/tmp/catalyst/builds/default/livecd-stage2-${ARCHNAME}-*-${KERTYPE}/isolinux)
 rootmodule=$(ls -d /var/tmp/catalyst/tmp/default/livecd-stage2-${ARCHNAME}-*-${KERTYPE}/${LIBDIR}/modules)
 kervertemp=$(ls -d ${rootmodule}/*${KERTYPE}*-${ARCHNAME})
@@ -43,8 +43,8 @@ then
 	exit 1
 fi
 
-echo "cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin-1.6/kernels-x86/"
-cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin-1.6/kernels-x86/
+echo "cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin/kernels-x86/"
+cp ${rootkernel}/${imagename}* /worksrc/sysresccd-bin/kernels-x86/
 
 mkdir -p ${targetdir}
 echo "(cd ${rootmodule} ; tar cfj ${targetdir}/${kerversion}.tar.bz2 ${kerversion})"

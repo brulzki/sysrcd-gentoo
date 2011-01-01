@@ -100,8 +100,8 @@ rm -f /sbin/insmod.static ; ln -s /sbin/insmod /sbin/insmod.static
 rm -f /var/cache/revdep-rebuild/*
 
 # manage mksquashfs/unsquashfs programs
-[ ! -f /usr/bin/mksquashfs-lzma ] && ln -s /usr/bin/mksquashfs /usr/bin/mksquashfs-lzma
-[ ! -f /usr/bin/unsquashfs-lzma ] && ln -s /usr/bin/unsquashfs /usr/bin/unsquashfs-lzma
+#[ ! -f /usr/bin/mksquashfs-lzma ] && ln -s /usr/bin/mksquashfs /usr/bin/mksquashfs-lzma
+#[ ! -f /usr/bin/unsquashfs-lzma ] && ln -s /usr/bin/unsquashfs /usr/bin/unsquashfs-lzma
 
 # create link for reiserfsck
 echo "==> creating /sbin/fsck.reiserfs"
@@ -127,9 +127,12 @@ then
 fi
 
 # prepare the runxserver script
-echo "==> replacing /usr/bin/X"
-rm -f /usr/bin/X
-ln -s /root/runxserver /usr/bin/X
+#echo "==> replacing /usr/bin/X"
+#rm -f /usr/bin/X
+#ln -s /root/runxserver /usr/bin/X
+
+# update fonts when exiting from xorg
+sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
 
 # for programs that expect syslog
 echo "==> creating /usr/sbin/syslog "
@@ -142,13 +145,6 @@ do
 	echo "find ${curdir} -name "*.gz" -exec gzip -d {} \;"
 	find ${curdir} -name "*.gz" -exec gzip -d {} \;
 done
-
-# renaming nouveau_drv.so (currently broken)
-echo "==> renaming nouveau_drv.so"
-if [ -f /usr/lib/xorg/modules/drivers/nouveau_drv.so ]
-then
-	mv /usr/lib/xorg/modules/drivers/nouveau_drv.so /usr/lib/xorg/modules/drivers/nouveau_drv.disabled
-fi
 
 # install 32bit kernel modules
 echo "==> installing 32bit kernel modules"

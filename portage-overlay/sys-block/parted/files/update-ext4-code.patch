@@ -42,7 +42,7 @@ Index: b/libparted/fs/ext2/ext2_fs.h
 ===================================================================
 --- a/libparted/fs/ext2/ext2_fs.h
 +++ b/libparted/fs/ext2/ext2_fs.h
-@@ -174,9 +174,9 @@
+@@ -176,9 +176,9 @@
  struct ext2_super_block
  {
  	uint32_t	s_inodes_count;		/* Inodes count */
@@ -55,7 +55,7 @@ Index: b/libparted/fs/ext2/ext2_fs.h
  	uint32_t	s_free_inodes_count;	/* Free inodes count */
  	uint32_t	s_first_data_block;	/* First Data Block */
  	uint32_t	s_log_block_size;	/* Block size */
-@@ -235,10 +235,38 @@
+@@ -237,10 +237,38 @@
  	uint32_t	s_journal_inum;		/* inode number of journal file */
  	uint32_t	s_journal_dev;		/* device number of journal file */
  	uint32_t	s_last_orphan;		/* start of list of inodes to delete */
@@ -95,7 +95,7 @@ Index: b/libparted/fs/ext2/ext2_fs.h
  #define EXT2_DIRENT_INODE(dir_ent)	(PED_LE32_TO_CPU((dir_ent).inode))
  #define EXT2_DIRENT_REC_LEN(dir_ent)	(PED_LE16_TO_CPU((dir_ent).rec_len))
  #define EXT2_DIRENT_NAME_LEN(dir_ent)	((dir_ent).name_len)
-@@ -271,10 +299,45 @@
+@@ -273,10 +301,45 @@
  #define EXT2_INODE_BLOCK(inode, blk)	(PED_LE32_TO_CPU((inode).i_block[blk]))
  
  #define EXT2_SUPER_INODES_COUNT(sb)	(PED_LE32_TO_CPU((sb).s_inodes_count))
@@ -144,7 +144,7 @@ Index: b/libparted/fs/ext2/ext2_fs.h
  #define EXT2_SUPER_FREE_INODES_COUNT(sb) \
  		(PED_LE32_TO_CPU((sb).s_free_inodes_count))
  #define EXT2_SUPER_FIRST_DATA_BLOCK(sb) \
-@@ -308,11 +371,6 @@
+@@ -310,11 +373,6 @@
  #define EXT2_SUPER_FIRST_INO(sb)	(PED_LE32_TO_CPU((sb).s_first_ino))
  #define EXT2_SUPER_INODE_SIZE(sb)	(PED_LE16_TO_CPU((sb).s_inode_size))
  #define EXT2_SUPER_BLOCK_GROUP_NR(sb)	(PED_LE16_TO_CPU((sb).s_block_group_nr))
@@ -187,10 +187,10 @@ Index: b/libparted/fs/ext2/ext2_mkfs.c
  	sb->s_free_inodes_count = PED_CPU_TO_LE32 (numgroups
  							* inodes_per_group);
  	sb->s_first_data_block = PED_CPU_TO_LE32(first_block);
-Index: b/libparted/fs/ext2/ext2_resize.c
+Index: a/libparted/fs/ext2/ext2_resize.c
 ===================================================================
 --- a/libparted/fs/ext2/ext2_resize.c
-+++ b/libparted/fs/ext2/ext2_resize.c
++++ a/libparted/fs/ext2/ext2_resize.c
 @@ -105,9 +105,9 @@
  	fs->sb.s_inodes_count = PED_CPU_TO_LE32(
  		EXT2_SUPER_INODES_COUNT(fs->sb)
@@ -263,7 +263,7 @@ Index: b/libparted/fs/ext2/interface.c
  
  struct ext2_dev_handle* ext2_make_dev_handle_from_parted_geometry(PedGeometry* geom);
  
-@@ -51,25 +52,21 @@
+@@ -51,29 +52,25 @@
  
  		is_ext3 = (EXT2_SUPER_FEATURE_COMPAT (*sb)
  			   & EXT3_FEATURE_COMPAT_HAS_JOURNAL) != 0;
@@ -271,22 +271,30 @@ Index: b/libparted/fs/ext2/interface.c
 -			is_ext4 = ((EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
 -				    & EXT4_FEATURE_RO_COMPAT_HUGE_FILE)
 -				   || (EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
+-				       & EXT4_FEATURE_RO_COMPAT_GDT_CSUM)
+-				   || (EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
 -				       & EXT4_FEATURE_RO_COMPAT_DIR_NLINK)
 -				   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
 -				       & EXT4_FEATURE_INCOMPAT_EXTENTS)
 -				   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
--				       & EXT4_FEATURE_INCOMPAT_64BIT));
+-				       & EXT4_FEATURE_INCOMPAT_64BIT)
+-				   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
+-				       & EXT4_FEATURE_INCOMPAT_FLEX_BG));
 -			if (is_ext4)
 -				is_ext3 = 0;
 -		}
 +		is_ext4 = ((EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
 +			    & EXT4_FEATURE_RO_COMPAT_HUGE_FILE)
 +			   || (EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
++			       & EXT4_FEATURE_RO_COMPAT_GDT_CSUM)
++			   || (EXT2_SUPER_FEATURE_RO_COMPAT (*sb)
 +			       & EXT4_FEATURE_RO_COMPAT_DIR_NLINK)
 +			   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
 +			       & EXT4_FEATURE_INCOMPAT_EXTENTS)
 +			   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
-+			       & EXT4_FEATURE_INCOMPAT_64BIT));
++			       & EXT4_FEATURE_INCOMPAT_64BIT)
++			   || (EXT2_SUPER_FEATURE_INCOMPAT (*sb)
++			       & EXT4_FEATURE_INCOMPAT_FLEX_BG));
  		free (sb);
  
  		if (expect_ext_ver == 2 && (is_ext3 || is_ext4))
@@ -299,7 +307,7 @@ Index: b/libparted/fs/ext2/interface.c
  			return NULL;
  
  		if (version > 0 && group_nr > 0) {
-@@ -362,6 +359,18 @@
+@@ -366,6 +363,18 @@
  
  static PedFileSystemOps _ext4_ops = {
  	probe:		_ext4_probe,
@@ -318,7 +326,7 @@ Index: b/libparted/fs/ext2/interface.c
  	clobber:	NULL,
  	open:		NULL,
  	create:         NULL,
-@@ -372,6 +381,7 @@
+@@ -376,6 +385,7 @@
  	get_create_constraint:	NULL,
  	get_copy_constraint:	NULL,
  	get_resize_constraint:	NULL

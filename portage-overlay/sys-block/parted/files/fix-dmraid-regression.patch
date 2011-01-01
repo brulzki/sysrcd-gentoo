@@ -14,13 +14,12 @@ Index: b/libparted/arch/linux.c
 ===================================================================
 --- a/libparted/arch/linux.c
 +++ b/libparted/arch/linux.c
-@@ -2660,41 +2660,38 @@
+@@ -2708,39 +2708,37 @@
  static int
  _dm_add_partition (PedDisk* disk, PedPartition* part)
  {
 +        struct stat     dev_stat;
 +        struct dm_task *task = NULL;
-         int             rc;
          char*           vol_name = NULL;
 -        const char*     dev_name = NULL;
 +        char*           dev_name = NULL;
@@ -51,8 +50,7 @@ Index: b/libparted/arch/linux.c
 +        if (!vol_name)
 +                return 0;
  
--        rc = dm_task_run(task);
--        if (rc < 0)
+-        if (!dm_task_run(task))
 +        if (!_device_stat (disk->dev, &dev_stat))
                  goto err;
  

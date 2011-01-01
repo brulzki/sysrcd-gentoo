@@ -1,6 +1,6 @@
 #!/sbin/runscript
 
-DAEMON="/usr/bin/xinit"
+DAEMON="/usr/bin/startx"
 ARGS="/etc/X11/xinit/xinitrc"
 PIDFILE="/var/run/dostartx.pid"
 LOGFILE="/var/log/dostartx.log"

@@ -6,7 +6,7 @@
 # genkernel-9999.REV    -> use SVN REV
 # genkernel-VERSION     -> normal genkernel release
 
-VERSION_BUSYBOX='1.17.1'
+VERSION_BUSYBOX='1.17.4'
 VERSION_DMAP='1.02.22'
 VERSION_DMRAID='1.0.0.rc16'
 VERSION_E2FSPROGS='1.40.11'

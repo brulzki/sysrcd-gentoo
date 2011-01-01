@@ -3,56 +3,56 @@
 # system packages
 >=dev-lang/python-3.0
 >=sys-apps/portage-2.1.9
->=sys-kernel/std-sources-2.6.36
->=sys-kernel/alt-sources-2.6.36
 >=sys-kernel/gentoo-sources-2.6.36
 >=sys-kernel/linux-headers-2.6.36
+>=sys-kernel/std-sources-2.6.36
+>=sys-kernel/alt-sources-2.6.37
 <sys-kernel/genkernel-3.4.10-r1
 >sys-kernel/genkernel-3.4.10-r1
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
+>sys-fs/dmraid-1.0.0_rc16-r2
 <sys-fs/btrfs-progs-0.19-r2
->=sys-boot/syslinux-4.00
 >app-admin/testdisk-6.11
 <sys-boot/grub-0.97-r10
 >sys-boot/grub-0.97-r10
->=sys-block/parted-2.3
+<sys-block/parted-2.3-r1
+>sys-block/parted-2.3-r1
 sys-fs/device-mapper
 app-arch/lzma-utils
 sys-apps/pcmcia-cs
 
 # network-manager
->=net-misc/networkmanager-0.8
->=net-misc/networkmanager-vpnc-0.8
->=gnome-extra/nm-applet-0.8
+>net-misc/modemmanager-0.4_p20101211
+<net-misc/modemmanager-0.4_p20101211
 
 # modified packages
 >sys-fs/multipath-tools-0.4.8
->sys-fs/squashfs-tools-4.0
+<sys-fs/squashfs-tools-4.1
 >www-servers/thttpd-2.25b-r7
-<dev-lang/perl-5.12.2-r2
->dev-lang/perl-5.12.2-r2
+<dev-lang/perl-5.12.2-r5
+>dev-lang/perl-5.12.2-r5
 
 # binaries are too large in recent samba versions
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543
 >net-fs/samba-3.2.0
 
 # fix problems
-<x11-drivers/xf86-input-vmmouse-12.6.9
->x11-drivers/xf86-input-vmmouse-12.6.9
->=sys-fs/mtools-4.0.0
+>=sys-boot/syslinux-4.0
 <=net-fs/nfs-utils-1.2.0
 >=net-dialup/lrzsz-0.12.20-r3
 >=sys-devel/gettext-0.18.1.1-r1
 
 # xorg
-<x11-libs/libdrm-2.4.22
+>=media-libs/mesa-7.9
+>=x11-libs/libdrm-2.4.23
 <x11-base/xorg-server-1.9
 <x11-base/xorg-drivers-1.9
 >=x11-base/xorg-server-1.10
 >=x11-base/xorg-drivers-1.10
-<x11-base/xorg-server-1.9.2
->x11-base/xorg-server-1.9.2
-<net-misc/tigervnc-1.0.1_p20100914-r4
+<x11-base/xorg-server-1.9.3
+>x11-base/xorg-server-1.9.3
+<net-misc/tigervnc-1.0.1_p20100914-r5
+>net-misc/tigervnc-1.0.1_p20100914-r5
 
