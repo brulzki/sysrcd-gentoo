@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20101229
-source_subpath: default/stage4-i386-20101225-01
+snapshot: 20110211
+source_subpath: default/stage4-i386-20110206-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -197,7 +197,6 @@ livecd/packages:
 	net-wireless/b43-fwcutter
 	net-wireless/bcm43xx-fwcutter
 	net-wireless/ipw2100-firmware
-	net-wireless/ipw2200-firmware
 	net-wireless/iw
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware

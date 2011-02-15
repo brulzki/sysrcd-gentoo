@@ -34,6 +34,26 @@ sys-apps/pcmcia-cs
 <dev-lang/perl-5.12.2-r5
 >dev-lang/perl-5.12.2-r5
 
+# mask xfce-4.8
+>=xfce-base/xfce4-meta-4.8
+>=xfce-extra/xfce4-wavelan-plugin-0.5.6
+>=xfce-extra/xfce4-battery-plugin-1.0.0
+>=xfce-base/exo-0.4.0
+>=xfce-base/libxfce4menu-4.8
+>=xfce-base/libxfce4util-4.8
+>=xfce-base/libxfcegui4-4.8
+>=xfce-base/xfce-utils-4.8
+>=xfce-base/xfce4-meta-4.8
+>=xfce-base/xfce4-panel-4.8
+>=xfce-base/xfce4-settings-4.8
+>=xfce-base/xfconf-4.8
+>=xfce-base/xfdesktop-4.8
+>=xfce-base/xfwm4-4.8
+>=xfce-extra/xfce4-battery-plugin-0.5.2
+>=xfce-extra/xfce4-datetime-plugin-0.6.2
+>=xfce-extra/xfce4-taskmanager-1.1
+>=xfce-extra/xfce4-wavelan-plugin-0.5.6
+
 # binaries are too large in recent samba versions
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543
 >net-fs/samba-3.2.0
@@ -43,6 +63,7 @@ sys-apps/pcmcia-cs
 <=net-fs/nfs-utils-1.2.0
 >=net-dialup/lrzsz-0.12.20-r3
 >=sys-devel/gettext-0.18.1.1-r1
+>=net-misc/openssh-5.8
 
 # xorg
 >=media-libs/mesa-7.9
@@ -51,8 +72,8 @@ sys-apps/pcmcia-cs
 <x11-base/xorg-drivers-1.9
 >=x11-base/xorg-server-1.10
 >=x11-base/xorg-drivers-1.10
-<x11-base/xorg-server-1.9.3
->x11-base/xorg-server-1.9.3
+<x11-base/xorg-server-1.9.4
+>x11-base/xorg-server-1.9.4
 <net-misc/tigervnc-1.0.1_p20100914-r5
 >net-misc/tigervnc-1.0.1_p20100914-r5
 

@@ -12,20 +12,6 @@
 =net-misc/networkmanager-vpnc-0.8 ~*
 =net-misc/modemmanager-0.4* ~*
 
-# XFCE 4.8 beta
-#=xfce-base/exo-0.5* ~*
-#=xfce-base/garcon-0.1* ~*
-#=xfce-base/libxfce4ui-4.7* ~*
-#=xfce-base/libxfce4util-4.7* ~*
-#=xfce-base/xfce4-settings-4.7* ~*
-#=xfce-base/xfce4-panel-4.7* ~*
-#=xfce-base/xfce4-meta-4.8_pre* ~*
-#=xfce-base/xfce4-panel-4.7* ~*
-#=xfce-base/xfdesktop-4.7* ~*
-#=xfce-base/xfce-utils-4.7* ~*
-#=xfce-base/xfconf-4.7* ~*
-#=xfce-base/xfwm4-4.7* ~*
-
 # Misc packages
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
@@ -53,6 +39,8 @@ sys-apps/ethtool ~*
 app-crypt/chntpw ~*
 perl-core/Encode ~*
 sys-block/gparted ~*
+net-misc/tigervnc ~*
+sys-fs/cryptsetup ~*
 sys-fs/nilfs-utils ~*
 sys-apps/memtester ~*
 app-forensics/afflib ~*

@@ -6,6 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.0.1
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.35.11 (rescuecd + rescue64)
+* Updated alternative kernels to 2.6.36.3 (altker32 + altker64)
+* Updated Memtest86+ floppy disk image to 4.20 (supports Sandy-Bridge + fusion)
+* Updated xorg-server to 1.9.4 (graphical server and drivers)
+* Updated initramfs software (programs involved in the boot process)
+* Upgraded atl1c driver in standard kernel for Atheros AR8151 Gigabit devices
+* Fixed name resolution in the initramfs environment (used for PXE booting)
+* Updated GParted to version 0.8.0
+
+-------------------------------------------------------------------------------
 2.0.0 (2011-01-01)
 -------------------------------------------------------------------------------
 * Standard kernels based on the Long-Term-Supported 2.6.35 kernel (2.6.35.10)
