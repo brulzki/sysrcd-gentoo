@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Editor
+Comment=Edit text files
+Icon=accessories-text-editor
+Exec='/usr/bin/geany'
+Path=/root
+Terminal=false
+StartupNotify=false
+

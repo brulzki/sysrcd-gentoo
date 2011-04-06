@@ -51,11 +51,12 @@ sed -i -e 's/Skipping ALSA detection as requested on command line .../Skipping A
 # /sbin/livecd-functions.sh expect 'cdroot' in /proc/cmdline (we removed cdroot)
 sed -i -e 's!for x in ${CMDLINE}!for x in ${CMDLINE} cdroot!g' /sbin/livecd-functions.sh
 
-# allow freshclam
+# update clamav virus definitions
 chown clamav:clamav /var/log/clamav
 chown clamav:clamav /var/run/clamav
 chown clamav:clamav /var/lib/clamav
 chown clamav:clamav /var/lib/clamav/*
+/usr/bin/freshclam
 
 # remove warnings about files with a modification time in the future!
 [ -f /etc/init.d/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
@@ -114,9 +115,6 @@ rm -f /etc/init.d/net.eth*
 # remove xfce icons for missing programs
 echo "==> removing desktop files for missing programs"
 rm -f /usr/share/applications/{xfce4-file-manager.desktop,xfce4-help.desktop}
-
-# fix the "xfce4-logout" entry in the menu
-sed -i -e 's!xfce4-session-logout!killall xinit!g' /usr/share/applications/xfce4-logout.desktop
 
 # decompress oscar files
 echo "==> extracting oscar"

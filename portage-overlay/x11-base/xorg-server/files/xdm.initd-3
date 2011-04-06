@@ -1,7 +1,7 @@
 #!/sbin/runscript
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License, v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-3,v 1.1 2010/09/28 12:43:19 scarabeus Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-3,v 1.2 2011/01/22 15:30:07 lxnay Exp $
 
 # This is here to serve as a note to myself, and future developers.
 #
@@ -90,6 +90,11 @@ setup_dm() {
 			EXE=/usr/bin/gpe-dm
 			PIDFILE=/var/run/gpe-dm.pid
 			;;
+		lxdm)
+			EXE=/usr/sbin/lxdm-binary
+			PIDFILE=/var/run/lxdm.pid
+			START_STOP_ARGS="--background"
+			;;
 		*)
 			# first find out if there is such executable
 			EXE="$(which ${MY_XDM} 2>/dev/null)"
@@ -141,6 +146,7 @@ start() {
 	save_options "service" "${EXE}"
 	save_options "name"    "${NAME}"
 	save_options "pidfile" "${PIDFILE}"
+	save_options "start_stop_args" "${START_STOP_ARGS}"
 
 	if [ -n "${CHECKVT-y}" ] ; then
 		if vtstatic "${CHECKVT:-7}" ; then

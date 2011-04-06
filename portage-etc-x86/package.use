@@ -13,6 +13,9 @@ net-libs/webkit-gtk -gstreamer -doc -test
 www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 app-arch/xz-utils threads -nls static-libs
+dev-libs/lzo static-libs
+dev-libs/libgcrypt static-libs
+media-libs/jpeg static-libs
 sys-fs/fsarchiver lzma lzo gcrypt static
 sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl bash-completion python
@@ -23,6 +26,7 @@ sys-fs/udev extras
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba -ipv6 -client -smbclient -cups -netapi -pam -fam -kernel_linux acl readline server syslog examples
 sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
+dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
 sys-auth/consolekit policykit
 sys-fs/ecryptfs-utils -gtk
@@ -33,7 +37,7 @@ sys-fs/btrfs-progs -debug-utils
 app-text/poppler -abiword -lcms cairo
 app-text/poppler-bindings gtk -qt3 -qt4 -test
 net-print/cups -perl -python
-dev-util/git -perl
+dev-vcs/git -perl -gtk
 net-wireless/wpa_supplicant dbus
 net-misc/networkmanager -doc dhclient gnutls
 media-libs/freetype -bindist
@@ -42,7 +46,7 @@ sys-boot/grub multislot
 app-crypt/truecrypt -X
 x11-libs/wxGTK -X
 net-wireless/ndiswrapper usb
-sys-fs/squashfs-tools lzma
+sys-fs/squashfs-tools lzma -gzip
 www-client/chromium -ffmpeg
 media-fonts/terminus-font X
 dev-libs/libxml2 python
@@ -59,4 +63,5 @@ www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo svg cleartype lcdfilter
+media-libs/mesa -gallium
 

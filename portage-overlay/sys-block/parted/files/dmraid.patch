@@ -9,7 +9,7 @@ Index: b/libparted/arch/linux.c
 ===================================================================
 --- a/libparted/arch/linux.c
 +++ b/libparted/arch/linux.c
-@@ -268,6 +268,10 @@
+@@ -269,6 +269,10 @@
  
  static char* _device_get_part_path (PedDevice* dev, int num);
  static int _partition_is_mounted_by_path (const char* path);
@@ -20,7 +20,7 @@ Index: b/libparted/arch/linux.c
  
  static int
  _read_fd (int fd, char **buf)
-@@ -485,8 +489,16 @@
+@@ -486,8 +490,16 @@
                 if (stat (buf, &st) != 0)
                         continue;
  
@@ -39,18 +39,18 @@ Index: b/libparted/arch/linux.c
         }
         closedir (mapper_dir);
  
-@@ -2193,6 +2205,10 @@
+@@ -2200,6 +2212,10 @@
          } else if (!strncmp (dev->path, "/dev/loop", 9)) {
                  /* Loop devices can only have one partition. */
                  strcpy (result, dev->path);
 +#ifdef ENABLE_DEVICE_MAPPER
 +        } else if (dev->type == PED_DEVICE_DM && _is_dmraid_device (dev->path)) {
-+                snprintf (result, result_len, "%s%d", dev->path, num);
++                snprintf (result, result_len, "%sp%d", dev->path, num);
 +#endif
          } else if (dev->type == PED_DEVICE_DAC960
                          || dev->type == PED_DEVICE_CPQARRAY
                          || dev->type == PED_DEVICE_ATARAID
-@@ -2695,6 +2711,8 @@
+@@ -2702,6 +2718,8 @@
          char*           vol_name = NULL;
          const char*     dev_name = NULL;
          char*           params = NULL;
@@ -59,7 +59,7 @@ Index: b/libparted/arch/linux.c
          LinuxSpecific*  arch_specific = LINUX_SPECIFIC (disk->dev);
  
          if (!_has_partitions(disk))
-@@ -2732,12 +2750,19 @@
+@@ -2739,12 +2757,19 @@
          dm_task_set_name (task, vol_name);
          dm_task_add_target (task, 0, part->geom.length,
                  "linear", params);
@@ -79,7 +79,7 @@ Index: b/libparted/arch/linux.c
                  return 1;
          } else {
                  _dm_remove_map_name(vol_name);
-@@ -2778,6 +2803,85 @@
+@@ -2785,6 +2810,85 @@
          }
          return rc;
  }

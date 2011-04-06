@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=xfburn
+Comment=cd/dvd burning software
+Icon=/root/icons/xfburn.png
+Exec='/usr/bin/xfburn'
+Path=/root
+Terminal=false
+StartupNotify=false
+

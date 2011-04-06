@@ -6,7 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
-2.0.1
+2.1.0 (2011-04-06)
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.35.12 (long-term kernel: rescuecd + rescue64)
+* Alternative kernels rebased on linux-2.6.38.2 (most recent kernel)
+* Patched alternative kernels with loop-aes-3.6b (encrypt disks using AES)
+* Updated testdisk to 6.11.3 (Checks and undeletes partitions + PhotoRec)
+* Updated sys-apps/hdparm to 9.36 (Utility to change hard drive parameters)
+* Updated the XFCE desktop environment to new major version: 4.8
+* Updated gdisk to 0.7.1 (the package has been renamed sys-apps/gptfdisk)
+* 32bit kernels (rescuecd + altker32) compiled for i586 instead of i686
+
+-------------------------------------------------------------------------------
+2.0.1 (2011-02-15)
 -------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.35.11 (rescuecd + rescue64)
 * Updated alternative kernels to 2.6.36.3 (altker32 + altker64)

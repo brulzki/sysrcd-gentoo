@@ -540,6 +540,8 @@ do_listdev()
 ## Main
 ###############################################################################
 
+export TERMINFO_DIRS=$TERMINFO_DIRS:/lib/terminfo:/etc/terminfo:/usr/share/terminfo
+
 if [ "$(basename $0)" = 'usb_inst.sh' ] && [ -d "${PROGLOC}/usb_inst" ]
 then
 	RUN_FROM_ISOROOT='1'

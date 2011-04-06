@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Command Prompt
+Comment=X terminal emulator
+Icon=utilities-terminal
+Exec='/usr/bin/terminal'
+Path=/root
+Terminal=false
+StartupNotify=false
+

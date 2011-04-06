@@ -1,11 +1,11 @@
 # ------ SystemRescueCd package.keywords ------
 
 # System packages
-=sys-fs/squashfs-tools-4.1* ~*
+=sys-fs/squashfs-tools-4.2* ~*
 =sys-apps/baselayout-2.0* ~*
 =sys-libs/glibc-2.12* ~*
-=sys-apps/openrc-0.6* ~*
-=sys-devel/gcc-4.4* ~*
+=sys-apps/openrc-0.7* ~*
+=sys-fs/lvm2-2.02.84* ~*
 
 # Network Manager
 =net-misc/networkmanager-openvpn-0.8 ~*
@@ -13,6 +13,9 @@
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
+=sys-fs/e2fsprogs-1.41.14* ~*
+=sys-libs/e2fsprogs-libs-1.41.14* ~*
+=www-client/firefox-bin-3.6* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
@@ -20,7 +23,7 @@
 =sys-apps/util-linux-2.18* ~*
 =app-text/epdfview-0.1.7* ~*
 =dev-util/kbuild-0.1.5_p2 ~*
-=net-fs/nfs-utils-1.2.2* ~*
+=net-fs/nfs-utils-1.2.3* ~*
 =dev-util/strace-4.5.20* ~*
 =net-nds/rpcbind-0.2.0* ~*
 =app-arch/xz-utils-5.0* ~*
@@ -39,13 +42,12 @@ sys-apps/ethtool ~*
 app-crypt/chntpw ~*
 perl-core/Encode ~*
 sys-block/gparted ~*
-net-misc/tigervnc ~*
 sys-fs/cryptsetup ~*
 sys-fs/nilfs-utils ~*
+sys-apps/gptfdisk ~*
 sys-apps/memtester ~*
 app-forensics/afflib ~*
 x11-misc/xdg-user-dirs ~*
-sys-apps/smartmontools ~*
 net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
@@ -61,14 +63,17 @@ sys-block/open-iscsi ~*
 app-admin/procinfo-ng ~*
 sys-apps/lm_sensors ~*
 sys-block/scsiadd ~*
+sys-apps/hdparm ~*
 sys-apps/gdisk ~*
 app-arch/pigz ~*
+sys-process/nmon ~*
 sys-block/megarc ~*
 sys-block/megacli ~*
 sys-block/tw_cli ~*
 sys-apps/flashrom ~*
 sys-block/ms-sys ~*
-sys-fs/dd-rhelp ~*
+sys-fs/aufs2-util ~*
+sys-fs/aufs2 ~*
 sys-fs/lde ~*
 
 # kernel related packages
@@ -76,6 +81,9 @@ sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
+
+# XOrg
+=x11-base/xorg-server-1.9.5* ~*
 
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*
@@ -91,9 +99,6 @@ app-crypt/truecrypt ~*
 sys-fs/ecryptfs-utils ~*
 sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
-
-# XOrg packages
-=x11-base/xorg-server-1.9* ~*
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*

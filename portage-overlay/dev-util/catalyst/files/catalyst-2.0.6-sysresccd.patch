@@ -6,7 +6,7 @@ diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modu
  	def set_snapshot_path(self):
  		self.settings["snapshot_path"]=normpath(self.settings["storedir"]+\
 -			"/snapshots/portage-"+self.settings["snapshot"]+".tar.bz2")
-+			"/snapshots/portage-"+self.settings["snapshot"]+".tar.lzma")
++			"/snapshots/portage-"+self.settings["snapshot"]+".tar.xz")
  
  		if os.path.exists(self.settings["snapshot_path"]):
  			self.settings["snapshot_path_hash"]=\
@@ -15,7 +15,7 @@ diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modu
  			cleanup_msg=\
  				"Cleaning up existing portage tree (This can take a long time)..."
 -			unpack_cmd="tar xjpf "+self.settings["snapshot_path"]+" -C "+\
-+			unpack_cmd="tar xpf "+self.settings["snapshot_path"]+" --lzma -C "+\
++			unpack_cmd="tar xpf "+self.settings["snapshot_path"]+" --xz -C "+\
  				self.settings["chroot_path"]+"/usr"
  			unpack_errmsg="Error unpacking snapshot"
  
@@ -41,7 +41,7 @@ diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/s
  		st=self.settings["storedir"]
  		self.settings["snapshot_path"]=normpath(st+"/snapshots/portage-"+self.settings["version_stamp"]\
 -			+".tar.bz2")
-+			+".tar.lzma")
++			+".tar.xz")
  		self.settings["tmp_path"]=normpath(st+"/tmp/"+self.settings["target_subpath"])
  		if self.settings.has_key("portdir_overlay"):
  			print "\nWarning!!!!"

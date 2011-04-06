@@ -3,12 +3,12 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110211
+snapshot: 20110401
 source_subpath: default/stage4-i386-20110206-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
-livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4
+livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4 -gallium
 
 livecd/packages:
 	app-accessibility/speakup-utils
@@ -92,6 +92,7 @@ livecd/packages:
 	app-misc/mc
 	app-misc/screen
 	app-misc/scrub
+	app-misc/secure-delete
 	app-misc/symlinks
 	app-misc/tmux
 	app-misc/vlock
@@ -106,6 +107,7 @@ livecd/packages:
 	app-text/dos2unix
 	app-text/epdfview
 	app-text/tree
+	app-text/wgetpaste
 	app-vim/gentoo-syntax
 	dev-lang/perl
 	dev-lang/ruby
@@ -133,7 +135,6 @@ livecd/packages:
 	net-analyzer/httping
 	net-analyzer/ifstat
 	net-analyzer/iftop
-	net-analyzer/iptraf
 	net-analyzer/macchanger
 	net-analyzer/netcat
 	net-analyzer/ngrep
@@ -217,7 +218,6 @@ livecd/packages:
 	sys-apps/dstat
 	sys-apps/dumpdisklayout
 	sys-apps/ed
-	sys-apps/eject
 	sys-apps/ethtool
 	sys-apps/fbset
 	sys-apps/file
@@ -225,7 +225,7 @@ livecd/packages:
 	sys-apps/flashrom
 	sys-apps/fxload
 	sys-apps/gawk
-	sys-apps/gdisk
+	sys-apps/gptfdisk
 	sys-apps/groff
 	sys-apps/hal
 	sys-apps/hdparm
@@ -245,7 +245,6 @@ livecd/packages:
 	sys-apps/pciutils
 	sys-apps/pcmciautils
 	sys-apps/pv
-	sys-apps/ren
 	sys-apps/rename
 	sys-apps/rescan-scsi-bus
 	sys-apps/sdparm
@@ -261,6 +260,7 @@ livecd/packages:
 	sys-apps/x86info
 	sys-auth/pambase
 	sys-block/aic94xx-firmware
+	sys-block/eject
 	sys-block/gpart
 	sys-block/gparted
 	sys-block/lsiutil
@@ -289,7 +289,6 @@ livecd/packages:
 	sys-fs/cryptsetup
 	sys-fs/ddrescue
 	sys-fs/dd-rescue
-	sys-fs/dd-rhelp
 	sys-fs/diskdev_cmds
 	sys-fs/dmraid
 	sys-fs/dosfstools
@@ -334,6 +333,7 @@ livecd/packages:
 	sys-process/htop
 	sys-process/iotop
 	sys-process/lsof
+	sys-process/nmon
 	sys-process/procps
 	sys-process/psmisc
 	sys-process/vixie-cron
@@ -345,6 +345,7 @@ livecd/packages:
 	x11-apps/xdpyinfo
 	x11-apps/xgamma
 	x11-apps/xhost
+	x11-apps/xinit
 	x11-apps/xkbcomp
 	x11-apps/xmodmap
 	x11-apps/xrandr
