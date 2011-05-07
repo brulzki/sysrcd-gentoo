@@ -18,7 +18,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	mv linux-2.6.38 linux-${KV}
 	cd linux-${KV}
-	epatch ${FILESDIR}/alt-sources-2.6.38-01-fc15-010.patch.bz2 || die "alt-sources fedora patch failed."
+	epatch ${FILESDIR}/alt-sources-2.6.38-01-fc15-022.patch.bz2 || die "alt-sources fedora patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.38-02-aufs.patch.bz2 || die "alt-sources aufs patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.38-03-reiser4.patch.bz2 || die "alt-sources reiser4 patch failed."
 	epatch ${FILESDIR}/alt-sources-2.6.38-04-loopaes.patch.bz2 || die "alt-sources loopaes patch failed."
@@ -27,6 +27,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e ${sednoagp} drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt210/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt211/" Makefile
 }
 

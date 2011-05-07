@@ -26,7 +26,7 @@ livecd/users:
 boot/kernel: altker64
 
 boot/kernel/altker64/sources: sys-kernel/alt-sources
-boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.38-alt210.x86_64
+boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.38-alt211.x86_64
 boot/kernel/altker64/use: pcmcia usb -X png truetype 
 boot/kernel/altker64/extraversion: amd64
 boot/kernel/altker64/packages:

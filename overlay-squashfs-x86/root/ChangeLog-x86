@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.1.1 (2011-05-07)
+-------------------------------------------------------------------------------
+* Updated standard kernels to 2.6.35.13 (long-term kernel: rescuecd + rescue64)
+* Alternative kernels rebased on linux-2.6.38.5 (most recent kernel)
+* Added xfce-base/xfce4-session package (new menu entry to leave xfce)
+
+-------------------------------------------------------------------------------
 2.1.0 (2011-04-06)
 -------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.35.12 (long-term kernel: rescuecd + rescue64)

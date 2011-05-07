@@ -26,7 +26,7 @@ livecd/users:
 boot/kernel: rescue64
 
 boot/kernel/rescue64/sources: sys-kernel/std-sources
-boot/kernel/rescue64/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.35-std210.x86_64
+boot/kernel/rescue64/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.35-std211.x86_64
 boot/kernel/rescue64/use: pcmcia usb -X png truetype 
 boot/kernel/rescue64/extraversion: amd64
 boot/kernel/rescue64/packages:

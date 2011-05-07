@@ -2,7 +2,7 @@
 sys-kernel/genkernel selinux
 xfce-base/exo -python
 xfce-base/xfconf -perl
-xfce-base/xfce4-meta -session 
+xfce-base/xfce4-meta session
 xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
 app-cdr/xfburn -hal dbus xfce -gstreamer

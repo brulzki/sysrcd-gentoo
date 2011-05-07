@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.35-std210.i586
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.35-std211.i586
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i586
 boot/kernel/rescuecd/packages:
