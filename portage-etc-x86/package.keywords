@@ -2,9 +2,7 @@
 
 # System packages
 =sys-fs/squashfs-tools-4.2* ~*
-=sys-apps/baselayout-2.0* ~*
 =sys-libs/glibc-2.12* ~*
-=sys-apps/openrc-0.7* ~*
 =sys-fs/lvm2-2.02.84* ~*
 
 # Network Manager
@@ -83,7 +81,9 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # XOrg
-=x11-base/xorg-server-1.9.5* ~*
+net-misc/tigervnc ~*
+x11-base/xorg-server ~*
+x11-base/xorg-drivers ~*
 
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="2.1.1"
+VERSION="2.2.0"
 EXTRAVER=""
-VOLNAME="sysrcd-2.1.1"
+VOLNAME="sysrcd-2.2.0"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -88,7 +88,7 @@ cp ${REPOSRC}/mainfiles/init ${newramfs}/init
 
 # build new initramfs
 echo 'building the new initramfs...'
-( cd ${newramfs} && find . | cpio -H newc -o | lzma -5 > ${newinitrfs} )
+( cd ${newramfs} && find . | cpio -H newc -o | xz --check=crc32 > ${newinitrfs} )
 
 # remove old igz-images and tmp-dirs
 [ -d ${newramfs} ] && rm -rf ${newramfs} 

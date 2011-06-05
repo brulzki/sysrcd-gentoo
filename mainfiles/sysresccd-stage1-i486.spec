@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110401
-source_subpath: default/stage4-i386-20110206-01
+snapshot: 20110601
+source_subpath: default/stage4-i386-20110515-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -112,6 +112,7 @@ livecd/packages:
 	dev-lang/perl
 	dev-lang/ruby
 	dev-libs/expat
+	dev-libs/icu
 	dev-libs/libconfig
 	dev-libs/lzo
 	dev-libs/openssl
@@ -204,7 +205,6 @@ livecd/packages:
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
-	net-wireless/zd1211-firmware
 	perl-core/Encode
 	sys-apps/acl
 	sys-apps/attr
@@ -376,4 +376,5 @@ livecd/packages:
 	xfce-extra/xfce4-wavelan-plugin
 	xfce-extra/xfce4-datetime-plugin
 	xfce-extra/xfce4-battery-plugin
+	#net-wireless/zd1220-firmware
 

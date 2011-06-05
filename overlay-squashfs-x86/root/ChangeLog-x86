@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.2.0 (2011-06-05)
+-------------------------------------------------------------------------------
+* Updated standard kernels to linux-2.6.38.8 (rescuecd + rescue64)
+* Updated alternative kernels to linux-2.6.39.1 (altker32 + altker64)
+* Updated "Offline NT Password & Registry Editor" ("ntpasswd" boot entry)
+* Updated ntfs3g to 2011.4.12 (driver that provides read-write access to ntfs)
+* Updated Python from 2.6 to 2.7
+* Updated Gentoo Portage to 2.1.9
+* Updated GParted to 0.8.1
+* Updated Samba to 3.4.12
+* Updated Perl to 5.12.3
+
+-------------------------------------------------------------------------------
 2.1.1 (2011-05-07)
 -------------------------------------------------------------------------------
 * Updated standard kernels to 2.6.35.13 (long-term kernel: rescuecd + rescue64)

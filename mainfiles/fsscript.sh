@@ -51,6 +51,9 @@ sed -i -e 's/Skipping ALSA detection as requested on command line .../Skipping A
 # /sbin/livecd-functions.sh expect 'cdroot' in /proc/cmdline (we removed cdroot)
 sed -i -e 's!for x in ${CMDLINE}!for x in ${CMDLINE} cdroot!g' /sbin/livecd-functions.sh
 
+# avoid warning
+echo "rc_sys=''" >> /etc/rc.conf
+
 # update clamav virus definitions
 chown clamav:clamav /var/log/clamav
 chown clamav:clamav /var/run/clamav
@@ -100,10 +103,6 @@ rm -f /sbin/insmod.static ; ln -s /sbin/insmod /sbin/insmod.static
 # remove rdev-rebuild temp files
 rm -f /var/cache/revdep-rebuild/*
 
-# manage mksquashfs/unsquashfs programs
-#[ ! -f /usr/bin/mksquashfs-lzma ] && ln -s /usr/bin/mksquashfs /usr/bin/mksquashfs-lzma
-#[ ! -f /usr/bin/unsquashfs-lzma ] && ln -s /usr/bin/unsquashfs /usr/bin/unsquashfs-lzma
-
 # create link for reiserfsck
 echo "==> creating /sbin/fsck.reiserfs"
 [ ! -f /sbin/fsck.reiserfs ] && ln /sbin/reiserfsck /sbin/fsck.reiserfs
@@ -123,11 +122,6 @@ then
 	tar xfzp /usr/share/oscar/oscar.tar.gz -C /usr/share/oscar
 	rm -rf /usr/share/oscar/oscar.tar.gz
 fi
-
-# prepare the runxserver script
-#echo "==> replacing /usr/bin/X"
-#rm -f /usr/bin/X
-#ln -s /root/runxserver /usr/bin/X
 
 # update fonts when exiting from xorg
 sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
@@ -232,7 +226,6 @@ then
 	/sbin/rc-update del local default
 
 	# remove services which don't make sense on a livecd
-	rm -f /etc/init.d/root
 	rm -f /etc/init.d/checkfs
 	rm -f /etc/init.d/checkroot
 	rm -f /etc/init.d/fsck
@@ -251,6 +244,7 @@ then
 	# fix dependencies
 	sed -i -e 's!need root!!g' /etc/init.d/mtab
 	sed -i -e 's!need fsck!!g' /etc/init.d/localmount
+	sed -i -e 's!need fsck!!g' /etc/init.d/root
 	sed -i -e 's!need hald!use hald!g' /etc/init.d/xdm
 
 	# unpack firmwares

@@ -1,6 +1,6 @@
-diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modules/generic_stage_target.py
+diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-d/modules/generic_stage_target.py
 --- catalyst-2.0.6-a/modules/generic_stage_target.py	2008-05-29 05:30:10.000000000 +0100
-+++ catalyst-2.0.6-b/modules/generic_stage_target.py	2010-04-03 15:46:58.000000000 +0100
++++ catalyst-2.0.6-d/modules/generic_stage_target.py	2011-05-07 17:21:38.000000000 +0100
 @@ -426,7 +426,7 @@
  
  	def set_snapshot_path(self):
@@ -28,14 +28,14 @@ diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-b/modu
 +                        myf.write('ACCEPT_LICENSE="*"\n')
 +                        myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
 +                        myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
-+                        myf.write('FEATURES="parallel parallel-fetch confcache -collision-protect -protect-owned"\n')
++                        myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned"\n')
 +
  			if self.settings.has_key("LDFLAGS"):
  				myf.write("# LDFLAGS is unsupported.  USE AT YOUR OWN RISK!\n")
  				myf.write('LDFLAGS="'+self.settings["LDFLAGS"]+'"\n')
-diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/snapshot_target.py
+diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-d/modules/snapshot_target.py
 --- catalyst-2.0.6-a/modules/snapshot_target.py	2008-05-29 05:30:11.000000000 +0100
-+++ catalyst-2.0.6-b/modules/snapshot_target.py	2010-04-03 15:46:58.000000000 +0100
++++ catalyst-2.0.6-d/modules/snapshot_target.py	2011-05-07 17:18:56.000000000 +0100
 @@ -17,7 +17,7 @@
  		self.settings["target_subpath"]="portage"
  		st=self.settings["storedir"]
@@ -45,9 +45,9 @@ diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-b/modules/s
  		self.settings["tmp_path"]=normpath(st+"/tmp/"+self.settings["target_subpath"])
  		if self.settings.has_key("portdir_overlay"):
  			print "\nWarning!!!!"
-diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-b/targets/support/chroot-functions.sh
+diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-d/targets/support/chroot-functions.sh
 --- catalyst-2.0.6-a/targets/support/chroot-functions.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/chroot-functions.sh	2010-04-03 15:46:58.000000000 +0100
++++ catalyst-2.0.6-d/targets/support/chroot-functions.sh	2011-05-07 17:19:46.000000000 +0100
 @@ -126,6 +126,9 @@
  	else
  		clst_myemergeopts="--quiet"
@@ -58,9 +58,18 @@ diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-b/
  	if [ -n "${clst_FETCH}" ]
  	then
  		export bootstrap_opts="-f"
-diff -urN catalyst-2.0.6-a/targets/support/filesystem-functions.sh catalyst-2.0.6-b/targets/support/filesystem-functions.sh
+@@ -166,7 +169,7 @@
+ 	# portage to avoid frying our /etc/make.conf file.  Otherwise, we could
+ 	# just let emerge system could merge it.
+ 	[ -e /etc/make.conf ] && echo 'USE="${USE} build"' >> /etc/make.conf
+-	run_merge --oneshot --nodeps virtual/portage
++	#run_merge --oneshot --nodeps virtual/portage
+ 	sed -i '/USE="${USE} build"/d' /etc/make.conf
+ }
+ 
+diff -urN catalyst-2.0.6-a/targets/support/filesystem-functions.sh catalyst-2.0.6-d/targets/support/filesystem-functions.sh
 --- catalyst-2.0.6-a/targets/support/filesystem-functions.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/filesystem-functions.sh	2010-04-03 15:48:05.000000000 +0100
++++ catalyst-2.0.6-d/targets/support/filesystem-functions.sh	2011-05-07 17:18:56.000000000 +0100
 @@ -53,6 +53,7 @@
  create_squashfs() {
  	echo "Creating squashfs..."
@@ -69,9 +78,9 @@ diff -urN catalyst-2.0.6-a/targets/support/filesystem-functions.sh catalyst-2.0.
  	mksquashfs "${clst_destpath}" "$1/${loopname}" ${clst_fsops} -noappend \
  		|| die "mksquashfs failed, did you emerge squashfs-tools?"
  }
-diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-b/targets/support/kmerge.sh
+diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-d/targets/support/kmerge.sh
 --- catalyst-2.0.6-a/targets/support/kmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/kmerge.sh	2010-04-03 15:46:58.000000000 +0100
++++ catalyst-2.0.6-d/targets/support/kmerge.sh	2011-05-07 17:18:56.000000000 +0100
 @@ -99,7 +99,7 @@
  	fi
  	if [ "${clst_kernel_merge}" != "" ]
@@ -81,9 +90,9 @@ diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-b/targets/su
  			${GK_ARGS} || exit 1
  	else
  		genkernel ${GK_ARGS} || exit 1
-diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-b/targets/support/unmerge.sh
+diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-d/targets/support/unmerge.sh
 --- catalyst-2.0.6-a/targets/support/unmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-b/targets/support/unmerge.sh	2010-04-03 15:46:58.000000000 +0100
++++ catalyst-2.0.6-d/targets/support/unmerge.sh	2011-05-07 17:18:56.000000000 +0100
 @@ -2,6 +2,77 @@
  
  source /tmp/chroot-functions.sh

@@ -18,7 +18,7 @@ Index: b/libparted/arch/linux.c
  #ifdef ENABLE_DEVICE_MAPPER
  #include <libdevmapper.h>
  #endif
-@@ -2807,20 +2808,15 @@
+@@ -2809,20 +2810,15 @@
                  return _dm_reread_part_table (disk);
  #endif
          if (disk->dev->type != PED_DEVICE_FILE) {

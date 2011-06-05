@@ -1,6 +1,6 @@
 export VIDEO_CARDS="vesa intel radeon nouveau nv dummy glint i128 i740 mach64 mga r128 rendition s3 s3virge siliconmotion trident sis savage cirrus voodoo sisusb ast tdfx via vmware apm"
 export INPUT_DEVICES="keyboard vmmouse mouse evdev synaptics"
-export FEATURES="parallel parallel-fetch -collision-protect -protect-owned"
+export FEATURES="parallel-fetch -collision-protect -protect-owned"
 export MAKEOPTS="-j5 --load-average=8"
 export PORTAGE_NICENESS="19"
 export ACCEPT_LICENSE="*"

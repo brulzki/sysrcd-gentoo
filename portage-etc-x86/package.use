@@ -32,7 +32,7 @@ sys-auth/consolekit policykit
 sys-fs/ecryptfs-utils -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -png
-sys-fs/ntfs3g -external-fuse -acl
+sys-fs/ntfs3g -external-fuse -acl -ntfsprogs
 sys-fs/btrfs-progs -debug-utils
 app-text/poppler -abiword -lcms cairo
 app-text/poppler-bindings gtk -qt3 -qt4 -test

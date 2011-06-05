@@ -39,18 +39,7 @@ Index: b/libparted/arch/linux.c
         }
         closedir (mapper_dir);
  
-@@ -2200,6 +2212,10 @@
-         } else if (!strncmp (dev->path, "/dev/loop", 9)) {
-                 /* Loop devices can only have one partition. */
-                 strcpy (result, dev->path);
-+#ifdef ENABLE_DEVICE_MAPPER
-+        } else if (dev->type == PED_DEVICE_DM && _is_dmraid_device (dev->path)) {
-+                snprintf (result, result_len, "%sp%d", dev->path, num);
-+#endif
-         } else if (dev->type == PED_DEVICE_DAC960
-                         || dev->type == PED_DEVICE_CPQARRAY
-                         || dev->type == PED_DEVICE_ATARAID
-@@ -2702,6 +2718,8 @@
+@@ -2701,6 +2717,8 @@
          char*           vol_name = NULL;
          const char*     dev_name = NULL;
          char*           params = NULL;
@@ -59,7 +48,7 @@ Index: b/libparted/arch/linux.c
          LinuxSpecific*  arch_specific = LINUX_SPECIFIC (disk->dev);
  
          if (!_has_partitions(disk))
-@@ -2739,12 +2757,19 @@
+@@ -2741,12 +2759,19 @@
          dm_task_set_name (task, vol_name);
          dm_task_add_target (task, 0, part->geom.length,
                  "linear", params);
@@ -79,7 +68,7 @@ Index: b/libparted/arch/linux.c
                  return 1;
          } else {
                  _dm_remove_map_name(vol_name);
-@@ -2785,6 +2810,85 @@
+@@ -2787,6 +2812,85 @@
          }
          return rc;
  }

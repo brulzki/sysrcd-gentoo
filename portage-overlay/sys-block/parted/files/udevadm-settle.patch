@@ -19,7 +19,7 @@ Index: b/libparted/arch/linux.c
  #include <ctype.h>
  #include <errno.h>
  #include <fcntl.h>
-@@ -2799,16 +2800,60 @@
+@@ -2801,16 +2802,60 @@
          return have_blkpg = kver >= KERNEL_VERSION (2,4,0) ? 1 : 0;
  }
  
@@ -82,7 +82,7 @@ Index: b/libparted/arch/linux.c
  #endif
          if (disk->dev->type != PED_DEVICE_FILE) {
  
-@@ -2819,10 +2864,20 @@
+@@ -2821,10 +2866,20 @@
  		assert (_have_blkpg ());
  
  		if (!_disk_sync_part_table (disk))

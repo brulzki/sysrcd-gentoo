@@ -264,7 +264,7 @@ Index: b/libparted/labels/gpt.c
   ************************************************************/
  static int
  gpt_read (PedDisk *disk)
-@@ -1096,6 +1316,100 @@
+@@ -1096,6 +1316,113 @@
  }
  
  static int
@@ -312,7 +312,7 @@ Index: b/libparted/labels/gpt.c
 +  /* Apple's firmware also appears to be unhappy if the EFI system
 +     partition doesn't extend all the way to the start of the disk */
 +
-+  if (raw_part->OSType == 0xee) {
++  if (number == 1 && raw_part->OSType == 0xee) {
 +    raw_part->SizeInLBA += raw_part->StartingLBA - 1;
 +    raw_part->StartingLBA = 1;
 +  }
@@ -343,6 +343,7 @@ Index: b/libparted/labels/gpt.c
 +  memset(&pmbr->PartitionRecord, 0, sizeof(pmbr->PartitionRecord));
 +  pmbr->Signature = PED_CPU_TO_LE16(MSDOS_MBR_SIGNATURE);
 +
++  bool prot = false; /* have we found a protective partition? */
 +  for (i=1; i<=4; i++) {
 +    part = ped_disk_get_partition (disk, i);
 +    if (!part)
@@ -350,6 +351,18 @@ Index: b/libparted/labels/gpt.c
 +
 +    if (!fill_raw_part (&pmbr->PartitionRecord [i - 1], part, 0, i))
 +      goto error;
++    if (pmbr->PartitionRecord[i - 1].OSType == 0xee)
++      prot = true;
++  }
++
++  if (!prot) { /* create one covering the gpt entries */
++    if (!pmbr->PartitionRecord[0].OSType)
++      return _write_pmbr (disk->dev);
++    for (i=2; i>=0; i--)
++      pmbr->PartitionRecord[i + 1] = pmbr->PartitionRecord[i];
++    pmbr->PartitionRecord[0].OSType = 0xee;
++    pmbr->PartitionRecord[0].StartingLBA = 1;
++    pmbr->PartitionRecord[0].SizeInLBA = pmbr->PartitionRecord[1].StartingLBA - 1;
 +  }
 +
 +  if (!ped_device_write (disk->dev, pmbr, GPT_PMBR_LBA, GPT_PMBR_SECTORS))
@@ -365,7 +378,7 @@ Index: b/libparted/labels/gpt.c
  _generate_header (const PedDisk *disk, int alternate, uint32_t ptes_crc,
                    GuidPartitionTableHeader_t **gpt_p)
  {
-@@ -1201,9 +1515,15 @@
+@@ -1201,9 +1528,15 @@
  
    ptes_crc = efi_crc32 (ptes, ptes_size);
  
@@ -384,7 +397,7 @@ Index: b/libparted/labels/gpt.c
  
    /* Write PTH and PTEs */
    /* FIXME: Caution: this code is nearly identical to what's just below. */
-@@ -1790,6 +2110,21 @@
+@@ -1790,6 +2123,21 @@
    PED_ASSERT (sizeof (GuidPartitionEntry_t) == 128, return);
  
    ped_disk_type_register (&gpt_disk_type);

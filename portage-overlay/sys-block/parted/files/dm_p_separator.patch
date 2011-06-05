@@ -1,0 +1,33 @@
+From: Phillip Susi <psusi@cfl.rr.com>
+Description: Device mapper type should not automatically
+ mean add 'p' before the partition number.  Fall back to
+ adding it only if the previous character is a digit.
+ This complies with kpartx behavior and linux behavior
+ "since the dawn of time".
+Forwarded: yes
+Last-Update: 2011-03-08
+
+Index: b/libparted/arch/linux.c
+===================================================================
+--- a/libparted/arch/linux.c	2011-03-08 10:43:36.726632247 -0500
++++ b/libparted/arch/linux.c	2011-03-08 10:46:30.274635151 -0500
+@@ -2198,7 +2198,6 @@
+         } else if (dev->type == PED_DEVICE_DAC960
+                         || dev->type == PED_DEVICE_CPQARRAY
+                         || dev->type == PED_DEVICE_ATARAID
+-                        || dev->type == PED_DEVICE_DM
+                         || isdigit (dev->path[path_len - 1]))
+                 snprintf (result, result_len, "%sp%d", dev->path, num);
+         else
+@@ -2716,7 +2715,10 @@
+ 
+         dev_name = dm_task_get_name (task);
+ 
+-        if (asprintf (&vol_name, "%sp%d", dev_name, part->num) == -1)
++        if (isdigit (dev_name[strlen (dev_name) - 1])) {
++                if (asprintf (&vol_name, "%sp%d", dev_name, part->num) == -1)
++                        goto err;
++        } else if (asprintf (&vol_name, "%s%d", dev_name, part->num) == -1)
+                 goto err;
+ 
+         /* Caution: dm_task_destroy frees dev_name.  */
