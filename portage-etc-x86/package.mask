@@ -3,6 +3,7 @@
 # system packages
 >=sys-devel/gcc-4.5
 >=sys-apps/portage-2.2
+>=sys-apps/portage-2.1.10
 >=dev-lang/python-3.0
 >=sys-kernel/gentoo-sources-2.6.39
 >=sys-kernel/linux-headers-2.6.39
@@ -51,13 +52,13 @@ mail-mta/courier
 
 # fix problems
 >=sys-boot/syslinux-4.0
->=net-dialup/lrzsz-0.12.20-r3
 >=sys-devel/gettext-0.18.1.1-r1
 >=net-misc/openssh-5.8
 >=sys-apps/lshw-02.15b
 <net-dialup/gtkterm-0.99.6
 =sys-fs/xfsprogs-3.1.5*
 <sys-fs/ntfs3g-2011.4.12
+<sys-devel/autoconf-2.68
 
 # xorg
 <net-misc/tigervnc-1.0.1_p20100914-r6

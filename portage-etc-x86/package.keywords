@@ -25,6 +25,7 @@
 =dev-util/strace-4.5.20* ~*
 =net-nds/rpcbind-0.2.0* ~*
 =app-arch/xz-utils-5.0* ~*
+=sys-devel/autoconf-2.68* ~*
 =app-editors/vim-core-7.3* ~*
 =app-editors/vim-7.3* ~*
 =app-editors/gvim-7.3* ~*
@@ -81,7 +82,6 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # XOrg
-net-misc/tigervnc ~*
 x11-base/xorg-server ~*
 x11-base/xorg-drivers ~*
 

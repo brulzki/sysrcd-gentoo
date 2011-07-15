@@ -6,6 +6,12 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.2.1 (2011-07-15)
+-------------------------------------------------------------------------------
+* Standard kernels: added recent fedora patches to linux-2.6.38.8 (rescuecd + rescue64)
+* Alternative kernels: updated sources to linux-2.6.39.3 (altker32 + altker64)
+
+-------------------------------------------------------------------------------
 2.2.0 (2011-06-05)
 -------------------------------------------------------------------------------
 * Updated standard kernels to linux-2.6.38.8 (rescuecd + rescue64)

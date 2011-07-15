@@ -156,6 +156,10 @@ def main():
 			if found==0:
 				found+=search_autoruns(curdir, ar_autoruns, copyfilefct_basic)
 
+	# ---- remove user setable ar_nowait flag if set ----
+	if os.path.isfile('/etc/ar_nowait'):
+		os.unlink('/etc/ar_nowait')
+
 	# ---- execute the autorun scripts found ----
 	for curfile in autorunfiles:
 		processdostextfiles(curfile)
@@ -182,6 +186,8 @@ def main():
 			os.unlink(curfile)
 	
 	# ---- wait a keypress feature -----
+	if os.path.isfile('/etc/ar_nowait'):
+		ar_nowait='y'
 	if ar_nowait=='n' and len(autorunfiles)>0:
 		print 'end of autorun scripts, press <Enter> to continue'
 		sys.stdin.read(1)
