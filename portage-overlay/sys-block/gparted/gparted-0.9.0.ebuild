@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-block/gparted/gparted-0.8.0.ebuild,v 1.2 2011/05/11 08:56:47 eva Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-block/gparted/gparted-0.8.0.ebuild,v 1.3 2011/06/05 21:43:30 eva Exp $
 
 EAPI="2"
 GCONF_DEBUG="no"
@@ -18,7 +18,8 @@ KEYWORDS="amd64 x86"
 IUSE="btrfs dmraid fat gtk hfs jfs kde mdadm ntfs reiserfs reiser4 xfs"
 
 # FIXME: add gpart support
-common_depends=">=sys-block/parted-2.3
+common_depends=">=sys-block/parted-2.4
+	<sys-block/parted-3
 	>=dev-cpp/gtkmm-2.16:2.4"
 
 RDEPEND="${common_depends}
@@ -50,11 +51,17 @@ RDEPEND="${common_depends}
 
 DEPEND="${common_depends}
 	>=dev-util/pkgconfig-0.12
-	>=dev-util/intltool-0.35.5"
+	>=dev-util/intltool-0.35.5
+	app-text/scrollkeeper
+	app-text/gnome-doc-utils
+	app-text/docbook-xml-dtd:4.1.2"
 
 pkg_setup() {
 	DOCS="AUTHORS NEWS ChangeLog README"
-	G2CONF="${G2CONF} --disable-scrollkeeper --disable-doc GKSUPROG=$(type -P true)"
+	G2CONF="${G2CONF}
+		--disable-doc
+		--disable-scrollkeeper
+		GKSUPROG=$(type -P true)"
 }
 
 src_prepare() {
@@ -77,7 +84,6 @@ src_install() {
 	fi
 
 	if use gtk; then
-		sed -i "s:Exec=:Exec=gksu :" "${D}"/usr/share/applications/gparted.desktop
 		echo "NotShowIn=KDE;" >> "${D}"/usr/share/applications/gparted.desktop
 	else
 		echo "OnlyShowIn=X-NeverShowThis;" >> "${D}"/usr/share/applications/gparted.desktop

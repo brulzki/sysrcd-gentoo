@@ -6,7 +6,7 @@ xfce-base/xfce4-meta session
 xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
 app-cdr/xfburn -hal dbus xfce -gstreamer
-sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce -debug -gnome -kde 
+sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce gtk -debug -gnome -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test

@@ -13,7 +13,6 @@ dev-cpp/cairomm
 dev-cpp/glibmm
 dev-cpp/gtkmm
 dev-cpp/pangomm
-dev-libs/dbus-glib
 dev-libs/libburn
 dev-libs/libisofs
 dev-util/geany
@@ -35,7 +34,6 @@ net-misc/networkmanager
 net-misc/rdesktop
 net-misc/tigervnc
 net-wireless/wpa_supplicant
-sys-apps/dbus
 sys-apps/hal
 sys-auth/policykit
 sys-block/gparted

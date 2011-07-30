@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="2.2.1"
+VERSION="2.3.0"
 EXTRAVER=""
-VOLNAME="sysrcd-2.2.1"
+VOLNAME="sysrcd-2.3.0"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -80,7 +80,7 @@ newinitrfs="${curdir}/initram.igz"
 mkdir -p ${newramfs}
 cp -a ${REPOBIN}/overlay-initramfs/* ${newramfs}/
 
-# copy custom busybox binary to the new initramfs
+# setup custom busybox in initramfs
 ( cd ${newramfs}/bin/ ; ln busybox sh )
 
 # update the init boot script in the initramfs
@@ -92,6 +92,10 @@ echo 'building the new initramfs...'
 
 # remove old igz-images and tmp-dirs
 [ -d ${newramfs} ] && rm -rf ${newramfs} 
+
+# ========= copy embedded initramfs to permanent location =====================
+mkdir -p /var/tmp/EMBEDDEDINIT
+cp /worksrc/catalyst/tmp/default/livecd-stage2-*/etc/kernels/initramfs-*.cpio* /var/tmp/EMBEDDEDINIT/
 
 # ========= copy the new files to the pxe environment =========================
 if [ -d /tftpboot ]

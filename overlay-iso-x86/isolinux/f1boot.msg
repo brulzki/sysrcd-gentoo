@@ -15,7 +15,7 @@
 0C*07 Network tools (samba, nfs, ssh, lftp, tcpdump, ...) and wireless drivers
 0C*07 Network booting via PXE (press F6 for help)
 
-0C*07 X.Org / Xfbdev graphical environments with XFCE and Firefox-3.6
+0C*07 X.Org / Xfbdev graphical environments with XFCE and Firefox-5.0
 0C*07 Hardware autodetection and Midnight Commander
 
 02==>07 0EPress F5 for help if you have boot problems with SystemRescueCd 02<==07 

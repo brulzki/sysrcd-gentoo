@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.3.0 (2011-07-30)
+-------------------------------------------------------------------------------
+* Updated alternative kernels to linux-3.0.0 (altker32 + altker64)
+* Updated firmwares in both the initramfs and in the main filesystem
+* Added support for linux-3.0 in sys-kernel/genkernel-3.4.10-r2
+* Linux kernels modules are gzipped in the embedded initramfs to save memory
+* Fixed busy CPU in the terminal by downgrading x11-libs/vte to 0.26.3
+* Updated parted to 2.4 and GParted to 0.9.0
+* Updated sys-apps/portage to 2.1.10
+* Update app-admin/testdisk to 6.12
+* Updated Firefox to version 5
+
+-------------------------------------------------------------------------------
 2.2.1 (2011-07-15)
 -------------------------------------------------------------------------------
 * Standard kernels: added recent fedora patches to linux-2.6.38.8 (rescuecd + rescue64)

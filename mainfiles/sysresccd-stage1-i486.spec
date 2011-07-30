@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110708
-source_subpath: default/stage4-i386-20110625-01
+snapshot: 20110728
+source_subpath: default/stage4-i386-20110724-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -48,6 +48,7 @@ livecd/packages:
 	app-arch/tar
 	app-arch/unace
 	app-arch/unrar
+	app-arch/unshield
 	app-arch/unzip
 	app-arch/xarchiver
 	app-arch/xz-utils
@@ -199,12 +200,18 @@ livecd/packages:
 	net-wireless/b43-fwcutter
 	net-wireless/bcm43xx-fwcutter
 	net-wireless/ipw2100-firmware
+	net-wireless/ipw2200-firmware
+	net-wireless/linux-wlan-ng-firmware
 	net-wireless/iw
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware
+	net-wireless/rtl8192se-firmware
+	net-wireless/rtl8192su-firmware
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
+	net-wireless/zd1211-firmware
+	sys-kernel/linux-firmware
 	perl-core/Encode
 	sys-apps/acl
 	sys-apps/attr
@@ -372,9 +379,9 @@ livecd/packages:
 	x11-themes/gnome-icon-theme
 	x11-wm/jwm
 	xfce-base/xfce4-meta
+	xfce-extra/xfce4-battery-plugin
+	xfce-extra/xfce4-datetime-plugin
+	xfce-extra/xfce4-notifyd
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
-	xfce-extra/xfce4-datetime-plugin
-	xfce-extra/xfce4-battery-plugin
-	#net-wireless/zd1220-firmware
 

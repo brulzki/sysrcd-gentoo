@@ -32,6 +32,7 @@ DEPEND=""
 RDEPEND="dev-lang/python
 	app-crypt/shash
 	virtual/cdrtools
+	>=app-portage/gentoolkit-0.3.0.4
 	ccache? ( dev-util/ccache )
 	ia64? ( sys-fs/dosfstools )
 	kernel_linux? ( app-misc/zisofs-tools >=sys-fs/squashfs-tools-2.1 )"

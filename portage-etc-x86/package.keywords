@@ -11,9 +11,10 @@
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
+=sys-apps/portage-2.1.10.7* ~*
 =sys-fs/e2fsprogs-1.41.14* ~*
 =sys-libs/e2fsprogs-libs-1.41.14* ~*
-=www-client/firefox-bin-3.6* ~*
+=www-client/firefox-bin-5* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
@@ -25,10 +26,10 @@
 =dev-util/strace-4.5.20* ~*
 =net-nds/rpcbind-0.2.0* ~*
 =app-arch/xz-utils-5.0* ~*
-=sys-devel/autoconf-2.68* ~*
 =app-editors/vim-core-7.3* ~*
 =app-editors/vim-7.3* ~*
 =app-editors/gvim-7.3* ~*
+=sys-block/parted-2.4* ~*
 =net-dialup/ppp-2.4.5* ~*
 =dev-lang/perl-5.12* ~*
 =app-misc/mc-4.7.4* ~*
@@ -76,14 +77,15 @@ sys-fs/aufs2 ~*
 sys-fs/lde ~*
 
 # kernel related packages
+sys-kernel/linux-firmware ~*
 sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # XOrg
-x11-base/xorg-server ~*
-x11-base/xorg-drivers ~*
+#x11-base/xorg-server ~*
+#x11-base/xorg-drivers ~*
 
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*
@@ -104,9 +106,13 @@ sys-fs/ntfs3g ~*
 net-wireless/b43-fwcutter ~*
 net-wireless/bcm43xx-fwcutter ~*
 net-wireless/atmel-firmware ~*
+net-wireless/libertas-firmware ~*
 net-wireless/madwifi-ng ~*
 net-wireless/madwifi-ng-tools ~*
 net-wireless/rt61-firmware ~*
 net-wireless/rt73-firmware ~*
 net-wireless/prism54-firmware ~*
+net-wireless/linux-wlan-ng-firmware ~*
+net-wireless/rtl8192se-firmware ~*
+net-wireless/rtl8192su-firmware ~*
 

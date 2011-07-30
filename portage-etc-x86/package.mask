@@ -3,17 +3,18 @@
 # system packages
 >=sys-devel/gcc-4.5
 >=sys-apps/portage-2.2
->=sys-apps/portage-2.1.10
+>=sys-apps/portage-2.1.11
 >=dev-lang/python-3.0
+>=app-misc/livecd-tools-2.0
 >=sys-kernel/gentoo-sources-2.6.39
 >=sys-kernel/linux-headers-2.6.39
->=sys-kernel/std-sources-2.6.39
->=sys-kernel/alt-sources-2.6.40
-<sys-kernel/genkernel-3.4.10-r1
->sys-kernel/genkernel-3.4.10-r1
+>=sys-kernel/std-sources-3.0
+>=sys-kernel/alt-sources-3.1
+<sys-kernel/genkernel-3.4.10-r2
+>sys-kernel/genkernel-3.4.10-r2
 
 # misc packages
->www-client/firefox-bin-3.9
+>=www-client/firefox-bin-6.0
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
 <sys-fs/btrfs-progs-0.19-r2
@@ -41,14 +42,15 @@ mail-mta/courier
 <sys-fs/squashfs-tools-4.2-r1
 >sys-fs/squashfs-tools-4.2-r1
 >www-servers/thttpd-2.25b-r7
-<app-admin/testdisk-6.11.3
->app-admin/testdisk-6.11.3
-<sys-block/parted-2.3-r3
->sys-block/parted-2.3-r3
+<app-admin/testdisk-6.12
+>app-admin/testdisk-6.12
+<sys-block/parted-2.4
+>sys-block/parted-2.4
 <sys-block/iscsitarget-1.4.20.2
 >sys-block/iscsitarget-1.4.20.2
 <sys-apps/util-linux-2.19.1
 >sys-apps/util-linux-2.19.1
+>x11-libs/libnotify-0.7.2
 
 # fix problems
 >=sys-boot/syslinux-4.0
@@ -59,20 +61,15 @@ mail-mta/courier
 =sys-fs/xfsprogs-3.1.5*
 <sys-fs/ntfs3g-2011.4.12
 <sys-devel/autoconf-2.68
+>x11-libs/vte-0.26.3
 
 # xorg
 <net-misc/tigervnc-1.0.1_p20100914-r6
 >net-misc/tigervnc-1.0.1_p20100914-r6
-<x11-base/xorg-server-1.9
-<x11-base/xorg-drivers-1.9
->=x11-base/xorg-server-1.10
->=x11-base/xorg-drivers-1.10
 <x11-base/xorg-server-1.9.5
->x11-base/xorg-server-1.9.5
-
-# modified perl
-#<dev-lang/perl-5.12.2-r5
-#>dev-lang/perl-5.12.2-r5
+>x11-base/xorg-server-1.9.9
+<x11-base/xorg-drivers-1.9
+>x11-base/xorg-drivers-1.9
 
 # binaries are too large in recent samba versions
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543
