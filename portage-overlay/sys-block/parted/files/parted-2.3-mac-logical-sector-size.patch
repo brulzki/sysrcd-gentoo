@@ -1,0 +1,106 @@
+From 325b06dae4dff1751d6c5f28506def0786a1a1c9 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Thu, 16 Dec 2010 15:37:32 -0500
+Subject: [PATCH] Improve support for mac partition tables with logical sector size != 512
+
+On mac partition tables which specify a sector size larger than the
+physical sector size, we need to reallocate the buffer after we
+determine the correct sector size.
+
+This is a normal condition when CD is used with Apple partitions (for
+example, the USB rescue stick for the MacBookAir3,1), and then an image
+(analogous to an .iso image) is created, so also don't raise an exception in
+_disk_analyse_block_size() when we find that.
+
+Also simplify the code in _disk_analyse_block_size() a bit since there's no
+reason to ever do the byteswapping more than once or convert everything to
+512-byte multiples since we neither load nor store it that way.
+---
+ libparted/labels/mac.c |   44 ++++++++++++++++++++++++++------------------
+ 1 files changed, 26 insertions(+), 18 deletions(-)
+
+diff --git a/libparted/labels/mac.c b/libparted/labels/mac.c
+index 49a236e..418343e 100644
+--- a/libparted/labels/mac.c
++++ b/libparted/labels/mac.c
+@@ -643,35 +643,22 @@ _rawpart_get_partmap_size (MacRawPartition* raw_part, PedDisk* disk)
+ static int
+ _disk_analyse_block_size (PedDisk* disk, MacRawDisk* raw_disk)
+ {
+-	PedSector	block_size;
++	PedSector	block_size = PED_BE16_TO_CPU(raw_disk->block_size);
+ 
+-	if (PED_BE16_TO_CPU (raw_disk->block_size) % 512) {
++	if (block_size % 512) {
+ #ifndef DISCOVER_ONLY
+ 		ped_exception_throw (
+ 			PED_EXCEPTION_ERROR,
+ 			PED_EXCEPTION_CANCEL,
+ 			_("Weird block size on device descriptor: %d bytes is "
+ 			  "not divisible by 512."),
+-			(int) PED_BE16_TO_CPU (raw_disk->block_size));
++			(int) block_size);
+ #endif
+ 		goto error;
+ 	}
+ 
+-	block_size = PED_BE16_TO_CPU (raw_disk->block_size) / 512;
+-	if (block_size != disk->dev->sector_size / 512) {
+-#ifndef DISCOVER_ONLY
+-		if (ped_exception_throw (
+-			PED_EXCEPTION_WARNING,
+-			PED_EXCEPTION_IGNORE_CANCEL,
+-			_("The driver descriptor says the physical block size "
+-			  "is %d bytes, but Linux says it is %d bytes."),
+-			(int) block_size * 512,
+-			(int) disk->dev->sector_size)
+-				!= PED_EXCEPTION_IGNORE)
+-			goto error;
+-#endif
+-		disk->dev->sector_size = block_size * 512;
+-	}
++	if (block_size != disk->dev->sector_size)
++		disk->dev->sector_size = block_size;
+ 
+ 	return 1;
+ 
+@@ -729,6 +716,7 @@ mac_read (PedDisk* disk)
+ 	PedPartition*		part;
+ 	int			num;
+ 	PedSector		ghost_size;
++	PedSector		sector_size;
+ 	PedConstraint*		constraint_exact;
+ 	int			last_part_entry_num = 0;
+ 
+@@ -746,8 +734,28 @@ mac_read (PedDisk* disk)
+ 	if (!_check_signature (raw_disk))
+ 		goto error;
+ 
++	sector_size = disk->dev->sector_size;
+ 	if (!_disk_analyse_block_size (disk, raw_disk))
+ 		goto error;
++
++	/* If dev->sector_size changed when we did ptt_read_sector(),
++	   then the buffer size is wrong and we'll take a segfault
++	   down the line unless we re-allocate it here. */
++	if (disk->dev->sector_size != sector_size) {
++		free(buf);
++		buf = 0;
++		if (!ptt_read_sector(disk->dev, 0, &buf))
++			return 0;
++
++		MacRawDisk *raw_disk = (MacRawDisk *) buf;
++
++		if (!_check_signature (raw_disk))
++			goto error;
++
++		if (!_disk_analyse_block_size (disk, raw_disk))
++			goto error;
++	}
++
+ 	if (!_disk_analyse_ghost_size (disk))
+ 		goto error;
+ 	ghost_size = mac_disk_data->ghost_size;
+-- 
+1.7.3.1
+

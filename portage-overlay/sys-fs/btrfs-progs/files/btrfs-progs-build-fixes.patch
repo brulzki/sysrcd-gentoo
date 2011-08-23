@@ -1,0 +1,36 @@
+diff --git a/btrfsck.c b/btrfsck.c
+index 63e44d1..1e040c4 100644
+--- a/btrfsck.c
++++ b/btrfsck.c
+@@ -22,7 +22,9 @@
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <fcntl.h>
++#include <sys/types.h>
+ #include <sys/stat.h>
++#include <unistd.h>
+ #include "kerncompat.h"
+ #include "ctree.h"
+ #include "disk-io.h"
+diff --git a/mkfs.c b/mkfs.c
+index 2e99b95..638f4c2 100644
+--- a/mkfs.c
++++ b/mkfs.c
+@@ -348,7 +348,7 @@ int main(int ac, char **av)
+ 	u64 alloc_start = 0;
+ 	u64 metadata_profile = BTRFS_BLOCK_GROUP_RAID1 | BTRFS_BLOCK_GROUP_DUP;
+ 	u64 data_profile = BTRFS_BLOCK_GROUP_RAID0;
+-	u32 leafsize = getpagesize();
++	u32 leafsize = sysconf(_SC_PAGESIZE);
+ 	u32 sectorsize = 4096;
+ 	u32 nodesize = leafsize;
+ 	u32 stripesize = 4096;
+@@ -405,7 +405,7 @@ int main(int ac, char **av)
+ 				print_usage();
+ 		}
+ 	}
+-	sectorsize = max(sectorsize, (u32)getpagesize());
++	sectorsize = max(sectorsize, (u32)sysconf(_SC_PAGESIZE));
+ 	if (leafsize < sectorsize || (leafsize & (sectorsize - 1))) {
+ 		fprintf(stderr, "Illegal leafsize %u\n", leafsize);
+ 		exit(1);

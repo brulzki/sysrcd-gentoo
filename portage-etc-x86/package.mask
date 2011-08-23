@@ -14,11 +14,10 @@
 >sys-kernel/genkernel-3.4.10-r2
 
 # misc packages
->=www-client/firefox-bin-6.0
+>=www-client/firefox-bin-7.0
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
 <sys-fs/btrfs-progs-0.19-r2
-<sys-apps/gptfdisk-0.7.1
 <sys-boot/grub-0.97-r10
 >sys-boot/grub-0.97-r10
 
@@ -32,11 +31,10 @@ app-arch/lzma-utils
 sys-apps/pcmcia-cs
 mail-mta/courier
 
-# network-manager
+# modified packages
 >net-misc/modemmanager-0.4_p20101211
 <net-misc/modemmanager-0.4_p20101211
-
-# modified packages
+<x11-drivers/xf86-input-vmmouse-12.7.0
 >x11-drivers/xf86-input-vmmouse-12.7.0
 >sys-fs/multipath-tools-0.4.8
 <sys-fs/squashfs-tools-4.2-r1
@@ -44,15 +42,18 @@ mail-mta/courier
 >www-servers/thttpd-2.25b-r7
 <app-admin/testdisk-6.12
 >app-admin/testdisk-6.12
-<sys-block/parted-2.4
->sys-block/parted-2.4
+<sys-block/parted-2.4-r1
+>sys-block/parted-2.4-r1
 <sys-block/iscsitarget-1.4.20.2
 >sys-block/iscsitarget-1.4.20.2
 <sys-apps/util-linux-2.19.1
 >sys-apps/util-linux-2.19.1
+<sys-fs/btrfs-progs-0.19-r4
+>sys-fs/btrfs-progs-0.19-r4
 >x11-libs/libnotify-0.7.2
 
 # fix problems
+>=app-text/gnome-doc-utils-0.20.5
 >=sys-boot/syslinux-4.0
 >=sys-devel/gettext-0.18.1.1-r1
 >=net-misc/openssh-5.8

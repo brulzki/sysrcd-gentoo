@@ -3,7 +3,7 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110728
+snapshot: 20110821
 source_subpath: default/stage4-i386-20110724-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -41,6 +41,7 @@ livecd/packages:
 	app-arch/par2cmdline
 	app-arch/pbzip2
 	app-arch/pigz
+	app-arch/pxz
 	app-arch/rar
 	app-arch/rpm2targz
 	app-arch/rzip
@@ -234,7 +235,6 @@ livecd/packages:
 	sys-apps/gawk
 	sys-apps/gptfdisk
 	sys-apps/groff
-	sys-apps/hal
 	sys-apps/hdparm
 	sys-apps/hwsetup
 	sys-apps/ipmitool
@@ -262,6 +262,7 @@ livecd/packages:
 	sys-apps/smartmontools
 	sys-apps/tcp-wrappers
 	sys-apps/usbutils
+	sys-apps/usb_modeswitch
 	sys-apps/util-linux
 	sys-apps/which
 	sys-apps/x86info
@@ -289,6 +290,7 @@ livecd/packages:
 	sys-boot/mbr
 	sys-boot/syslinux
 	sys-cluster/drbd
+	sys-devel/autogen
 	sys-devel/bc
 	sys-devel/crossdev
 	sys-devel/gettext

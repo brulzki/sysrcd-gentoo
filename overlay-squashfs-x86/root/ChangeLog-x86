@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.3.1 (2011-08-23)
+-------------------------------------------------------------------------------
+* Updated alternative kernels to linux-3.0.3 (altker32 + altker64)
+* Updated btrfs-progs to the latest upstream version (20110805)
+* Updated firmwares to sys-kernel/linux-firmware-20110818
+* Patched parted-2.4 with fixes from Fedora
+* Updated Firefox to version 6
+
+-------------------------------------------------------------------------------
 2.3.0 (2011-07-30)
 -------------------------------------------------------------------------------
 * Updated alternative kernels to linux-3.0.0 (altker32 + altker64)

@@ -12,13 +12,11 @@
 
 # Misc packages
 =sys-apps/portage-2.1.10.7* ~*
-=sys-fs/e2fsprogs-1.41.14* ~*
-=sys-libs/e2fsprogs-libs-1.41.14* ~*
-=www-client/firefox-bin-5* ~*
+=www-client/firefox-bin-6* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
-=sys-apps/iproute2-2.6.35* ~*
+=sys-apps/iproute2-2.6.38* ~*
 =sys-apps/util-linux-2.18* ~*
 =app-text/epdfview-0.1.7* ~*
 =dev-util/kbuild-0.1.5_p2 ~*
@@ -35,8 +33,10 @@
 =app-misc/mc-4.7.4* ~*
 =sys-fs/udev-164* ~*
 sys-boot/grub **
+app-arch/pxz ~*
 app-misc/scrub ~*
 dev-util/geany ~*
+app-backup/dar ~*
 sys-fs/ext3grep ~*
 sys-apps/ethtool ~*
 app-crypt/chntpw ~*

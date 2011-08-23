@@ -9,7 +9,7 @@ PROVIDE="virtual/linux-sources"
 HOMEPAGE="http://kernel.sysresccd.org"
 LICENSE="GPL-2"
 SLOT="${KV}"
-KEYWORDS="-* amd64 x86"
+KEYWORDS="-* arm amd64 x86"
 IUSE=""
 
 src_unpack()
@@ -28,6 +28,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e ${sednoagp} drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -std230/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std231/" Makefile
 }
 

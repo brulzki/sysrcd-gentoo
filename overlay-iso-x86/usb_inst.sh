@@ -460,6 +460,7 @@ do_dialog()
 			dialog_status "${status}"
 			do_writembr ${devname2} >> ${logfile} 2>&1
 			[ $? -ne 0 ] && dialog_die "Failed to write the MBR on ${devname2}"
+			sleep 1
 			output="$(find_first_partition ${devname2})\n"
 			devname2="${devname2}$?"
 			dialog_status "${status}"

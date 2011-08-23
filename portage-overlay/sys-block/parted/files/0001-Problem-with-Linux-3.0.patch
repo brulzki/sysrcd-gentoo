@@ -1,0 +1,52 @@
+From eb5e5f9c57aa8a3f8502ea75b08e5c608f6cec2c Mon Sep 17 00:00:00 2001
+From: Jim Meyering <jim@meyering.net>
+Date: Sun, 5 Jun 2011 18:17:40 +0200
+Subject: [PATCH] Problem with Linux "3.0"
+
+Richard W.M. Jones wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=710882
+>
+> I'm fairly sure that the problem is in _get_linux_version function in
+> libparted/arch/linux.c, which expects a 3 part string.  In Linux 3.0
+> the string is "3.0" so this fails.
+>
+> Sorry for not putting together a patch, but my dev machine is down at
+> the moment.  If no one else jumps in, I'll post a patch tomorrow.
+
+Hi Rich,
+Thanks for the report.
+Here's an untested patch:
+
+>From 2ad212ad414f96b34420ece1adc3db9f291d03c3 Mon Sep 17 00:00:00 2001
+From: Jim Meyering <meyering@redhat.com>
+Date: Sun, 5 Jun 2011 18:15:31 +0200
+Subject: [PATCH] libparted: accommodate two-component linux version number
+ like 3.0
+
+* libparted/arch/linux.c (_get_linux_version): Also accept 2-component
+version numbers.
+Reported by Richard W.M. Jones.
+---
+ libparted/arch/linux.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/libparted/arch/linux.c b/libparted/arch/linux.c
+index aeaf98f..111816c 100644
+--- a/libparted/arch/linux.c
++++ b/libparted/arch/linux.c
+@@ -610,7 +610,11 @@ _get_linux_version ()
+ 
+         if (uname (&uts))
+                 return kver = 0;
+-        if (sscanf (uts.release, "%u.%u.%u", &major, &minor, &teeny) != 3)
++        if (sscanf (uts.release, "%u.%u.%u", &major, &minor, &teeny) == 3)
++                ; /* ok */
++        else if (sscanf (uts.release, "%u.%u", &major, &minor) == 2)
++                teeny = 0;
++        else
+                 return kver = 0;
+ 
+         return kver = KERNEL_VERSION (major, minor, teeny);
+-- 
+1.7.5.1
+

@@ -1,8 +1,10 @@
+/usr/libexec/ck-get-x11*
 /usr/bin/pinentry-gtk-2
 /usr/bin/xapm
 /usr/bin/gxditview
 /usr/bin/xtotroff
 /usr/sbin/gtk-lshw
+/usr/sbin/dbus-launch
 /root/jwm
 /root/runxserver
 /root/winmgr.sh
