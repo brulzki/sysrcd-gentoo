@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110821
+snapshot: 20111017
 source_subpath: default/livecd-stage1-i686-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -28,7 +28,7 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-2.6.38-std231.i586
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-std-i586.cfg
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
 boot/kernel/rescuecd/extraversion: i586
 boot/kernel/rescuecd/packages:
@@ -37,9 +37,9 @@ boot/kernel/rescuecd/packages:
         net-wireless/ndiswrapper
         sys-block/open-iscsi
 	sys-fs/aufs2-util
-	=sys-boot/grub-1.98
         x11-wm/jwm
-        sys-block/iscsitarget
+	=sys-boot/grub-1.98
+        #sys-block/iscsitarget
 
 livecd/unmerge:
 	app-admin/eselect-opengl

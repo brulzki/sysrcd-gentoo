@@ -56,7 +56,7 @@ echo -e "${dc1}*${lc1} Graphical environment${dc2} : use either ${lc2}Xorg${dc2}
 echo -e "   Type ${lc2}wizard${dc2} to run the graphical environment (or ${lc2}startx${dc2} but it may fail)"
 echo -e "   X.Org comes with the XFCE environment and several graphical tools:"
 echo -e "   ${dc1}-${dc2} Partition manager:..${lc2}gparted${dc2}"
-echo -e "   ${dc1}-${dc2} Web browsers:.......${lc2}firefox-6${dc2}"
+echo -e "   ${dc1}-${dc2} Web browsers:.......${lc2}firefox-7${dc2}"
 echo -e "   ${dc1}-${dc2} Text editors:.......${lc2}gvim${dc2} and ${lc2}geany${dc2}"
 echo
 fbecho

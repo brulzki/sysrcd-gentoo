@@ -3,7 +3,7 @@ version_stamp: default-alt
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20110821
+snapshot: 20111017
 source_subpath: default/livecd-stage1-amd64-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -26,9 +26,9 @@ livecd/users:
 boot/kernel: altker64
 
 boot/kernel/altker64/sources: sys-kernel/alt-sources
-boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-3.0-alt231.x86_64
+boot/kernel/altker64/config: /worksrc/sysresccd-src/kernelcfg/config-alt-x86_64.cfg
 boot/kernel/altker64/use: pcmcia usb -X png truetype 
 boot/kernel/altker64/extraversion: amd64
 boot/kernel/altker64/packages:
-	net-wireless/ndiswrapper
+	#net-wireless/ndiswrapper
 

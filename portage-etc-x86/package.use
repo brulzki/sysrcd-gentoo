@@ -29,6 +29,7 @@ sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4
 dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
 sys-auth/consolekit policykit
+sys-auth/pambase consolekit
 sys-fs/ecryptfs-utils -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -png

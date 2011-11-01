@@ -2,17 +2,19 @@
 
 # System packages
 =sys-fs/squashfs-tools-4.2* ~*
+=sys-apps/portage-2.1* ~*
 =sys-libs/glibc-2.12* ~*
 =sys-fs/lvm2-2.02.84* ~*
 
 # Network Manager
-=net-misc/networkmanager-openvpn-0.8 ~*
-=net-misc/networkmanager-vpnc-0.8 ~*
+=net-misc/networkmanager-0.8.4* ~*
+=net-misc/networkmanager-vpnc-0.8* ~*
+=net-misc/networkmanager-openvpn-0.8* ~*
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
-=sys-apps/portage-2.1.10.7* ~*
-=www-client/firefox-bin-6* ~*
+=net-misc/tigervnc-1.0.1_p20110618-r1 ~*
+=www-client/firefox-bin-7* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
@@ -82,10 +84,6 @@ sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
-
-# XOrg
-#x11-base/xorg-server ~*
-#x11-base/xorg-drivers ~*
 
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*

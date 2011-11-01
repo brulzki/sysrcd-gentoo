@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.4.0 (2011-11-01)
+-------------------------------------------------------------------------------
+* Updated standard kernels to linux-3.0.8 (rescuecd + rescue64)
+* Updated alternative kernels to linux-3.1.0 (altker32 + altker64)
+* Dropped Reiser4 patch from all kernels (no patch for linux-3.x)
+* Updated xorg-server to 1.10.4 (graphical server and drivers)
+* Updated mozilla-firefox to 7.0.1
+* Updated GParted to 0.10.0
+
+-------------------------------------------------------------------------------
 2.3.1 (2011-08-23)
 -------------------------------------------------------------------------------
 * Updated alternative kernels to linux-3.0.3 (altker32 + altker64)

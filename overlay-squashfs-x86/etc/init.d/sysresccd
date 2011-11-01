@@ -117,7 +117,6 @@ start()
 	chown clamav:clamav /var/log/clamav
 	chown clamav:clamav /var/run/clamav
 	chown clamav:clamav /var/lib/clamav
-	chown clamav:clamav /var/lib/clamav/*
 
 	# ---- create a kernel options file ----
 	if [ -f /proc/config.gz ]
