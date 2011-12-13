@@ -4,9 +4,10 @@
 >=sys-devel/gcc-4.5
 >=sys-apps/portage-2.2
 >=sys-apps/portage-2.1.11
+>=sys-apps/openrc-0.9.0
 >=dev-lang/python-3.0
 >=app-misc/livecd-tools-2.0
->=sys-kernel/gentoo-sources-2.6.39
+>=sys-kernel/gentoo-sources-3.1
 >=sys-kernel/linux-headers-2.6.39
 >=sys-kernel/std-sources-3.1
 >=sys-kernel/alt-sources-3.2
@@ -16,7 +17,6 @@
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
-<sys-fs/btrfs-progs-0.19-r2
 <sys-boot/grub-0.97-r10
 >sys-boot/grub-0.97-r10
 
@@ -47,25 +47,24 @@ mail-mta/courier
 >sys-block/iscsitarget-1.4.20.2
 <sys-apps/util-linux-2.19.1
 >sys-apps/util-linux-2.19.1
-<sys-fs/btrfs-progs-0.19-r4
->sys-fs/btrfs-progs-0.19-r4
+<sys-fs/btrfs-progs-0.19-r5
+>sys-fs/btrfs-progs-0.19-r5
 >x11-libs/libnotify-0.7.2
 
 # fix problems
->=app-text/gnome-doc-utils-0.20.5
 >=sys-boot/syslinux-4.0
 >=sys-devel/gettext-0.18.1.1-r1
 >=net-misc/openssh-5.8
 <net-dialup/gtkterm-0.99.6
-=sys-fs/xfsprogs-3.1.5*
 <sys-fs/ntfs3g-2011.4.12
 <sys-devel/autoconf-2.68
->x11-terms/terminal-0.4.8
 >x11-libs/vte-0.26.3
+>=net-misc/openswan-2.6
 
 # xorg
-<x11-base/xorg-server-1.10.4
->x11-base/xorg-server-1.10.9
+>net-misc/tigervnc-1.1.0
+<x11-base/xorg-server-1.10.4-r1
+>x11-base/xorg-server-1.10.4-r1
 <x11-base/xorg-drivers-1.10
 >x11-base/xorg-drivers-1.10
 

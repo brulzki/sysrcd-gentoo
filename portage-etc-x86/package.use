@@ -12,11 +12,12 @@ sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
 www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
+app-arch/bzip2 static-libs
 app-arch/xz-utils threads -nls static-libs
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
 media-libs/jpeg static-libs
-sys-fs/fsarchiver lzma lzo gcrypt static
+app-backup/fsarchiver lzma lzo gcrypt static
 sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl bash-completion python
 app-editors/vim-core -livecd bash-completion
@@ -65,4 +66,6 @@ sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo svg cleartype lcdfilter
 media-libs/mesa -gallium
+x11-libs/libdrm libkms
+sys-apps/lshw gtk -sqlite -static
 

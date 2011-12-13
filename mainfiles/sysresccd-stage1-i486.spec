@@ -3,7 +3,7 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20111017
+snapshot: 20111212
 source_subpath: default/stage4-i386-20110724-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -55,6 +55,7 @@ livecd/packages:
 	app-arch/zip
 	app-backup/dar
 	app-backup/duplicity
+	app-backup/fsarchiver
 	app-backup/rdiff-backup
 	app-backup/rsnapshot
 	app-backup/tob
@@ -240,6 +241,7 @@ livecd/packages:
 	sys-apps/iproute2
 	sys-apps/kbd
 	sys-apps/lm_sensors
+	sys-apps/lshw
 	sys-apps/man-pages
 	sys-apps/memtester
 	sys-apps/miscfiles
@@ -302,7 +304,6 @@ livecd/packages:
 	sys-fs/e2fsprogs
 	sys-fs/ext3grep
 	sys-fs/extundelete
-	sys-fs/fsarchiver
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
 	sys-fs/jfsutils

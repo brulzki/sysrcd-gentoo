@@ -4,7 +4,7 @@
 =sys-fs/squashfs-tools-4.2* ~*
 =sys-apps/portage-2.1* ~*
 =sys-libs/glibc-2.12* ~*
-=sys-fs/lvm2-2.02.84* ~*
+=sys-fs/lvm2-2.02.88* ~*
 
 # Network Manager
 =net-misc/networkmanager-0.8.4* ~*
@@ -13,8 +13,8 @@
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
-=net-misc/tigervnc-1.0.1_p20110618-r1 ~*
-=www-client/firefox-bin-7* ~*
+=net-misc/tigervnc-1.1.0 ~*
+=www-client/firefox-bin-8* ~*
 =dev-util/dialog-1.1.20100428* ~*
 =sys-block/open-iscsi-2.0.871* ~*
 =net-firewall/iptables-1.4.9* ~*
@@ -90,10 +90,10 @@ sys-kernel/genkernel ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/zfs-fuse-0.6.9* ~*
 =app-arch/dump-0.4.42* ~*
-=sys-fs/xfsdump-3.0.4* ~*
+=sys-fs/xfsdump-3.0.6* ~*
 =sys-fs/xfsprogs-3.1* ~*
 sys-fs/extundelete ~*
-sys-fs/fsarchiver ~*
+app-backup/fsarchiver ~*
 app-admin/testdisk ~*
 app-crypt/truecrypt ~*
 sys-fs/ecryptfs-utils ~*

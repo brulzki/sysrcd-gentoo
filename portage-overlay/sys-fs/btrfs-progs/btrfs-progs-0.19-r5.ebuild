@@ -27,11 +27,7 @@ src_unpack() {
 
 	# Apply patch from Josef Bacik (btrfs developer at RedHat)
 	# that brings version 0.19 up to the version used in RedHat/Fedora.
-	epatch "${FILESDIR}/${PN}-upstream.patch"
-	epatch "${FILESDIR}/${PN}-fix-labels.patch"
-	epatch "${FILESDIR}/${PN}-build-everything.patch"
-	epatch "${FILESDIR}/${PN}-valgrind.patch"
-	epatch "${FILESDIR}/${PN}-build-fixes.patch"
+	epatch "${FILESDIR}/${PN}-git20111119.patch"
 
 	# Fix hardcoded "gcc" and "make"
 	sed -i -e 's:gcc $(CFLAGS):$(CC) $(CFLAGS):' Makefile
