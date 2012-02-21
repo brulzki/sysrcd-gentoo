@@ -17,7 +17,7 @@ app-arch/xz-utils threads -nls static-libs
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
 media-libs/jpeg static-libs
-app-backup/fsarchiver lzma lzo gcrypt static
+app-backup/fsarchiver lzma lzo gcrypt -static
 sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl bash-completion python
 app-editors/vim-core -livecd bash-completion
@@ -26,7 +26,7 @@ sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
 sys-fs/udev extras
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba -ipv6 -client -smbclient -cups -netapi -pam -fam -kernel_linux acl readline server syslog examples
-sys-block/partclone -reiserfs -xfs -hfs fat ntfs -reiser4 
+sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs
 dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
 sys-auth/consolekit policykit
@@ -34,7 +34,7 @@ sys-auth/pambase consolekit
 sys-fs/ecryptfs-utils -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -png
-sys-fs/ntfs3g -external-fuse -acl -ntfsprogs
+sys-fs/ntfs3g -external-fuse -acl ntfsprogs extras
 sys-fs/btrfs-progs -debug-utils
 app-text/poppler -abiword -lcms cairo
 app-text/poppler-bindings gtk -qt3 -qt4 -test
@@ -55,7 +55,7 @@ dev-libs/libxml2 python
 net-misc/tigervnc server xorgmodule -opengl
 sys-apps/miscfiles minimal
 net-analyzer/tcpdump -samba
-dev-lang/python -berkdb
+dev-lang/python -berkdb xml
 x11-apps/xinit minimal
 net-dialup/rp-pppoe -X
 net-analyzer/nmap -gtk
@@ -65,7 +65,15 @@ www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo svg cleartype lcdfilter
+gnome-base/librsvg -introspection
 media-libs/mesa -gallium
 x11-libs/libdrm libkms
 sys-apps/lshw gtk -sqlite -static
+sys-boot/grub device-mapper -efiemu
+net-libs/webkit-gtk -introspection
+net-libs/glib-networking -gnome
+dev-libs/openssl static-libs
+media-fonts/font-adobe-75dpi X nls
+media-fonts/font-cursor-misc X nls
+media-fonts/font-misc-misc X nls
 

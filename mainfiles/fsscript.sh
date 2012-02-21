@@ -137,6 +137,7 @@ do
 	echo "find ${curdir} -name "*.gz" -exec gzip -d {} \;"
 	find ${curdir} -name "*.gz" -exec gzip -d {} \;
 done
+/usr/bin/mkfontdir -e /usr/share/fonts/encodings -- /usr/share/fonts/100dpi /usr/share/fonts/75dpi /usr/share/fonts/misc /usr/share/fonts/terminus /usr/share/fonts/TTF /usr/share/fonts/Type1 /usr/share/fonts/unifont
 
 # install 32bit kernel modules
 echo "==> installing 32bit kernel modules"

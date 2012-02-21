@@ -290,6 +290,16 @@ sysresccd_udev_start()
     sleep 3 # sleep 3 seconds anyway: most USB devices just need it to initialize
     [ -n "${SCANDELAY}" ] && good_msg "Waiting ${SCANDELAY} seconds..." && sleep ${SCANDELAY}
 
+    # reload the tg3 driver (https://bugzilla.redhat.com/show_bug.cgi?id=525966#c19)
+    if grep -q ^tg3 /proc/modules && grep -q reload /proc/cmdline
+    then
+        echo "Reloading module tg3 ..."
+        modprobe -r tg3
+        modprobe broadcom
+        modprobe tg3
+        echo "Module tg3 has been reloaded"
+    fi
+
     # hide name of modules being loaded
     rm -f /showmodprobe
 }

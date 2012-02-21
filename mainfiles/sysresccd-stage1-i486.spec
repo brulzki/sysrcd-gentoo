@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20111212
-source_subpath: default/stage4-i386-20110724-01
+snapshot: 20120211
+source_subpath: default/stage4-i386-20111217-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -90,6 +90,7 @@ livecd/packages:
 	app-misc/ckermit
 	app-misc/colordiff
 	app-misc/emelfm2
+	app-misc/fdupes
 	app-misc/livecd-tools
 	app-misc/mc
 	app-misc/screen
@@ -279,7 +280,6 @@ livecd/packages:
 	sys-block/ms-sys
 	sys-block/mtx
 	sys-block/nbd
-	sys-block/partclone
 	sys-block/parted
 	sys-block/partimage
 	sys-block/scsiadd
@@ -288,12 +288,14 @@ livecd/packages:
 	=sys-boot/grub-0.97-r10
 	sys-boot/lilo
 	sys-boot/mbr
+	sys-boot/os-prober
 	sys-boot/syslinux
 	sys-cluster/drbd
 	sys-devel/autogen
 	sys-devel/bc
 	sys-devel/crossdev
 	sys-devel/gettext
+	sys-block/partclone
 	sys-fs/btrfs-progs
 	sys-fs/cryptsetup
 	sys-fs/ddrescue
@@ -302,8 +304,6 @@ livecd/packages:
 	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
-	sys-fs/ext3grep
-	sys-fs/extundelete
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
 	sys-fs/jfsutils
@@ -312,12 +312,12 @@ livecd/packages:
 	sys-fs/lufis
 	sys-fs/lufs
 	sys-fs/lvm2
+	sys-fs/mac-fdisk
 	sys-fs/mdadm
 	sys-fs/mtd-utils
 	sys-fs/multipath-tools
 	sys-fs/nilfs-utils
 	sys-fs/ntfs3g
-	sys-fs/ntfsprogs
 	sys-fs/ntfsreloc
 	sys-fs/reiser4progs
 	sys-fs/reiserfsprogs
@@ -346,7 +346,7 @@ livecd/packages:
 	sys-process/psmisc
 	sys-process/vixie-cron
 	www-client/elinks
-	www-client/firefox-bin
+	www-client/midori
 	www-servers/thttpd
 	x11-apps/setxkbmap
 	x11-apps/xcalc
@@ -385,4 +385,6 @@ livecd/packages:
 	xfce-extra/xfce4-notifyd
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
+	#sys-fs/ext3grep
+	#sys-fs/extundelete
 

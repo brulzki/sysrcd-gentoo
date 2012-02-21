@@ -6,6 +6,23 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.5.0 (2012-02-21)
+-------------------------------------------------------------------------------
+* Updated standard kernels to Long-Term-Supported linux-3.0.21 (rescuecd + rescue64)
+* Updated alternative kernels to latest stable: linux-3.2.6 (altker32 + altker64)
+* Updated sys-fs/ntfs3g to 2012.1.15 and replace ntfsprogs
+* Updated btrfs-progs to the latest stable version from git
+* Updated e2fsprogs to 1.42 (ext3/ext4 filesystem tools)
+* Updated GParted to 0.12.0 (graphical partition editor)
+* Updated system packages (glibc-2.13, gcc-4.4.6)
+* Updated firmwares to linux-firmware-20120125
+* Added app-misc/fdupes (find duplicate files)
+* Replaced Firefox with Midori to save space
+* Updated sys-fs/partclone to 0.2.38
+* Update app-admin/testdisk to 6.13
+* Updated sys-boot/grub to 1.99-r2
+
+-------------------------------------------------------------------------------
 2.4.1 (2011-11-13)
 -------------------------------------------------------------------------------
 * Updated standard kernels to linux-3.0.13 (rescuecd + rescue64)

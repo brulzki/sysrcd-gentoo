@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20111212
+snapshot: 20120211
 source_subpath: default/livecd-stage1-i686-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -35,11 +35,11 @@ boot/kernel/rescuecd/packages:
         sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
         net-wireless/ndiswrapper
+	=sys-boot/grub-1.99-r2
         sys-block/open-iscsi
-	sys-fs/aufs2-util
+        sys-block/iscsitarget
+	sys-fs/aufs-util
         x11-wm/jwm
-	=sys-boot/grub-1.98
-        #sys-block/iscsitarget
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -54,7 +54,6 @@ livecd/unmerge:
 	sys-kernel/gentoo-sources
 	dev-lang/nasm
 	dev-lang/yasm
-	dev-libs/libxslt
 	dev-util/yacc
 	dev-util/gtk-doc
 	dev-util/scons
@@ -171,6 +170,13 @@ livecd/unmerge:
 	xfce-extra/xfce4-notifyd
 	sys-devel/autogen
 	dev-scheme/guile
+	dev-python/paramiko
+	dev-vcs/bzr
+	dev-vcs/git
+	dev-lang/vala
+	dev-libs/libcroco
+	dev-util/gperf
+	gnome-base/librsvg
 
 livecd/empty:
 	/var/cache/revdep-rebuild
@@ -416,4 +422,5 @@ livecd/rm:
 	/usr/lib/xorg/modules/extensions/libglx.so
 	/usr/lib/opengl/xorg-x11/extensions/libglx.so
 	/usr/lib/dri
+	#/usr/lib/gcc/*/*/{libgomp.la,libmudflap*.la}
 

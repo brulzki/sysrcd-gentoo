@@ -2,8 +2,7 @@
 
 # System packages
 =sys-fs/squashfs-tools-4.2* ~*
-=sys-apps/portage-2.1* ~*
-=sys-libs/glibc-2.12* ~*
+=sys-devel/gcc-4.4.6* ~*
 =sys-fs/lvm2-2.02.88* ~*
 
 # Network Manager
@@ -13,27 +12,16 @@
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
-=net-misc/tigervnc-1.1.0 ~*
 =www-client/firefox-bin-8* ~*
-=dev-util/dialog-1.1.20100428* ~*
-=sys-block/open-iscsi-2.0.871* ~*
-=net-firewall/iptables-1.4.9* ~*
-=sys-apps/iproute2-2.6.38* ~*
-=sys-apps/util-linux-2.18* ~*
+=sys-libs/e2fsprogs-libs-1.42* ~*
+=sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.7* ~*
-=dev-util/kbuild-0.1.5_p2 ~*
-=net-fs/nfs-utils-1.2.3* ~*
-=dev-util/strace-4.5.20* ~*
-=net-nds/rpcbind-0.2.0* ~*
-=app-arch/xz-utils-5.0* ~*
-=app-editors/vim-core-7.3* ~*
-=app-editors/vim-7.3* ~*
-=app-editors/gvim-7.3* ~*
+=app-editors/vim-core-7.3.353* ~*
+=app-editors/vim-7.3.353* ~*
+=app-editors/gvim-7.3.353* ~*
 =sys-block/parted-2.4* ~*
 =net-dialup/ppp-2.4.5* ~*
-=dev-lang/perl-5.12* ~*
-=app-misc/mc-4.7.4* ~*
-=sys-fs/udev-164* ~*
+=dev-lang/v8-3.6* ~*
 sys-boot/grub **
 app-arch/pxz ~*
 app-misc/scrub ~*
@@ -74,8 +62,8 @@ sys-block/megacli ~*
 sys-block/tw_cli ~*
 sys-apps/flashrom ~*
 sys-block/ms-sys ~*
-sys-fs/aufs2-util ~*
-sys-fs/aufs2 ~*
+sys-boot/os-prober ~*
+sys-fs/aufs-util ~*
 sys-fs/lde ~*
 
 # kernel related packages
@@ -89,7 +77,7 @@ sys-kernel/genkernel ~*
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/zfs-fuse-0.6.9* ~*
-=app-arch/dump-0.4.42* ~*
+=app-arch/dump-0.4.44* ~*
 =sys-fs/xfsdump-3.0.6* ~*
 =sys-fs/xfsprogs-3.1* ~*
 sys-fs/extundelete ~*

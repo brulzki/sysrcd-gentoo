@@ -1,3 +1,5 @@
 # ------ SystemRescueCd package.unmask ------
-=sys-boot/grub-1.98*
+=sys-boot/grub-1.99*
+=sys-fs/zfs-fuse-0.6.9*
+=app-shells/ksh-93*
 

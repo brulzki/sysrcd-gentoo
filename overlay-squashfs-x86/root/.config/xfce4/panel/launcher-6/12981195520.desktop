@@ -1,9 +1,10 @@
+
 [Desktop Entry]
 Type=Application
-Name=Firefox
+Name=Midori Web Browser
 Comment=Web browser
-Icon=/root/icons/firefox.png
-Exec='/usr/bin/firefox-bin'
+Icon=/root/icons/midori.png
+Exec=/usr/bin/midori
 Path=/root
 Terminal=false
 StartupNotify=false

@@ -19,7 +19,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	mv linux-3.0 linux-${KV}
 	cd linux-${KV}
-	epatch ${FILESDIR}/std-sources-3.0-01-stable-3.0.13.patch.bz2 || die "std-sources stable patch failed."
+	epatch ${FILESDIR}/std-sources-3.0-01-stable-3.0.21.patch.bz2 || die "std-sources stable patch failed."
 	epatch ${FILESDIR}/std-sources-3.0-02-fc15.patch.bz2 || die "std-sources fedora patch failed."
 	epatch ${FILESDIR}/std-sources-3.0-03-aufs.patch.bz2 || die "std-sources aufs patch failed."
 	epatch ${FILESDIR}/std-sources-3.0-04-loopaes.patch.bz2 || die "std-sources loopaes patch failed."
@@ -29,6 +29,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -std241/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std250/" Makefile
 }
 

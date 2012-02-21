@@ -12,13 +12,13 @@ rescue64:
 	rm -f config*tmp*
 
 altker32:
-	./merge.pl sysrcd-generic.conf config-3.1.5-1.fc16.i686 >| config-alt-i586.tmp1
+	./merge.pl sysrcd-generic.conf config-2.6.42.6-3.fc15.i686 >| config-alt-i586.tmp1
 	./merge.pl sysrcd-altker.conf config-alt-i586.tmp1 >| config-alt-i586.tmp2
 	./merge.pl sysrcd-32bit.conf config-alt-i586.tmp2 >| config-alt-i586.cfg
 	rm -f config*tmp*
 
 altker64:
-	./merge.pl sysrcd-generic.conf config-3.1.5-1.fc16.x86_64 >| config-alt-x86_64.tmp1
+	./merge.pl sysrcd-generic.conf config-2.6.42.6-3.fc15.x86_64 >| config-alt-x86_64.tmp1
 	./merge.pl sysrcd-altker.conf config-alt-x86_64.tmp1 >| config-alt-x86_64.cfg
 	rm -f config*tmp*
 
