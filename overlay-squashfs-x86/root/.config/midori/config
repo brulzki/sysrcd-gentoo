@@ -8,7 +8,8 @@ show-menubar=true
 show-bookmarkbar=true
 toolbar-items=TabNew,Back,Forward,Next,ReloadStop,BookmarkAdd,Location,Search,Trash,
 load-on-startup=MIDORI_STARTUP_HOMEPAGE
-location-entry-search=https://duckduckgo.com/?q=%s
+homepage=http://www.sysresccd.org/
+location-entry-search=https://duckduckgo.com/?q=%s&t=sysrescue
 always-show-tabbar=true
 enable-spell-checking=false
 enable-html5-database=true
@@ -16,6 +17,7 @@ maximum-cookie-age=1
 maximum-history-age=0
 proxy-type=MIDORI_PROXY_NONE
 maximum-cache-size=0
-user-agent=Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-us) AppleWebKit/534+ (KHTML, like Gecko) Version/5.0 Safari/534.26+ Midori/0.4
+user-agent=Mozilla/5.0 (X11; Linux; en-us) AppleWebKit/535+ (KHTML, like Gecko) Version/5.0 Safari/535.4+ Midori/0.4
 clear-private-data=177
 clear-data=page-icons,formhistory,web-cookies,flash-cookies,html5-databases,web-cache,offline-appcache,
+search-width=304

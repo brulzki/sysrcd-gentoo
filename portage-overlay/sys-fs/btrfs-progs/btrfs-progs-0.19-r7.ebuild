@@ -6,28 +6,24 @@ inherit eutils
 
 DESCRIPTION="Btrfs filesystem utilities"
 HOMEPAGE="http://btrfs.wiki.kernel.org/"
-SRC_URI="http://www.kernel.org/pub/linux/kernel/people/mason/btrfs/${P}.tar.bz2
-	mirror://gentoo/${P}-redhat.patch.bz2"
+SRC_URI="http://www.kernel.org/pub/linux/kernel/people/mason/btrfs/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 arm ppc64 x86"
-IUSE="acl debug-utils"
+IUSE="debug-utils"
 
 DEPEND="debug-utils? ( dev-python/matplotlib )
-	acl? (
-			sys-apps/acl
-			sys-fs/e2fsprogs
-	)"
+        sys-apps/acl
+        sys-fs/e2fsprogs"
 RDEPEND="${DEPEND}"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# Apply patch from Josef Bacik (btrfs developer at RedHat)
-	# that brings version 0.19 up to the version used in RedHat/Fedora.
-	epatch "${FILESDIR}/${PN}-git20120116.patch"
+	# Apply changes from btrfs-progs-0.19-23.el6.src.rpm (Oracle Linux)
+	epatch "${FILESDIR}/${PN}-0.19-23.ol6.patch"
 
 	# Fix hardcoded "gcc" and "make"
 	sed -i -e 's:gcc $(CFLAGS):$(CC) $(CFLAGS):' Makefile
@@ -35,14 +31,7 @@ src_unpack() {
 }
 
 src_compile() {
-	emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
-		all || die
-	emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
-		btrfstune btrfs-image || die
-	if use acl; then
-		emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
-			convert || die
-	fi
+	emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" all || die
 }
 
 src_install() {
@@ -58,15 +47,10 @@ src_install() {
 	dosbin btrfs-map-logical
 	dosbin btrfs-zero-log
 
-	# fsck will segfault if invoked at boot, so do not make this link
-	#dosym btrfsck /sbin/fsck.btrfs
+	dosym btrfsck /sbin/fsck.btrfs
 	newsbin mkfs.btrfs mkbtrfs
 	dosym mkbtrfs /sbin/mkfs.btrfs
-	if use acl; then
-		dosbin btrfs-convert
-	else
-		ewarn "Note: btrfs-convert not built/installed (requires acl USE flag)"
-	fi
+	dosbin btrfs-convert
 
 	if use debug-utils; then
 		dobin btrfs-debug-tree
@@ -84,14 +68,7 @@ src_install() {
 	fi
 
 	dodoc INSTALL
+
 	emake prefix="${D}/usr/share" install-man
 }
 
-pkg_postinst() {
-	ewarn "WARNING: This version of btrfs-progs corresponds to and should only"
-	ewarn "         be used with the version of btrfs included in the"
-	ewarn "         Linux kernel (2.6.31 and above)."
-	ewarn ""
-	ewarn "         This version should NOT be used with earlier versions"
-	ewarn "         of the standalone btrfs module!"
-}

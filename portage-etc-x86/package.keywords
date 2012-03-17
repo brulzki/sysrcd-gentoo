@@ -12,15 +12,14 @@
 =net-misc/modemmanager-0.4* ~*
 
 # Misc packages
-=www-client/firefox-bin-8* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.7* ~*
-=app-editors/vim-core-7.3.353* ~*
-=app-editors/vim-7.3.353* ~*
+=sys-fs/multipath-tools-0.4.9* ~*
 =app-editors/gvim-7.3.353* ~*
 =sys-block/parted-2.4* ~*
 =net-dialup/ppp-2.4.5* ~*
+=sys-libs/zlib-1.2.5* ~*
 =dev-lang/v8-3.6* ~*
 sys-boot/grub **
 app-arch/pxz ~*
@@ -65,6 +64,7 @@ sys-block/ms-sys ~*
 sys-boot/os-prober ~*
 sys-fs/aufs-util ~*
 sys-fs/lde ~*
+x11-drivers/xf86-input-vmmouse ~*
 
 # kernel related packages
 sys-kernel/linux-firmware ~*
@@ -87,6 +87,8 @@ app-crypt/truecrypt ~*
 sys-fs/ecryptfs-utils ~*
 sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
+sys-kernel/spl **
+sys-fs/zfs **
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*

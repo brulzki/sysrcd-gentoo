@@ -238,7 +238,7 @@ do_isogen()
 	cmd="mkisofs -J -l -o /mnt/custom/customcd/isofile/sysresccd-${curtime}.iso \
 	        -b isolinux/isolinux.bin -c isolinux/boot.cat -input-charset utf-8 \
 	        -no-emul-boot -boot-load-size 4 -boot-info-table \
-	        -V '${ISO_VOLUME}' /mnt/custom/customcd/isoroot"
+	        -V ${ISO_VOLUME} /mnt/custom/customcd/isoroot"
 	${cmd}
 	res="$?"
 	echo "${cmd} --> $res"

@@ -123,6 +123,9 @@ then
 	rm -rf /usr/share/oscar/oscar.tar.gz
 fi
 
+# remove zfs kernel modules from the standard kernel
+rm -rf /lib/modules/*i586/addon/{spl,zfs}
+
 # update fonts when exiting from xorg
 sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
 
@@ -147,8 +150,6 @@ do
 	kerver=$(basename $modtar | sed -e 's/.tar.bz2//')
 	echo "DECOMPRESS32 (version [$kerver]): tar xfjp $modtar -C /lib/modules/"
 	tar xfjp $modtar -C /lib/modules/
-	echo "DEPMOD32: depmod -ae -v $kerver"
-	depmod -ae -v $kerver > /dev/null
 	rm -f $modtar
 	echo '--------------------------------------------------------------'
 done
@@ -163,8 +164,6 @@ do
 	tar xfjp $modtar -C /lib64/modules/
 	echo "LINK64: ln -s /lib64/modules/$kerver /lib/modules/$kerver"
 	ln -s /lib64/modules/$kerver /lib/modules/$kerver
-	echo "DEPMOD64: depmod -ae -v $kerver"
-	depmod -ae -v $kerver > /dev/null
 	rm -f $modtar
 	echo '--------------------------------------------------------------'
 done
@@ -173,6 +172,15 @@ done
 echo "==> strip kernel modules"
 find /lib/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
 find /lib64/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
+
+# run depmod on all kernels
+echo "==> run depmod for all kernels"
+for kerdir in /lib/modules/*
+do
+	kerver=$(basename ${kerdir})
+	echo "*) depmod -a ${kerver}"
+	depmod -a ${kerver}
+done
 
 # update /etc/make.profile
 echo "==> updating /etc/make.profile"
@@ -196,6 +204,13 @@ localedef -i /usr/share/i18n/locales/en_US -f UTF-8 /usr/lib/locale/en_US.utf8
 localedef -i /usr/share/i18n/locales/en_US -f ISO-8859-1 /usr/lib/locale/en_US
 localedef -i /usr/share/i18n/locales/de_DE -f ISO-8859-1 /usr/lib/locale/de_DE
 localedef -i /usr/share/i18n/locales/fr_FR -f ISO-8859-1 /usr/lib/locale/fr_FR
+
+# fix dmraid
+ln -s /usr/lib/libdmraid.so /usr/lib/libdmraid.so.1
+ln -s /usr/lib/libdmraid-events-isw.so /usr/lib/libdmraid-events-isw.so.1
+
+# workaround for mkfs.btrfs which wants to find /boot/sysrcd.dat
+touch /boot/sysrcd.dat
 
 # ----- OpenRC specific stuff
 echo "==> OpenRC adjustments"

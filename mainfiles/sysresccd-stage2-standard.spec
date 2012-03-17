@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120211
+snapshot: 20120316
 source_subpath: default/livecd-stage1-i686-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -35,10 +35,12 @@ boot/kernel/rescuecd/packages:
         sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
         net-wireless/ndiswrapper
-	=sys-boot/grub-1.99-r2
+	=sys-boot/grub-2.00_beta2
         sys-block/open-iscsi
         sys-block/iscsitarget
 	sys-fs/aufs-util
+	sys-kernel/spl
+	sys-fs/zfs
         x11-wm/jwm
 
 livecd/unmerge:
@@ -162,7 +164,6 @@ livecd/unmerge:
 	dev-perl/XML-LibXML
 	dev-perl/XML-Simple
 	media-gfx/imagemagick
-	dev-vcs/git
 	gnome-base/libgtop
 	x11-libs/libgksu
 	x11-libs/gksu

@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120211
-source_subpath: default/stage4-i386-20111217-01
+snapshot: 20120316
+source_subpath: default/stage4-i386-20120304-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -53,6 +53,7 @@ livecd/packages:
 	app-arch/xarchiver
 	app-arch/xz-utils
 	app-arch/zip
+	app-backup/bacula
 	app-backup/dar
 	app-backup/duplicity
 	app-backup/fsarchiver
@@ -117,6 +118,7 @@ livecd/packages:
 	dev-libs/expat
 	dev-libs/icu
 	dev-libs/libconfig
+	dev-libs/libisoburn
 	dev-libs/lzo
 	dev-libs/openssl
 	dev-libs/pkcs11-helper
@@ -127,6 +129,7 @@ livecd/packages:
 	dev-util/ltrace
 	dev-util/pkgconfig
 	dev-util/strace
+	dev-vcs/git
 	gnome-extra/nm-applet
 	lxde-base/lxrandr
 	media-fonts/font-bh-ttf
@@ -207,7 +210,6 @@ livecd/packages:
 	net-wireless/iw
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware
-	net-wireless/rtl8192se-firmware
 	net-wireless/rtl8192su-firmware
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
@@ -304,6 +306,8 @@ livecd/packages:
 	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
+	sys-fs/ext3grep
+	sys-fs/extundelete
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
 	sys-fs/jfsutils
@@ -328,7 +332,6 @@ livecd/packages:
 	sys-fs/udftools
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
-	sys-fs/zfs-fuse
 	sys-kernel/gentoo-sources
 	sys-libs/libstdc++-v3
 	sys-libs/openipmi
@@ -385,6 +388,4 @@ livecd/packages:
 	xfce-extra/xfce4-notifyd
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
-	#sys-fs/ext3grep
-	#sys-fs/extundelete
 

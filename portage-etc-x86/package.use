@@ -6,6 +6,7 @@ xfce-base/xfce4-meta session
 xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
 app-cdr/xfburn -hal dbus xfce -gstreamer
+app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
 sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce gtk -debug -gnome -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
@@ -26,7 +27,7 @@ sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
 sys-fs/udev extras
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba -ipv6 -client -smbclient -cups -netapi -pam -fam -kernel_linux acl readline server syslog examples
-sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs
+sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
 dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
 sys-auth/consolekit policykit
@@ -72,8 +73,9 @@ sys-apps/lshw gtk -sqlite -static
 sys-boot/grub device-mapper -efiemu
 net-libs/webkit-gtk -introspection
 net-libs/glib-networking -gnome
-dev-libs/openssl static-libs
 media-fonts/font-adobe-75dpi X nls
 media-fonts/font-cursor-misc X nls
 media-fonts/font-misc-misc X nls
+sys-libs/zlib static-libs
+dev-libs/openssl static-libs
 

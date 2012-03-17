@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.5.1 (2012-03-17)
+-------------------------------------------------------------------------------
+* Updated standard kernels to Long-Term-Supported linux-3.0.24 (rescuecd + rescue64)
+* Updated alternative kernels to latest stable: linux-3.2.11 (altker32 + altker64)
+* Replaced zfs-fuse with native zfs-0.6.0_rc on 64bit kernels (rescue64 + altker64)
+* Updated fsarchiver to 0.6.13 (fixes detection of the root filesystem)
+* Updated grub2 from 1.99 to 2.00_beta2 (grub-0.97 is still availble)
+* Updated partclone to 0.2.45 and added ntfs and btrfs utilities
+* Updated floppy disk images for HDT, GAG, Super-Grub-Disk
+* Updated btrfs-progs from btrfs-progs-0.19-23.el6.src.rpm
+* Added client for app-backup/bacula-5.0.3 backup program
+
+-------------------------------------------------------------------------------
 2.5.0 (2012-02-21)
 -------------------------------------------------------------------------------
 * Updated standard kernels to Long-Term-Supported linux-3.0.21 (rescuecd + rescue64)

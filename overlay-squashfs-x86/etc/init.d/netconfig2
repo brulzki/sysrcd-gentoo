@@ -51,10 +51,10 @@ start()
 		
 		dhcpstate=''
 		attempts=1
-		maxattempts=25
+		maxattempts=20
 		while [ "${dhcpstate}" != 'ok' ] && [ "${attempts}" -lt "${maxattempts}" ] # retry until we get a dhcp address on at least one interface
 		do
-			for curdev in ${NETDEVICES}
+			for curdev in ${DHCPDEVICES}
 			do
 				# Try to find whether or not the link is connected
 				mac=$(ifconfig ${curdev} | grep HWaddr | awk '{print $5}')
@@ -73,7 +73,7 @@ start()
 				if [ "${linkstate}" != 'no-link' ]
 				then
 					print_and_log_netconfig2  "Attempt ${attempts} of ${maxattempts} to get a DHCP address on ${curdev}..."
-					cmd="dhcpcd -L -n -t 10 -I '' -h ${DHCPHOSTNAME} ${curdev}"
+					cmd="dhcpcd -L -n -t 10 -h ${DHCPHOSTNAME} ${curdev}"
 					${cmd} ; res="$?"
 					print_and_log_netconfig2  "${cmd} --> ${res}"
 					[ "${res}" = '0' ] && dhcpstate='ok'
