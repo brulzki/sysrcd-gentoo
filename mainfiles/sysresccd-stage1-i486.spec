@@ -3,7 +3,7 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120316
+snapshot: 20120420
 source_subpath: default/stage4-i386-20120304-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -320,7 +320,6 @@ livecd/packages:
 	sys-fs/mdadm
 	sys-fs/mtd-utils
 	sys-fs/multipath-tools
-	sys-fs/nilfs-utils
 	sys-fs/ntfs3g
 	sys-fs/ntfsreloc
 	sys-fs/reiser4progs

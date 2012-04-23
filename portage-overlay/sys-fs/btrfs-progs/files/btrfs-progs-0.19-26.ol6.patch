@@ -1,6 +1,6 @@
-diff -urN btrfs-progs-0.19.0-official/bcp btrfs-progs-0.19-23.el6/bcp
---- btrfs-progs-0.19.0-official/bcp	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/bcp	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/bcp btrfs-progs-0.19-26.el6/bcp
+--- btrfs-progs-0.19.0/bcp	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/bcp	2012-02-22 15:59:55.000000000 +0000
 @@ -136,8 +136,7 @@
              srcname = os.path.join(dirpath, x)
              statinfo = os.lstat(srcname)
@@ -21,9 +21,9 @@ diff -urN btrfs-progs-0.19.0-official/bcp btrfs-progs-0.19-23.el6/bcp
  
              statinfo = os.lstat(srcname)
              copyfile(srcname, dst, part, statinfo, None)
-diff -urN btrfs-progs-0.19.0-official/btrfs.c btrfs-progs-0.19-23.el6/btrfs.c
---- btrfs-progs-0.19.0-official/btrfs.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs.c btrfs-progs-0.19-26.el6/btrfs.c
+--- btrfs-progs-0.19.0/btrfs.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,276 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -301,10 +301,10 @@ diff -urN btrfs-progs-0.19.0-official/btrfs.c btrfs-progs-0.19-23.el6/btrfs.c
 +	fixup_argv0(argv, cmd->token);
 +	exit(cmd->fn(argc, argv));
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.c
---- btrfs-progs-0.19.0-official/btrfsck.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfsck.c	2012-02-09 16:53:33.000000000 +0000
-@@ -20,7 +20,10 @@
+diff -urN btrfs-progs-0.19.0/btrfsck.c btrfs-progs-0.19-26.el6/btrfsck.c
+--- btrfs-progs-0.19.0/btrfsck.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfsck.c	2012-02-22 15:59:55.000000000 +0000
+@@ -20,14 +20,20 @@
  #define _GNU_SOURCE 1
  #include <stdio.h>
  #include <stdlib.h>
@@ -314,8 +314,10 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +#include <getopt.h>
  #include "kerncompat.h"
  #include "ctree.h"
++#include "volumes.h"
++#include "repair.h"
  #include "disk-io.h"
-@@ -28,6 +31,7 @@
+ #include "print-tree.h"
  #include "transaction.h"
  #include "list.h"
  #include "version.h"
@@ -323,7 +325,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  static u64 bytes_used = 0;
  static u64 total_csum_bytes = 0;
-@@ -36,7 +40,7 @@
+@@ -36,7 +42,7 @@
  static u64 btree_space_waste = 0;
  static u64 data_bytes_allocated = 0;
  static u64 data_bytes_referenced = 0;
@@ -332,7 +334,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  struct extent_backref {
  	struct list_head list;
-@@ -71,9 +75,13 @@
+@@ -71,9 +77,13 @@
  	struct cache_extent cache;
  	struct btrfs_disk_key parent_key;
  	u64 start;
@@ -346,7 +348,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	unsigned int content_checked:1;
  	unsigned int owner_ref_checked:1;
  	unsigned int is_root:1;
-@@ -100,7 +108,11 @@
+@@ -100,7 +110,11 @@
  #define REF_ERR_DUP_INODE_REF		(1 << 5)
  #define REF_ERR_INDEX_UNMATCH		(1 << 6)
  #define REF_ERR_FILETYPE_UNMATCH	(1 << 7)
@@ -359,7 +361,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  struct inode_record {
  	struct list_head backrefs;
-@@ -144,6 +156,29 @@
+@@ -144,6 +158,29 @@
  #define I_ERR_SOME_CSUM_MISSING		(1 << 12)
  #define I_ERR_LINK_COUNT_WRONG		(1 << 13)
  
@@ -389,7 +391,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  struct ptr_node {
  	struct cache_extent cache;
  	void *data;
-@@ -151,6 +186,7 @@
+@@ -151,6 +188,7 @@
  
  struct shared_node {
  	struct cache_extent cache;
@@ -397,7 +399,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	struct cache_tree inode_cache;
  	struct inode_record *current;
  	u32 refs;
-@@ -258,6 +294,14 @@
+@@ -258,6 +296,14 @@
  	free(rec);
  }
  
@@ -412,7 +414,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  static void maybe_free_inode_rec(struct cache_tree *inode_cache,
  				 struct inode_record *rec)
  {
-@@ -309,8 +353,7 @@
+@@ -309,8 +355,7 @@
  	}
  
  	BUG_ON(rec->refs != 1);
@@ -422,7 +424,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		cache = find_cache_extent(inode_cache, rec->ino, 1);
  		node = container_of(cache, struct ptr_node, cache);
  		BUG_ON(node->data != rec);
-@@ -338,14 +381,12 @@
+@@ -338,14 +383,12 @@
  	return ret;
  }
  
@@ -438,7 +440,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	rec = active_node->current;
  	BUG_ON(rec->ino != key->objectid || rec->refs > 1);
-@@ -361,11 +402,8 @@
+@@ -361,11 +404,8 @@
  	if (btrfs_inode_flags(eb, item) & BTRFS_INODE_NODATASUM)
  		rec->nodatasum = 1;
  	rec->found_inode_item = 1;
@@ -452,7 +454,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	maybe_free_inode_rec(&active_node->inode_cache, rec);
  	return 0;
  }
-@@ -391,7 +429,6 @@
+@@ -391,7 +431,6 @@
  	memcpy(backref->name, name, namelen);
  	backref->name[namelen] = '\0';
  	list_add_tail(&backref->list, &rec->backrefs);
@@ -460,7 +462,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	return backref;
  }
  
-@@ -419,6 +456,7 @@
+@@ -419,6 +458,7 @@
  		backref->filetype = filetype;
  		backref->found_dir_index = 1;
  	} else if (itemtype == BTRFS_DIR_ITEM_KEY) {
@@ -468,7 +470,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		if (backref->found_dir_item)
  			backref->errors |= REF_ERR_DUP_DIR_ITEM;
  		if (backref->found_dir_index && backref->filetype != filetype)
-@@ -443,10 +481,10 @@
+@@ -443,10 +483,10 @@
  }
  
  static int merge_inode_recs(struct inode_record *src, struct inode_record *dst,
@@ -481,7 +483,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	dst->merging = 1;
  	list_for_each_entry(backref, &src->backrefs, list) {
-@@ -457,6 +495,7 @@
+@@ -457,6 +497,7 @@
  					BTRFS_DIR_INDEX_KEY, backref->errors);
  		}
  		if (backref->found_dir_item) {
@@ -489,7 +491,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			add_inode_backref(dst_cache, dst->ino,
  					backref->dir, 0, backref->name,
  					backref->namelen, backref->filetype,
-@@ -481,6 +520,8 @@
+@@ -481,6 +522,8 @@
  	if (dst->first_extent_gap > src->first_extent_gap)
  		dst->first_extent_gap = src->first_extent_gap;
  
@@ -498,7 +500,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	dst->found_size += src->found_size;
  	if (src->extent_start != (u64)-1) {
  		if (dst->extent_start == (u64)-1) {
-@@ -510,14 +551,8 @@
+@@ -510,14 +553,8 @@
  			dst->errors |= I_ERR_DUP_INODE_ITEM;
  		}
  	}
@@ -514,7 +516,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	return 0;
  }
  
-@@ -537,8 +572,9 @@
+@@ -537,8 +574,9 @@
  	if (src_node->current)
  		current_ino = src_node->current->ino;
  
@@ -526,7 +528,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	cache = find_first_cache_extent(src, 0);
  	while (cache) {
  		node = container_of(cache, struct ptr_node, cache);
-@@ -558,13 +594,26 @@
+@@ -558,13 +596,26 @@
  		ret = insert_existing_cache_extent(dst, &ins->cache);
  		if (ret == -EEXIST) {
  			conflict = get_inode_rec(dst, rec->ino, 1);
@@ -554,7 +556,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	if (current_ino > 0 && (!dst_node->current ||
  	    current_ino > dst_node->current->ino)) {
  		if (dst_node->current) {
-@@ -616,6 +665,7 @@
+@@ -616,6 +667,7 @@
  	node = calloc(1, sizeof(*node));
  	node->cache.start = bytenr;
  	node->cache.size = 1;
@@ -562,7 +564,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	cache_tree_init(&node->inode_cache);
  	node->refs = refs;
  
-@@ -646,6 +696,7 @@
+@@ -646,6 +698,7 @@
  	if (wc->root_level == wc->active_node &&
  	    btrfs_root_refs(&root->root_item) == 0) {
  		if (--node->refs == 0) {
@@ -570,7 +572,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			free_inode_recs(&node->inode_cache);
  			remove_cache_extent(&wc->shared, &node->cache);
  			free(node);
-@@ -708,10 +759,12 @@
+@@ -708,10 +761,12 @@
  	int filetype;
  	struct btrfs_dir_item *di;
  	struct inode_record *rec;
@@ -583,7 +585,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	inode_cache = &active_node->inode_cache;
  	rec = active_node->current;
  	rec->found_dir_item = 1;
-@@ -740,7 +793,9 @@
+@@ -740,7 +795,9 @@
  					  key->objectid, key->offset, namebuf,
  					  len, filetype, key->type, error);
  		} else if (location.type == BTRFS_ROOT_ITEM_KEY) {
@@ -594,7 +596,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		} else {
  			fprintf(stderr, "warning line %d\n", __LINE__);
  		}
-@@ -945,7 +1000,7 @@
+@@ -945,7 +1002,7 @@
  	struct btrfs_key key;
  	u32 nritems;
  	int i;
@@ -603,7 +605,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	struct cache_tree *inode_cache;
  	struct shared_node *active_node;
  
-@@ -977,8 +1032,7 @@
+@@ -977,8 +1034,7 @@
  			ret = process_inode_ref(eb, i, &key, active_node);
  			break;
  		case BTRFS_INODE_ITEM_KEY:
@@ -613,7 +615,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			break;
  		case BTRFS_EXTENT_DATA_KEY:
  			ret = process_file_extent(root, eb, i, &key,
-@@ -988,7 +1042,7 @@
+@@ -988,7 +1044,7 @@
  			break;
  		};
  	}
@@ -622,7 +624,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  }
  
  static void reada_walk_down(struct btrfs_root *root,
-@@ -1033,7 +1087,9 @@
+@@ -1033,7 +1089,9 @@
  	ret = btrfs_lookup_extent_info(NULL, root,
  				       path->nodes[*level]->start,
  				       path->nodes[*level]->len, &refs, NULL);
@@ -633,7 +635,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	if (refs > 1) {
  		ret = enter_shared_node(root, path->nodes[*level]->start,
  					refs, wc, *level);
-@@ -1060,7 +1116,8 @@
+@@ -1060,7 +1118,8 @@
  		blocksize = btrfs_level_size(root, *level - 1);
  		ret = btrfs_lookup_extent_info(NULL, root, bytenr, blocksize,
  					       &refs, NULL);
@@ -643,7 +645,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  		if (refs > 1) {
  			ret = enter_shared_node(root, bytenr, refs,
-@@ -1120,7 +1177,7 @@
+@@ -1120,7 +1179,7 @@
  
  	if (!rec->found_inode_item || rec->errors)
  		goto out;
@@ -652,7 +654,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		goto out;
  	if (list_empty(&rec->backrefs))
  		goto out;
-@@ -1176,13 +1233,23 @@
+@@ -1176,13 +1235,23 @@
  		node = container_of(cache, struct ptr_node, cache);
  		rec = node->data;
  		remove_cache_extent(inode_cache, &node->cache);
@@ -677,7 +679,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		error++;
  		if (!rec->found_inode_item)
  			rec->errors |= I_ERR_NO_INODE_ITEM;
-@@ -1205,13 +1272,314 @@
+@@ -1205,13 +1274,314 @@
  				backref->namelen, backref->name,
  				backref->filetype, backref->errors);
  		}
@@ -993,7 +995,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			 struct walk_control *wc)
  {
  	int ret = 0;
-@@ -1219,10 +1587,18 @@
+@@ -1219,10 +1589,18 @@
  	int level;
  	struct btrfs_path path;
  	struct shared_node root_node;
@@ -1012,7 +1014,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	cache_tree_init(&root_node.inode_cache);
  
  	level = btrfs_header_level(root->node);
-@@ -1266,6 +1642,8 @@
+@@ -1266,6 +1644,8 @@
  	}
  	btrfs_release_path(root, &path);
  
@@ -1021,7 +1023,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	if (root_node.current) {
  		root_node.current->checked = 1;
  		maybe_free_inode_rec(&root_node.inode_cache,
-@@ -1280,13 +1658,15 @@
+@@ -1280,13 +1660,15 @@
  {
  	if (objectid == BTRFS_FS_TREE_OBJECTID ||
  	    objectid == BTRFS_TREE_RELOC_OBJECTID ||
@@ -1039,7 +1041,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  {
  	struct btrfs_path path;
  	struct btrfs_key key;
-@@ -1319,10 +1699,14 @@
+@@ -1319,10 +1701,14 @@
  		    fs_root_objectid(key.objectid)) {
  			tmp_root = btrfs_read_fs_root_no_cache(root->fs_info,
  							       &key);
@@ -1055,7 +1057,94 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		}
  		path.slots[0]++;
  	}
-@@ -1458,12 +1842,12 @@
+@@ -1334,86 +1720,6 @@
+ 	return err;
+ }
+ 
+-static int check_node(struct btrfs_root *root,
+-		      struct btrfs_disk_key *parent_key,
+-		      struct extent_buffer *buf)
+-{
+-	int i;
+-	struct btrfs_key cpukey;
+-	struct btrfs_disk_key key;
+-	u32 nritems = btrfs_header_nritems(buf);
+-
+-	if (nritems == 0 || nritems > BTRFS_NODEPTRS_PER_BLOCK(root))
+-		return 1;
+-	if (parent_key->type) {
+-		btrfs_node_key(buf, &key, 0);
+-		if (memcmp(parent_key, &key, sizeof(key)))
+-			return 1;
+-	}
+-	for (i = 0; nritems > 1 && i < nritems - 2; i++) {
+-		btrfs_node_key(buf, &key, i);
+-		btrfs_node_key_to_cpu(buf, &cpukey, i + 1);
+-		if (btrfs_comp_keys(&key, &cpukey) >= 0)
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+-static int check_leaf(struct btrfs_root *root,
+-		      struct btrfs_disk_key *parent_key,
+-		      struct extent_buffer *buf)
+-{
+-	int i;
+-	struct btrfs_key cpukey;
+-	struct btrfs_disk_key key;
+-	u32 nritems = btrfs_header_nritems(buf);
+-
+-	if (btrfs_header_level(buf) != 0) {
+-		fprintf(stderr, "leaf is not a leaf %llu\n",
+-		       (unsigned long long)btrfs_header_bytenr(buf));
+-		return 1;
+-	}
+-	if (btrfs_leaf_free_space(root, buf) < 0) {
+-		fprintf(stderr, "leaf free space incorrect %llu %d\n",
+-			(unsigned long long)btrfs_header_bytenr(buf),
+-			btrfs_leaf_free_space(root, buf));
+-		return 1;
+-	}
+-
+-	if (nritems == 0)
+-		return 0;
+-
+-	btrfs_item_key(buf, &key, 0);
+-	if (parent_key->type && memcmp(parent_key, &key, sizeof(key))) {
+-		fprintf(stderr, "leaf parent key incorrect %llu\n",
+-		       (unsigned long long)btrfs_header_bytenr(buf));
+-		return 1;
+-	}
+-	for (i = 0; nritems > 1 && i < nritems - 2; i++) {
+-		btrfs_item_key(buf, &key, i);
+-		btrfs_item_key_to_cpu(buf, &cpukey, i + 1);
+-		if (btrfs_comp_keys(&key, &cpukey) >= 0) {
+-			fprintf(stderr, "bad key ordering %d %d\n", i, i+1);
+-			return 1;
+-		}
+-		if (btrfs_item_offset_nr(buf, i) !=
+-			btrfs_item_end_nr(buf, i + 1)) {
+-			fprintf(stderr, "incorrect offsets %u %u\n",
+-				btrfs_item_offset_nr(buf, i),
+-				btrfs_item_end_nr(buf, i + 1));
+-			return 1;
+-		}
+-		if (i == 0 && btrfs_item_end_nr(buf, i) !=
+-		    BTRFS_LEAF_DATA_SIZE(root)) {
+-			fprintf(stderr, "bad item end %u wanted %u\n",
+-				btrfs_item_end_nr(buf, i),
+-				(unsigned)BTRFS_LEAF_DATA_SIZE(root));
+-			return 1;
+-		}
+-	}
+-	return 0;
+-}
+-
+ static int all_backpointers_checked(struct extent_record *rec, int print_errs)
+ {
+ 	struct list_head *cur = rec->backrefs.next;
+@@ -1458,12 +1764,12 @@
  			if (!print_errs)
  				goto out;
  			tback = (struct tree_backref *)back;
@@ -1070,7 +1159,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		}
  		if (back->is_data) {
  			dback = (struct data_backref *)back;
-@@ -1473,7 +1857,7 @@
+@@ -1473,7 +1779,7 @@
  					goto out;
  				fprintf(stderr, "Incorrect local backref count"
  					" on %llu %s %llu owner %llu"
@@ -1079,7 +1168,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  					(unsigned long long)rec->start,
  					back->full_backref ?
  					"parent" : "root",
-@@ -1482,7 +1866,7 @@
+@@ -1482,7 +1788,7 @@
  					(unsigned long long)dback->root,
  					(unsigned long long)dback->owner,
  					(unsigned long long)dback->offset,
@@ -1088,7 +1177,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			}
  		}
  		if (!back->is_data) {
-@@ -1541,7 +1925,6 @@
+@@ -1541,7 +1847,6 @@
  	struct btrfs_root *ref_root;
  	struct btrfs_key key;
  	struct btrfs_path path;
@@ -1096,8 +1185,12 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	int level;
  	int found = 0;
  
-@@ -1574,7 +1957,7 @@
- 	
+@@ -1571,10 +1876,10 @@
+ 		btrfs_item_key_to_cpu(buf, &key, 0);
+ 	else
+ 		btrfs_node_key_to_cpu(buf, &key, 0);
+-	
++
  	btrfs_init_path(&path);
  	path.lowest_level = level + 1;
 -	ret = btrfs_search_slot(NULL, ref_root, &key, &path, 0, 0);
@@ -1105,7 +1198,55 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	if (buf->start == btrfs_node_blockptr(path.nodes[level + 1],
  					      path.slots[level + 1]))
-@@ -1590,12 +1973,28 @@
+@@ -1584,24 +1889,82 @@
+ 	return found ? 0 : 1;
+ }
+ 
++static int is_extent_tree_record(struct extent_record *rec)
++{
++	struct list_head *cur = rec->backrefs.next;
++	struct extent_backref *node;
++	struct tree_backref *back;
++	int is_extent = 0;
++
++	while(cur != &rec->backrefs) {
++		node = list_entry(cur, struct extent_backref, list);
++		cur = cur->next;
++		if (node->is_data)
++			return 0;
++		back = (struct tree_backref *)node;
++		if (node->full_backref)
++			return 0;
++		if (back->root == BTRFS_EXTENT_TREE_OBJECTID)
++			is_extent = 1;
++	}
++	return is_extent;
++}
++
++
++static int record_bad_block_io(struct btrfs_fs_info *info,
++			       struct cache_tree *extent_cache,
++			       u64 start, u64 len)
++{
++	struct extent_record *rec;
++	struct cache_extent *cache;
++	struct btrfs_key key;
++
++	cache = find_cache_extent(extent_cache, start, len);
++	if (!cache)
++		return 0;
++
++	rec = container_of(cache, struct extent_record, cache);
++	if (!is_extent_tree_record(rec))
++		return 0;
++
++	btrfs_disk_key_to_cpu(&key, &rec->parent_key);
++	return btrfs_add_corrupt_extent_record(info, &key, start, len, 0);
++}
++
+ static int check_block(struct btrfs_root *root,
+ 		       struct cache_tree *extent_cache,
+ 		       struct extent_buffer *buf, u64 flags)
  {
  	struct extent_record *rec;
  	struct cache_extent *cache;
@@ -1117,6 +1258,12 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	if (!cache)
  		return 1;
  	rec = container_of(cache, struct extent_record, cache);
+-	if (btrfs_is_leaf(buf)) {
+-		ret = check_leaf(root, &rec->parent_key, buf);
+-	} else {
+-		ret = check_node(root, &rec->parent_key, buf);
+-	}
+-	if (ret) {
 +	rec->generation = btrfs_header_generation(buf);
 +
 +	level = btrfs_header_level(buf);
@@ -1131,10 +1278,16 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +	}
 +	rec->info_level = level;
 +
- 	if (btrfs_is_leaf(buf)) {
- 		ret = check_leaf(root, &rec->parent_key, buf);
++	if (btrfs_is_leaf(buf))
++		ret = btrfs_check_leaf(root, &rec->parent_key, buf);
++	else
++		ret = btrfs_check_node(root, &rec->parent_key, buf);
++
++	if (ret) {
+ 		fprintf(stderr, "bad block %llu\n",
+ 			(unsigned long long)buf->start);
  	} else {
-@@ -1660,6 +2059,7 @@
+@@ -1660,6 +2023,7 @@
  		ref->node.full_backref = 0;
  	}
  	list_add_tail(&ref->node.list, &rec->backrefs);
@@ -1142,7 +1295,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	return ref;
  }
  
-@@ -1677,7 +2077,7 @@
+@@ -1677,7 +2041,7 @@
  		if (!node->is_data)
  			continue;
  		back = (struct data_backref *)node;
@@ -1151,7 +1304,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			if (!node->full_backref)
  				continue;
  			if (parent == back->parent)
-@@ -1695,11 +2095,13 @@
+@@ -1695,11 +2059,13 @@
  
  static struct data_backref *alloc_data_backref(struct extent_record *rec,
  						u64 parent, u64 root,
@@ -1166,7 +1319,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	if (parent > 0) {
  		ref->parent = parent;
  		ref->owner = 0;
-@@ -1714,13 +2116,16 @@
+@@ -1714,13 +2080,16 @@
  	ref->found_ref = 0;
  	ref->num_refs = 0;
  	list_add_tail(&ref->node.list, &rec->backrefs);
@@ -1184,7 +1337,16 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  {
  	struct extent_record *rec;
  	struct cache_extent *cache;
-@@ -1761,11 +2166,15 @@
+@@ -1732,7 +2101,7 @@
+ 		if (inc_ref)
+ 			rec->refs++;
+ 		if (rec->nr == 1)
+-			rec->nr = nr;
++			rec->nr = max(nr, max_size);
+ 
+ 		if (start != rec->start) {
+ 			fprintf(stderr, "warning, start mismatch %llu %llu\n",
+@@ -1761,12 +2130,16 @@
  		if (parent_key)
  			btrfs_cpu_key_to_disk(&rec->parent_key, parent_key);
  
@@ -1196,11 +1358,13 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	}
  	rec = malloc(sizeof(*rec));
  	rec->start = start;
+-	rec->nr = nr;
 +	rec->max_size = max_size;
- 	rec->nr = nr;
++	rec->nr = max(nr, max_size);
  	rec->content_checked = 0;
  	rec->owner_ref_checked = 0;
-@@ -1812,7 +2221,7 @@
+ 	INIT_LIST_HEAD(&rec->backrefs);
+@@ -1812,7 +2185,7 @@
  
  	cache = find_cache_extent(extent_cache, bytenr, 1);
  	if (!cache) {
@@ -1209,7 +1373,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		cache = find_cache_extent(extent_cache, bytenr, 1);
  		if (!cache)
  			abort();
-@@ -1851,7 +2260,7 @@
+@@ -1851,7 +2224,7 @@
  
  static int add_data_backref(struct cache_tree *extent_cache, u64 bytenr,
  			    u64 parent, u64 root, u64 owner, u64 offset,
@@ -1218,7 +1382,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  {
  	struct extent_record *rec;
  	struct data_backref *back;
-@@ -1859,7 +2268,8 @@
+@@ -1859,7 +2232,8 @@
  
  	cache = find_cache_extent(extent_cache, bytenr, 1);
  	if (!cache) {
@@ -1228,7 +1392,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		cache = find_cache_extent(extent_cache, bytenr, 1);
  		if (!cache)
  			abort();
-@@ -1869,9 +2279,13 @@
+@@ -1869,9 +2243,13 @@
  	if (rec->start != bytenr) {
  		abort();
  	}
@@ -1243,7 +1407,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	if (found_ref) {
  		BUG_ON(num_refs != 1);
-@@ -1895,7 +2309,6 @@
+@@ -1895,7 +2273,6 @@
  	return 0;
  }
  
@@ -1251,7 +1415,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  static int add_pending(struct cache_tree *pending,
  		       struct cache_tree *seen, u64 bytenr, u32 size)
  {
-@@ -1985,11 +2398,10 @@
+@@ -1985,11 +2362,10 @@
  	btrfs_item_key_to_cpu(leaf, &key, slot);
  	ref0 = btrfs_item_ptr(leaf, slot, struct btrfs_extent_ref_v0);
  	if (btrfs_ref_objectid_v0(leaf, ref0) < BTRFS_FIRST_FREE_OBJECTID) {
@@ -1265,7 +1429,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	}
  	return 0;
  }
-@@ -2022,14 +2434,14 @@
+@@ -2022,14 +2398,14 @@
  		BUG();
  #endif
  		return add_extent_rec(extent_cache, NULL, key.objectid,
@@ -1282,7 +1446,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	ptr = (unsigned long)(ei + 1);
  	if (btrfs_extent_flags(eb, ei) & BTRFS_EXTENT_FLAG_TREE_BLOCK)
-@@ -2057,21 +2469,24 @@
+@@ -2057,21 +2433,24 @@
  								       dref),
  					btrfs_extent_data_ref_offset(eb, dref),
  					btrfs_extent_data_ref_count(eb, dref),
@@ -1310,7 +1474,17 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	return 0;
  }
  
-@@ -2138,6 +2553,8 @@
+@@ -2135,9 +2514,18 @@
+ 
+ 	/* fixme, get the real parent transid */
+ 	buf = read_tree_block(root, bytenr, size, 0);
++	if (!extent_buffer_uptodate(buf)) {
++		record_bad_block_io(root->fs_info,
++				    extent_cache, bytenr, size);
++		free_extent_buffer(buf);
++		goto out;
++	}
++
  	nritems = btrfs_header_nritems(buf);
  
  	ret = btrfs_lookup_extent_info(NULL, root, bytenr, size, NULL, &flags);
@@ -1319,7 +1493,16 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  	if (flags & BTRFS_BLOCK_FLAG_FULL_BACKREF) {
  		parent = bytenr;
-@@ -2164,16 +2581,6 @@
+@@ -2148,6 +2536,8 @@
+ 	}
+ 
+ 	ret = check_block(root, extent_cache, buf, flags);
++	if (ret)
++		goto out;
+ 
+ 	if (btrfs_is_leaf(buf)) {
+ 		btree_space_waste += btrfs_leaf_free_space(root, buf);
+@@ -2164,16 +2554,6 @@
  				continue;
  			}
  			if (key.type == BTRFS_BLOCK_GROUP_ITEM_KEY) {
@@ -1336,7 +1519,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  				continue;
  			}
  			if (key.type == BTRFS_EXTENT_REF_V0_KEY) {
-@@ -2206,7 +2613,7 @@
+@@ -2206,7 +2586,7 @@
  								       ref),
  					btrfs_extent_data_ref_offset(buf, ref),
  					btrfs_extent_data_ref_count(buf, ref),
@@ -1345,7 +1528,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  				continue;
  			}
  			if (key.type == BTRFS_SHARED_DATA_REF_KEY) {
-@@ -2216,7 +2623,7 @@
+@@ -2216,7 +2596,7 @@
  				add_data_backref(extent_cache,
  					key.objectid, key.offset, 0, 0, 0, 
  					btrfs_shared_data_ref_count(buf, ref),
@@ -1354,7 +1537,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  				continue;
  			}
  			if (key.type != BTRFS_EXTENT_DATA_KEY)
-@@ -2239,26 +2646,33 @@
+@@ -2239,26 +2619,33 @@
  			ret = add_extent_rec(extent_cache, NULL,
  				   btrfs_file_extent_disk_bytenr(buf, fi),
  				   btrfs_file_extent_disk_num_bytes(buf, fi),
@@ -1393,7 +1576,15 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
  			if (level > 1) {
  				add_pending(nodes, seen, ptr, size);
-@@ -2296,25 +2710,310 @@
+@@ -2277,6 +2664,7 @@
+ 	    btrfs_header_backref_rev(buf) == BTRFS_MIXED_BACKREF_REV &&
+ 	    !btrfs_header_flag(buf, BTRFS_HEADER_FLAG_RELOC))
+ 		found_old_backref = 1;
++out:
+ 	free_extent_buffer(buf);
+ 	return 0;
+ }
+@@ -2296,25 +2684,553 @@
  	else
  		add_pending(pending, seen, buf->start, buf->len);
  	add_extent_rec(extent_cache, NULL, buf->start, buf->len,
@@ -1413,6 +1604,77 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  
 -static int check_extent_refs(struct btrfs_root *root,
 -		      struct cache_tree *extent_cache)
++/* as we fix the tree, we might be deleting blocks that
++ * we're tracking for repair.  This hook makes sure we
++ * remove any backrefs for blocks as we are fixing them.
++ */
++static int free_extent_hook(struct btrfs_trans_handle *trans,
++			    struct btrfs_root *root,
++			    u64 bytenr, u64 num_bytes, u64 parent,
++			    u64 root_objectid, u64 owner, u64 offset,
++			    int refs_to_drop)
++{
++	struct extent_record *rec;
++	struct cache_extent *cache;
++	int is_data;
++	struct cache_tree *extent_cache = root->fs_info->fsck_extent_cache;
++
++	is_data = owner >= BTRFS_FIRST_FREE_OBJECTID;
++	cache = find_cache_extent(extent_cache, bytenr, num_bytes);
++	if (!cache)
++		return 0;
++
++	rec = container_of(cache, struct extent_record, cache);
++	if (is_data) {
++		struct data_backref *back;
++		back = find_data_backref(rec, parent, root_objectid, owner,
++					 offset);
++		if (!back)
++			goto out;
++		if (back->node.found_ref) {
++			back->found_ref -= refs_to_drop;
++			if (rec->refs)
++				rec->refs -= refs_to_drop;
++		}
++		if (back->node.found_extent_tree) {
++			back->num_refs -= refs_to_drop;
++			if (rec->extent_item_refs)
++				rec->extent_item_refs -= refs_to_drop;
++		}
++		if (back->found_ref == 0)
++			back->node.found_ref = 0;
++		if (back->num_refs == 0)
++			back->node.found_extent_tree = 0;
++
++		if (!back->node.found_extent_tree && back->node.found_ref) {
++			list_del(&back->node.list);
++			free(back);
++		}
++	} else {
++		struct tree_backref *back;
++		back = find_tree_backref(rec, parent, root_objectid);
++		if (!back)
++			goto out;
++		if (back->node.found_ref) {
++			if (rec->refs)
++				rec->refs--;
++			back->node.found_ref = 0;
++		}
++		if (back->node.found_extent_tree) {
++			if (rec->extent_item_refs)
++				rec->extent_item_refs--;
++			back->node.found_extent_tree = 0;
++		}
++		if (!back->node.found_extent_tree && back->node.found_ref) {
++			list_del(&back->node.list);
++			free(back);
++		}
++	}
++	maybe_free_extent_rec(extent_cache, rec);
++out:
++	return 0;
++}
++
 +static int delete_extent_records(struct btrfs_trans_handle *trans,
 +				 struct btrfs_root *root,
 +				 struct btrfs_path *path,
@@ -1636,6 +1898,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +	int ret;
 +	struct btrfs_path *path;
 +	struct list_head *cur = rec->backrefs.next;
++	struct cache_extent *cache;
 +	struct extent_backref *back;
 +	int allocated = 0;
 +	u64 flags = 0;
@@ -1654,6 +1917,13 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +
 +	if (ret < 0)
 +		goto out;
++
++	/* was this block corrupt?  If so, don't add references to it */
++	cache = find_cache_extent(info->corrupt_blocks, rec->start, rec->max_size);
++	if (cache) {
++		ret = 0;
++		goto out;
++	}
 +
 +	/* step two, recreate all the refs we did find */
 +	while(cur != &rec->backrefs) {
@@ -1678,6 +1948,156 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +	return ret;
 +}
 +
++/* right now we only prune from the extent allocation tree */
++static int prune_one_block(struct btrfs_trans_handle *trans,
++			   struct btrfs_fs_info *info,
++			   struct btrfs_corrupt_block *corrupt)
++{
++	int ret;
++	struct btrfs_path path;
++	struct extent_buffer *eb;
++	u64 found;
++	int slot;
++	int nritems;
++	int level = corrupt->level + 1;
++
++	btrfs_init_path(&path);
++again:
++	/* we want to stop at the parent to our busted block */
++	path.lowest_level = level;
++
++	ret = btrfs_search_slot(trans, info->extent_root,
++				&corrupt->key, &path, -1, 1);
++
++	if (ret < 0)
++		goto out;
++
++	eb = path.nodes[level];
++	if (!eb) {
++		ret = -ENOENT;
++		goto out;
++	}
++
++	/*
++	 * hopefully the search gave us the block we want to prune,
++	 * lets try that first
++	 */
++	slot = path.slots[level];
++	found =  btrfs_node_blockptr(eb, slot);
++	if (found == corrupt->cache.start)
++		goto del_ptr;
++
++	nritems = btrfs_header_nritems(eb);
++
++	/* the search failed, lets scan this node and hope we find it */
++	for (slot = 0; slot < nritems; slot++) {
++		found =  btrfs_node_blockptr(eb, slot);
++		if (found == corrupt->cache.start)
++			goto del_ptr;
++	}
++	/*
++	 * we couldn't find the bad block.  TODO, search all the nodes for pointers
++	 * to this block
++	 */
++	if (eb == info->extent_root->node) {
++		ret = -ENOENT;
++		goto out;
++	} else {
++		level++;
++		btrfs_release_path(NULL, &path);
++		goto again;
++	}
++
++del_ptr:
++	printk("deleting pointer to block %Lu\n", corrupt->cache.start);
++	ret = btrfs_del_ptr(trans, info->extent_root, &path, level, slot);
++
++out:
++	btrfs_release_path(NULL, &path);
++	return ret;
++}
++
++static int prune_corrupt_blocks(struct btrfs_trans_handle *trans,
++				struct btrfs_fs_info *info)
++{
++	struct cache_extent *cache;
++	struct btrfs_corrupt_block *corrupt;
++
++	cache = find_first_cache_extent(info->corrupt_blocks, 0);
++	while (1) {
++		if (!cache)
++			break;
++		corrupt = container_of(cache, struct btrfs_corrupt_block, cache);
++		prune_one_block(trans, info, corrupt);
++		cache = next_cache_extent(cache);
++	}
++	return 0;
++}
++
++static void free_corrupt_blocks(struct btrfs_fs_info *info)
++{
++	struct cache_extent *cache;
++	struct btrfs_corrupt_block *corrupt;
++
++	while (1) {
++		cache = find_first_cache_extent(info->corrupt_blocks, 0);
++		if (!cache)
++			break;
++		corrupt = container_of(cache, struct btrfs_corrupt_block, cache);
++		remove_cache_extent(info->corrupt_blocks, cache);
++		free(corrupt);
++	}
++}
++
++static int check_block_group(struct btrfs_trans_handle *trans,
++			      struct btrfs_fs_info *info,
++			      struct map_lookup *map,
++			      int *reinit)
++{
++	struct btrfs_key key;
++	struct btrfs_path path;
++	int ret;
++
++	key.objectid = map->ce.start;
++	key.offset = map->ce.size;
++	key.type = BTRFS_BLOCK_GROUP_ITEM_KEY;
++
++	btrfs_init_path(&path);
++	ret = btrfs_search_slot(NULL, info->extent_root,
++				&key, &path, 0, 0);
++	btrfs_release_path(NULL, &path);
++	if (ret <= 0)
++		goto out;
++
++	ret = btrfs_make_block_group(trans, info->extent_root, 0, map->type,
++			       BTRFS_FIRST_CHUNK_TREE_OBJECTID,
++			       key.objectid, key.offset);
++	*reinit = 1;
++out:
++	return ret;
++}
++
++static int check_block_groups(struct btrfs_trans_handle *trans,
++			      struct btrfs_fs_info *info, int *reinit)
++{
++	struct cache_extent *ce;
++	struct map_lookup *map;
++	struct btrfs_mapping_tree *map_tree = &info->mapping_tree;
++
++	/* this isn't quite working */
++	return 0;
++
++	ce = find_first_cache_extent(&map_tree->cache_tree, 0);
++	while (1) {
++		if (!ce)
++			break;
++		map = container_of(ce, struct map_lookup, ce);
++		check_block_group(trans, info, map, reinit);
++		ce = next_cache_extent(ce);
++	}
++	return 0;
++}
++
 +static int check_extent_refs(struct btrfs_trans_handle *trans,
 +			     struct btrfs_root *root,
 +			     struct cache_tree *extent_cache, int repair)
@@ -1687,6 +2107,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  	int err = 0;
 +	int ret = 0;
 +	int fixed = 0;
++	int reinit = 0;
  
 +	if (repair) {
 +		/*
@@ -1699,16 +2120,29 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +		while(cache) {
 +			rec = container_of(cache, struct extent_record, cache);
 +			btrfs_pin_extent(root->fs_info,
-+					 rec->start, rec->nr);
++					 rec->start, rec->max_size);
 +			cache = next_cache_extent(cache);
 +		}
++
++		/* pin down all the corrupted blocks too */
++		cache = find_first_cache_extent(root->fs_info->corrupt_blocks, 0);
++		while(cache) {
++			rec = container_of(cache, struct extent_record, cache);
++			btrfs_pin_extent(root->fs_info,
++					 rec->start, rec->max_size);
++			cache = next_cache_extent(cache);
++		}
++		prune_corrupt_blocks(trans, root->fs_info);
++		check_block_groups(trans, root->fs_info, &reinit);
++		if (reinit)
++			btrfs_read_block_groups(root->fs_info->extent_root);
 +	}
  	while(1) {
 +		fixed = 0;
  		cache = find_first_cache_extent(extent_cache, 0);
  		if (!cache)
  			break;
-@@ -2326,19 +3025,39 @@
+@@ -2326,19 +3242,39 @@
  			fprintf(stderr, "extent item %llu, found %llu\n",
  				(unsigned long long)rec->extent_item_refs,
  				(unsigned long long)rec->refs);
@@ -1748,7 +2182,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  			err = 1;
  		}
  
-@@ -2346,10 +3065,23 @@
+@@ -2346,16 +3282,30 @@
  		free_all_extent_backrefs(rec);
  		free(rec);
  	}
@@ -1773,16 +2207,45 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  {
  	struct cache_tree extent_cache;
  	struct cache_tree seen;
-@@ -2430,7 +3162,7 @@
+ 	struct cache_tree pending;
+ 	struct cache_tree reada;
+ 	struct cache_tree nodes;
++	struct cache_tree corrupt_blocks;
+ 	struct btrfs_path path;
+ 	struct btrfs_key key;
+ 	struct btrfs_key found_key;
+@@ -2372,6 +3322,13 @@
+ 	cache_tree_init(&pending);
+ 	cache_tree_init(&nodes);
+ 	cache_tree_init(&reada);
++	cache_tree_init(&corrupt_blocks);
++
++	if (repair) {
++		root->fs_info->fsck_extent_cache = &extent_cache;
++		root->fs_info->free_extent_hook = free_extent_hook;
++		root->fs_info->corrupt_blocks = &corrupt_blocks;
++	}
+ 
+ 	bits_nr = 1024;
+ 	bits = malloc(bits_nr * sizeof(struct block_info));
+@@ -2430,7 +3387,15 @@
  		if (ret != 0)
  			break;
  	}
 -	ret = check_extent_refs(root, &extent_cache);
 +	ret = check_extent_refs(trans, root, &extent_cache, repair);
++
++	if (repair) {
++		free_corrupt_blocks(root->fs_info);
++		root->fs_info->fsck_extent_cache = NULL;
++		root->fs_info->free_extent_hook = NULL;
++		root->fs_info->corrupt_blocks = NULL;
++	}
++
  	return ret;
  }
  
-@@ -2441,29 +3173,122 @@
+@@ -2441,29 +3406,120 @@
  	exit(1);
  }
  
@@ -1790,6 +2253,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +	{ "super", 1, NULL, 's' },
 +	{ "repair", 0, NULL, 0 },
 +	{ "init-csum-tree", 0, NULL, 0 },
++	{ "init-extent-tree", 0, NULL, 0 },
 +	{ 0, 0, 0, 0}
 +};
 +
@@ -1832,11 +2296,11 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +			init_csum_tree = 1;
 +			rw = 1;
 +		}
- 
--	if (ac < 2)
++
 +	}
 +	ac = ac - optind;
-+
+ 
+-	if (ac < 2)
 +	if (ac != 1)
  		print_usage();
  
@@ -1882,12 +2346,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
 +		}
 +		goto out;
 +	}
-+
 +	ret = check_extents(trans, root, repair);
-+	if (ret) {
-+		fprintf(stderr, "check extents failed with %d!!!!!!!!!\n", ret);
-+		goto out;
-+	}
++	if (ret)
++		fprintf(stderr, "Errors found in extent allocation tree\n");
 +
 +	fprintf(stderr, "checking fs roots\n");
 +	ret = check_fs_roots(root, &root_cache);
@@ -1912,10 +2373,10 @@ diff -urN btrfs-progs-0.19.0-official/btrfsck.c btrfs-progs-0.19-23.el6/btrfsck.
  		 * there was a disk format change when mixed
  		 * backref was in testing tree. The old format
  		 * existed about one week.
-diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.el6/btrfs-corrupt-block.c
---- btrfs-progs-0.19.0-official/btrfs-corrupt-block.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-corrupt-block.c	2012-02-09 16:53:33.000000000 +0000
-@@ -0,0 +1,336 @@
+diff -urN btrfs-progs-0.19.0/btrfs-corrupt-block.c btrfs-progs-0.19-26.el6/btrfs-corrupt-block.c
+--- btrfs-progs-0.19.0/btrfs-corrupt-block.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-corrupt-block.c	2012-02-22 15:59:55.000000000 +0000
+@@ -0,0 +1,396 @@
 +/*
 + * Copyright (C) 2009 Oracle.  All rights reserved.
 + *
@@ -2009,6 +2470,56 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +	fprintf(stderr, "\t-o Output file to hold the extent\n");
 +	fprintf(stderr, "\t-b Number of bytes to read\n");
 +	exit(1);
++}
++
++static void corrupt_keys(struct btrfs_trans_handle *trans,
++			 struct btrfs_root *root,
++			 struct extent_buffer *eb)
++{
++	int slot;
++	int bad_slot;
++	int nr;
++	struct btrfs_disk_key bad_key;;
++
++	nr = btrfs_header_nritems(eb);
++	if (nr == 0)
++		return;
++
++	slot = rand() % nr;
++	bad_slot = rand() % nr;
++
++	if (bad_slot == slot)
++		return;
++
++	fprintf(stderr, "corrupting keys in block %llu slot %d swapping with %d\n",
++		(unsigned long long)eb->start, slot, bad_slot);
++
++	if (btrfs_header_level(eb) == 0) {
++		btrfs_item_key(eb, &bad_key, bad_slot);
++		btrfs_set_item_key(eb, &bad_key, slot);
++	} else {
++		btrfs_node_key(eb, &bad_key, bad_slot);
++		btrfs_set_node_key(eb, &bad_key, slot);
++	}
++	btrfs_mark_buffer_dirty(eb);
++	if (!trans) {
++		csum_tree_block(root, eb, 0);
++		write_extent_to_disk(eb);
++	}
++}
++
++
++static int corrupt_keys_in_block(struct btrfs_root *root, u64 bytenr)
++{
++	struct extent_buffer *eb;
++
++	eb = read_tree_block(root, bytenr, root->leafsize, 0);
++	if (!eb)
++		return -EIO;;
++
++	corrupt_keys(NULL, root, eb);
++	free_extent_buffer(eb);
++	return 0;
 +}
 +
 +static int corrupt_extent(struct btrfs_trans_handle *trans,
@@ -2140,6 +2651,7 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +	{ "bytes", 1, NULL, 'b' },
 +	{ "extent-record", 0, NULL, 'e' },
 +	{ "extent-tree", 0, NULL, 'E' },
++	{ "keys", 0, NULL, 'k' },
 +	{ 0, 0, 0, 0}
 +};
 +
@@ -2157,12 +2669,13 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +	u64 bytes = 4096;
 +	int extent_rec = 0;
 +	int extent_tree = 0;
++	int corrupt_block_keys = 0;
 +
 +	srand(128);
 +
 +	while(1) {
 +		int c;
-+		c = getopt_long(ac, av, "l:c:eE", long_options,
++		c = getopt_long(ac, av, "l:c:eEk", long_options,
 +				&option_index);
 +		if (c < 0)
 +			break;
@@ -2196,6 +2709,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +				break;
 +			case 'E':
 +				extent_tree = 1;
++				break;
++			case 'k':
++				corrupt_block_keys = 1;
 +				break;
 +			default:
 +				print_usage();
@@ -2242,8 +2758,13 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +	bytes *= root->sectorsize;
 +
 +	while (bytes > 0) {
-+		eb = debug_corrupt_block(root, logical, root->sectorsize, copy);
-+		free_extent_buffer(eb);
++		if (corrupt_block_keys) {
++			corrupt_keys_in_block(root, logical);
++		} else {
++			eb = debug_corrupt_block(root, logical,
++						 root->sectorsize, copy);
++			free_extent_buffer(eb);
++		}
 +		logical += root->sectorsize;
 +		bytes -= root->sectorsize;
 +	}
@@ -2252,9 +2773,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-corrupt-block.c btrfs-progs-0.19-23.
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfsctl.c btrfs-progs-0.19-23.el6/btrfsctl.c
---- btrfs-progs-0.19.0-official/btrfsctl.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfsctl.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfsctl.c btrfs-progs-0.19-26.el6/btrfsctl.c
+--- btrfs-progs-0.19.0/btrfsctl.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfsctl.c	2012-02-22 15:59:55.000000000 +0000
 @@ -29,6 +29,7 @@
  #include <unistd.h>
  #include <dirent.h>
@@ -2373,9 +2894,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfsctl.c btrfs-progs-0.19-23.el6/btrfsct
 +	return 0;
  }
  
-diff -urN btrfs-progs-0.19.0-official/btrfs-defrag.c btrfs-progs-0.19-23.el6/btrfs-defrag.c
---- btrfs-progs-0.19.0-official/btrfs-defrag.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-defrag.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-defrag.c btrfs-progs-0.19-26.el6/btrfs-defrag.c
+--- btrfs-progs-0.19.0/btrfs-defrag.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-defrag.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,39 @@
 +/*
 + * Copyright (C) 2010 Oracle.  All rights reserved.
@@ -2416,9 +2937,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-defrag.c btrfs-progs-0.19-23.el6/btr
 +#include "utils.h"
 +#include "version.h"
 +
-diff -urN btrfs-progs-0.19.0-official/btrfslabel.c btrfs-progs-0.19-23.el6/btrfslabel.c
---- btrfs-progs-0.19.0-official/btrfslabel.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfslabel.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfslabel.c btrfs-progs-0.19-26.el6/btrfslabel.c
+--- btrfs-progs-0.19.0/btrfslabel.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfslabel.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,121 @@
 +/*
 + * Copyright (C) 2008 Morey Roof.   All rights reserved.
@@ -2541,9 +3062,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfslabel.c btrfs-progs-0.19-23.el6/btrfs
 +	change_label_unmounted(btrfs_dev, nLabel);
 +	return 0;
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfslabel.h btrfs-progs-0.19-23.el6/btrfslabel.h
---- btrfs-progs-0.19.0-official/btrfslabel.h	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfslabel.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfslabel.h btrfs-progs-0.19-26.el6/btrfslabel.h
+--- btrfs-progs-0.19.0/btrfslabel.h	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfslabel.h	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,5 @@
 +/* btrflabel.h */
 +
@@ -2551,9 +3072,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfslabel.h btrfs-progs-0.19-23.el6/btrfs
 +int get_label(char *btrfs_dev);
 +int set_label(char *btrfs_dev, char *nLabel);
 \ No newline at end of file
-diff -urN btrfs-progs-0.19.0-official/btrfs-list.c btrfs-progs-0.19-23.el6/btrfs-list.c
---- btrfs-progs-0.19.0-official/btrfs-list.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-list.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-list.c btrfs-progs-0.19-26.el6/btrfs-list.c
+--- btrfs-progs-0.19.0/btrfs-list.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-list.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,936 @@
 +/*
 + * Copyright (C) 2010 Oracle.  All rights reserved.
@@ -3491,9 +4012,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-list.c btrfs-progs-0.19-23.el6/btrfs
 +
 +	return ret_path;
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfs-map-logical.c btrfs-progs-0.19-23.el6/btrfs-map-logical.c
---- btrfs-progs-0.19.0-official/btrfs-map-logical.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-map-logical.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-map-logical.c btrfs-progs-0.19-26.el6/btrfs-map-logical.c
+--- btrfs-progs-0.19.0/btrfs-map-logical.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-map-logical.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,220 @@
 +/*
 + * Copyright (C) 2009 Oracle.  All rights reserved.
@@ -3715,9 +4236,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-map-logical.c btrfs-progs-0.19-23.el
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfs-select-super.c btrfs-progs-0.19-23.el6/btrfs-select-super.c
---- btrfs-progs-0.19.0-official/btrfs-select-super.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-select-super.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-select-super.c btrfs-progs-0.19-26.el6/btrfs-select-super.c
+--- btrfs-progs-0.19.0/btrfs-select-super.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-select-super.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,99 @@
 +/*
 + * Copyright (C) 2007 Oracle.  All rights reserved.
@@ -3818,9 +4339,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-select-super.c btrfs-progs-0.19-23.e
 +	 */ 
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/btrfs-show.c btrfs-progs-0.19-23.el6/btrfs-show.c
---- btrfs-progs-0.19.0-official/btrfs-show.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-show.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-show.c btrfs-progs-0.19-26.el6/btrfs-show.c
+--- btrfs-progs-0.19.0/btrfs-show.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-show.c	2012-02-22 15:59:55.000000000 +0000
 @@ -117,6 +117,11 @@
  	int ret;
  	int option_index = 0;
@@ -3833,9 +4354,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-show.c btrfs-progs-0.19-23.el6/btrfs
  	while(1) {
  		int c;
  		c = getopt_long(ac, av, "", long_options,
-diff -urN btrfs-progs-0.19.0-official/btrfs-vol.c btrfs-progs-0.19-23.el6/btrfs-vol.c
---- btrfs-progs-0.19.0-official/btrfs-vol.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-vol.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-vol.c btrfs-progs-0.19-26.el6/btrfs-vol.c
+--- btrfs-progs-0.19.0/btrfs-vol.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-vol.c	2012-02-22 15:59:55.000000000 +0000
 @@ -78,6 +78,11 @@
  	struct btrfs_ioctl_vol_args args;
  	u64 dev_block_count = 0;
@@ -3886,9 +4407,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-vol.c btrfs-progs-0.19-23.el6/btrfs-
  		if (ret) {
  			fprintf(stderr, "Unable to init %s\n", device);
  			exit(1);
-diff -urN btrfs-progs-0.19.0-official/btrfs-zero-log.c btrfs-progs-0.19-23.el6/btrfs-zero-log.c
---- btrfs-progs-0.19.0-official/btrfs-zero-log.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/btrfs-zero-log.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/btrfs-zero-log.c btrfs-progs-0.19-26.el6/btrfs-zero-log.c
+--- btrfs-progs-0.19.0/btrfs-zero-log.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/btrfs-zero-log.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,72 @@
 +/*
 + * Copyright (C) 2007 Oracle.  All rights reserved.
@@ -3962,9 +4483,9 @@ diff -urN btrfs-progs-0.19.0-official/btrfs-zero-log.c btrfs-progs-0.19-23.el6/b
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/calc-size.c btrfs-progs-0.19-23.el6/calc-size.c
---- btrfs-progs-0.19.0-official/calc-size.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/calc-size.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/calc-size.c btrfs-progs-0.19-26.el6/calc-size.c
+--- btrfs-progs-0.19.0/calc-size.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/calc-size.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,268 @@
 +/*
 + * Copyright (C) 2011 Red Hat.  All rights reserved.
@@ -4234,9 +4755,9 @@ diff -urN btrfs-progs-0.19.0-official/calc-size.c btrfs-progs-0.19-23.el6/calc-s
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-balance.c btrfs-progs-0.19-23.el6/cmds-balance.c
---- btrfs-progs-0.19.0-official/cmds-balance.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-balance.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-balance.c btrfs-progs-0.19-26.el6/cmds-balance.c
+--- btrfs-progs-0.19.0/cmds-balance.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-balance.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,713 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -4951,9 +5472,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-balance.c btrfs-progs-0.19-23.el6/cmd
 +
 +	return handle_command_group(&balance_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-device.c btrfs-progs-0.19-23.el6/cmds-device.c
---- btrfs-progs-0.19.0-official/cmds-device.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-device.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-device.c btrfs-progs-0.19-26.el6/cmds-device.c
+--- btrfs-progs-0.19.0/cmds-device.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-device.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,261 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -5216,9 +5737,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-device.c btrfs-progs-0.19-23.el6/cmds
 +{
 +	return handle_command_group(&device_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-filesystem.c btrfs-progs-0.19-23.el6/cmds-filesystem.c
---- btrfs-progs-0.19.0-official/cmds-filesystem.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-filesystem.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-filesystem.c btrfs-progs-0.19-26.el6/cmds-filesystem.c
+--- btrfs-progs-0.19.0/cmds-filesystem.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-filesystem.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,538 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -5758,9 +6279,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-filesystem.c btrfs-progs-0.19-23.el6/
 +{
 +	return handle_command_group(&filesystem_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-inspect.c btrfs-progs-0.19-23.el6/cmds-inspect.c
---- btrfs-progs-0.19.0-official/cmds-inspect.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-inspect.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-inspect.c btrfs-progs-0.19-26.el6/cmds-inspect.c
+--- btrfs-progs-0.19.0/cmds-inspect.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-inspect.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,243 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -6005,9 +6526,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-inspect.c btrfs-progs-0.19-23.el6/cmd
 +{
 +	return handle_command_group(&inspect_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-scrub.c btrfs-progs-0.19-23.el6/cmds-scrub.c
---- btrfs-progs-0.19.0-official/cmds-scrub.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-scrub.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-scrub.c btrfs-progs-0.19-26.el6/cmds-scrub.c
+--- btrfs-progs-0.19.0/cmds-scrub.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-scrub.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,1721 @@
 +/*
 + * Copyright (C) 2011 STRATO.  All rights reserved.
@@ -7730,9 +8251,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-scrub.c btrfs-progs-0.19-23.el6/cmds-
 +{
 +	return handle_command_group(&scrub_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/cmds-subvolume.c btrfs-progs-0.19-23.el6/cmds-subvolume.c
---- btrfs-progs-0.19.0-official/cmds-subvolume.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/cmds-subvolume.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/cmds-subvolume.c btrfs-progs-0.19-26.el6/cmds-subvolume.c
+--- btrfs-progs-0.19.0/cmds-subvolume.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/cmds-subvolume.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,533 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -8267,9 +8788,9 @@ diff -urN btrfs-progs-0.19.0-official/cmds-subvolume.c btrfs-progs-0.19-23.el6/c
 +{
 +	return handle_command_group(&subvolume_cmd_group, argc, argv);
 +}
-diff -urN btrfs-progs-0.19.0-official/commands.h btrfs-progs-0.19-23.el6/commands.h
---- btrfs-progs-0.19.0-official/commands.h	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/commands.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/commands.h btrfs-progs-0.19-26.el6/commands.h
+--- btrfs-progs-0.19.0/commands.h	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/commands.h	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,97 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -8368,9 +8889,9 @@ diff -urN btrfs-progs-0.19.0-official/commands.h btrfs-progs-0.19-23.el6/command
 +int cmd_device(int argc, char **argv);
 +int cmd_scrub(int argc, char **argv);
 +int cmd_inspect(int argc, char **argv);
-diff -urN btrfs-progs-0.19.0-official/common.c btrfs-progs-0.19-23.el6/common.c
---- btrfs-progs-0.19.0-official/common.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/common.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/common.c btrfs-progs-0.19-26.el6/common.c
+--- btrfs-progs-0.19.0/common.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/common.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,46 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -8418,9 +8939,9 @@ diff -urN btrfs-progs-0.19.0-official/common.c btrfs-progs-0.19-23.el6/common.c
 +	}
 +	return fd;
 +}
-diff -urN btrfs-progs-0.19.0-official/convert.c btrfs-progs-0.19-23.el6/convert.c
---- btrfs-progs-0.19.0-official/convert.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/convert.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/convert.c btrfs-progs-0.19-26.el6/convert.c
+--- btrfs-progs-0.19.0/convert.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/convert.c	2012-02-22 15:59:55.000000000 +0000
 @@ -370,7 +370,6 @@
  	struct btrfs_extent_item *ei;
  	u32 blocksize = root->sectorsize;
@@ -8543,10 +9064,27 @@ diff -urN btrfs-progs-0.19.0-official/convert.c btrfs-progs-0.19-23.el6/convert.
  	if (ret)
  		goto err;
  	ret = create_chunk_mapping(trans, root);
-diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
---- btrfs-progs-0.19.0-official/ctree.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/ctree.c	2012-02-09 16:53:33.000000000 +0000
-@@ -138,6 +138,46 @@
+diff -urN btrfs-progs-0.19.0/ctree.c btrfs-progs-0.19-26.el6/ctree.c
+--- btrfs-progs-0.19.0/ctree.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/ctree.c	2012-02-22 15:59:55.000000000 +0000
+@@ -19,6 +19,7 @@
+ #include "disk-io.h"
+ #include "transaction.h"
+ #include "print-tree.h"
++#include "repair.h"
+ 
+ static int split_node(struct btrfs_trans_handle *trans, struct btrfs_root
+ 		      *root, struct btrfs_path *path, int level);
+@@ -32,8 +33,6 @@
+ 			      struct btrfs_root *root,
+ 			      struct extent_buffer *dst_buf,
+ 			      struct extent_buffer *src_buf);
+-static int del_ptr(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+-		   struct btrfs_path *path, int level, int slot);
+ 
+ inline void btrfs_init_path(struct btrfs_path *p)
+ {
+@@ -138,6 +137,48 @@
  	return 0;
  }
  
@@ -8564,8 +9102,10 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
 +				   btrfs_level_size(root, 0),
 +				   root->root_key.objectid,
 +				   &disk_key, level, 0, 0);
-+	if (IS_ERR(c))
-+		return PTR_ERR(c);
++	if (IS_ERR(c)) {
++		c = old;
++		extent_buffer_get(c);
++	}
 +
 +	memset_extent_buffer(c, 0, 0, sizeof(struct btrfs_header));
 +	btrfs_set_header_level(c, level);
@@ -8593,7 +9133,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  /*
   * check if the tree block can be shared by multiple trees
   */
-@@ -262,7 +302,6 @@
+@@ -262,7 +303,6 @@
  			     struct extent_buffer **cow_ret,
  			     u64 search_start, u64 empty_size)
  {
@@ -8601,7 +9141,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	struct extent_buffer *cow;
  	struct btrfs_disk_key disk_key;
  	int level;
-@@ -272,7 +311,6 @@
+@@ -272,7 +312,6 @@
  	WARN_ON(root->ref_cows && trans->transid != root->last_trans);
  
  	level = btrfs_header_level(buf);
@@ -8609,7 +9149,255 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  
  	if (level == 0)
  		btrfs_item_key(buf, &disk_key, 0);
-@@ -767,7 +805,7 @@
+@@ -551,156 +590,125 @@
+ 	return btrfs_item_offset_nr(leaf, nr - 1);
+ }
+ 
+-static int check_node(struct btrfs_root *root, struct btrfs_path *path,
+-		      int level)
++int btrfs_check_node(struct btrfs_root *root,
++		      struct btrfs_disk_key *parent_key,
++		      struct extent_buffer *buf)
+ {
+-	struct extent_buffer *parent = NULL;
+-	struct extent_buffer *node = path->nodes[level];
+-	struct btrfs_disk_key parent_key;
+-	struct btrfs_disk_key node_key;
+-	int parent_slot;
+-	int slot;
++	int i;
+ 	struct btrfs_key cpukey;
+-	u32 nritems = btrfs_header_nritems(node);
++	struct btrfs_disk_key key;
++	u32 nritems = btrfs_header_nritems(buf);
+ 
+-	if (path->nodes[level + 1])
+-		parent = path->nodes[level + 1];
++	if (nritems == 0 || nritems > BTRFS_NODEPTRS_PER_BLOCK(root))
++		goto fail;
+ 
+-	slot = path->slots[level];
+-	BUG_ON(nritems == 0);
+-	if (parent) {
+-		parent_slot = path->slots[level + 1];
+-		btrfs_node_key(parent, &parent_key, parent_slot);
+-		btrfs_node_key(node, &node_key, 0);
+-		BUG_ON(memcmp(&parent_key, &node_key,
+-			      sizeof(struct btrfs_disk_key)));
+-		BUG_ON(btrfs_node_blockptr(parent, parent_slot) !=
+-		       btrfs_header_bytenr(node));
+-	}
+-	BUG_ON(nritems > BTRFS_NODEPTRS_PER_BLOCK(root));
+-	if (slot != 0) {
+-		btrfs_node_key_to_cpu(node, &cpukey, slot - 1);
+-		btrfs_node_key(node, &node_key, slot);
+-		BUG_ON(btrfs_comp_keys(&node_key, &cpukey) <= 0);
+-	}
+-	if (slot < nritems - 1) {
+-		btrfs_node_key_to_cpu(node, &cpukey, slot + 1);
+-		btrfs_node_key(node, &node_key, slot);
+-		BUG_ON(btrfs_comp_keys(&node_key, &cpukey) >= 0);
++	if (parent_key && parent_key->type) {
++		btrfs_node_key(buf, &key, 0);
++		if (memcmp(parent_key, &key, sizeof(key)))
++			goto fail;
++	}
++	for (i = 0; nritems > 1 && i < nritems - 2; i++) {
++		btrfs_node_key(buf, &key, i);
++		btrfs_node_key_to_cpu(buf, &cpukey, i + 1);
++		if (btrfs_comp_keys(&key, &cpukey) >= 0)
++			goto fail;
+ 	}
+ 	return 0;
++fail:
++	if (btrfs_header_owner(buf) == BTRFS_EXTENT_TREE_OBJECTID) {
++		if (parent_key)
++			btrfs_disk_key_to_cpu(&cpukey, parent_key);
++		else
++			btrfs_node_key_to_cpu(buf, &cpukey, 0);
++		btrfs_add_corrupt_extent_record(root->fs_info, &cpukey,
++						buf->start, buf->len,
++						btrfs_header_level(buf));
++	}
++	return -EIO;
+ }
+ 
+-static int check_leaf(struct btrfs_root *root, struct btrfs_path *path,
+-		      int level)
++int btrfs_check_leaf(struct btrfs_root *root,
++		      struct btrfs_disk_key *parent_key,
++		      struct extent_buffer *buf)
+ {
+-	struct extent_buffer *leaf = path->nodes[level];
+-	struct extent_buffer *parent = NULL;
+-	int parent_slot;
++	int i;
+ 	struct btrfs_key cpukey;
+-	struct btrfs_disk_key parent_key;
+-	struct btrfs_disk_key leaf_key;
+-	int slot = path->slots[0];
+-
+-	u32 nritems = btrfs_header_nritems(leaf);
++	struct btrfs_disk_key key;
++	u32 nritems = btrfs_header_nritems(buf);
+ 
+-	if (path->nodes[level + 1])
+-		parent = path->nodes[level + 1];
++	if (btrfs_header_level(buf) != 0) {
++		fprintf(stderr, "leaf is not a leaf %llu\n",
++		       (unsigned long long)btrfs_header_bytenr(buf));
++		goto fail;
++	}
++	if (btrfs_leaf_free_space(root, buf) < 0) {
++		fprintf(stderr, "leaf free space incorrect %llu %d\n",
++			(unsigned long long)btrfs_header_bytenr(buf),
++			btrfs_leaf_free_space(root, buf));
++		goto fail;
++	}
+ 
+ 	if (nritems == 0)
+ 		return 0;
+ 
+-	if (parent) {
+-		parent_slot = path->slots[level + 1];
+-		btrfs_node_key(parent, &parent_key, parent_slot);
+-		btrfs_item_key(leaf, &leaf_key, 0);
+-
+-		BUG_ON(memcmp(&parent_key, &leaf_key,
+-		       sizeof(struct btrfs_disk_key)));
+-		BUG_ON(btrfs_node_blockptr(parent, parent_slot) !=
+-		       btrfs_header_bytenr(leaf));
++	btrfs_item_key(buf, &key, 0);
++	if (parent_key && parent_key->type &&
++	    memcmp(parent_key, &key, sizeof(key))) {
++		fprintf(stderr, "leaf parent key incorrect %llu\n",
++		       (unsigned long long)btrfs_header_bytenr(buf));
++		goto fail;
+ 	}
+-#if 0
+ 	for (i = 0; nritems > 1 && i < nritems - 2; i++) {
+-		btrfs_item_key_to_cpu(leaf, &cpukey, i + 1);
+-		btrfs_item_key(leaf, &leaf_key, i);
+-		if (comp_keys(&leaf_key, &cpukey) >= 0) {
+-			btrfs_print_leaf(root, leaf);
+-			printk("slot %d offset bad key\n", i);
+-			BUG_ON(1);
+-		}
+-		if (btrfs_item_offset_nr(leaf, i) !=
+-			btrfs_item_end_nr(leaf, i + 1)) {
+-			btrfs_print_leaf(root, leaf);
+-			printk("slot %d offset bad\n", i);
+-			BUG_ON(1);
+-		}
+-		if (i == 0) {
+-			if (btrfs_item_offset_nr(leaf, i) +
+-			       btrfs_item_size_nr(leaf, i) !=
+-			       BTRFS_LEAF_DATA_SIZE(root)) {
+-				btrfs_print_leaf(root, leaf);
+-				printk("slot %d first offset bad\n", i);
+-				BUG_ON(1);
+-			}
+-		}
+-	}
+-	if (nritems > 0) {
+-		if (btrfs_item_size_nr(leaf, nritems - 1) > 4096) {
+-				btrfs_print_leaf(root, leaf);
+-				printk("slot %d bad size \n", nritems - 1);
+-				BUG_ON(1);
+-		}
+-	}
+-#endif
+-	if (slot != 0 && slot < nritems - 1) {
+-		btrfs_item_key(leaf, &leaf_key, slot);
+-		btrfs_item_key_to_cpu(leaf, &cpukey, slot - 1);
+-		if (btrfs_comp_keys(&leaf_key, &cpukey) <= 0) {
+-			btrfs_print_leaf(root, leaf);
+-			printk("slot %d offset bad key\n", slot);
+-			BUG_ON(1);
+-		}
+-		if (btrfs_item_offset_nr(leaf, slot - 1) !=
+-		       btrfs_item_end_nr(leaf, slot)) {
+-			btrfs_print_leaf(root, leaf);
+-			printk("slot %d offset bad\n", slot);
+-			BUG_ON(1);
+-		}
+-	}
+-	if (slot < nritems - 1) {
+-		btrfs_item_key(leaf, &leaf_key, slot);
+-		btrfs_item_key_to_cpu(leaf, &cpukey, slot + 1);
+-		BUG_ON(btrfs_comp_keys(&leaf_key, &cpukey) >= 0);
+-		if (btrfs_item_offset_nr(leaf, slot) !=
+-			btrfs_item_end_nr(leaf, slot + 1)) {
+-			btrfs_print_leaf(root, leaf);
+-			printk("slot %d offset bad\n", slot);
+-			BUG_ON(1);
++		btrfs_item_key(buf, &key, i);
++		btrfs_item_key_to_cpu(buf, &cpukey, i + 1);
++		if (btrfs_comp_keys(&key, &cpukey) >= 0) {
++			fprintf(stderr, "bad key ordering %d %d\n", i, i+1);
++			goto fail;
++		}
++		if (btrfs_item_offset_nr(buf, i) !=
++			btrfs_item_end_nr(buf, i + 1)) {
++			fprintf(stderr, "incorrect offsets %u %u\n",
++				btrfs_item_offset_nr(buf, i),
++				btrfs_item_end_nr(buf, i + 1));
++			goto fail;
++		}
++		if (i == 0 && btrfs_item_end_nr(buf, i) !=
++		    BTRFS_LEAF_DATA_SIZE(root)) {
++			fprintf(stderr, "bad item end %u wanted %u\n",
++				btrfs_item_end_nr(buf, i),
++				(unsigned)BTRFS_LEAF_DATA_SIZE(root));
++			goto fail;
+ 		}
+ 	}
+-	BUG_ON(btrfs_item_offset_nr(leaf, 0) +
+-	       btrfs_item_size_nr(leaf, 0) != BTRFS_LEAF_DATA_SIZE(root));
+ 	return 0;
++fail:
++	if (btrfs_header_owner(buf) == BTRFS_EXTENT_TREE_OBJECTID) {
++		if (parent_key)
++			btrfs_disk_key_to_cpu(&cpukey, parent_key);
++		else
++			btrfs_item_key_to_cpu(buf, &cpukey, 0);
++
++		btrfs_add_corrupt_extent_record(root->fs_info, &cpukey,
++						buf->start, buf->len, 0);
++	}
++	return -EIO;
+ }
+ 
+ static int noinline check_block(struct btrfs_root *root,
+ 				struct btrfs_path *path, int level)
+ {
+-	return 0;
+-#if 0
+-	struct extent_buffer *buf = path->nodes[level];
++	struct btrfs_disk_key key;
++	struct btrfs_disk_key *key_ptr = NULL;
++	struct extent_buffer *parent;
+ 
+-	if (memcmp_extent_buffer(buf, root->fs_info->fsid,
+-				 (unsigned long)btrfs_header_fsid(buf),
+-				 BTRFS_FSID_SIZE)) {
+-		printk("warning bad block %Lu\n", buf->start);
+-		return 1;
++	if (path->nodes[level + 1]) {
++		parent = path->nodes[level + 1];
++		btrfs_node_key(parent, &key, path->slots[level + 1]);
++		key_ptr = &key;
+ 	}
+-#endif
+ 	if (level == 0)
+-		return check_leaf(root, path, level);
+-	return check_node(root, path, level);
++		return btrfs_check_leaf(root, key_ptr, path->nodes[0]);
++	return btrfs_check_node(root, key_ptr, path->nodes[level]);
+ }
+ 
+ /*
+@@ -767,7 +775,7 @@
  	return -1;
  }
  
@@ -8618,7 +9406,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  				   struct extent_buffer *parent, int slot)
  {
  	int level = btrfs_header_level(parent);
-@@ -795,7 +833,6 @@
+@@ -795,7 +803,6 @@
  	int wret;
  	int pslot;
  	int orig_slot = path->slots[level];
@@ -8626,7 +9414,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	u64 orig_ptr;
  
  	if (level == 0)
-@@ -845,9 +882,6 @@
+@@ -845,9 +852,6 @@
  	    BTRFS_NODEPTRS_PER_BLOCK(root) / 4)
  		return 0;
  
@@ -8636,7 +9424,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	left = read_node_slot(root, parent, pslot - 1);
  	if (left) {
  		wret = btrfs_cow_block(trans, root, left,
-@@ -873,8 +907,6 @@
+@@ -873,8 +877,6 @@
  		wret = push_node_left(trans, root, left, mid, 1);
  		if (wret < 0)
  			ret = wret;
@@ -8645,7 +9433,27 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	}
  
  	/*
-@@ -996,14 +1028,12 @@
+@@ -892,8 +894,8 @@
+ 			wait_on_tree_block_writeback(root, right);
+ 			free_extent_buffer(right);
+ 			right = NULL;
+-			wret = del_ptr(trans, root, path, level + 1, pslot +
+-				       1);
++			wret = btrfs_del_ptr(trans, root, path,
++					     level + 1, pslot + 1);
+ 			if (wret)
+ 				ret = wret;
+ 			wret = btrfs_free_extent(trans, root, bytenr,
+@@ -940,7 +942,7 @@
+ 		wait_on_tree_block_writeback(root, mid);
+ 		free_extent_buffer(mid);
+ 		mid = NULL;
+-		wret = del_ptr(trans, root, path, level + 1, pslot);
++		wret = btrfs_del_ptr(trans, root, path, level + 1, pslot);
+ 		if (wret)
+ 			ret = wret;
+ 		wret = btrfs_free_extent(trans, root, bytenr, blocksize,
+@@ -996,14 +998,12 @@
  	int wret;
  	int pslot;
  	int orig_slot = path->slots[level];
@@ -8660,7 +9468,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  
  	if (level < BTRFS_MAX_LEVEL - 1)
  		parent = path->nodes[level + 1];
-@@ -1102,7 +1132,7 @@
+@@ -1102,7 +1102,7 @@
  /*
   * readahead one full node of leaves
   */
@@ -8669,7 +9477,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  			     int level, int slot, u64 objectid)
  {
  	struct extent_buffer *node;
-@@ -1199,7 +1229,7 @@
+@@ -1199,7 +1199,7 @@
  	u8 lowest_level = 0;
  
  	lowest_level = p->lowest_level;
@@ -8678,7 +9486,16 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	WARN_ON(p->nodes[0] != NULL);
  	/*
  	WARN_ON(!mutex_is_locked(&root->fs_info->fs_mutex));
-@@ -2370,7 +2400,6 @@
+@@ -1264,6 +1264,8 @@
+ 						 key->objectid);
+ 
+ 			b = read_node_slot(root, b, slot);
++			if (!extent_buffer_uptodate(b))
++				return -EIO;
+ 		} else {
+ 			p->slots[level] = slot;
+ 			if (ins_len > 0 &&
+@@ -2370,7 +2372,6 @@
  {
  	int ret = 0;
  	int slot;
@@ -8686,7 +9503,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	struct extent_buffer *leaf;
  	struct btrfs_item *item;
  	u32 nritems;
-@@ -2380,7 +2409,6 @@
+@@ -2380,7 +2381,6 @@
  	unsigned int size_diff;
  	int i;
  
@@ -8694,7 +9511,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	leaf = path->nodes[0];
  	slot = path->slots[0];
  
-@@ -2468,7 +2496,6 @@
+@@ -2468,7 +2468,6 @@
  {
  	int ret = 0;
  	int slot;
@@ -8702,7 +9519,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	struct extent_buffer *leaf;
  	struct btrfs_item *item;
  	u32 nritems;
-@@ -2477,7 +2504,6 @@
+@@ -2477,7 +2476,6 @@
  	unsigned int old_size;
  	int i;
  
@@ -8710,7 +9527,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	leaf = path->nodes[0];
  
  	nritems = btrfs_header_nritems(leaf);
-@@ -2541,7 +2567,6 @@
+@@ -2541,7 +2539,6 @@
  	struct btrfs_item *item;
  	int ret = 0;
  	int slot;
@@ -8718,7 +9535,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	int i;
  	u32 nritems;
  	u32 total_size = 0;
-@@ -2565,7 +2590,6 @@
+@@ -2565,7 +2562,6 @@
  	if (ret < 0)
  		goto out;
  
@@ -8726,7 +9543,25 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	leaf = path->nodes[0];
  
  	nritems = btrfs_header_nritems(leaf);
-@@ -2931,6 +2955,8 @@
+@@ -2675,7 +2671,7 @@
+  * continuing all the way the root if required.  The root is converted into
+  * a leaf if all the nodes are emptied.
+  */
+-static int del_ptr(struct btrfs_trans_handle *trans, struct btrfs_root *root,
++int btrfs_del_ptr(struct btrfs_trans_handle *trans, struct btrfs_root *root,
+ 		   struct btrfs_path *path, int level, int slot)
+ {
+ 	struct extent_buffer *parent = path->nodes[level];
+@@ -2727,7 +2723,7 @@
+ 	int ret;
+ 
+ 	WARN_ON(btrfs_header_generation(leaf) != trans->transid);
+-	ret = del_ptr(trans, root, path, 1, path->slots[1]);
++	ret = btrfs_del_ptr(trans, root, path, 1, path->slots[1]);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -2931,6 +2927,8 @@
  			reada_for_search(root, path, level, slot, 0);
  
  		next = read_node_slot(root, c, slot);
@@ -8735,7 +9570,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  		break;
  	}
  	path->slots[level] = slot;
-@@ -2945,6 +2971,8 @@
+@@ -2945,6 +2943,8 @@
  		if (path->reada)
  			reada_for_search(root, path, level, 0, 0);
  		next = read_node_slot(root, next, 0);
@@ -8744,9 +9579,9 @@ diff -urN btrfs-progs-0.19.0-official/ctree.c btrfs-progs-0.19-23.el6/ctree.c
  	}
  	return 0;
  }
-diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
---- btrfs-progs-0.19.0-official/ctree.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/ctree.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/ctree.h btrfs-progs-0.19-26.el6/ctree.h
+--- btrfs-progs-0.19.0/ctree.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/ctree.h	2012-02-22 15:59:55.000000000 +0000
 @@ -24,6 +24,7 @@
  #include "radix-tree.h"
  #include "extent-cache.h"
@@ -8921,7 +9756,21 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  
  struct btrfs_block_group_item {
  	__le64 used;
-@@ -847,6 +918,8 @@
+@@ -726,6 +797,13 @@
+ 	struct list_head space_info;
+ 	int system_allocs;
+ 	int readonly;
++	int (*free_extent_hook)(struct btrfs_trans_handle *trans,
++				struct btrfs_root *root,
++				u64 bytenr, u64 num_bytes, u64 parent,
++				u64 root_objectid, u64 owner, u64 offset,
++				int refs_to_drop);
++	struct cache_tree *fsck_extent_cache;
++	struct cache_tree *corrupt_blocks;
+ };
+ 
+ /*
+@@ -847,6 +925,8 @@
  #define BTRFS_DEV_ITEM_KEY	216
  #define BTRFS_CHUNK_ITEM_KEY	228
  
@@ -8930,7 +9779,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  /*
   * string items are for debugging.  They just store a short string of
   * data in the FS
-@@ -1047,6 +1120,7 @@
+@@ -1047,6 +1127,7 @@
  
  /* struct btrfs_inode_ref */
  BTRFS_SETGET_FUNCS(inode_ref_name_len, struct btrfs_inode_ref, name_len, 16);
@@ -8938,7 +9787,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  BTRFS_SETGET_FUNCS(inode_ref_index, struct btrfs_inode_ref, index, 64);
  
  /* struct btrfs_inode_item */
-@@ -1325,6 +1399,10 @@
+@@ -1325,6 +1406,10 @@
  BTRFS_SETGET_FUNCS(root_ref_sequence, struct btrfs_root_ref, sequence, 64);
  BTRFS_SETGET_FUNCS(root_ref_name_len, struct btrfs_root_ref, name_len, 16);
  
@@ -8949,7 +9798,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  /* struct btrfs_dir_item */
  BTRFS_SETGET_FUNCS(dir_data_len, struct btrfs_dir_item, data_len, 16);
  BTRFS_SETGET_FUNCS(dir_type, struct btrfs_dir_item, type, 8);
-@@ -1510,6 +1588,55 @@
+@@ -1510,6 +1595,55 @@
  			 last_snapshot, 64);
  
  
@@ -9005,7 +9854,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  /* struct btrfs_super_block */
  
  BTRFS_SETGET_STACK_FUNCS(super_bytenr, struct btrfs_super_block, bytenr, 64);
-@@ -1557,6 +1684,8 @@
+@@ -1557,6 +1691,8 @@
  			 incompat_flags, 64);
  BTRFS_SETGET_STACK_FUNCS(super_csum_type, struct btrfs_super_block,
  			 csum_type, 16);
@@ -9014,7 +9863,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  
  static inline int btrfs_super_csum_size(struct btrfs_super_block *s)
  {
-@@ -1572,6 +1701,7 @@
+@@ -1572,6 +1708,7 @@
  
  /* struct btrfs_file_extent_item */
  BTRFS_SETGET_FUNCS(file_extent_type, struct btrfs_file_extent_item, type, 8);
@@ -9022,7 +9871,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  
  static inline unsigned long btrfs_file_extent_inline_start(struct
  						   btrfs_file_extent_item *e)
-@@ -1588,18 +1718,30 @@
+@@ -1588,18 +1725,30 @@
  
  BTRFS_SETGET_FUNCS(file_extent_disk_bytenr, struct btrfs_file_extent_item,
  		   disk_bytenr, 64);
@@ -9053,7 +9902,7 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  BTRFS_SETGET_FUNCS(file_extent_encryption, struct btrfs_file_extent_item,
  		   encryption, 8);
  BTRFS_SETGET_FUNCS(file_extent_other_encoding, struct btrfs_file_extent_item,
-@@ -1643,6 +1785,10 @@
+@@ -1643,6 +1792,10 @@
  	btrfs_item_offset_nr(leaf, slot)))
  
  /* extent-tree.c */
@@ -9064,10 +9913,18 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  int btrfs_extent_post_op(struct btrfs_trans_handle *trans,
  			 struct btrfs_root *root);
  int btrfs_copy_pinned(struct btrfs_root *root, struct extent_io_tree *copy);
-@@ -1705,6 +1851,12 @@
+@@ -1705,6 +1858,20 @@
  			     struct btrfs_root *root, u64 bytenr, u64 num,
  			     int alloc, int mark_free);
  /* ctree.c */
++int btrfs_del_ptr(struct btrfs_trans_handle *trans, struct btrfs_root *root,
++		   struct btrfs_path *path, int level, int slot);
++int btrfs_check_node(struct btrfs_root *root,
++		      struct btrfs_disk_key *parent_key,
++		      struct extent_buffer *buf);
++int btrfs_check_leaf(struct btrfs_root *root,
++		      struct btrfs_disk_key *parent_key,
++		      struct extent_buffer *buf);
 +int btrfs_fsck_reinit_root(struct btrfs_trans_handle *trans,
 +		      struct btrfs_root *root);
 +void reada_for_search(struct btrfs_root *root, struct btrfs_path *path,
@@ -9077,9 +9934,9 @@ diff -urN btrfs-progs-0.19.0-official/ctree.h btrfs-progs-0.19-23.el6/ctree.h
  int btrfs_previous_item(struct btrfs_root *root,
  			struct btrfs_path *path, u64 min_objectid,
  			int type);
-diff -urN btrfs-progs-0.19.0-official/debug-tree.c btrfs-progs-0.19-23.el6/debug-tree.c
---- btrfs-progs-0.19.0-official/debug-tree.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/debug-tree.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/debug-tree.c btrfs-progs-0.19-26.el6/debug-tree.c
+--- btrfs-progs-0.19.0/debug-tree.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/debug-tree.c	2012-02-22 15:59:55.000000000 +0000
 @@ -35,44 +35,6 @@
  	exit(1);
  }
@@ -9420,9 +10277,9 @@ diff -urN btrfs-progs-0.19.0-official/debug-tree.c btrfs-progs-0.19-23.el6/debug
  	printf("uuid %s\n", uuidbuf);
  	printf("%s\n", BTRFS_BUILD_VERSION);
  	return 0;
-diff -urN btrfs-progs-0.19.0-official/dir-item.c btrfs-progs-0.19-23.el6/dir-item.c
---- btrfs-progs-0.19.0-official/dir-item.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/dir-item.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/dir-item.c btrfs-progs-0.19-26.el6/dir-item.c
+--- btrfs-progs-0.19.0/dir-item.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/dir-item.c	2012-02-22 15:59:55.000000000 +0000
 @@ -332,5 +332,5 @@
  		ret = btrfs_truncate_item(trans, root, path,
  					  item_len - sub_item_len, 1);
@@ -9430,9 +10287,9 @@ diff -urN btrfs-progs-0.19.0-official/dir-item.c btrfs-progs-0.19-23.el6/dir-ite
 -	return 0;
 +	return ret;
  }
-diff -urN btrfs-progs-0.19.0-official/dir-test.c btrfs-progs-0.19-23.el6/dir-test.c
---- btrfs-progs-0.19.0-official/dir-test.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/dir-test.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/dir-test.c btrfs-progs-0.19-26.el6/dir-test.c
+--- btrfs-progs-0.19.0/dir-test.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/dir-test.c	2012-02-22 15:59:55.000000000 +0000
 @@ -485,7 +485,7 @@
  			if (ret) {
  				fprintf(stderr, "op %d failed %d:%d\n",
@@ -9442,9 +10299,9 @@ diff -urN btrfs-progs-0.19.0-official/dir-test.c btrfs-progs-0.19-23.el6/dir-tes
  				fprintf(stderr, "op %d failed %d:%d\n",
  					op, i, iterations);
  				err = ret;
-diff -urN btrfs-progs-0.19.0-official/disk-io.c btrfs-progs-0.19-23.el6/disk-io.c
---- btrfs-progs-0.19.0-official/disk-io.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/disk-io.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/disk-io.c btrfs-progs-0.19-26.el6/disk-io.c
+--- btrfs-progs-0.19.0/disk-io.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/disk-io.c	2012-02-22 15:59:55.000000000 +0000
 @@ -35,14 +35,19 @@
  #include "utils.h"
  #include "print-tree.h"
@@ -9984,9 +10841,9 @@ diff -urN btrfs-progs-0.19.0-official/disk-io.c btrfs-progs-0.19-23.el6/disk-io.
  	return !ret;
  }
  
-diff -urN btrfs-progs-0.19.0-official/disk-io.h btrfs-progs-0.19-23.el6/disk-io.h
---- btrfs-progs-0.19.0-official/disk-io.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/disk-io.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/disk-io.h btrfs-progs-0.19-26.el6/disk-io.h
+--- btrfs-progs-0.19.0/disk-io.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/disk-io.h	2012-02-22 15:59:55.000000000 +0000
 @@ -46,7 +46,13 @@
  struct btrfs_root *open_ctree(const char *filename, u64 sb_bytenr, int writes);
  struct btrfs_root *open_ctree_fd(int fp, const char *path, u64 sb_bytenr,
@@ -10001,9 +10858,9 @@ diff -urN btrfs-progs-0.19.0-official/disk-io.h btrfs-progs-0.19-23.el6/disk-io.
  int write_ctree_super(struct btrfs_trans_handle *trans,
  		      struct btrfs_root *root);
  int btrfs_read_dev_super(int fd, struct btrfs_super_block *sb, u64 sb_bytenr);
-diff -urN btrfs-progs-0.19.0-official/extent-cache.c btrfs-progs-0.19-23.el6/extent-cache.c
---- btrfs-progs-0.19.0-official/extent-cache.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/extent-cache.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/extent-cache.c btrfs-progs-0.19-26.el6/extent-cache.c
+--- btrfs-progs-0.19.0/extent-cache.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/extent-cache.c	2012-02-22 15:59:55.000000000 +0000
 @@ -96,13 +96,11 @@
  				 struct cache_extent *pe)
  {
@@ -10020,9 +10877,9 @@ diff -urN btrfs-progs-0.19.0-official/extent-cache.c btrfs-progs-0.19-23.el6/ext
  	return 0;
  }
  
-diff -urN btrfs-progs-0.19.0-official/extent_io.c btrfs-progs-0.19-23.el6/extent_io.c
---- btrfs-progs-0.19.0-official/extent_io.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/extent_io.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/extent_io.c btrfs-progs-0.19-26.el6/extent_io.c
+--- btrfs-progs-0.19.0/extent_io.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/extent_io.c	2012-02-22 15:59:55.000000000 +0000
 @@ -28,7 +28,8 @@
  #include "extent_io.h"
  #include "list.h"
@@ -10114,9 +10971,9 @@ diff -urN btrfs-progs-0.19.0-official/extent_io.c btrfs-progs-0.19-23.el6/extent
  	if (eb->flags & EXTENT_UPTODATE)
  		return 1;
  	return 0;
-diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/extent-tree.c
---- btrfs-progs-0.19.0-official/extent-tree.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/extent-tree.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/extent-tree.c btrfs-progs-0.19-26.el6/extent-tree.c
+--- btrfs-progs-0.19.0/extent-tree.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/extent-tree.c	2012-02-22 15:59:55.000000000 +0000
 @@ -1039,6 +1039,11 @@
  		err = ret;
  		goto out;
@@ -10236,7 +11093,15 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  	return ret;
  }
  
-@@ -1735,7 +1717,7 @@
+@@ -1721,7 +1703,6 @@
+ 
+ 		cache = (struct btrfs_block_group_cache *)(unsigned long)ptr;
+ 		ret = write_one_cache_group(trans, root, path, cache);
+-		BUG_ON(ret);
+ 	}
+ 	btrfs_free_path(path);
+ 	return 0;
+@@ -1735,7 +1716,7 @@
  	struct btrfs_space_info *found;
  	list_for_each(cur, head) {
  		found = list_entry(cur, struct btrfs_space_info, list);
@@ -10245,7 +11110,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  			return found;
  	}
  	return NULL;
-@@ -1752,7 +1734,12 @@
+@@ -1752,7 +1733,12 @@
  	if (found) {
  		found->total_bytes += total_bytes;
  		found->bytes_used += bytes_used;
@@ -10259,7 +11124,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  		*space_info = found;
  		return 0;
  	}
-@@ -1775,6 +1762,7 @@
+@@ -1775,6 +1761,7 @@
  {
  	u64 extra_flags = flags & (BTRFS_BLOCK_GROUP_RAID0 |
  				   BTRFS_BLOCK_GROUP_RAID1 |
@@ -10267,7 +11132,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  				   BTRFS_BLOCK_GROUP_DUP);
  	if (extra_flags) {
  		if (flags & BTRFS_BLOCK_GROUP_DATA)
-@@ -1812,7 +1800,8 @@
+@@ -1812,7 +1799,8 @@
  	    thresh)
  		return 0;
  
@@ -10277,7 +11142,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  	if (ret == -ENOSPC) {
  		space_info->full = 1;
  		return 0;
-@@ -1820,7 +1809,7 @@
+@@ -1820,7 +1808,7 @@
  
  	BUG_ON(ret);
  
@@ -10286,7 +11151,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  		     BTRFS_FIRST_CHUNK_TREE_OBJECTID, start, num_bytes);
  	BUG_ON(ret);
  	return 0;
-@@ -1869,6 +1858,7 @@
+@@ -1869,6 +1857,7 @@
  
  		old_val = btrfs_block_group_used(&cache->item);
  		num_bytes = min(total, cache->key.offset - byte_in_group);
@@ -10294,7 +11159,26 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  		if (alloc) {
  			old_val += num_bytes;
  			cache->space_info->bytes_used += num_bytes;
-@@ -1963,6 +1953,21 @@
+@@ -1904,6 +1893,10 @@
+ 	}
+ 	while (num > 0) {
+ 		cache = btrfs_lookup_block_group(fs_info, bytenr);
++		if (!cache) {
++			len = min((u64)root->sectorsize, num);
++			goto next;
++		}
+ 		WARN_ON(!cache);
+ 		len = min(num, cache->key.offset -
+ 			  (bytenr - cache->key.objectid));
+@@ -1916,6 +1909,7 @@
+ 			cache->space_info->bytes_pinned -= len;
+ 			fs_info->total_pinned -= len;
+ 		}
++next:
+ 		bytenr += len;
+ 		num -= len;
+ 	}
+@@ -1963,6 +1957,21 @@
  	return 0;
  }
  
@@ -10316,7 +11200,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  static int finish_current_insert(struct btrfs_trans_handle *trans,
  				 struct btrfs_root *extent_root)
  {
-@@ -2047,6 +2052,12 @@
+@@ -2047,6 +2056,12 @@
  	return 0;
  }
  
@@ -10329,7 +11213,20 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  /*
   * remove an extent from the root, returns 0 on success
   */
-@@ -2132,8 +2143,6 @@
+@@ -2072,6 +2087,12 @@
+ 	u32 item_size;
+ 	u64 refs;
+ 
++	if (root->fs_info->free_extent_hook) {
++		root->fs_info->free_extent_hook(trans, root, bytenr, num_bytes,
++						parent, root_objectid, owner_objectid,
++						owner_offset, refs_to_drop);
++
++	}
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
+@@ -2132,8 +2153,6 @@
  			extent_slot = path->slots[0];
  		}
  	} else {
@@ -10338,7 +11235,7 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  		printk(KERN_ERR "btrfs unable to find ref byte nr %llu "
  		       "parent %llu root %llu  owner %llu offset %llu\n",
  		       (unsigned long long)bytenr,
-@@ -2141,6 +2150,8 @@
+@@ -2141,6 +2160,8 @@
  		       (unsigned long long)root_objectid,
  		       (unsigned long long)owner_objectid,
  		       (unsigned long long)owner_offset);
@@ -10347,15 +11244,43 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
  	}
  
  	leaf = path->nodes[0];
-@@ -2250,6 +2261,7 @@
- 					 mark_free);
- 		BUG_ON(ret);
+@@ -2246,10 +2267,9 @@
+ 			BUG_ON(ret);
+ 		}
+ 
+-		ret = update_block_group(trans, root, bytenr, num_bytes, 0,
+-					 mark_free);
+-		BUG_ON(ret);
++		update_block_group(trans, root, bytenr, num_bytes, 0, mark_free);
  	}
 +fail:
  	btrfs_free_path(path);
  	finish_current_insert(trans, extent_root);
  	return ret;
-@@ -3283,3 +3295,158 @@
+@@ -2578,13 +2598,7 @@
+ 
+ 	ret = update_block_group(trans, root, ins->objectid, ins->offset,
+ 				 1, 0);
+-	if (ret) {
+-		printk(KERN_ERR "btrfs update block group failed for %llu "
+-		       "%llu\n", (unsigned long long)ins->objectid,
+-		       (unsigned long long)ins->offset);
+-		BUG();
+-	}
+-	return ret;
++	return 0;
+ }
+ 
+ static int alloc_tree_block(struct btrfs_trans_handle *trans,
+@@ -3167,7 +3181,6 @@
+ 
+ 	finish_current_insert(trans, extent_root);
+ 	ret = del_pending_extents(trans, extent_root);
+-	BUG_ON(ret);
+ 	set_avail_alloc_bits(extent_root->fs_info, type);
+ 	return 0;
+ }
+@@ -3283,3 +3296,158 @@
  	return update_block_group(trans, root, bytenr, num_bytes,
  				  alloc, mark_free);
  }
@@ -10514,9 +11439,9 @@ diff -urN btrfs-progs-0.19.0-official/extent-tree.c btrfs-progs-0.19-23.el6/exte
 +	btrfs_release_path(root, &path);
 +	return 0;
 +}
-diff -urN btrfs-progs-0.19.0-official/file-item.c btrfs-progs-0.19-23.el6/file-item.c
---- btrfs-progs-0.19.0-official/file-item.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/file-item.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/file-item.c btrfs-progs-0.19-26.el6/file-item.c
+--- btrfs-progs-0.19.0/file-item.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/file-item.c	2012-02-22 15:59:55.000000000 +0000
 @@ -193,7 +193,7 @@
  			  struct btrfs_root *root, u64 alloc_end,
  			  u64 bytenr, char *data, size_t len)
@@ -10534,9 +11459,9 @@ diff -urN btrfs-progs-0.19.0-official/file-item.c btrfs-progs-0.19-23.el6/file-i
  		goto found;
  	}
  	ret = PTR_ERR(item);
-diff -urN btrfs-progs-0.19.0-official/find-root.c btrfs-progs-0.19-23.el6/find-root.c
---- btrfs-progs-0.19.0-official/find-root.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/find-root.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/find-root.c btrfs-progs-0.19-26.el6/find-root.c
+--- btrfs-progs-0.19.0/find-root.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/find-root.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,458 @@
 +/*
 + * Copyright (C) 2011 Red Hat.  All rights reserved.
@@ -10996,9 +11921,9 @@ diff -urN btrfs-progs-0.19.0-official/find-root.c btrfs-progs-0.19-23.el6/find-r
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/.gitignore btrfs-progs-0.19-23.el6/.gitignore
---- btrfs-progs-0.19.0-official/.gitignore	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/.gitignore	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/.gitignore btrfs-progs-0.19-26.el6/.gitignore
+--- btrfs-progs-0.19.0/.gitignore	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/.gitignore	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,15 @@
 +*.o
 +.*.o.d
@@ -11015,9 +11940,9 @@ diff -urN btrfs-progs-0.19.0-official/.gitignore btrfs-progs-0.19-23.el6/.gitign
 +mkfs.btrfs
 +repair
 +restore
-diff -urN btrfs-progs-0.19.0-official/help.c btrfs-progs-0.19-23.el6/help.c
---- btrfs-progs-0.19.0-official/help.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/help.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/help.c btrfs-progs-0.19-26.el6/help.c
+--- btrfs-progs-0.19.0/help.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/help.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,214 @@
 +/*
 + * This program is free software; you can redistribute it and/or
@@ -11233,9 +12158,9 @@ diff -urN btrfs-progs-0.19.0-official/help.c btrfs-progs-0.19-23.el6/help.c
 +
 +	usage_command_group(grp, full, 0);
 +}
-diff -urN btrfs-progs-0.19.0-official/INSTALL btrfs-progs-0.19-23.el6/INSTALL
---- btrfs-progs-0.19.0-official/INSTALL	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/INSTALL	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/INSTALL btrfs-progs-0.19-26.el6/INSTALL
+--- btrfs-progs-0.19.0/INSTALL	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/INSTALL	2012-02-22 15:59:55.000000000 +0000
 @@ -22,27 +22,38 @@
  e2fsprogs-devel from various distros.
  
@@ -11286,9 +12211,9 @@ diff -urN btrfs-progs-0.19.0-official/INSTALL btrfs-progs-0.19-23.el6/INSTALL
  
 -	debug-tree /dev/sda2 >& big_output_file
  
-diff -urN btrfs-progs-0.19.0-official/ioctl.h btrfs-progs-0.19-23.el6/ioctl.h
---- btrfs-progs-0.19.0-official/ioctl.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/ioctl.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/ioctl.h btrfs-progs-0.19-26.el6/ioctl.h
+--- btrfs-progs-0.19.0/ioctl.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/ioctl.h	2012-02-22 15:59:55.000000000 +0000
 @@ -23,13 +23,256 @@
  
  #define BTRFS_IOCTL_MAGIC 0x94
@@ -11584,9 +12509,9 @@ diff -urN btrfs-progs-0.19.0-official/ioctl.h btrfs-progs-0.19-23.el6/ioctl.h
 +					struct btrfs_ioctl_ino_path_args)
 +
  #endif
-diff -urN btrfs-progs-0.19.0-official/ioctl-test.c btrfs-progs-0.19-23.el6/ioctl-test.c
---- btrfs-progs-0.19.0-official/ioctl-test.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/ioctl-test.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/ioctl-test.c btrfs-progs-0.19-26.el6/ioctl-test.c
+--- btrfs-progs-0.19.0/ioctl-test.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/ioctl-test.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,37 @@
 +#include <stdio.h>
 +#include <stdlib.h>
@@ -11625,9 +12550,9 @@ diff -urN btrfs-progs-0.19.0-official/ioctl-test.c btrfs-progs-0.19-23.el6/ioctl
 +	return 0;
 +}
 +
-diff -urN btrfs-progs-0.19.0-official/kerncompat.h btrfs-progs-0.19-23.el6/kerncompat.h
---- btrfs-progs-0.19.0-official/kerncompat.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/kerncompat.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/kerncompat.h btrfs-progs-0.19-26.el6/kerncompat.h
+--- btrfs-progs-0.19.0/kerncompat.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/kerncompat.h	2012-02-22 15:59:55.000000000 +0000
 @@ -42,7 +42,11 @@
  #define GFP_NOFS 0
  #define __read_mostly
@@ -11640,9 +12565,9 @@ diff -urN btrfs-progs-0.19.0-official/kerncompat.h btrfs-progs-0.19-23.el6/kernc
  #define BUG() abort()
  #ifdef __CHECKER__
  #define __force    __attribute__((force))
-diff -urN btrfs-progs-0.19.0-official/Makefile btrfs-progs-0.19-23.el6/Makefile
---- btrfs-progs-0.19.0-official/Makefile	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/Makefile	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/Makefile btrfs-progs-0.19-26.el6/Makefile
+--- btrfs-progs-0.19.0/Makefile	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/Makefile	2012-02-22 15:59:55.000000000 +0000
 @@ -1,28 +1,32 @@
 -CC=gcc
 +CC = gcc
@@ -11653,7 +12578,7 @@ diff -urN btrfs-progs-0.19.0-official/Makefile btrfs-progs-0.19-23.el6/Makefile
  	  root-tree.o dir-item.o file-item.o inode-item.o \
  	  inode-map.o crc32c.o rbtree.o extent-cache.o extent_io.o \
 -	  volumes.o utils.o
-+	  volumes.o utils.o btrfs-list.o btrfslabel.o
++	  volumes.o utils.o btrfs-list.o btrfslabel.o repair.o
 +cmds_objects = cmds-subvolume.o cmds-filesystem.o cmds-device.o cmds-scrub.o \
 +	       cmds-inspect.o cmds-balance.o
  
@@ -11780,9 +12705,9 @@ diff -urN btrfs-progs-0.19.0-official/Makefile btrfs-progs-0.19-23.el6/Makefile
 -	if [ -e btrfs-convert ]; then $(INSTALL) btrfs-convert $(DESTDIR)$(bindir); fi
  
  -include .*.d
-diff -urN btrfs-progs-0.19.0-official/man/btrfs.8.in btrfs-progs-0.19-23.el6/man/btrfs.8.in
---- btrfs-progs-0.19.0-official/man/btrfs.8.in	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/man/btrfs.8.in	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/man/btrfs.8.in btrfs-progs-0.19-26.el6/man/btrfs.8.in
+--- btrfs-progs-0.19.0/man/btrfs.8.in	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/man/btrfs.8.in	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,322 @@
 +.TH BTRFS 8 "" "btrfs" "btrfs"
 +.\"
@@ -12106,9 +13031,9 @@ diff -urN btrfs-progs-0.19.0-official/man/btrfs.8.in btrfs-progs-0.19-23.el6/man
 +further details.
 +.SH SEE ALSO
 +.BR mkfs.btrfs (8)
-diff -urN btrfs-progs-0.19.0-official/man/btrfsctl.8.in btrfs-progs-0.19-23.el6/man/btrfsctl.8.in
---- btrfs-progs-0.19.0-official/man/btrfsctl.8.in	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/man/btrfsctl.8.in	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/man/btrfsctl.8.in btrfs-progs-0.19-26.el6/man/btrfsctl.8.in
+--- btrfs-progs-0.19.0/man/btrfsctl.8.in	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/man/btrfsctl.8.in	2012-02-22 15:59:55.000000000 +0000
 @@ -10,6 +10,9 @@
  [ \fB \-A\fP\fI device\fP ]
  [ \fB \-a\fP ]
@@ -12119,9 +13044,9 @@ diff -urN btrfs-progs-0.19.0-official/man/btrfsctl.8.in btrfs-progs-0.19-23.el6/
  .SH DESCRIPTION
  .B btrfsctl
  is used to control the filesystem and the files and directories stored. It is the tool to create a new snapshot for the filesystem.
-diff -urN btrfs-progs-0.19.0-official/man/btrfs-show.8.in btrfs-progs-0.19-23.el6/man/btrfs-show.8.in
---- btrfs-progs-0.19.0-official/man/btrfs-show.8.in	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/man/btrfs-show.8.in	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/man/btrfs-show.8.in btrfs-progs-0.19-26.el6/man/btrfs-show.8.in
+--- btrfs-progs-0.19.0/man/btrfs-show.8.in	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/man/btrfs-show.8.in	2012-02-22 15:59:55.000000000 +0000
 @@ -3,6 +3,9 @@
  btrfs-show \- scan the /dev directory for btrfs partitions and print results.
  .SH SYNOPSIS
@@ -12132,9 +13057,9 @@ diff -urN btrfs-progs-0.19.0-official/man/btrfs-show.8.in btrfs-progs-0.19-23.el
  .SH DESCRIPTION
  .B btrfs-show
  is used to scan the /dev directory for btrfs partitions and display brief
-diff -urN btrfs-progs-0.19.0-official/man/Makefile btrfs-progs-0.19-23.el6/man/Makefile
---- btrfs-progs-0.19.0-official/man/Makefile	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/man/Makefile	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/man/Makefile btrfs-progs-0.19-26.el6/man/Makefile
+--- btrfs-progs-0.19.0/man/Makefile	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/man/Makefile	2012-02-22 15:59:55.000000000 +0000
 @@ -7,13 +7,16 @@
  man8dir = $(mandir)/man8
  
@@ -12153,9 +13078,9 @@ diff -urN btrfs-progs-0.19.0-official/man/Makefile btrfs-progs-0.19-23.el6/man/M
  btrfsctl.8.gz: btrfsctl.8.in
  	$(GZIP) -n -c btrfsctl.8.in > btrfsctl.8.gz
  
-diff -urN btrfs-progs-0.19.0-official/man/mkfs.btrfs.8.in btrfs-progs-0.19-23.el6/man/mkfs.btrfs.8.in
---- btrfs-progs-0.19.0-official/man/mkfs.btrfs.8.in	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/man/mkfs.btrfs.8.in	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/man/mkfs.btrfs.8.in btrfs-progs-0.19-26.el6/man/mkfs.btrfs.8.in
+--- btrfs-progs-0.19.0/man/mkfs.btrfs.8.in	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/man/mkfs.btrfs.8.in	2012-02-22 15:59:55.000000000 +0000
 @@ -9,6 +9,7 @@
  [ \fB \-l\fP\fI leafsize\fP ]
  [ \fB \-L\fP\fI label\fP ]
@@ -12177,9 +13102,9 @@ diff -urN btrfs-progs-0.19.0-official/man/mkfs.btrfs.8.in btrfs-progs-0.19-23.el
  \fB\-n\fR, \fB\-\-nodesize \fIsize\fR
  Specify the nodesize. By default the value is set to the pagesize.
  .TP
-diff -urN btrfs-progs-0.19.0-official/mkfs.c btrfs-progs-0.19-23.el6/mkfs.c
---- btrfs-progs-0.19.0-official/mkfs.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/mkfs.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/mkfs.c btrfs-progs-0.19-26.el6/mkfs.c
+--- btrfs-progs-0.19.0/mkfs.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/mkfs.c	2012-02-22 15:59:55.000000000 +0000
 @@ -29,12 +29,14 @@
  #include <stdlib.h>
  #include <sys/types.h>
@@ -13451,9 +14376,9 @@ diff -urN btrfs-progs-0.19.0-official/mkfs.c btrfs-progs-0.19-23.el6/mkfs.c
  	ret = close_ctree(root);
  	BUG_ON(ret);
  
-diff -urN btrfs-progs-0.19.0-official/print-tree.c btrfs-progs-0.19-23.el6/print-tree.c
---- btrfs-progs-0.19.0-official/print-tree.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/print-tree.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/print-tree.c btrfs-progs-0.19-26.el6/print-tree.c
+--- btrfs-progs-0.19.0/print-tree.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/print-tree.c	2012-02-22 15:59:55.000000000 +0000
 @@ -239,7 +239,7 @@
  			       btrfs_shared_data_ref_count(eb, sref));
  			break;
@@ -13570,9 +14495,9 @@ diff -urN btrfs-progs-0.19.0-official/print-tree.c btrfs-progs-0.19-23.el6/print
  	}
  }
 -
-diff -urN btrfs-progs-0.19.0-official/print-tree.h btrfs-progs-0.19-23.el6/print-tree.h
---- btrfs-progs-0.19.0-official/print-tree.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/print-tree.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/print-tree.h btrfs-progs-0.19-26.el6/print-tree.h
+--- btrfs-progs-0.19.0/print-tree.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/print-tree.h	2012-02-22 15:59:55.000000000 +0000
 @@ -19,6 +19,6 @@
  #ifndef __PRINT_TREE_
  #define __PRINT_TREE_
@@ -13581,9 +14506,9 @@ diff -urN btrfs-progs-0.19.0-official/print-tree.h btrfs-progs-0.19-23.el6/print
 +void btrfs_print_tree(struct btrfs_root *root, struct extent_buffer *t, int follow);
  void btrfs_print_key(struct btrfs_disk_key *disk_key);
  #endif
-diff -urN btrfs-progs-0.19.0-official/quick-test.c btrfs-progs-0.19-23.el6/quick-test.c
---- btrfs-progs-0.19.0-official/quick-test.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/quick-test.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/quick-test.c btrfs-progs-0.19-26.el6/quick-test.c
+--- btrfs-progs-0.19.0/quick-test.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/quick-test.c	2012-02-22 15:59:55.000000000 +0000
 @@ -85,7 +85,7 @@
  			fprintf(stderr, "search %d:%d\n", num, i);
  		ret = btrfs_search_slot(NULL, root, &ins, &path, 0, 0);
@@ -13611,9 +14536,9 @@ diff -urN btrfs-progs-0.19.0-official/quick-test.c btrfs-progs-0.19-23.el6/quick
  	close_ctree(root);
  	return 0;
  }
-diff -urN btrfs-progs-0.19.0-official/random-test.c btrfs-progs-0.19-23.el6/random-test.c
---- btrfs-progs-0.19.0-official/random-test.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/random-test.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/random-test.c btrfs-progs-0.19-26.el6/random-test.c
+--- btrfs-progs-0.19.0/random-test.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/random-test.c	2012-02-22 15:59:55.000000000 +0000
 @@ -404,7 +404,7 @@
  			if (ret) {
  				fprintf(stderr, "op %d failed %d:%d\n",
@@ -13623,9 +14548,99 @@ diff -urN btrfs-progs-0.19.0-official/random-test.c btrfs-progs-0.19-23.el6/rand
  				fprintf(stderr, "op %d failed %d:%d\n",
  					op, i, iterations);
  				err = ret;
-diff -urN btrfs-progs-0.19.0-official/restore.c btrfs-progs-0.19-23.el6/restore.c
---- btrfs-progs-0.19.0-official/restore.c	1970-01-01 01:00:00.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/restore.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/repair.c btrfs-progs-0.19-26.el6/repair.c
+--- btrfs-progs-0.19.0/repair.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/repair.c	2012-02-22 15:59:55.000000000 +0000
+@@ -0,0 +1,50 @@
++/*
++ * Copyright (C) 2012 Oracle.  All rights reserved.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public
++ * License v2 as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 021110-1307, USA.
++ */
++
++#include "ctree.h"
++#include "extent-cache.h"
++#include "utils.h"
++#include "repair.h"
++
++int btrfs_add_corrupt_extent_record(struct btrfs_fs_info *info,
++				    struct btrfs_key *first_key,
++				    u64 start, u64 len, int level)
++
++{
++	int ret = 0;
++	struct btrfs_corrupt_block *corrupt;
++
++	if (!info->corrupt_blocks)
++		return 0;
++
++	corrupt = malloc(sizeof(*corrupt));
++	if (!corrupt)
++		return -ENOMEM;
++
++	memcpy(&corrupt->key, first_key, sizeof(*first_key));
++	corrupt->cache.start = start;
++	corrupt->cache.size = len;
++	corrupt->level = level;
++
++	ret = insert_existing_cache_extent(info->corrupt_blocks, &corrupt->cache);
++	if (ret)
++		free(corrupt);
++	BUG_ON(ret && ret != -EEXIST);
++	return ret;
++}
++
+diff -urN btrfs-progs-0.19.0/repair.h btrfs-progs-0.19-26.el6/repair.h
+--- btrfs-progs-0.19.0/repair.h	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/repair.h	2012-02-22 15:59:55.000000000 +0000
+@@ -0,0 +1,32 @@
++/*
++ * Copyright (C) 2012 Oracle.  All rights reserved.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public
++ * License v2 as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public
++ * License along with this program; if not, write to the
++ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
++ * Boston, MA 021110-1307, USA.
++ */
++
++#ifndef __BTRFS_REPAIR__
++#define __BTRFS_REPAIR__
++
++struct btrfs_corrupt_block {
++	struct cache_extent cache;
++	struct btrfs_key key;
++	int level;
++};
++
++int btrfs_add_corrupt_extent_record(struct btrfs_fs_info *info,
++				    struct btrfs_key *first_key,
++				    u64 start, u64 len, int level);
++
++#endif
+diff -urN btrfs-progs-0.19.0/restore.c btrfs-progs-0.19-26.el6/restore.c
+--- btrfs-progs-0.19.0/restore.c	1970-01-01 01:00:00.000000000 +0100
++++ btrfs-progs-0.19-26.el6/restore.c	2012-02-22 15:59:55.000000000 +0000
 @@ -0,0 +1,872 @@
 +/*
 + * Copyright (C) 2011 Red Hat.  All rights reserved.
@@ -14499,9 +15514,9 @@ diff -urN btrfs-progs-0.19.0-official/restore.c btrfs-progs-0.19-23.el6/restore.
 +	close_ctree(root);
 +	return ret;
 +}
-diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
---- btrfs-progs-0.19.0-official/utils.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/utils.c	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/utils.c btrfs-progs-0.19-26.el6/utils.c
+--- btrfs-progs-0.19.0/utils.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/utils.c	2012-02-22 15:59:55.000000000 +0000
 @@ -31,6 +31,10 @@
  #include <fcntl.h>
  #include <unistd.h>
@@ -15001,7 +16016,21 @@ diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
  			continue;
  		}
  		ret = btrfs_scan_one_device(fd, fullpath, &tmp_devices,
-@@ -798,6 +1073,7 @@
+@@ -759,7 +1034,12 @@
+ int btrfs_scan_for_fsid(struct btrfs_fs_devices *fs_devices, u64 total_devs,
+ 			int run_ioctls)
+ {
+-	return btrfs_scan_one_dir("/dev", run_ioctls);
++	int ret;
++
++	ret = btrfs_scan_block_devices(run_ioctls);
++	if (ret)
++		ret = btrfs_scan_one_dir("/dev", run_ioctls);
++	return ret;
+ }
+ 
+ int btrfs_device_already_in_root(struct btrfs_root *root, int fd,
+@@ -798,6 +1078,7 @@
  char *pretty_sizes(u64 size)
  {
  	int num_divs = 0;
@@ -15009,7 +16038,7 @@ diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
  	u64 last_size = size;
  	u64 fract_size = size;
  	float fraction;
-@@ -815,8 +1091,90 @@
+@@ -815,8 +1096,113 @@
  		return NULL;
  
  	fraction = (float)fract_size / 1024;
@@ -15057,7 +16086,10 @@ diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
 +	int i;
 +	char buf[1024];
 +	char fullpath[110];
++	int scans = 0;
++	int special;
 +
++scan_again:
 +	proc_partitions = fopen("/proc/partitions","r");
 +	if (!proc_partitions) {
 +		fprintf(stderr, "Unable to open '/proc/partitions' for scanning\n");
@@ -15073,8 +16105,23 @@ diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
 +
 +	strcpy(fullpath,"/dev/");
 +	while(fgets(buf, 1023, proc_partitions)) {
-+
 +		i = sscanf(buf," %*d %*d %*d %99s", fullpath+5);
++
++		/*
++		 * multipath and MD devices may register as a btrfs filesystem
++		 * both through the original block device and through
++		 * the special (/dev/mapper or /dev/mdX) entry.
++		 * This scans the special entries last
++		 */
++		special = strncmp(fullpath, "/dev/dm-", strlen("/dev/dm-")) == 0;
++		if (!special)
++			special = strncmp(fullpath, "/dev/md", strlen("/dev/md")) == 0;
++
++		if (scans == 0 && special)
++			continue;
++		if (scans > 0 && !special)
++			continue;
++
 +		ret = lstat(fullpath, &st);
 +		if (ret < 0) {
 +			fprintf(stderr, "failed to stat %s\n", fullpath);
@@ -15099,12 +16146,17 @@ diff -urN btrfs-progs-0.19.0-official/utils.c btrfs-progs-0.19-23.el6/utils.c
 +	}
 +
 +	fclose(proc_partitions);
++
++	if (scans == 0) {
++		scans++;
++		goto scan_again;
++	}
 +	return 0;
 +}
 +
-diff -urN btrfs-progs-0.19.0-official/utils.h btrfs-progs-0.19-23.el6/utils.h
---- btrfs-progs-0.19.0-official/utils.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/utils.h	2012-02-09 16:53:33.000000000 +0000
+diff -urN btrfs-progs-0.19.0/utils.h btrfs-progs-0.19-26.el6/utils.h
+--- btrfs-progs-0.19.0/utils.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/utils.h	2012-02-22 15:59:55.000000000 +0000
 @@ -27,7 +27,7 @@
  int btrfs_make_root_dir(struct btrfs_trans_handle *trans,
  			struct btrfs_root *root, u64 objectid);
@@ -15130,10 +16182,45 @@ diff -urN btrfs-progs-0.19.0-official/utils.h btrfs-progs-0.19-23.el6/utils.h
 +
 +int btrfs_scan_block_devices(int run_ioctl);
  #endif
-diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.c
---- btrfs-progs-0.19.0-official/volumes.c	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/volumes.c	2012-02-09 16:53:33.000000000 +0000
-@@ -643,7 +643,6 @@
+diff -urN btrfs-progs-0.19.0/volumes.c btrfs-progs-0.19-26.el6/volumes.c
+--- btrfs-progs-0.19.0/volumes.c	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/volumes.c	2012-02-22 15:59:55.000000000 +0000
+@@ -35,18 +35,6 @@
+ 	u64 physical;
+ };
+ 
+-struct map_lookup {
+-	struct cache_extent ce;
+-	u64 type;
+-	int io_align;
+-	int io_width;
+-	int stripe_len;
+-	int sector_size;
+-	int num_stripes;
+-	int sub_stripes;
+-	struct btrfs_bio_stripe stripes[];
+-};
+-
+ #define map_lookup_size(n) (sizeof(struct map_lookup) + \
+ 			    (sizeof(struct btrfs_bio_stripe) * (n)))
+ 
+@@ -128,7 +116,14 @@
+ 			btrfs_stack_device_bytes_used(&disk_super->dev_item);
+ 		list_add(&device->dev_list, &fs_devices->devices);
+ 		device->fs_devices = fs_devices;
+-	}
++	} else if (!device->name || strcmp(device->name, path)) {
++		char *name = strdup(path);
++                if (!name)
++                        return -ENOMEM;
++                kfree(device->name);
++                device->name = name;
++        }
++
+ 
+ 	if (found_transid > fs_devices->latest_trans) {
+ 		fs_devices->latest_devid = devid;
+@@ -643,7 +638,6 @@
  	struct list_head *cur;
  	struct map_lookup *map;
  	int min_stripe_size = 1 * 1024 * 1024;
@@ -15141,7 +16228,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  	u64 calc_size = 8 * 1024 * 1024;
  	u64 min_free;
  	u64 max_chunk_size = 4 * calc_size;
-@@ -811,7 +810,6 @@
+@@ -811,7 +805,6 @@
  		btrfs_set_stack_stripe_devid(stripe, device->devid);
  		btrfs_set_stack_stripe_offset(stripe, dev_offset);
  		memcpy(stripe->dev_uuid, device->uuid, BTRFS_UUID_SIZE);
@@ -15149,7 +16236,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  		index++;
  	}
  	BUG_ON(!list_empty(&private_devs));
-@@ -857,6 +855,108 @@
+@@ -857,6 +850,108 @@
  	return ret;
  }
  
@@ -15258,7 +16345,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  void btrfs_mapping_init(struct btrfs_mapping_tree *tree)
  {
  	cache_tree_init(&tree->cache_tree);
-@@ -867,14 +967,12 @@
+@@ -867,14 +962,12 @@
  	struct cache_extent *ce;
  	struct map_lookup *map;
  	int ret;
@@ -15273,7 +16360,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  	if (map->type & (BTRFS_BLOCK_GROUP_DUP | BTRFS_BLOCK_GROUP_RAID1))
  		ret = map->num_stripes;
  	else if (map->type & BTRFS_BLOCK_GROUP_RAID10)
-@@ -884,6 +982,30 @@
+@@ -884,6 +977,30 @@
  	return ret;
  }
  
@@ -15304,7 +16391,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  int btrfs_rmap_block(struct btrfs_mapping_tree *map_tree,
  		     u64 chunk_start, u64 physical, u64 devid,
  		     u64 **logical, int *naddrs, int *stripe_len)
-@@ -944,6 +1066,14 @@
+@@ -944,6 +1061,14 @@
  		    u64 logical, u64 *length,
  		    struct btrfs_multi_bio **multi_ret, int mirror_num)
  {
@@ -15319,7 +16406,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  	struct cache_extent *ce;
  	struct map_lookup *map;
  	u64 offset;
-@@ -959,16 +1089,24 @@
+@@ -959,16 +1084,24 @@
  		stripes_allocated = 1;
  	}
  again:
@@ -15348,7 +16435,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  	map = container_of(ce, struct map_lookup, ce);
  	offset = logical - ce->start;
  
-@@ -1032,8 +1170,6 @@
+@@ -1032,8 +1165,6 @@
  			multi->num_stripes = map->sub_stripes;
  		else if (mirror_num)
  			stripe_index += mirror_num - 1;
@@ -15357,7 +16444,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  
  		stripe_nr = stripe_nr / factor;
  	} else if (map->type & BTRFS_BLOCK_GROUP_DUP) {
-@@ -1060,6 +1196,8 @@
+@@ -1060,6 +1191,8 @@
  		stripe_index++;
  	}
  	*multi_ret = multi;
@@ -15366,7 +16453,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  out:
  	return 0;
  }
-@@ -1159,6 +1297,16 @@
+@@ -1159,6 +1292,16 @@
  	return readonly;
  }
  
@@ -15383,7 +16470,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  static int read_one_chunk(struct btrfs_root *root, struct btrfs_key *key,
  			  struct extent_buffer *leaf,
  			  struct btrfs_chunk *chunk)
-@@ -1209,8 +1357,9 @@
+@@ -1209,8 +1352,9 @@
  		map->stripes[i].dev = btrfs_find_device(root, devid, uuid,
  							NULL);
  		if (!map->stripes[i].dev) {
@@ -15395,7 +16482,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  		}
  
  	}
-@@ -1333,7 +1482,7 @@
+@@ -1333,7 +1477,7 @@
  	u8 *ptr;
  	unsigned long sb_ptr;
  	u32 cur;
@@ -15404,7 +16491,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  
  	sb = btrfs_find_create_tree_block(root, BTRFS_SUPER_INFO_OFFSET,
  					  BTRFS_SUPER_INFO_SIZE);
-@@ -1364,7 +1513,8 @@
+@@ -1364,7 +1508,8 @@
  		if (key.type == BTRFS_CHUNK_ITEM_KEY) {
  			chunk = (struct btrfs_chunk *)sb_ptr;
  			ret = read_one_chunk(root, &key, sb, chunk);
@@ -15414,7 +16501,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  			num_stripes = btrfs_chunk_num_stripes(sb, chunk);
  			len = btrfs_chunk_item_size(num_stripes);
  		} else {
-@@ -1375,7 +1525,7 @@
+@@ -1375,7 +1520,7 @@
  		cur += len;
  	}
  	free_extent_buffer(sb);
@@ -15423,10 +16510,33 @@ diff -urN btrfs-progs-0.19.0-official/volumes.c btrfs-progs-0.19-23.el6/volumes.
  }
  
  int btrfs_read_chunk_tree(struct btrfs_root *root)
-diff -urN btrfs-progs-0.19.0-official/volumes.h btrfs-progs-0.19-23.el6/volumes.h
---- btrfs-progs-0.19.0-official/volumes.h	2009-06-11 17:56:15.000000000 +0100
-+++ btrfs-progs-0.19-23.el6/volumes.h	2012-02-09 16:53:33.000000000 +0000
-@@ -91,14 +91,50 @@
+diff -urN btrfs-progs-0.19.0/volumes.h btrfs-progs-0.19-26.el6/volumes.h
+--- btrfs-progs-0.19.0/volumes.h	2009-06-11 17:56:15.000000000 +0100
++++ btrfs-progs-0.19-26.el6/volumes.h	2012-02-22 15:59:55.000000000 +0000
+@@ -18,6 +18,7 @@
+ 
+ #ifndef __BTRFS_VOLUMES_
+ #define __BTRFS_VOLUMES_
++
+ struct btrfs_device {
+ 	struct list_head dev_list;
+ 	struct btrfs_root *dev_root;
+@@ -88,17 +89,65 @@
+ 	struct btrfs_bio_stripe stripes[];
+ };
+ 
++struct map_lookup {
++	struct cache_extent ce;
++	u64 type;
++	int io_align;
++	int io_width;
++	int stripe_len;
++	int sector_size;
++	int num_stripes;
++	int sub_stripes;
++	struct btrfs_bio_stripe stripes[];
++};
++
  #define btrfs_multi_bio_size(n) (sizeof(struct btrfs_multi_bio) + \
  			    (sizeof(struct btrfs_bio_stripe) * (n)))
  
@@ -15477,7 +16587,7 @@ diff -urN btrfs-progs-0.19.0-official/volumes.h btrfs-progs-0.19-23.el6/volumes.
  int btrfs_rmap_block(struct btrfs_mapping_tree *map_tree,
  		     u64 chunk_start, u64 physical, u64 devid,
  		     u64 **logical, int *naddrs, int *stripe_len);
-@@ -107,6 +143,9 @@
+@@ -107,6 +156,9 @@
  int btrfs_alloc_chunk(struct btrfs_trans_handle *trans,
  		      struct btrfs_root *extent_root, u64 *start,
  		      u64 *num_bytes, u64 type);

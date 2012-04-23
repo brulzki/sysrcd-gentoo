@@ -556,8 +556,8 @@ sysresccd_setup_volumes()
             /sbin/modprobe -b ${mod}
         done
         good_msg "Starting mdadm (linux software raid)"
-        /sbin/mdadm -Es > /etc/mdadm.conf
-        /sbin/mdadm -As
+        /sbin/mdadm -Es | awk '{ for (i=1; i<=NF;i++) { if ($i !~ /^name=/) printf("%s ", $i) } print("") }' > /etc/mdadm.conf
+        /sbin/mdadm -As -c /etc/mdadm.conf
     fi
 
     # Setup the Logical Volume Manager
@@ -1579,6 +1579,8 @@ BLKDEVICES="$BLKDEVICES /dev/dm* /dev/mapper/*"
 BLKDEVICES="$BLKDEVICES /dev/md* /dev/md/*"
 # xen pv
 BLKDEVICES="$BLKDEVICES /dev/xvd*"
+# virtio
+BLKDEVICES="$BLKDEVICES /dev/vd*"
 
 # =============================================================================
 

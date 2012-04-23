@@ -27,7 +27,10 @@ start()
 	setterm -blank 0 -powersave off
 
 	# ---- auto-detect software raid ----
-	[ -n "$(which mdadm)" ] && mdadm --auto-detect 2>&1
+	if ! echo ${CMDLINE} | grep -q 'nomdadm'
+	then
+		[ -n "$(which mdadm)" ] && mdadm --auto-detect 2>&1
+	fi
 	
 	# ---- change the root password if requested in cmdline ----
 	for curopt in ${CMDLINE}

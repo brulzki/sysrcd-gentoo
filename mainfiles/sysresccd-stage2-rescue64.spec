@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120316
+snapshot: 20120420
 source_subpath: default/livecd-stage1-amd64-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -33,5 +33,4 @@ boot/kernel/rescue64/packages:
 	sys-block/open-iscsi
 	net-wireless/ndiswrapper
 	sys-block/iscsitarget
-	sys-fs/zfs
 

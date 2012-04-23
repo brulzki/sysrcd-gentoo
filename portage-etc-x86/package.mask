@@ -9,7 +9,7 @@
 >=sys-kernel/gentoo-sources-3.3
 >=sys-kernel/linux-headers-3.3
 >=sys-kernel/std-sources-3.0.999
->=sys-kernel/alt-sources-3.2.999
+>=sys-kernel/alt-sources-3.3.999
 <sys-kernel/genkernel-3.4.10-r2
 >sys-kernel/genkernel-3.4.10-r2
 
@@ -34,6 +34,7 @@ sys-fs/device-mapper
 app-arch/lzma-utils
 sys-apps/pcmcia-cs
 mail-mta/courier
+dev-libs/nettle
 
 # modified packages
 >net-misc/modemmanager-0.4_p20101211
@@ -43,12 +44,13 @@ mail-mta/courier
 >www-servers/thttpd-2.25b-r7
 <app-admin/testdisk-6.13
 >app-admin/testdisk-6.13
-<sys-block/parted-2.4-r1
->sys-block/parted-2.4-r1
+<sys-block/parted-3.1-r1
+>sys-block/parted-3.1-r1
+<sys-block/gparted-0.12.1
 <sys-block/iscsitarget-1.4.20.2
 >sys-block/iscsitarget-1.4.20.2
-<sys-fs/btrfs-progs-0.19-r7
->sys-fs/btrfs-progs-0.19-r7
+<sys-fs/btrfs-progs-0.19-r8
+>sys-fs/btrfs-progs-0.19-r8
 >www-client/midori-0.4.3
 <www-client/midori-0.4.3
 
@@ -60,6 +62,9 @@ mail-mta/courier
 <sys-devel/autoconf-2.68
 >=net-misc/openswan-2.6
 >=net-misc/openssh-5.7
+>=net-libs/gnutls-2.10.9
+=app-text/docbook-xml-dtd-4.1.2
+
 
 # xorg
 <net-misc/tigervnc-1.1.0-r3
@@ -73,4 +78,5 @@ mail-mta/courier
 # binaries are too large in recent samba versions
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543
 # >net-fs/samba-3.2.0
+
 

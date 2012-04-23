@@ -6,6 +6,17 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.6.0
+-------------------------------------------------------------------------------
+* Updated standard kernels to Long-Term-Supported linux-3.0.29 (rescuecd + rescue64)
+* Updated alternative kernels to latest stable: linux-3.3.3 (altker32 + altker64)
+* Updated partclone to 0.2.47 and added ntfs and btrfs utilities
+* Modified mdadm behavior (Thanks to Matteo and Gernot)
+* Updated btrfs-progs from btrfs-progs-0.19-26.el6.src.rpm
+* Updated parted to 3.1 and GParted to 0.12.1
+* Updated grub2 to 2.00_beta3
+
+-------------------------------------------------------------------------------
 2.5.1 (2012-03-17)
 -------------------------------------------------------------------------------
 * Updated standard kernels to Long-Term-Supported linux-3.0.24 (rescuecd + rescue64)
@@ -47,7 +58,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
 2.4.0 (2011-11-01)
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 * Updated standard kernels to linux-3.0.8 (rescuecd + rescue64)
 * Updated alternative kernels to linux-3.1.0 (altker32 + altker64)
 * Dropped Reiser4 patch from all kernels (no patch for linux-3.x)

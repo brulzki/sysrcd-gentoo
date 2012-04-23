@@ -22,8 +22,8 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# Apply changes from btrfs-progs-0.19-23.el6.src.rpm (Oracle Linux)
-	epatch "${FILESDIR}/${PN}-0.19-23.ol6.patch"
+	# Apply changes from btrfs-progs-0.19-26.el6.src.rpm (Oracle Linux)
+	epatch "${FILESDIR}/${PN}-0.19-26.ol6.patch"
 
 	# Fix hardcoded "gcc" and "make"
 	sed -i -e 's:gcc $(CFLAGS):$(CC) $(CFLAGS):' Makefile
@@ -44,13 +44,14 @@ src_install() {
 	dosbin btrfstune
 	dosbin btrfs-image
 	dosbin btrfs-convert
+	dosbin btrfs-restore
 	dosbin btrfs-map-logical
 	dosbin btrfs-zero-log
+	dosbin btrfs-find-root
 
 	dosym btrfsck /sbin/fsck.btrfs
 	newsbin mkfs.btrfs mkbtrfs
 	dosym mkbtrfs /sbin/mkfs.btrfs
-	dosbin btrfs-convert
 
 	if use debug-utils; then
 		dobin btrfs-debug-tree

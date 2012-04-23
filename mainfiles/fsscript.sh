@@ -123,9 +123,6 @@ then
 	rm -rf /usr/share/oscar/oscar.tar.gz
 fi
 
-# remove zfs kernel modules from the standard kernel
-rm -rf /lib/modules/*i586/addon/{spl,zfs}
-
 # update fonts when exiting from xorg
 sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
 

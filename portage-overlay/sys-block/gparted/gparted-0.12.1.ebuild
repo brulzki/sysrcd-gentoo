@@ -18,8 +18,7 @@ KEYWORDS="amd64 x86"
 IUSE="btrfs dmraid fat gtk hfs jfs kde mdadm ntfs reiserfs reiser4 xfs"
 
 # FIXME: add gpart support
-common_depends=">=sys-block/parted-2.4
-	<sys-block/parted-3
+common_depends=">=sys-block/parted-3.1
 	>=dev-cpp/gtkmm-2.16:2.4"
 
 RDEPEND="${common_depends}
@@ -51,10 +50,7 @@ RDEPEND="${common_depends}
 
 DEPEND="${common_depends}
 	>=dev-util/pkgconfig-0.12
-	>=dev-util/intltool-0.35.5
-	app-text/scrollkeeper
-	app-text/gnome-doc-utils
-	app-text/docbook-xml-dtd:4.1.2"
+	>=dev-util/intltool-0.35.5"
 
 pkg_setup() {
 	DOCS="AUTHORS NEWS ChangeLog README"

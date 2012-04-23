@@ -1,10 +1,5 @@
 # ------ SystemRescueCd package.keywords ------
 
-# System packages
-=sys-fs/squashfs-tools-4.2* ~*
-=sys-devel/gcc-4.4.6* ~*
-=sys-fs/lvm2-2.02.88* ~*
-
 # Network Manager
 =net-misc/networkmanager-0.8.4* ~*
 =net-misc/networkmanager-vpnc-0.8* ~*
@@ -17,10 +12,10 @@
 =app-text/epdfview-0.1.7* ~*
 =sys-fs/multipath-tools-0.4.9* ~*
 =app-editors/gvim-7.3.353* ~*
-=sys-block/parted-2.4* ~*
 =net-dialup/ppp-2.4.5* ~*
 =sys-libs/zlib-1.2.5* ~*
 =dev-lang/v8-3.6* ~*
+sys-block/parted ~*
 sys-boot/grub **
 app-arch/pxz ~*
 app-misc/scrub ~*
@@ -71,12 +66,14 @@ sys-kernel/linux-firmware ~*
 sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
+net-wireless/ndiswrapper ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
-=sys-fs/zfs-fuse-0.6.9* ~*
+=sys-fs/zfs-fuse-0.6* ~*
+=sys-fs/zfs-fuse-0.7* ~*
 =app-arch/dump-0.4.44* ~*
 =sys-fs/xfsdump-3.0.6* ~*
 =sys-fs/xfsprogs-3.1* ~*

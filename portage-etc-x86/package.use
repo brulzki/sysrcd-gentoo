@@ -32,6 +32,7 @@ dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
 sys-auth/consolekit policykit
 sys-auth/pambase consolekit
+sys-auth/polkit gtk
 sys-fs/ecryptfs-utils -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -png
