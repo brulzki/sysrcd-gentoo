@@ -1,6 +1,18 @@
-diff -urN genkernel-3.4.10-orig/gen_bootloader.sh genkernel-3.4.10-sysrcd3/gen_bootloader.sh
---- genkernel-3.4.10-orig/gen_bootloader.sh	2008-06-05 17:47:55.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_bootloader.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/alpha/busy-config genkernel-3.4.10-c/alpha/busy-config
+--- genkernel-3.4.10-a/alpha/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/alpha/busy-config	2012-04-24 21:46:38.841820604 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/gen_bootloader.sh genkernel-3.4.10-c/gen_bootloader.sh
+--- genkernel-3.4.10-a/gen_bootloader.sh	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/gen_bootloader.sh	2012-04-24 21:45:18.166822536 +0100
 @@ -75,7 +75,7 @@
  		# grub.conf already exists; so...
  		# ... Clone the first boot definition and change the version.
@@ -10,9 +22,9 @@ diff -urN genkernel-3.4.10-orig/gen_bootloader.sh genkernel-3.4.10-sysrcd3/gen_b
  
  		cp -f ${GRUB_CONF} ${GRUB_CONF}.bak
  		awk 'BEGIN { RS="\n"; }
-diff -urN genkernel-3.4.10-orig/gen_compile.sh genkernel-3.4.10-sysrcd3/gen_compile.sh
---- genkernel-3.4.10-orig/gen_compile.sh	2008-06-05 17:47:56.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_compile.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_compile.sh genkernel-3.4.10-c/gen_compile.sh
+--- genkernel-3.4.10-a/gen_compile.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/gen_compile.sh	2012-04-24 21:45:18.166822536 +0100
 @@ -287,30 +287,13 @@
  	cd - > /dev/null
  }
@@ -149,9 +161,9 @@ diff -urN genkernel-3.4.10-orig/gen_compile.sh genkernel-3.4.10-sysrcd3/gen_comp
  		rm -rf "${DMRAID_DIR}" dmraid
  	fi
  }
-diff -urN genkernel-3.4.10-orig/gen_configkernel.sh genkernel-3.4.10-sysrcd3/gen_configkernel.sh
---- genkernel-3.4.10-orig/gen_configkernel.sh	2008-06-05 17:47:55.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_configkernel.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_configkernel.sh genkernel-3.4.10-c/gen_configkernel.sh
+--- genkernel-3.4.10-a/gen_configkernel.sh	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/gen_configkernel.sh	2012-04-24 21:45:18.166822536 +0100
 @@ -87,17 +87,6 @@
  		[ "$?" ] || gen_die 'Error: xconfig failed!'
  	fi
@@ -170,9 +182,9 @@ diff -urN genkernel-3.4.10-orig/gen_configkernel.sh genkernel-3.4.10-sysrcd3/gen
  	# Make sure lvm modules are on if --lvm/--lvm
  	if isTrue ${CMD_LVM}
  	then
-diff -urN genkernel-3.4.10-orig/gen_determineargs.sh genkernel-3.4.10-sysrcd3/gen_determineargs.sh
---- genkernel-3.4.10-orig/gen_determineargs.sh	2008-06-05 17:47:55.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_determineargs.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_determineargs.sh genkernel-3.4.10-c/gen_determineargs.sh
+--- genkernel-3.4.10-a/gen_determineargs.sh	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/gen_determineargs.sh	2012-04-24 21:45:18.166822536 +0100
 @@ -6,20 +6,12 @@
  		/bin/tar -xj -C ${TEMP} -f ${KERNCACHE} kerncache.config 
  		if [ -e ${TEMP}/kerncache.config ]
@@ -233,9 +245,9 @@ diff -urN genkernel-3.4.10-orig/gen_determineargs.sh genkernel-3.4.10-sysrcd3/ge
  	fi
  }
  
-diff -urN genkernel-3.4.10-orig/generic/initrd.defaults genkernel-3.4.10-sysrcd3/generic/initrd.defaults
---- genkernel-3.4.10-orig/generic/initrd.defaults	2008-06-05 17:47:56.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/generic/initrd.defaults	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/generic/initrd.defaults genkernel-3.4.10-c/generic/initrd.defaults
+--- genkernel-3.4.10-a/generic/initrd.defaults	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/generic/initrd.defaults	2012-04-24 21:45:18.167822318 +0100
 @@ -50,7 +50,7 @@
  KVER="${KMAJOR}.${KMINOR}"
  MISCOPTS='debug detect'
@@ -254,9 +266,9 @@ diff -urN genkernel-3.4.10-orig/generic/initrd.defaults genkernel-3.4.10-sysrcd3
  then
  	KSUFF='.ko'
  else
-diff -urN genkernel-3.4.10-orig/gen_initramfs.sh genkernel-3.4.10-sysrcd3/gen_initramfs.sh
---- genkernel-3.4.10-orig/gen_initramfs.sh	2008-06-05 17:47:56.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_initramfs.sh	2011-07-23 10:36:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_initramfs.sh genkernel-3.4.10-c/gen_initramfs.sh
+--- genkernel-3.4.10-a/gen_initramfs.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/gen_initramfs.sh	2012-04-24 21:45:18.167822318 +0100
 @@ -319,14 +319,19 @@
  		print_info 2 "initramfs: >> Copying ${i}${MOD_EXT}..."
  		cp -ax --parents "${mymod}" "${TEMP}/initramfs-modules-${KV}-temp"
@@ -343,9 +355,9 @@ diff -urN genkernel-3.4.10-orig/gen_initramfs.sh genkernel-3.4.10-sysrcd3/gen_in
  	fi
  
  	if ! isTrue "${CMD_NOINSTALL}"
-diff -urN genkernel-3.4.10-orig/genkernel genkernel-3.4.10-sysrcd3/genkernel
---- genkernel-3.4.10-orig/genkernel	2008-06-05 17:47:55.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/genkernel	2011-07-23 10:32:48.000000000 +0100
+diff -urN genkernel-3.4.10-a/genkernel genkernel-3.4.10-c/genkernel
+--- genkernel-3.4.10-a/genkernel	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/genkernel	2012-04-24 21:45:18.167822318 +0100
 @@ -222,9 +222,6 @@
  	# Configure kernel
  	config_kernel
@@ -412,9 +424,9 @@ diff -urN genkernel-3.4.10-orig/genkernel genkernel-3.4.10-sysrcd3/genkernel
  	fi
  fi
  
-diff -urN genkernel-3.4.10-orig/gen_moddeps.sh genkernel-3.4.10-sysrcd3/gen_moddeps.sh
---- genkernel-3.4.10-orig/gen_moddeps.sh	2008-06-05 17:47:56.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_moddeps.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_moddeps.sh genkernel-3.4.10-c/gen_moddeps.sh
+--- genkernel-3.4.10-a/gen_moddeps.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/gen_moddeps.sh	2012-04-24 21:45:18.167822318 +0100
 @@ -2,12 +2,7 @@
  
  modules_kext()
@@ -429,9 +441,9 @@ diff -urN genkernel-3.4.10-orig/gen_moddeps.sh genkernel-3.4.10-sysrcd3/gen_modd
  	echo ${KEXT}
  }
  
-diff -urN genkernel-3.4.10-orig/gen_package.sh genkernel-3.4.10-sysrcd3/gen_package.sh
---- genkernel-3.4.10-orig/gen_package.sh	2008-06-05 17:47:56.000000000 +0100
-+++ genkernel-3.4.10-sysrcd3/gen_package.sh	2011-07-23 10:28:32.000000000 +0100
+diff -urN genkernel-3.4.10-a/gen_package.sh genkernel-3.4.10-c/gen_package.sh
+--- genkernel-3.4.10-a/gen_package.sh	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/gen_package.sh	2012-04-24 21:45:18.167822318 +0100
 @@ -24,12 +24,7 @@
  	
  	if ! isTrue "${INTEGRATED_INITRAMFS}"
@@ -446,3 +458,135 @@ diff -urN genkernel-3.4.10-orig/gen_package.sh genkernel-3.4.10-sysrcd3/gen_pack
  	fi
  
  	if [ "${KERNCACHE}" != "" ]
+diff -urN genkernel-3.4.10-a/ia64/busy-config genkernel-3.4.10-c/ia64/busy-config
+--- genkernel-3.4.10-a/ia64/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/ia64/busy-config	2012-04-24 21:46:38.841820604 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/mips/busy-config genkernel-3.4.10-c/mips/busy-config
+--- genkernel-3.4.10-a/mips/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/mips/busy-config	2012-04-24 21:46:38.841820604 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/parisc/busy-config genkernel-3.4.10-c/parisc/busy-config
+--- genkernel-3.4.10-a/parisc/busy-config	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/parisc/busy-config	2012-04-24 21:46:38.850822799 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/parisc64/busy-config genkernel-3.4.10-c/parisc64/busy-config
+--- genkernel-3.4.10-a/parisc64/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/parisc64/busy-config	2012-04-24 21:46:38.849818549 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/ppc/busy-config genkernel-3.4.10-c/ppc/busy-config
+--- genkernel-3.4.10-a/ppc/busy-config	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/ppc/busy-config	2012-04-24 21:46:38.855818315 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/ppc64/busy-config genkernel-3.4.10-c/ppc64/busy-config
+--- genkernel-3.4.10-a/ppc64/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/ppc64/busy-config	2012-04-24 21:46:38.853829036 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/sparc/busy-config genkernel-3.4.10-c/sparc/busy-config
+--- genkernel-3.4.10-a/sparc/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/sparc/busy-config	2012-04-24 21:46:38.860819718 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/sparc64/busy-config genkernel-3.4.10-c/sparc64/busy-config
+--- genkernel-3.4.10-a/sparc64/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/sparc64/busy-config	2012-04-24 21:46:38.857821547 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/um/busy-config genkernel-3.4.10-c/um/busy-config
+--- genkernel-3.4.10-a/um/busy-config	2008-06-05 17:47:56.000000000 +0100
++++ genkernel-3.4.10-c/um/busy-config	2012-04-24 21:47:41.844903636 +0100
+@@ -384,7 +384,7 @@
+ CONFIG_RDATE=y
+ CONFIG_SWAPONOFF=y
+ CONFIG_MOUNT=y
+-CONFIG_NFSMOUNT=y
++# CONFIG_NFSMOUNT is not set
+ CONFIG_UMOUNT=y
+ # CONFIG_FEATURE_MOUNT_FORCE is not set
+ 
+diff -urN genkernel-3.4.10-a/x86/busy-config genkernel-3.4.10-c/x86/busy-config
+--- genkernel-3.4.10-a/x86/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/x86/busy-config	2012-04-24 21:46:38.866820844 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y
+diff -urN genkernel-3.4.10-a/x86_64/busy-config genkernel-3.4.10-c/x86_64/busy-config
+--- genkernel-3.4.10-a/x86_64/busy-config	2008-06-05 17:47:55.000000000 +0100
++++ genkernel-3.4.10-c/x86_64/busy-config	2012-04-24 21:46:38.864822464 +0100
+@@ -462,7 +462,7 @@
+ CONFIG_MORE=y
+ CONFIG_FEATURE_USE_TERMIOS=y
+ CONFIG_MOUNT=y
+-CONFIG_FEATURE_MOUNT_NFS=y
++#CONFIG_FEATURE_MOUNT_NFS is not set
+ # CONFIG_FEATURE_MOUNT_CIFS is not set
+ CONFIG_FEATURE_MOUNT_FLAGS=y
+ CONFIG_FEATURE_MOUNT_FSTAB=y

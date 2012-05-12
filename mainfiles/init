@@ -1581,6 +1581,8 @@ BLKDEVICES="$BLKDEVICES /dev/md* /dev/md/*"
 BLKDEVICES="$BLKDEVICES /dev/xvd*"
 # virtio
 BLKDEVICES="$BLKDEVICES /dev/vd*"
+# mmc cards
+BLKDEVICES="$BLKDEVICES /dev/mmcblk*"
 
 # =============================================================================
 

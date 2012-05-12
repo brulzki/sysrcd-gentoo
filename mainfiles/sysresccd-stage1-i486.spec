@@ -3,12 +3,12 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120420
-source_subpath: default/stage4-i386-20120304-01
+snapshot: 20120507
+source_subpath: default/stage4-i386-20120505-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
-livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -nouveau dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4 -gallium
+livecd/use: -svg -opengl -glx -berkdb -gdbm -minimal -introspection dri X bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba gtk gtk2 png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4 -gallium
 
 livecd/packages:
 	app-admin/hddtemp
@@ -29,6 +29,7 @@ livecd/packages:
 	app-arch/cabextract
 	app-arch/cfv
 	app-arch/cpio
+	app-arch/dpkg
 	app-arch/dump
 	app-arch/gzip
 	app-arch/lzip
@@ -42,6 +43,7 @@ livecd/packages:
 	app-arch/pigz
 	app-arch/pxz
 	app-arch/rar
+	app-arch/rpm
 	app-arch/rpm2targz
 	app-arch/rzip
 	app-arch/sharutils
@@ -124,6 +126,7 @@ livecd/packages:
 	dev-libs/pkcs11-helper
 	dev-libs/popt
 	dev-util/cmake
+	dev-util/debootstrap
 	dev-util/geany
 	dev-util/intltool
 	dev-util/ltrace
@@ -142,6 +145,7 @@ livecd/packages:
 	net-analyzer/httping
 	net-analyzer/ifstat
 	net-analyzer/iftop
+	net-analyzer/iptraf-ng
 	net-analyzer/macchanger
 	net-analyzer/netcat
 	net-analyzer/ngrep
@@ -206,8 +210,8 @@ livecd/packages:
 	net-wireless/bcm43xx-fwcutter
 	net-wireless/ipw2100-firmware
 	net-wireless/ipw2200-firmware
-	net-wireless/linux-wlan-ng-firmware
 	net-wireless/iw
+	net-wireless/linux-wlan-ng-firmware
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware
 	net-wireless/rtl8192su-firmware
@@ -215,7 +219,6 @@ livecd/packages:
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
 	net-wireless/zd1211-firmware
-	sys-kernel/linux-firmware
 	perl-core/Encode
 	sys-apps/acl
 	sys-apps/attr
@@ -252,7 +255,6 @@ livecd/packages:
 	sys-apps/netplug
 	sys-apps/net-tools
 	sys-apps/openrc
-	sys-apps/pciutils
 	sys-apps/pcmciautils
 	sys-apps/pv
 	sys-apps/rename
@@ -264,8 +266,8 @@ livecd/packages:
 	sys-apps/shadow
 	sys-apps/smartmontools
 	sys-apps/tcp-wrappers
-	sys-apps/usbutils
 	sys-apps/usb_modeswitch
+	sys-apps/usbutils
 	sys-apps/util-linux
 	sys-apps/which
 	sys-apps/x86info
@@ -282,6 +284,7 @@ livecd/packages:
 	sys-block/ms-sys
 	sys-block/mtx
 	sys-block/nbd
+	sys-block/partclone
 	sys-block/parted
 	sys-block/partimage
 	sys-block/scsiadd
@@ -297,7 +300,6 @@ livecd/packages:
 	sys-devel/bc
 	sys-devel/crossdev
 	sys-devel/gettext
-	sys-block/partclone
 	sys-fs/btrfs-progs
 	sys-fs/cryptsetup
 	sys-fs/ddrescue
@@ -332,6 +334,7 @@ livecd/packages:
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
 	sys-kernel/gentoo-sources
+	sys-kernel/linux-firmware
 	sys-libs/libstdc++-v3
 	sys-libs/openipmi
 	sys-libs/pam

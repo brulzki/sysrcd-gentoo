@@ -6,7 +6,7 @@
 # genkernel-9999.REV    -> use SVN REV
 # genkernel-VERSION     -> normal genkernel release
 
-VERSION_BUSYBOX='1.17.4'
+VERSION_BUSYBOX='1.19.4'
 VERSION_DMAP='1.02.22'
 VERSION_DMRAID='1.0.0.rc16'
 VERSION_E2FSPROGS='1.40.11'
@@ -74,6 +74,7 @@ src_unpack()
 					FEATURE_IP_LINK FEATURE_IP_ROUTE IPADDR IPLINK IPROUTE NSLOOKUP \
 					USE_BB_SHADOW USE_BB_PWD_GRP FEATURE_GREP_EGREP_ALIAS FINDFS TUNE2FS \
 					NAMEIF FEATURE_MDEV_CONF TELNET NC STAT FEATURE_STAT_FORMAT)
+	optdisabled=(NFSMOUNT FEATURE_MOUNT_NFS)
 
 	for arch in x86 x86_64 ia64 mips alpha ppc64 sparc parisc64 sparc64 parisc um ppc 
 	do
@@ -84,6 +85,10 @@ src_unpack()
 			then
 				echo "CONFIG_${curopt}=y" >> $arch/busy-config
 			fi
+		done
+		for curopt in ${optdisabled[*]}
+		do
+			sed -i -e "s/CONFIG_${curopt}=y/#CONFIG_${curopt} is not set/" $arch/busy-config
 		done
 	done
 

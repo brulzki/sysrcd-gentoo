@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION="2.6.0"
+VERSION="2.7.0"
 EXTRAVER=""
-VOLNAME="sysrcd-2.6.0"
+VOLNAME="sysrcd-2.7.0"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
@@ -122,6 +122,8 @@ fi
 # ========= copy list of packages ===============================================
 cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
 cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
+#cp /var/tmp/catalyst/tmp/default/livecd-stage2-amd64-default-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-amd64-packages-eix-${TXTVERSION}.txt
+#cp /var/tmp/catalyst/tmp/default/livecd-stage2-amd64-default-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-amd64-packages-std-${TXTVERSION}.txt
 
 # ========= prepare the backup ==================================================
 tar cfJp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.xz" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'

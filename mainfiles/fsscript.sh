@@ -39,7 +39,7 @@ sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF 
 [ -f /etc/init.d/net.lo ] && sed -i -e 's/"netplugd"//' /etc/init.d/net.lo
 
 # make ssh-keygen silent in the sshd initscript
-sed -i -e 's!/usr/bin/ssh-keygen!/usr/bin/ssh-keygen -q!g' /etc/init.d/sshd
+sed -i -e 's!ssh-keygen -t!ssh-keygen -q -t!g' /etc/init.d/sshd
 
 # disable ALSA sound by default in autoconfig
 sed -i -e 's/GPM="yes"/GPM="no"/' /etc/init.d/autoconfig
@@ -169,6 +169,11 @@ done
 echo "==> strip kernel modules"
 find /lib/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
 find /lib64/modules -name "*.ko" -exec strip --strip-unneeded '{}' \;
+
+# remove extra aufs kernel module (it is already in the kernel image)
+echo "==> remove aufs kernel modules"
+find /lib/modules -name "aufs*.ko"
+rm -f /lib*/modules/*/misc/aufs.ko
 
 # run depmod on all kernels
 echo "==> run depmod for all kernels"

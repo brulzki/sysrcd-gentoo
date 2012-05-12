@@ -15,7 +15,7 @@ FILEPATH_LST='/root/sysresccd-lst.txt'
 # =========================================================================
 if [ -n "$(which equery)" ]
 then
-	equery -q -C list -i | grep -v '^virtual' >|  ${FILEPATH_PKG}
+	equery -q -C list -i '*' | grep -v '^virtual' >|  ${FILEPATH_PKG}
 fi
 
 # -------------------------------------------------------------------------
@@ -35,7 +35,7 @@ then
 	for curpkg in $(cat ${FILEPATH_PKG})
 	do
 		echo "${curpkg}"
-		sizraw=$(equery -q -C size -b -e ${curpkg} | xargs | sed -r -e 's!.*size\(([0-9]*)\).*!\1!g')
+		sizraw=$(equery -q -C size -b ${curpkg} | xargs | sed -r -e 's!.*size\(([0-9]*)\).*!\1!g')
 		sizfmt=$(printf "%d kb" $((sizraw/1024)))
 		echo '' >> "${FILEPATH_LST}"
 		echo "=======================${curpkg} (size=${sizfmt})======================" >> "${FILEPATH_LST}"
@@ -53,7 +53,7 @@ then
 		pkgcat=$(echo ${pkgfmt} | cut -d: -f1)
 		pkgnam=$(echo ${pkgfmt} | cut -d: -f2)
 		pkgver=$(echo ${pkgfmt} | cut -d: -f3)
-		sizraw=$(equery -q -C size -b -e ${curpkg} | xargs | sed -r -e 's!.*size\(([0-9]*)\).*!\1!g')
+		sizraw=$(equery -q -C size -b ${curpkg} | xargs | sed -r -e 's!.*size\(([0-9]*)\).*!\1!g')
 		sizfmt=$(printf "%0.6d kb" $((sizraw/1024)))
 		output="${sizfmt} --> ${curpkg} --- ${pkgcat}:${pkgnam}:${pkgver}"
 		echo ${output} >> ${FILEPATH_SIZ}

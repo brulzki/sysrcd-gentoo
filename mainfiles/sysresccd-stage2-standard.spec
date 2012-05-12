@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120420
+snapshot: 20120507
 source_subpath: default/livecd-stage1-i686-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -35,18 +35,17 @@ boot/kernel/rescuecd/packages:
         sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
         net-wireless/ndiswrapper
-	=sys-boot/grub-2.00_beta3-r1
+	=sys-boot/grub-2.00_beta3-r2
         sys-block/open-iscsi
         sys-block/iscsitarget
 	sys-fs/nilfs-utils
-	sys-fs/aufs-util
 	sys-fs/zfs-fuse
+	sys-fs/aufs3
         x11-wm/jwm
 
 livecd/unmerge:
 	app-admin/eselect-opengl
 	app-admin/perl-cleaner
-	app-arch/rpm2targz
 	sys-devel/bison
 	sys-devel/bin86
 	sys-devel/dev86
@@ -75,17 +74,11 @@ livecd/unmerge:
 	x11-terms/xterm
 	x11-misc/imake
 	x11-misc/util-macros
-	x11-wm/twm
 	sys-devel/gettext
 	www-client/links
-	app-admin/metalog
-	x11-misc/makedepend
-	x11-misc/xorg-cf-files
-	x11-proto/bigreqsproto
 	x11-proto/compositeproto
 	x11-proto/damageproto
 	x11-proto/dri2proto
-	x11-proto/evieext
 	x11-proto/fixesproto
 	x11-proto/fontcacheproto
 	x11-proto/fontsproto
@@ -107,13 +100,9 @@ livecd/unmerge:
 	x11-proto/xf86rushproto
 	x11-proto/xf86vidmodeproto
 	x11-proto/xineramaproto
-	sys-libs/libkudzu
 	dev-lang/swig
 	sys-kernel/genkernel
-	media-libs/libafterimage
-	x11-misc/gccmakedep
 	sys-libs/cracklib
-	sys-libs/db
 	app-text/build-docbook-catalog
 	app-text/sgml-common
 	app-text/docbook-xsl-stylesheets
@@ -123,8 +112,6 @@ livecd/unmerge:
 	dev-util/unifdef
 	net-mail/mailbase
 	mail-mta/ssmtp
-	dev-util/xfce4-dev-tools
-	dev-libs/xmlrpc-c
 	dev-util/cmake
 	dev-util/scons
 	dev-libs/pkcs11-helper
@@ -135,7 +122,6 @@ livecd/unmerge:
 	app-text/recode
 	media-libs/glew
 	media-sound/alsa-headers
-	x11-drivers/xf86-video-fbdev
 	app-admin/eselect-ruby
 	dev-lang/ruby
 	dev-util/gtk-doc-am
@@ -178,6 +164,8 @@ livecd/unmerge:
 	dev-libs/libcroco
 	dev-util/gperf
 	gnome-base/librsvg
+	media-fonts/unifont
+	dev-libs/gobject-introspection
 
 livecd/empty:
 	/var/cache/revdep-rebuild
@@ -236,9 +224,11 @@ livecd/rm:
 	/root/.zsh/.svn
 	/usr/lib/mozilla-firefox/include
 	/usr/lib/mozilla-firefox/idl
+	/usr/include/webkit*
 	/usr/include/mozilla-firefox
 	/usr/include/unicode
 	/usr/include/wx*
+	/usr/include/tsk3
 	/usr/lib/wx/include
 	/usr/lib/gdkmm*
 	/usr/lib/scons*
@@ -269,6 +259,8 @@ livecd/rm:
 	/usr/lib/nss/*.a
 	/usr/lib/nspr/*.a
 	/usr/lib/cairo/*.la
+	/usr/lib/librpm*.la
+	/usr/lib/rpm-plugins/*.la
 	/usr/lib/{libbsd.a,libcurses.a,libpng.a}
 	/usr/lib/{libipsec.la,libclamav.la}
 	/usr/*/lib/{libbfd.a,libiberty.a,libopcodes.a}
@@ -304,7 +296,7 @@ livecd/rm:
 	/usr/lib/gtkmm*
 	/usr/sbin/{ntpd,swat}
 	/usr/share/zoneinfo
-	/usr/share/locale/{a*,b*,c*,d*,e*,f*,g*,h*,i*,j*,k*,lb,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
+	/usr/share/locale/{a*,b*,c*,d*,e*,f*,g*,h*,i*,j*,k*,lb,lg,li,lt,lv,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/lib/locale/{a*,b*,c*,g*,h*,i*,j*,k*,l*,m*,n*,o*,p*,q*,r*,s*,t*,u*,v*,w*,x*,y*,z*}
 	/usr/lib/locale/{da*,de_AT*,de_BE*,de_CH*,de_LU*,de_DE@euro,dz*}
 	/usr/lib/locale/{en_AU*,en_BW*,en_CA*,en_DK*,en_HK*,en_IE*,en_IN*,en_NG*,en_NZ*,en_PH*,en_SG*,en_ZA*,en_ZW*}
@@ -314,8 +306,8 @@ livecd/rm:
 	/usr/share/fonts/cyrillic
 	/usr/share/fonts/encodings/large
 	/usr/share/fonts/misc/{*ja*,*ko*,k14*}
-	/usr/share/i18n/charmaps/{GB18030.gz,EUC-TW.gz,CP949.gz,JOHAB.gz,GBK.gz,BIG5*,EUC*}
-	/usr/share/i18n/charmaps/{SHIFT*,ISO_default46.gz,GB2312.gz,WINDOWS-31J.gz}
+	/usr/share/i18n/charmaps/{GB18030*,EUC-TW*,CP949*,JOHAB*,GBK*,BIG5*,EUC*}
+	/usr/share/i18n/charmaps/{SHIFT*,ISO_default46*,GB2312*,WINDOWS-31J*}
 	/usr/share/ati/*
 	/opt/bin/amdcccle
 	/opt/bin/fglrxinfo
@@ -423,5 +415,4 @@ livecd/rm:
 	/usr/lib/xorg/modules/extensions/libglx.so
 	/usr/lib/opengl/xorg-x11/extensions/libglx.so
 	/usr/lib/dri
-	#/usr/lib/gcc/*/*/{libgomp.la,libmudflap*.la}
 
