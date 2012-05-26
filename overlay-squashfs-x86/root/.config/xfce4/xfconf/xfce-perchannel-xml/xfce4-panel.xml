@@ -17,6 +17,7 @@
         <value type="int" value="7"/>
         <value type="int" value="8"/>
         <value type="int" value="9"/>
+        <value type="int" value="17"/>
         <value type="int" value="10"/>
         <value type="int" value="11"/>
         <value type="int" value="12"/>
@@ -25,10 +26,11 @@
         <value type="int" value="15"/>
         <value type="int" value="16"/>
       </property>
-      <property name="horizontal" type="bool" value="true"/>
       <property name="position" type="string" value="p=10;x=0;y=570"/>
       <property name="leave-opacity" type="uint" value="20"/>
       <property name="enter-opacity" type="uint" value="100"/>
+      <property name="mode" type="uint" value="0"/>
+      <property name="position-locked" type="bool" value="true"/>
     </property>
   </property>
   <property name="plugins" type="empty">
@@ -109,10 +111,21 @@
     </property>
     <property name="plugin-14" type="string" value="separator">
       <property name="style" type="uint" value="1"/>
+      <property name="expand" type="bool" value="false"/>
     </property>
     <property name="plugin-15" type="string" value="datetime"/>
     <property name="plugin-16" type="string" value="actions">
-      <property name="first-action" type="uint" value="0"/>
+      <property name="appearance" type="uint" value="0"/>
+      <property name="invert-orientation" type="bool" value="false"/>
+      <property name="items" type="array">
+        <value type="string" value="+logout-dialog"/>
+        <value type="string" value="-switch-user"/>
+      </property>
+    </property>
+    <property name="plugin-17" type="string" value="separator">
+      <property name="expand" type="bool" value="true"/>
+      <property name="style" type="uint" value="0"/>
     </property>
   </property>
+  <property name="configver" type="int" value="2"/>
 </channel>

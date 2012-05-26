@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120507
-source_subpath: default/stage4-i386-20120505-01
+snapshot: 20120523
+source_subpath: default/stage4-i386-20120523-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -369,6 +369,7 @@ livecd/packages:
 	x11-drivers/xf86-input-keyboard
 	x11-drivers/xf86-input-mouse
 	x11-drivers/xf86-input-vmmouse
+	x11-libs/libXxf86misc
 	x11-libs/wxGTK
 	x11-misc/mkxf86config
 	x11-misc/read-edid

@@ -11,6 +11,7 @@
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.7* ~*
+=www-client/midori-0.4.6* ~*
 =net-dialup/ppp-2.4.5* ~*
 =sys-libs/zlib-1.2.5* ~*
 =sys-apps/lshw-02.16* ~*
@@ -40,7 +41,6 @@ net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
 app-antivirus/clamav ~*
-app-shells/ksh ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 sys-fs/dd-rescue ~*

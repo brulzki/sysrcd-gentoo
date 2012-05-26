@@ -11,7 +11,7 @@ sys-block/gparted fat hfs jfs ntfs reiser4 reiserfs xfs xfce gtk -debug -gnome -
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
-www-client/midori -sqlite -unique -doc -gnome -html -idn -libnotify
+www-client/midori deprecated -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 app-arch/bzip2 static-libs
 app-arch/xz-utils threads -nls static-libs

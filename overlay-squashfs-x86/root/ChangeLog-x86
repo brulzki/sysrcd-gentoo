@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.7.1 (2012-05-26)
+-------------------------------------------------------------------------------
+* Updated standard kernels to Long-Term-Supported linux-3.2.18 (rescuecd + rescue64)
+* Updated alternative kernels to latest stable: linux-3.3.7 (altker32 + altker64)
+* Updated syslinux and related files to 4.05 (fixes sysresccd-usbstick regression)
+* Updated XFCE graphical environment to 4.10 and Midori web-browser to 0.4.6
+* Updated e2fsprogs to 1.42.3
+
+-------------------------------------------------------------------------------
 2.7.0 (2012-05-14)
 -------------------------------------------------------------------------------
 * Updated standard kernels to Long-Term-Supported linux-3.2.16 (rescuecd + rescue64)

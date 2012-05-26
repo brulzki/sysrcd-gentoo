@@ -5,6 +5,7 @@
 >=sys-libs/glibc-2.14
 >=sys-apps/portage-2.1.11
 >=dev-lang/python-3.0
+<sys-boot/syslinux-4.0
 >=app-misc/livecd-tools-2.0
 >=sys-kernel/gentoo-sources-3.3
 >=sys-kernel/linux-headers-3.2
@@ -34,7 +35,11 @@ sys-fs/device-mapper
 app-arch/lzma-utils
 sys-apps/pcmcia-cs
 mail-mta/courier
-dev-libs/nettle
+x11-misc/xlockmore
+x11-misc/xscreensaver
+x11-apps/xwininfo
+x11-apps/appres
+app-text/sgml-common
 
 # modified packages
 >net-misc/modemmanager-0.4_p20101211
@@ -51,15 +56,13 @@ dev-libs/nettle
 >sys-block/iscsitarget-1.4.20.2
 <sys-fs/btrfs-progs-0.19-r9
 >sys-fs/btrfs-progs-0.19-r9
->www-client/midori-0.4.3
-<www-client/midori-0.4.3
+>www-client/midori-0.4.6
+<www-client/midori-0.4.6
 
 # fix problems
->=sys-devel/gettext-0.18.1.1-r1
 <net-dialup/gtkterm-0.99.6
 <sys-fs/ntfs3g-2011.4.12
 >=net-misc/openswan-2.6
->=net-libs/gnutls-2.10.9
 =app-text/docbook-xml-dtd-4.1.2
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
