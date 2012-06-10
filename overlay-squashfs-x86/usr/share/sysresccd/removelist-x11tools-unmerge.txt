@@ -155,6 +155,7 @@ x11-misc/mkxf86config
 x11-misc/notification-daemon
 x11-misc/read-edid
 x11-misc/shared-mime-info
+x11-misc/slock
 x11-misc/xbitmaps
 x11-misc/xkeyboard-config
 x11-proto/kbproto
@@ -173,6 +174,7 @@ xfce-base/libxfce4menu
 xfce-base/libxfce4ui
 xfce-base/libxfce4util
 xfce-base/libxfcegui4
+xfce-base/xfce4-appfinder
 xfce-base/xfce4-meta
 xfce-base/xfce4-panel
 xfce-base/xfce4-session

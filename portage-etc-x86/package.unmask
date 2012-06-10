@@ -1,5 +1,5 @@
 # ------ SystemRescueCd package.unmask ------
 =sys-fs/extundelete-0.2.0-r1
 =sys-block/megacli-8.02.21*
-=sys-boot/grub-2.00*
+sys-boot/grub
 

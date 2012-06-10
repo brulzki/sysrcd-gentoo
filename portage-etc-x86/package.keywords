@@ -15,6 +15,8 @@
 =net-dialup/ppp-2.4.5* ~*
 =sys-libs/zlib-1.2.5* ~*
 =sys-apps/lshw-02.16* ~*
+=app-misc/tmux-1.6* ~*
+=app-cdr/cdw-0.7.1* ~*
 =sys-devel/gcc-4.4* ~*
 =dev-lang/v8-3.6* ~*
 sys-block/parted ~*
@@ -64,6 +66,7 @@ sys-boot/os-prober ~*
 sys-fs/aufs3 ~*
 sys-fs/lde ~*
 x11-drivers/xf86-input-vmmouse ~*
+net-misc/tigervnc ~*
 
 # kernel related packages
 =net-wireless/ndiswrapper-1.58* ~*

@@ -361,7 +361,7 @@ do_syslinux()
 		die "syslinux not found on your system, please install syslinux first."
 	fi
 	
-	${PROG_SYSLINUX} ${partname}
+	${PROG_SYSLINUX} --install --directory syslinux ${partname}
 	res=$?
 	sync
 	if [ ${res} -eq 0 ]

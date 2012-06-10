@@ -6,6 +6,20 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+2.8.0 (2012-06-11)
+-------------------------------------------------------------------------------
+* Updated standard kernels to Long-Term-Supported linux-3.2.19 (rescuecd + rescue64)
+* Updated alternative kernels to latest stable: linux-3.4.2 (altker32 + altker64)
+* Fixed USB installer script for linux: usb_inst.sh (Thanks to Gernot for the fix)
+* Updated sys-apps/gptfdisk to 0.8.5 (Fdisk utility for GPT partition tables)
+* Updated fsarchiver to 0.6.15 to support recent features in btrfs/ext4 filesystems
+* Updated firmware files in the initramfs from linux-firmware-20120502
+* Updated DBAN to 2.2.6 (Hard Drive Disk Wipe and Data Clearing program)
+* Updated Grub2 bootloader to 2.00_beta6 (grub-0.97-r12 is also provided)
+* Updated list of kernel modules to put in the initramfs (storage and network)
+* Do not attempt to find sysrcd.dat on extended partitions (bug reported by Gernot)
+
+-------------------------------------------------------------------------------
 2.7.1 (2012-05-26)
 -------------------------------------------------------------------------------
 * Updated standard kernels to Long-Term-Supported linux-3.2.18 (rescuecd + rescue64)

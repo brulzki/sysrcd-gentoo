@@ -779,7 +779,8 @@ sysresccd_find_file() # $1=devtype, $2=filepath $3=mountdir, $4=mode
     mkdir -p ${mountdir}
     for curdev in ${searchdevices}
     do
-        if [ -b "${curdev}" ] # Check for a block device to mount
+        devsize=$(blockdev --getsize64 ${curdev}) 2>/dev/null || devsize=0
+        if [ -b "${curdev}" ] && [ ${devsize} -gt 1048576 ] # Check for valid block devices larger than 1MB
         then
             # check the 'skipmount=/dev/xxx' option (use it with a failing hard drive)
             # compare with a space at the end so that "/dev/sda1" and "/dev/sda11" don't match

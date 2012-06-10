@@ -3,7 +3,7 @@ version_stamp: default-std
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120523
+snapshot: 20120603
 source_subpath: default/livecd-stage1-i686-default
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -35,7 +35,6 @@ boot/kernel/rescuecd/packages:
         sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
         net-wireless/ndiswrapper
-	=sys-boot/grub-2.00_beta5
         sys-block/open-iscsi
         sys-block/iscsitarget
 	sys-fs/nilfs-utils
