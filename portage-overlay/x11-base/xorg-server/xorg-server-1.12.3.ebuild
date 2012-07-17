@@ -1,16 +1,15 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.11.4-r1.ebuild,v 1.2 2012/06/04 08:41:33 ago Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.12.3.ebuild,v 1.1 2012/07/12 13:50:29 chithanh Exp $
 
 EAPI=4
 
 XORG_DOC=doc
-XORG_EAUTORECONF=yes
-inherit xorg-2 multilib versionator
+inherit xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 DESCRIPTION="X.Org X servers"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux tslib +udev"
@@ -22,7 +21,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-apps/rgb-1.0.3
 	>=x11-apps/xauth-1.0.3
 	x11-apps/xkbcomp
-	>=x11-libs/libpciaccess-0.10.3
+	>=x11-libs/libpciaccess-0.12.901
 	>=x11-libs/libXau-1.0.4
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXfont-1.4.2
@@ -66,7 +65,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.0.2
 	>=x11-proto/glproto-1.4.14
-	>=x11-proto/inputproto-1.9.99.902
+	>=x11-proto/inputproto-2.1.99.3
 	>=x11-proto/kbproto-1.0.3
 	>=x11-proto/randrproto-1.2.99.3
 	>=x11-proto/recordproto-1.13.99.1
@@ -111,12 +110,7 @@ REQUIRED_USE="!minimal? (
 
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
-	"${FILESDIR}"/${PN}-disable-acpi.patch
-	"${FILESDIR}"/${PN}-1.9-nouveau-default.patch
-	"${FILESDIR}"/${PN}-1.11-disable-tests-without-ddx.patch
-	"${FILESDIR}"/${PN}-1.11-dix-pointerrootwin-send-focusin.patch
-	"${FILESDIR}"/${PN}-1.11-dix-send-focus-events.patch
-	"${FILESDIR}"/${PN}-1.11-log-format-fix.patch
+	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
 )
 
 pkg_pretend() {
@@ -125,9 +119,7 @@ pkg_pretend() {
 		die "Sorry, but gcc earlier than 4.0 wont work for xorg-server."
 }
 
-pkg_setup() {
-	xorg-2_pkg_setup
-
+src_configure() {
 	# localstatedir is used for the log location; we need to override the default
 	#	from ebuild.sh
 	# sysconfdir is used for the xorg.conf location; same applies
@@ -181,6 +173,8 @@ pkg_setup() {
 		ln -s "${EROOT}usr/$(get_libdir)/opengl/global/include/$i.h" "${T}/mesa-symlinks/GL/$i.h" || die
 	done
 	append-cppflags "-I${T}/mesa-symlinks"
+
+	xorg-2_src_configure
 }
 
 src_install() {
@@ -196,7 +190,7 @@ src_install() {
 	fi
 
 	newinitd "${FILESDIR}"/xdm-setup.initd-1 xdm-setup
-	newinitd "${FILESDIR}"/xdm.initd-5 xdm
+	newinitd "${FILESDIR}"/xdm.initd-8 xdm
 	newconfd "${FILESDIR}"/xdm.confd-4 xdm
 
 	# install the @x11-module-rebuild set for Portage

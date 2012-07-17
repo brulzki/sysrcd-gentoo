@@ -14,8 +14,6 @@ For instance type 0Frescuecd docache07 to boot the default image with that opt
 0Fmemtest07      Run memtest+ (memory tester)
 0Fntpasswd07     Edit/reset Windows passwords even on NTFS disks (supports Vista)
 0Ffreedos07      Run FreeDos (run DOS programs from a free OS)
-0Fgag07          Run GAG (Graphical Boot Manager)
-0Franish07       Run Ranish Partition Manager
 0Fhdt07          Hardware Detection tool 
 0Fdban07         Tool that wipes all data of a computer
 0Fmhdd07         Low-level Hard-Disk disagnostic tool

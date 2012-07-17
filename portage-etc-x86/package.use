@@ -74,10 +74,10 @@ x11-libs/vte -introspection
 x11-libs/libwnck -introspection
 net-libs/webkit-gtk -introspection
 gnome-base/librsvg -introspection
-media-libs/mesa -gallium
+media-libs/mesa gallium xa -llvm
 x11-libs/libdrm libkms
 sys-apps/lshw gtk -sqlite -static
-sys-boot/grub multislot device-mapper mount -efiemu
+sys-boot/grub multislot device-mapper mount -truetype -efiemu
 net-libs/glib-networking -gnome
 media-fonts/font-adobe-75dpi X nls
 media-fonts/font-cursor-misc X nls

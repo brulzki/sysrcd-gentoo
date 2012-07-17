@@ -40,6 +40,7 @@ x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
 app-text/sgml-common
+dev-lang/ruby
 
 # modified packages
 >net-misc/modemmanager-0.4_p20101211
@@ -61,6 +62,8 @@ app-text/sgml-common
 
 # fix problems
 =app-text/docbook-xml-dtd-4.1.2
+>sys-libs/tdb-1.2.8
+>dev-util/dialog-1.1.20120200
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
@@ -73,12 +76,14 @@ app-text/sgml-common
 # xorg
 <x11-drivers/xf86-input-vmmouse-12.8.0-r1
 >x11-drivers/xf86-input-vmmouse-12.8.0-r1
-<x11-base/xorg-server-1.11.4-r1
->x11-base/xorg-server-1.11.4-r1
-<x11-base/xorg-drivers-1.11
->x11-base/xorg-drivers-1.11
-<net-misc/tigervnc-1.1.0-r6
->net-misc/tigervnc-1.1.0-r6
+<x11-base/xorg-server-1.12.3
+>x11-base/xorg-server-1.12.3
+<x11-base/xorg-drivers-1.12
+>x11-base/xorg-drivers-1.12
+<net-misc/tigervnc-1.1.0-r7
+>net-misc/tigervnc-1.1.0-r7
+>media-libs/mesa-8.0.9
+<media-libs/mesa-8.0.3
 
 # binaries are too large in recent samba versions
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543

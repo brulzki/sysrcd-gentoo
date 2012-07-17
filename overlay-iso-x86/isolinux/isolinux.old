@@ -58,9 +58,6 @@ label memtest
 label freedos
   kernel memdisk
   append initrd=/bootdisk/freedos.img floppy
-label ranish
-  kernel memdisk
-  append initrd=/bootdisk/ranish.img floppy
 label aida
   kernel memdisk
   append initrd=/bootdisk/aida.img floppy
@@ -84,7 +81,7 @@ label mhdd
   append initrd=/bootdisk/mhdd.img floppy
 label grubdisk
   kernel memdisk
-  append initrd=/bootdisk/grubdisk.img floppy
+  append initrd=/bootdisk/grubdisk.img floppy raw
 label netboot
   kernel netboot
   append -

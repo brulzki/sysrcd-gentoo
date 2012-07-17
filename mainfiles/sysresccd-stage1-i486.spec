@@ -3,8 +3,8 @@ version_stamp: default
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20120603
-source_subpath: default/stage4-i386-20120523-01
+snapshot: 20120712
+source_subpath: default/stage4-i386-20120707-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -116,7 +116,6 @@ livecd/packages:
 	app-text/wgetpaste
 	app-vim/gentoo-syntax
 	dev-lang/perl
-	dev-lang/ruby
 	dev-libs/expat
 	dev-libs/icu
 	dev-libs/libconfig
@@ -125,6 +124,7 @@ livecd/packages:
 	dev-libs/openssl
 	dev-libs/pkcs11-helper
 	dev-libs/popt
+	dev-scheme/guile
 	dev-util/cmake
 	dev-util/debootstrap
 	dev-util/geany
@@ -196,6 +196,7 @@ livecd/packages:
 	net-misc/rdate
 	net-misc/rdesktop
 	net-misc/rsync
+	x11-misc/spacefm
 	net-misc/telnet-bsd
 	net-misc/tigervnc
 	net-misc/udpcast
@@ -291,7 +292,7 @@ livecd/packages:
 	sys-block/tw_cli
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r12
-	=sys-boot/grub-2.00_beta6
+	=sys-boot/grub-2.00
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober

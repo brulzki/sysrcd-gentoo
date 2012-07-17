@@ -23,7 +23,7 @@ start()
 	mkdir -p /var/run/dhcp
 	chown dhcp:dhcp /var/run/dhcp
 
-	# ---- disable screensaver in the console
+	# ---- disable screensaver in the console ----
 	setterm -blank 0 -powersave off
 
 	# ---- auto-detect software raid ----
@@ -127,11 +127,19 @@ start()
 		cat /proc/config.gz | gzip -d > /root/kernel-$(uname -r).conf
 	fi
 
-	# ---- fix inittab for serial consoles
+	# ---- fix inittab for serial consoles ----
 	livecd_fix_inittab
 	/sbin/telinit q &>/dev/null
 
-	# ---- mount tmpfs (important for backing store)
+	# ---- mount tmpfs (important for backing store) ----
 	mount -t tmpfs tmpfs /tmp
+
+	# ---- allow reboot after dropping the nbd conection ----
+	if echo ${CMDLINE} | grep -q ' nbdboot=\| netboot=nbd:'
+	then
+		cp /sbin/halt /tmp
+		mv /tmp/halt /sbin
+		ln -sf /sbin/halt /sbin/reboot
+	fi
 }
 

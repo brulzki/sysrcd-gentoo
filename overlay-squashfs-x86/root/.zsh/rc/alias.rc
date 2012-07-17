@@ -1,11 +1,10 @@
+alias mydf="df -hPT | column -t"
 alias ll="ls -lah"
 alias rm="rm -i"
 alias cp="cp -i"
 alias ls="ls --color=auto"
 alias l="ls -ail"
 alias cl="clear"
-
-alias cvs="cvs -z3"
 
 alias reboot="shutdown -r now"
 

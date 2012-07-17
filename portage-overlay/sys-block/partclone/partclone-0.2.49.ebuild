@@ -1,10 +1,8 @@
-inherit eutils
-
 EAPI="4"
+inherit eutils
 DESCRIPTION="Partition cloning tool"
 HOMEPAGE="http://partclone.org"
 SRC_URI="mirror://sourceforge/partclone/partclone-${PV}.tar.gz"
-
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
@@ -29,7 +27,7 @@ src_unpack()
 	cd ${S}
 }
 
-src_compile() 
+src_compile()
 {
 	local myconf
 	myconf="${myconf} --enable-extfs --enable-ncursesw"
