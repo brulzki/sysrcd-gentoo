@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright 2003-2006 Gentoo Foundation
-# Copyright 2006-2010 Francois Dupoux
+# Copyright 2006-2012 Francois Dupoux
 # Distributed under the terms of the GNU General Public License v2
 
 good_msg()
@@ -237,7 +237,7 @@ sysresccd_speakup()
 
 sysresccd_udev_start()
 {
-    good_msg "Loading modules..."
+    good_msg "Loading kernel modules..."
 
     echo '0' > /proc/sys/kernel/printk
 
@@ -619,37 +619,61 @@ sysresccd_stage1_http()
         sysresccd_panic "You requested an http boot, the address is not a valid http:// url."
     fi
 
-    good_msg "Downloading ${LOOPDAT} from ${HTTPBOOT}"
-    BOOTMD5=$(echo ${HTTPBOOT} | sed -e "s/${LOOPDAT}/${LOOPMD5}/g") # URL of the md5 file
-    for attempt in 0 1 2 3 4 5 6 7 8 9
+    BASEADDR=$(busybox dirname ${HTTPBOOT})
+
+    # in any case sysrcd.dat is required
+    FILENAMES="${LOOPDAT}"
+
+    # load system rescue modules if specific files provided in loadsrm
+    if [ -n "${LOADSRM}" ] && [ "${LOADSRM}" != "${SRMDEFAULT}" ]
+    then
+        tmplist=$(echo ${LOADSRM} | sed 's!,! !g')
+        for curfile in ${tmplist}
+        do
+            SRMFOUND="${SRMFOUND} ${BOOTPATH}/${curfile}"
+            FILENAMES="${FILENAMES} ${curfile}"
+        done
+    fi
+
+    # download each file
+    for curfile in ${FILENAMES}
     do
-        /bin/busybox wget ${BOOTMD5} -O /dev/null && break
-        echo "Failed to download ${BOOTMD5} (attempt ${attempt}), retrying..."
-        sleep 1
+        filename="${curfile}"
+        filecksm=$(echo ${curfile} | sed -e 's!.dat!.md5!' -e 's!.srm!.md5!') 
+        urldatafile="${BASEADDR}/${filename}"
+        urlchecksum="${BASEADDR}/${filecksm}"
+        good_msg "Downloading ${urldatafile} ..."
+
+        for attempt in 0 1 2 3 4 5 6 7 8 9
+        do
+            /bin/busybox wget ${urlchecksum} -O /dev/null && break
+            echo "Failed to download ${urlchecksum} (attempt ${attempt}), retrying..."
+            sleep 1
+        done
+        /bin/busybox wget ${urlchecksum} -O ${BOOTPATH}/${filecksm}
+        res1=$?
+        /bin/busybox wget ${urldatafile} -O ${BOOTPATH}/${filename}
+        res2=$?
+
+        if [ ${res1} -ne 0 ] || [ ${res2} -ne 0 ]
+        then
+            sysresccd_panic "Cannot download the files: wget failed. May be due to lack of memory"
+        fi
+
+        if [ ! -f "${BOOTPATH}/${filename}" ]
+        then
+            sysresccd_panic "Cannot download the \"${filename}\" boot file."
+        fi
+
+        md5now=$(/bin/busybox md5sum ${BOOTPATH}/${filename} | cut -d ' ' -f1)
+        md5exp=$(cat ${BOOTPATH}/${filecksm} | cut -d ' ' -f1)
+        if [ "${md5now}" = "${md5exp}" ]
+        then
+            good_msg "Successfully downloaded and md5 checked \"${filename}\""
+        else
+            sysresccd_panic "Filesystem image ${filename} is corrupt: md5sum incorrect"
+        fi
     done
-    /bin/busybox wget ${BOOTMD5} -O ${BOOTPATH}/${LOOPMD5}
-    res1=$?
-    /bin/busybox wget ${HTTPBOOT} -O ${BOOTPATH}/${LOOPDAT}
-    res2=$?
-
-    if [ ${res1} -ne 0 ] || [ ${res2} -ne 0 ]
-    then
-        sysresccd_panic "Cannot download the files: wget failed. May be due to lack of memory"
-    fi
-
-    if [ ! -f "${BOOTPATH}/${LOOPDAT}" ]
-    then
-        sysresccd_panic "Cannot download the \"${LOOPDAT}\" boot file."
-    fi
-
-    md5now=$(/bin/busybox md5sum ${BOOTPATH}/${LOOPDAT} | cut -d ' ' -f1)
-    md5orig=$(cat ${BOOTPATH}/${LOOPMD5} | cut -d ' ' -f1)
-    if [ "$md5now" = "$md5orig" ]
-    then
-        good_msg "Downloaded boot file to \"${BOOTPATH}/${LOOPDAT}\""
-    else
-        sysresccd_panic "The root filesystem image is invalid: md5sum failed"
-    fi
 }
 
 sysresccd_stage1_tftp()
@@ -664,36 +688,57 @@ sysresccd_stage1_tftp()
         sysresccd_panic "You requested an tftp boot, the address is not a valid tftp:// url."
     fi
 
-    good_msg "Downloading ${LOOPDAT} from ${TFTPBOOT}"
-    url="$(echo ${TFTPBOOT} | sed 's!tftp://!!g')" # remote the 'tftp://' prefix
+    url="$(echo ${TFTPBOOT} | sed 's!tftp://!!g')"
     tftpip="${url%%/*}"
-    tftpurl="/${url#*/}"
-    BOOTMD5=$(echo ${tftpurl} | sed -e "s/${LOOPDAT}/${LOOPMD5}/g") # URL of the md5 file
-    cmd1="/bin/busybox tftp -g -r ${BOOTMD5} -l ${BOOTPATH}/${LOOPMD5} ${tftpip}"
-    echo "$cmd1"
-    ${cmd1} ; res1="$?"
-    cmd2="/bin/busybox tftp -g -r ${tftpurl} -l ${BOOTPATH}/${LOOPDAT} ${tftpip}"
-    echo "$cmd2"
-    ${cmd2} ; res2="$?"
+    tftpurl=$(busybox dirname ${url} | sed -e 's![^/]*/!!')
 
-    if [ "$res1" != '0' ] || [ "$res2" != '0' ]
+    # in any case sysrcd.dat is required
+    FILENAMES="${LOOPDAT}"
+
+    # load system rescue modules (srm files)
+    if [ -n "${LOADSRM}" ] && [ "${LOADSRM}" != "${SRMDEFAULT}" ]
     then
-        sysresccd_panic "Cannot download the files, wget failed. May be due to lack of memory"
+        tmplist=$(echo ${LOADSRM} | sed 's!,! !g')
+        for curfile in ${tmplist}
+        do
+            SRMFOUND="${SRMFOUND} ${BOOTPATH}/${curfile}"
+            FILENAMES="${FILENAMES} ${curfile}"
+        done
     fi
 
-    if [ ! -f "${BOOTPATH}/${LOOPDAT}" ]
-    then
-        sysresccd_panic "Cannot download the \"${LOOPDAT}\" boot file."
-    fi
+    # download each file
+    for curfile in ${FILENAMES}
+    do
+        filename="${curfile}"
+        filecksm=$(echo ${curfile} | sed -e 's!.dat!.md5!' -e 's!.srm!.md5!') 
+        urldatafile="${tftpurl}/${filename}"
+        urlchecksum="${tftpurl}/${filecksm}"
+        good_msg "Downloading ${urldatafile} ..."
 
-    md5now=$(/bin/busybox md5sum ${BOOTPATH}/${LOOPDAT} | cut -d ' ' -f1)
-    md5orig=$(cat ${BOOTPATH}/${LOOPMD5} | cut -d ' ' -f1)
-    if [ "$md5now" = "$md5orig" ]
-    then
-        good_msg "Downloaded boot file to \"${BOOTPATH}/${LOOPDAT}\""
-    else
-        sysresccd_panic "The root filesystem image is invalid: md5sum failed"
-    fi
+        cmd="/bin/busybox tftp -g -r ${urlchecksum} -l ${BOOTPATH}/${filecksm} ${tftpip}"
+        echo "${cmd}"
+        ${cmd}
+        res1=$?
+
+        cmd="/bin/busybox tftp -g -r ${urldatafile} -l ${BOOTPATH}/${filename} ${tftpip}"
+        echo "${cmd}"
+        ${cmd}
+        res2=$?
+
+        if [ ${res1} -ne 0 ] || [ ${res2} -ne 0 ]
+        then
+            sysresccd_panic "Cannot download the files: tftp failed. May be due to lack of memory"
+        fi
+
+        md5now=$(/bin/busybox md5sum ${BOOTPATH}/${filename} | cut -d ' ' -f1)
+        md5exp=$(cat ${BOOTPATH}/${filecksm} | cut -d ' ' -f1)
+        if [ "${md5now}" = "${md5exp}" ]
+        then
+            good_msg "Successfully downloaded and md5 checked \"${filename}\""
+        else
+            sysresccd_panic "Filesystem image ${filename} is corrupt: md5sum incorrect"
+        fi
+    done
 }
 
 sysresccd_stage1_nfs()
@@ -720,6 +765,19 @@ sysresccd_stage1_nfs()
         good_msg "Successfully checked md5 sum of ${BOOTPATH}/${LOOPDAT}"
     else
         sysresccd_panic "md5sum checksum is invalid on the root filesystem image"
+    fi
+
+    # load system rescue modules (srm files)
+    if [ -n "${LOADSRM}" ]
+    then
+        tmplist=$(cd ${BOOTPATH}/${SUBDIR} ; ls ${LOADSRM} 2>/dev/null)
+        [ $? -eq 0 ] || break
+        for cursrm in ${tmplist}
+        do
+            fullpath="${BOOTPATH}/${SUBDIR}/${cursrm}"
+            good_msg "System rescue module '${cursrm}' found"
+            SRMFOUND="${SRMFOUND} ${fullpath}"
+        done
     fi
 }
 
@@ -759,7 +817,7 @@ sysresccd_find_devices() # $1=devtype
     *) # specific device name (eg: "/dev/sda1")
         searchdevices="${devtype}"
         ;;
-    esac
+        esac
     
     echo "${searchdevices}"
     return 1
@@ -829,6 +887,7 @@ sysresccd_find_file() # $1=devtype, $2=filepath $3=mountdir, $4=mode
 # find the device which contains sysrcd.dat and mount it on ${BOOTPATH}
 sysresccd_stage1_normal()
 {
+    # search for sysrcd.dat on block devices
     good_msg "Searching for ${SUBDIR}/${LOOPDAT} on devices..."
     filefound=''
     for attempts in 1 2 3 4 5
@@ -836,7 +895,7 @@ sysresccd_stage1_normal()
         [ ${attempts} -gt 1 ] && sleep 3 && bad_msg "Cannot find device with ${SUBDIR}/${LOOPDAT}. Retrying..."
         if sysresccd_find_file 'auto' ${SUBDIR}/${LOOPDAT} ${BOOTPATH} 'ro'
         then
-            if [ "${DOCHECK}" = '1' ] # don't run checksum by default on slow medias (cdrom, usb, ...)
+            if [ "${DOCHECK}" = '1' ] # dont run checksum by default on slow medias (cdrom, usb, ...)
             then
                 if [ ! -f "${BOOTPATH}/${SUBDIR}/${LOOPMD5}" ]
                 then
@@ -857,88 +916,135 @@ sysresccd_stage1_normal()
         fi
     done
 
+    # stop here if main squashfs file not found
     if [ -z "${filefound}" ]
     then
         sysresccd_panic "Cannot find ${SUBDIR}/${LOOPDAT} on devices"
     fi
 
+    # cache files to memory if option enabled
     if [ "${DOCACHE}" = '1' ]
     then
+        cachefailed='0'
+        CACHEFILES="${BOOTPATH}/${SUBDIR}/${LOOPDAT}"
+
+        if [ -n "${LOADSRM}" ]
+        then
+            tmplist=$(cd ${BOOTPATH}/${SUBDIR} ; ls ${LOADSRM} 2>/dev/null)
+            [ $? -eq 0 ] || break
+            for cursrm in ${tmplist}
+            do
+                fullpath="${BOOTPATH}/${SUBDIR}/${cursrm}"
+                CACHEFILES="${CACHEFILES} ${fullpath}"
+            done
+        fi
+
         good_msg "Creating tmpfs for caching in ${CACHEDIR}"
         if ! mount -t tmpfs -o ${CACHESIZE} tmpfs ${CACHEDIR}
         then
             sysresccd_panic "Cannot mount tmpfs filesystem on ${CACHEDIR} for caching"
         fi
 
-        # --------------- Get loopfile size
-        squashfspath="${BOOTPATH}/${SUBDIR}/${LOOPDAT}"
-        squashfssize=$(ls -l "$squashfspath" | sed -e ":a;s/  / /g;ta" | cut -f 5 -d ' ') # size in bytes
-        squashfssizekb=$(( $squashfssize / 1024 )) # size in kilo-bytes
-
         # --------------- Cache autorun files
         autoruns="$(ls -d ${BOOTPATH}/${SUBDIR}/autorun* 2>/dev/null)"
         [ "$autoruns" != "" ] && cp $autoruns ${CACHEDIR}/
 
-        # --------------- Cache main loop file
+        # --------------- Cache other files
         cp -a ${BOOTPATH}/${SUBDIR}/version ${CACHEDIR}/ 2>/dev/null
         cp -a ${BOOTPATH}/${SUBDIR}/${LOOPMD5} ${CACHEDIR}/${LOOPMD5} 2>/dev/null
-        good_msg "Copying ${LOOPDAT} file for caching (size: $squashfssizekb KB)..."
-        if [ -x /bin/pv ]
-        then
-            /bin/pv -p < ${BOOTPATH}/${SUBDIR}/${LOOPDAT} > ${CACHEDIR}/${LOOPDAT}
-            #/bin/rsync -aP ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT}
-        else
-            cp -a ${BOOTPATH}/${SUBDIR}/${LOOPDAT} ${CACHEDIR}/${LOOPDAT} 2>/dev/null
-        fi
 
-        # --------------- Check main loop file
-        expectedsize=$(/bin/busybox stat -c%s "${BOOTPATH}/${SUBDIR}/${LOOPDAT}")
-        copiedsize=$(/bin/busybox stat -c%s "${CACHEDIR}/${LOOPDAT}")
+        # ---------------- Cache all squashfs filesystems
+        for curfile in ${CACHEFILES}
+        do
+            # --------------- Get squashfs file size
+            squashfsname=$(busybox basename ${curfile})
+            squashfsorig="${curfile}"
+            squashfsdest="${CACHEDIR}/${squashfsname}"
+            squashfssize=$(ls -l "${squashfsorig}" | sed -e ":a;s/  / /g;ta" | cut -f 5 -d ' ') # size in bytes
+            squashfssizekb=$(( ${squashfssize} / 1024 )) # size in kilo-bytes
 
-        if [ "${copiedsize}" != "${expectedsize}" ] # Was the copy completed successfully ?
-        then # docache failed
-            bad_msg "Caching failed. Likely due to lack of memory"
-            rm -f "${CACHEDIR}/${LOOPDAT}"
-            umount ${CACHEDIR} 2>/dev/null
-            sleep 3
-        else # docache successful
-            good_msg "File ${LOOPDAT} successfully cached"
-            SUBDIR=''
-
-            # cache other files if possible
-            if [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
+            # --------------- Cache main squashfs file
+            good_msg "Copying ${squashfsname} file for caching (size: $squashfssizekb KB)..."
+            if [ -x /bin/pv ]
             then
-                good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd + usb_inst for caching..."
-                if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk \
-                    ${BOOTPATH}/${SUBDIR}/ntpasswd ${BOOTPATH}/${SUBDIR}/usb_inst* ${CACHEDIR}/
-                then
-                    rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd ${CACHEDIR}/usb_inst*
-                    bad_msg "Cannot cache these directories (required only for pxebootsrv). Likely due to lack of memory"
-                fi
-            fi
-
-            # unmount the media if possible
-            if umount ${BOOTPATH}
-            then
-                good_msg "The original media has been unmounted"
-                cmd="mount -n --move ${CACHEDIR} ${BOOTPATH}"
-                if ! ${cmd}
-                then
-                    bad_msg "${cmd} --> ${res}" && sleep 3
-                fi
+                /bin/pv -p < ${squashfsorig} > ${squashfsdest}
             else
-                bad_msg "Cannot unmount the original media"
+                cp -a ${squashfsorig} ${squashfsdest} 2>/dev/null
             fi
 
-            # unmount isostore if necessary
-            if cat /proc/mounts | awk '{print $2}' | grep -q "^${ISOSTORE}$"
+            # --------------- Check main squashfs file
+            expectedsize=$(/bin/busybox stat -c%s "${squashfsorig}")
+            copiedsize=$(/bin/busybox stat -c%s "${squashfsdest}")
+
+            if [ "${copiedsize}" != "${expectedsize}" ] # Was the copy completed successfully ?
+            then # docache failed
+                cachefailed=1
+                bad_msg "Caching failed. Likely due to lack of memory"
+                sleep 3
+                break
+            else # docache successful
+                good_msg "File ${squashfsname} successfully cached"
+            fi
+        done
+
+        # check if cache has succeded
+        if [ "${cachefailed}" = '0' ]
+        then
+            SUBDIR=''
+            good_msg "All files have successfully been cached"
+        else
+            rm -f ${CACHEDIR}/*
+            umount ${CACHEDIR} 2>/dev/null
+        fi
+
+        # cache other files if possible
+        if [ "${CDTYPE}" != 'mini' ] && [ "${cachefailed}" = '0' ] && \
+            [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] \
+            && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
+        then
+            good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd + usb_inst for caching..."
+            if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk \
+                ${BOOTPATH}/${SUBDIR}/ntpasswd ${BOOTPATH}/${SUBDIR}/usb_inst* ${CACHEDIR}/
             then
-                if losetup -d /dev/loop0
-                then
-                    umount ${ISOSTORE} && good_msg "Unmounted ${ISOSTORE}" || bad_msg "Cannot unmount ${ISOSTORE}"
-                fi
+                rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd ${CACHEDIR}/usb_inst*
+                bad_msg "Cannot cache these directories (required only for pxebootsrv). Likely due to lack of memory"
             fi
         fi
+
+        # unmount the media if possible
+        if [ "${cachefailed}" = '0' ] && umount ${BOOTPATH}
+        then
+            good_msg "The original media has been unmounted"
+            cmd="mount -n --move ${CACHEDIR} ${BOOTPATH}"
+            if ! ${cmd}
+            then
+                bad_msg "${cmd} --> ${res}" && sleep 3
+            fi
+        else
+            bad_msg "Cannot unmount the original media"
+        fi
+
+        # unmount isostore if necessary
+        if cat /proc/mounts | awk '{print $2}' | grep -q "^${ISOSTORE}$"
+        then
+            if losetup -d /dev/loop0
+            then
+                umount ${ISOSTORE} && good_msg "Unmounted ${ISOSTORE}" || bad_msg "Cannot unmount ${ISOSTORE}"
+            fi
+        fi
+    fi
+
+    # load system rescue modules (srm files)
+    if [ -n "${LOADSRM}" ]
+    then
+        tmplist=$(cd ${BOOTPATH}/${SUBDIR} ; ls ${LOADSRM} 2>/dev/null)
+        [ $? -eq 0 ] || break
+        for cursrm in ${tmplist}
+        do
+            fullpath="${BOOTPATH}/${SUBDIR}/${cursrm}"
+            good_msg "System rescue module '${cursrm}' found"
+            SRMFOUND="${SRMFOUND} ${fullpath}"
+        done
     fi
 }
 
@@ -1001,7 +1107,25 @@ sysresccd_stage2_normal() # mount ${BOOTPATH}/sysrcd.dat on ${SQUASHFSMNT}
 
 sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 {
-    # 1. search for a backstore file ("sysrcd.bs" by default)
+    AUFSEXTRA=""
+    MNTSEXTRA=""
+
+    # 1. mount all system rescue modules
+    for cursrm in ${SRMFOUND}
+    do
+        modname=$(busybox basename ${cursrm})
+        curmnt="/mntextra/${modname}"
+        good_msg "Mounting module ${modname} ..."
+        mkdir -p "${curmnt}"
+        if ! mount "${cursrm}" "${curmnt}"
+        then
+            sysresccd_panic "Cannot mount the loopback system rescue module file ${cursrm}"
+        fi
+        AUFSEXTRA="${curmnt}=ro:${AUFSEXTRA}"
+        MNTSEXTRA="${curmnt} ${MNTSEXTRA}"
+    done
+
+    # 2. search for a backstore file ("sysrcd.bs" by default)
     BACKSTORE_FOUND=''
     if [ "${BACKSTORE_CMD}" != 'off' ]
     then
@@ -1059,29 +1183,29 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 
     fi
 
-    # 2. store modifications in a tmpfs filesystem if there is no backstore
+    # 3. store modifications in a tmpfs filesystem if there is no backstore
     if [ -z "${BACKSTORE_FOUND}" ] && ! mount -t tmpfs tmpfs ${BACKSTORE_MEM}
     then
         sysresccd_panic "Fatal error: cannot mount tmpfs on ${BACKSTORE_MEM}"
     fi
 
-    # 3. create the aufs filesystem
+    # 4. create the aufs filesystem
     if ! grep -q aufs /proc/filesystems
     then
         sysresccd_panic "Fatal error: aufs filesystem not supported by the kernel."
     fi
-    if mount -t aufs none ${NEWROOT} -o dirs=${BACKSTORE_MEM}=rw:${SQUASHFSMNT}=ro -o noatime
+    if mount -t aufs none ${NEWROOT} -o dirs=${BACKSTORE_MEM}=rw:${AUFSEXTRA}${SQUASHFSMNT}=ro -o noatime
     then
         good_msg "The aufs filesystem has been created"
     else
         sysresccd_panic "Fatal error: cannot mount the aufs filesystem."
     fi
 
-    # 4. copy cached autorun scripts
+    # 5. copy cached autorun scripts
     autoruns="$(ls -d ${CACHEDIR}/autorun* 2>/dev/null)"
     [ "$autoruns" != "" ] && cp $autoruns ${NEWROOT}/var/autorun/cdrom
 
-    # 5. create the aufs filesystem for /tftpboot
+    # 6. create the aufs filesystem for /tftpboot
     TFTPBOOT_MEM='/tftpmem'
     TFTPBOOT_DIR='/tftpboot'
     mkdir -p ${TFTPBOOT_MEM}
@@ -1106,14 +1230,14 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 
     if [ -n "${isolinux_dir}" ]
     then
-        for curfile in initram.igz rescuecd rescue64 altker32 altker64
+        for curfile in initram.igz rescue32 rescue64 altker32 altker64
         do
             ln -s ${isolinux_dir}/${curfile} ${TFTPBOOT_DIR}/${curfile}
         done
     fi
 
-    # 5. move filesystems mount points to the newroot
-    for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE} ${TFTPBOOT_MEM}
+    # 7. move filesystems mount points to the newroot
+    for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE} ${TFTPBOOT_MEM} ${MNTSEXTRA}
     do
         targetdir="${NEWROOT}/livemnt/${mntdir}"
         if cat /proc/mounts | awk '{print $2}' | grep -q "^${mntdir}$"
@@ -1192,11 +1316,6 @@ sysresccd_stage3_rootsys() # mount the root partition on ${SQUASHFSMNT}
     then
         sysresccd_panic "Cannot find a valid root filesystem (partition having ${INITPROG})"
     fi
-
-    #NEWKERMODS="${NEWROOT}/lib/modules/$(uname -r)"
-    #mkdir -p ${NEWKERMODS}
-    #mount -t tmpfs tmpfs ${NEWKERMODS}
-    #cp -a /lib/modules/$(uname -r)/* ${NEWKERMODS}/
 }
 
 sysresccd_stage0_isoloop() # losetup the iso image on /dev/loop0
@@ -1384,6 +1503,16 @@ sysresccd_parsecmdline()
         docache)
             DOCACHE='1'
             ;;
+        loadsrm\=*)
+            LOADSRM=`parse_opt "${x}"`
+            LOADSRM="`echo ${LOADSRM} | sed -e \"s/,/ /g\"`"
+            ;;
+        loadsrm\=off)
+            LOADSRM=''
+            ;;
+        nosrm)
+            LOADSRM=''
+            ;;
         subdir\=*)
             SUBDIR=`parse_opt "${x}"`
             ;;
@@ -1543,6 +1672,8 @@ NODHCP=''
 ROOTFS=''
 SUBDIR=''
 SPEAKUP=''
+CDTYPE=''
+SCANDELAY='1'
 STAGE0='normal'
 BOOTPATH='/boot'
 NEWROOT='/newroot'
@@ -1557,8 +1688,11 @@ LOOPMD5='sysrcd.md5'
 INITPROG='/sbin/init'
 CONSOLE='/dev/console'
 CACHEDIR='/cache'
-CACHESIZE='size=512m'
+CACHESIZE='size=2048m'
 NONETMGR=''
+SRMDEFAULT='*.srm'
+LOADSRM="${SRMDEFAULT}"
+SRMFOUND=''
 
 # Start with an empty list
 BLKDEVICES=""

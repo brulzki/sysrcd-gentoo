@@ -64,7 +64,7 @@ start()
 	done
 	
 	# ---- options to configure and start the vncserver ----
-	# eg: "rescuecd vncserver=2:mYpAsWd" will create two vnc displays (display=1 on port 5900 and display=2 on port 5901)
+	# eg: "rescue64 vncserver=2:mYpAsWd" will create two vnc displays (display=1 on port 5900 and display=2 on port 5901)
 	# and the two displays will use the same password and the root user account (password=mYpAsWd)
 	# this option should be used only once, but in case of multiple usages the last vncserver option overwrite the previous ones
 	vnclog='/var/log/vncserver.log'
@@ -116,10 +116,13 @@ start()
 	fi
 
 	# ---- allow freshclam ----
-	mkdir -p /var/log/clamav /var/run/clamav
-	chown clamav:clamav /var/log/clamav
-	chown clamav:clamav /var/run/clamav
-	chown clamav:clamav /var/lib/clamav
+	if [ -f /usr/bin/freshclam ]
+	then   
+		mkdir -p /var/log/clamav /var/run/clamav
+		chown clamav:clamav /var/log/clamav
+		chown clamav:clamav /var/run/clamav
+		chown clamav:clamav /var/lib/clamav
+	fi
 
 	# ---- create a kernel options file ----
 	if [ -f /proc/config.gz ]
@@ -140,6 +143,22 @@ start()
 		cp /sbin/halt /tmp
 		mv /tmp/halt /sbin
 		ln -sf /sbin/halt /sbin/reboot
+	fi
+
+	# ---- automatically use 64bit version of fsarchiver/memtester if possible
+	if uname -m | grep -q x86_64
+	then
+		if [ -f /usr/sbin/fsarchiver-64bit ]
+		then
+			mv /usr/sbin/fsarchiver /usr/sbin/fsarchiver-32bit
+			ln -s /usr/sbin/fsarchiver-64bit /usr/sbin/fsarchiver
+		fi
+
+		if [ -f /usr/sbin/memtester-64bit ]
+		then
+			mv /usr/sbin/memtester /usr/sbin/memtester-32bit
+			ln -s /usr/sbin/memtester-64bit /usr/sbin/memtester
+		fi
 	fi
 }
 

@@ -36,8 +36,11 @@ fbecho
 echo -e "${lc1} =========== ${lc2}SystemRescue-Cd${lc1} -----${VERSION}=========== ${lc2}$(basename $(tty))${dc2}/6 ${lc1}=="
 echo -e "                      ${dc1}http://www.sysresccd.org/"
 echo
-echo -e "${dc1}*${dc2} You should stop the Network-Manager service if you want to configure "
-echo -e "   the network by hand. Just run this command: /etc/init.d/NetworkManager stop"
+if [ -f /etc/init.d/NetworkManager ]
+then
+	echo -e "${dc1}*${dc2} You should stop the Network-Manager service if you want to configure "
+	echo -e "   the network by hand. Just run this command: /etc/init.d/NetworkManager stop"
+fi
 echo -e "${dc1}*${dc2} Type ${lc2}net-setup eth0${dc2} to specify ethernet configuration."
 echo -e "${dc1}*${dc2} If your PC is on an ethernet local network, you can configure by hand:"
 echo -e "   ${dc1}-${dc2} ifconfig eth0 192.168.x.a (your static IP address)"
@@ -46,18 +49,21 @@ fbecho
 echo -e "${dc1}*${dc2} To be sure there is an ssh server running, type ${lc2}/etc/init.d/sshd start${dc2}."
 echo -e "   You will need to create an user or to change the root password with ${lc2}passwd${dc2}."
 fbecho
-echo -e "${dc1}*${dc2} Available console text editors : ${lc2}nano${dc2}, ${lc2}vim${dc2}, ${lc2}qemacs${dc2}, ${lc2}joe${dc2}."
+echo -e "${dc1}*${dc2} Available console text editors : ${lc2}nano${dc2}, ${lc2}vim${dc2}, ${lc2}qemacs${dc2}, ${lc2}zile${dc2}, ${lc2}joe${dc2}."
 echo -e "${dc1}*${dc2} Web browser in the console: ${lc2}elinks www.web-site.org${dc2}."
 fbecho
 echo -e "${dc1}*${lc1} Ntfs-3g${dc2} : If you need a full Read-Write NTFS access, use Ntfs-3g."
 echo -e "   Mount the disk: ${lc2}ntfs-3g /dev/sda1 /mnt/windows${dc2}"
 fbecho
-echo -e "${dc1}*${lc1} Graphical environment${dc2} : use either ${lc2}Xorg${dc2} or ${lc2}Xfbdev${dc2}."
-echo -e "   Type ${lc2}wizard${dc2} to run the graphical environment (or ${lc2}startx${dc2} but it may fail)"
-echo -e "   X.Org comes with the XFCE environment and several graphical tools:"
-echo -e "   ${dc1}-${dc2} Partition manager:..${lc2}gparted${dc2}"
-echo -e "   ${dc1}-${dc2} Web browsers:.......${lc2}midori${dc2}"
-echo -e "   ${dc1}-${dc2} Text editors:.......${lc2}gvim${dc2} and ${lc2}geany${dc2}"
+if [ -f /usr/bin/Xorg ]
+then
+	echo -e "${dc1}*${lc1} Graphical environment${dc2} : "
+	echo -e "   Type ${lc2}startx${dc2} to run the graphical environment"
+	echo -e "   X.Org comes with the XFCE environment and several graphical tools:"
+	echo -e "   ${dc1}-${dc2} Partition manager:..${lc2}gparted${dc2}"
+	echo -e "   ${dc1}-${dc2} Web browsers:.......${lc2}midori${dc2}"
+	echo -e "   ${dc1}-${dc2} Text editors:.......${lc2}gvim${dc2} and ${lc2}geany${dc2}"
+fi
 echo
 fbecho
 

@@ -12,6 +12,7 @@
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.7* ~*
 =www-client/midori-0.4.6* ~*
+=sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
 =net-dialup/ppp-2.4.5* ~*
 =sys-apps/lshw-02.16* ~*
@@ -56,16 +57,14 @@ sys-apps/hdparm ~*
 sys-apps/gdisk ~*
 app-arch/pigz ~*
 sys-process/nmon ~*
-sys-block/megarc ~*
-sys-block/megacli ~*
-sys-block/tw_cli ~*
 sys-apps/flashrom ~*
 sys-block/ms-sys ~*
 sys-boot/os-prober ~*
 sys-fs/aufs3 ~*
-sys-fs/lde ~*
-x11-drivers/xf86-input-vmmouse ~*
 net-misc/tigervnc ~*
+x11-drivers/xf86-input-vmmouse ~*
+app-emulation/open-vm-tools-kmod ~*
+app-emulation/open-vm-tools ~*
 
 # kernel related packages
 =net-wireless/ndiswrapper-1.58* ~*
@@ -78,7 +77,6 @@ sys-kernel/genkernel ~*
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
-=sys-fs/zfs-fuse-0.6* ~*
 =sys-fs/zfs-fuse-0.7* ~*
 =sys-fs/xfsprogs-3.1* ~*
 =sys-fs/xfsdump-3.1* ~*
@@ -89,8 +87,6 @@ app-crypt/truecrypt ~*
 sys-fs/ecryptfs-utils ~*
 sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
-sys-kernel/spl **
-sys-fs/zfs **
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*

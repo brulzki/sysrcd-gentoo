@@ -107,13 +107,13 @@ check_freespace()
 do_extract_check()
 {
 	# check for free space
-	check_freespace 900
+	check_freespace 1500
 }
 
 do_extract()
 {
 	# ---- check the original contents
-	for curfile in /livemnt/boot/sysrcd.dat /livemnt/boot/sysrcd.md5 /livemnt/boot/isolinux/rescuecd
+	for curfile in /livemnt/boot/sysrcd.dat /livemnt/boot/sysrcd.md5 /livemnt/boot/isolinux/rescue32
 	do
 		if [ ! -f "${curfile}" ]
 		then
@@ -132,7 +132,7 @@ do_extract()
 	done
 	
 	# ---- copy optionnal files and directories
-	for curfile in bootprog bootdisk ntpasswd usb_inst usb_inst.sh usbstick.htm
+	for curfile in boot bootprog bootdisk efi ntpasswd usb_inst usb_inst.sh usbstick.htm
 	do
 		if ! cp -a /livemnt/boot/${curfile} /mnt/custom/customcd/isoroot/ 2>/dev/null
 		then
@@ -150,7 +150,7 @@ do_extract()
 do_squashfs()
 {
 	# check for free space
-	check_freespace 350
+	check_freespace 400
 
 	# prepare the directories
 	mkdir -p /mnt/custom/customcd/
@@ -216,7 +216,7 @@ do_isogen()
 	curtime="$(date +%Y%m%d-%H%M)"
 
 	# check for free space
-	check_freespace 400
+	check_freespace 500
 
 	if [ -z "${ISO_VOLUME}" ]
 	then
@@ -235,10 +235,14 @@ do_isogen()
 
 	echo "Volume name of the CDRom: ${ISO_VOLUME}"
 
-	cmd="mkisofs -J -l -o /mnt/custom/customcd/isofile/sysresccd-${curtime}.iso \
-	        -b isolinux/isolinux.bin -c isolinux/boot.cat -input-charset utf-8 \
-	        -no-emul-boot -boot-load-size 4 -boot-info-table \
-	        -V ${ISO_VOLUME} /mnt/custom/customcd/isoroot"
+        cmd="xorriso -as mkisofs -joliet -rock \
+		-omit-version-number -disable-deep-relocation \
+		-b isolinux/isolinux.bin -c isolinux/boot.cat \
+		-no-emul-boot -boot-load-size 4 -boot-info-table \
+		-eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot \
+		-o /mnt/custom/customcd/isofile/sysresccd-${curtime}.iso \
+		-volid ${ISO_VOLUME} /mnt/custom/customcd/isoroot"
+
 	${cmd}
 	res="$?"
 	echo "${cmd} --> $res"

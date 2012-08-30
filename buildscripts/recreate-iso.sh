@@ -1,16 +1,21 @@
 #!/bin/sh
 
-VERSION="2.8.1"
-EXTRAVER=""
-VOLNAME="sysrcd-2.8.1"
+VERSION_MAJ=3
+VERSION_MIN=0
+VERSION_PAT=0
+
+# ==================================================================
+# ==================================================================
+
+VERSION="${VERSION_MAJ}.${VERSION_MIN}.${VERSION_PAT}"
+VOLNAME="sysrcd-${VERSION_MAJ}.${VERSION_MIN}.${VERSION_PAT}"
+GRUBCFG="grub-${VERSION_MAJ}${VERSION_MIN}${VERSION_PAT}.cfg"
 ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
 REPOBIN=/worksrc/sysresccd-bin
 
-# ==================================================================
-# ==================================================================
-
+# ========= check command line ================================================
 usage()
 {
 	echo "Usage: $0 <arch> <options>"
@@ -37,6 +42,7 @@ then
 	exit 1
 fi
 
+mkdir -p /mnt/cdrom
 umount /mnt/cdrom 2>/dev/null
 if ! mount -o loop,ro ${CURFILE} /mnt/cdrom
 then
@@ -50,27 +56,55 @@ then
 	exit 1
 fi
 
-[ -d ${TEMPDIR} ] && rm -rf ${TEMPDIR} 
-mkdir -p ${TEMPDIR}
-cp /mnt/cdrom/isolinux/rescuecd* ${REPOBIN}/kernels-x86/
+[ -d ${TEMPDIR} ] && rm -rf ${TEMPDIR} ; mkdir -p ${TEMPDIR}
 cp /mnt/cdrom/image.squashfs ${TEMPDIR}/sysrcd.dat
 ( cd ${TEMPDIR} ; md5sum sysrcd.dat > sysrcd.md5 ; chmod 644 sysrcd.* ) 
+CDTYPE="$(cat /mnt/cdrom/image.squashfs.txt)"
+CDVERS="$(cat ${REPOSRC}/overlay-squashfs-x86/root/version)"
 umount /mnt/cdrom
 
 # ========= copy files from overlays ===========================================
 rsync -ax ${REPOBIN}/overlay-iso-x86/ "${TEMPDIR}/"
 rsync -ax ${REPOSRC}/overlay-iso-x86/ "${TEMPDIR}/"
-rsync -ax ${REPOBIN}/kernels-x86/ ${TEMPDIR}/isolinux/
-cp ${REPOSRC}/overlay-squashfs-x86/root/version ${TEMPDIR}
+cp ${REPOSRC}/overlay-squashfs-x86/root/version "${TEMPDIR}/"
 
-# ========= integrate the version number in f1boot.msg =========================
-TXTVERSION=$(cat ${REPOSRC}/overlay-squashfs-x86/root/version)
-for fixfile in isolinux.cfg f1boot.msg
+# ========= copy and transform isolinux configuration files=====================
+case ${CDTYPE} in
+	full)
+		filter='<ALL>|<STD>'
+		memreq='512 MB'
+		;;
+	mini)
+		filter='<ALL>|<MIN>'
+		memreq='256 MB'
+		;;
+esac
+
+for curfile in ${REPOSRC}/overlay-iso-x86/isolinux/*
 do
-	sed -i -e "s/SRCDVER/${TXTVERSION}${EXTRAVER}/" ${TEMPDIR}/isolinux/${fixfile}
+	if [ -f ${curfile} ]
+	then
+		filename=$(basename ${curfile})
+		isofile1="${REPOSRC}/overlay-iso-x86/isolinux/${filename}"
+		isofile2="${TEMPDIR}/isolinux/${filename}"
+		grep -E "${filter}" "${isofile1}" >| "${isofile2}"
+		sed -i -e 's!<...> !!g' "${isofile2}"
+		sed -i -e "s!<MEMREQ>!${memreq}!g" "${isofile2}"
+		sed -i -e "s!<SRCDVER>!${CDVERS}!g" "${isofile2}"
+	fi
 done
 
-# ========= merge (rescuecd.igz+rescue64.igz+altker32.igz) --> rescuecd.igz ====
+# ========= copy kernel images from overlays ===================================
+if echo ${CDTYPE} | grep -q -E 'full|mini'
+then
+	rsync -ax ${REPOBIN}/kernels-x86/{rescue32,rescue64} ${TEMPDIR}/isolinux/
+fi
+if echo ${CDTYPE} | grep -q -E 'full'
+then
+	rsync -ax ${REPOBIN}/kernels-x86/{altker32,altker64} ${TEMPDIR}/isolinux/
+fi
+
+# ========= recreate initramfs =================================================
 curdir="${TEMPDIR}/isolinux"
 newramfs="${curdir}/initram-root"
 newinitrfs="${curdir}/initram.igz"
@@ -83,8 +117,9 @@ cp -a ${REPOBIN}/overlay-initramfs/* ${newramfs}/
 # setup custom busybox in initramfs
 ( cd ${newramfs}/bin/ ; ln busybox sh )
 
-# update the init boot script in the initramfs
+# copy the init boot script in the initramfs
 cp ${REPOSRC}/mainfiles/init ${newramfs}/init
+sed -i -e "s!CDTYPE=''!CDTYPE='${CDTYPE}'!g" ${newramfs}/init
 
 # build new initramfs
 echo 'building the new initramfs...'
@@ -95,7 +130,7 @@ echo 'building the new initramfs...'
 
 # ========= copy embedded initramfs to permanent location =====================
 mkdir -p /var/tmp/EMBEDDEDINIT
-cp /worksrc/catalyst/tmp/default/livecd-stage2-*/etc/kernels/initramfs-*.cpio* /var/tmp/EMBEDDEDINIT/
+rsync -ax /worksrc/catalyst/tmp/default/livecd-stage2-*/etc/kernels/initramfs-*.cpio* /var/tmp/EMBEDDEDINIT/
 
 # ========= copy the new files to the pxe environment =========================
 if [ -d /tftpboot ]
@@ -106,27 +141,71 @@ then
 fi
 
 # ========= prepare the ISO image =============================================
-ISOFILE="${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.iso"
+ISOFILE="${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${CDTYPE}-${MYDATE}.iso"
 
+iso_uuid=$(date -u +%Y-%m-%d-%H-%M-%S-00)
+iso_date=$(echo ${iso_uuid} | sed -e s/-//g)
+
+# 1. give "grub.cfg" a sysresccd version specific name
+mv "${TEMPDIR}/boot/grub/grub.cfg" "${TEMPDIR}/boot/grub/${GRUBCFG}"
+mkdir -p "${TEMPDIR}/efi/boot"
+
+# 2. create memdisk tar image which contains initial embedded grub.cfg
+memdisk_dir="/var/tmp/MEMDISKDIR"
+memdisk_img="/var/tmp/MEMDISKIMG"
+rm -rf ${memdisk_dir} ${memdisk_img}
+mkdir -p "${memdisk_dir}/boot/grub"
+initialcfg="${memdisk_dir}/boot/grub/grub.cfg"
+echo "" >| ${initialcfg}
+echo "search --file --no-floppy --set=root /boot/grub/${GRUBCFG}" >> ${initialcfg}
+echo "set prefix=/boot/grub" >> ${initialcfg}
+echo "source (\${root})/boot/grub/${GRUBCFG} " >> ${initialcfg}
+(cd "${memdisk_dir}"; tar -cf - boot) > "${memdisk_img}"
+
+# 3. create bootx64.efi that contains embedded memdisk tar image
+/usr/bin/grub2-mkimage -m "${memdisk_img}" -o "${TEMPDIR}/efi/boot/bootx64.efi" \
+	--prefix='(memdisk)/boot/grub' -d /usr/lib64/grub/x86_64-efi -C xz -O x86_64-efi \
+	search iso9660 configfile normal memdisk tar boot linux part_msdos part_gpt \
+	part_apple configfile help loadenv ls reboot chain search_fs_uuid multiboot \
+	fat iso9660 udf ext2 btrfs ntfs reiserfs xfs lvm ata
+
+# 4. create boot/grub/efi.img that contains bootx64.efi
+fatdisk_dir="/var/tmp/FATDISKDIR"
+fatdisk_img="/var/tmp/FATDISKIMG"
+rm -rf ${fatdisk_dir} ${fatdisk_img}
+mkdir -p "${fatdisk_dir}/efi/boot"
+cp -a "${TEMPDIR}/efi/boot/bootx64.efi" "${fatdisk_dir}/efi/boot/bootx64.efi"
+mformat -C -f 1440 -L 16 -i "${TEMPDIR}/boot/grub/efi.img" ::
+mcopy -s -i "${TEMPDIR}/boot/grub/efi.img" "${fatdisk_dir}/efi" ::/
+
+# 5. create iso image
 if [ "${CURARCH}" = "x86" ] || [ "${CURARCH}" = "amd64" ]
 then
-	mkisofs -J -l -V ${VOLNAME} -input-charset utf-8 -o ${ISOFILE} -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table ${TEMPDIR}
+	xorriso -as mkisofs -joliet -rock --modification-date=${iso_date} \
+		-omit-version-number -disable-deep-relocation \
+		-b isolinux/isolinux.bin -c isolinux/boot.cat \
+		-no-emul-boot -boot-load-size 4 -boot-info-table \
+		-eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot \
+		-volid ${VOLNAME} -o ${ISOFILE} ${TEMPDIR}
 	#/usr/bin/isohybrid ${ISOFILE}
 fi
-
 if [ "${CURARCH}" = "sparc" ]
 then
 	mkisofs -G /boot/isofs.b -J -V ${VOLNAME} -B ... -r -o ${ISOFILE} ${TEMPDIR}
 fi
 
 # ========= copy list of packages ===============================================
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-eix-${TXTVERSION}.txt
-cp /var/tmp/catalyst/tmp/default/livecd-stage2-i686-default-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-x86-packages-std-${TXTVERSION}.txt
-#cp /var/tmp/catalyst/tmp/default/livecd-stage2-amd64-default-std/root/sysresccd-eix.txt ${REPOSRC}/pkglist/sysresccd-amd64-packages-eix-${TXTVERSION}.txt
-#cp /var/tmp/catalyst/tmp/default/livecd-stage2-amd64-default-std/root/sysresccd-pkg.txt ${REPOSRC}/pkglist/sysresccd-amd64-packages-std-${TXTVERSION}.txt
+pkglist_full_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-full/root/sysresccd-pkg.txt"
+pkglist_full_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-full/root/sysresccd-eix.txt"
+pkglist_mini_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-mini/root/sysresccd-pkg.txt"
+pkglist_mini_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-mini/root/sysresccd-eix.txt"
+[ -f "${pkglist_full_std}" ] && cp "${pkglist_full_std}" "${REPOSRC}/pkglist/sysresccd-x86-packages-full-std-${CDVERS}.txt"
+[ -f "${pkglist_full_eix}" ] && cp "${pkglist_full_eix}" "${REPOSRC}/pkglist/sysresccd-x86-packages-full-eix-${CDVERS}.txt"
+[ -f "${pkglist_mini_std}" ] && cp "${pkglist_mini_std}" "${REPOSRC}/pkglist/sysresccd-x86-packages-mini-std-${CDVERS}.txt"
+[ -f "${pkglist_mini_eix}" ] && cp "${pkglist_mini_eix}" "${REPOSRC}/pkglist/sysresccd-x86-packages-mini-eix-${CDVERS}.txt"
 
 # ========= prepare the backup ==================================================
-tar cfJp "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${MYDATE}.tar.xz" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'
+tar cfz "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${CDTYPE}-${MYDATE}.tar.gz" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'
 
 # ========= force recompilation of sys-apps/sysresccd-scripts ===================
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-apps/sysresccd-*.tbz2

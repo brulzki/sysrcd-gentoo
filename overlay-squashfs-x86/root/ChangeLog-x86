@@ -6,52 +6,17 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
-2.8.1 (2012-07-17)
+3.0.0 (2012-09-03)
 -------------------------------------------------------------------------------
-* Updated standard kernels to Long-Term-Supported linux-3.2.23 (rescuecd + rescue64)
-* Updated alternative kernels to latest stable: linux-3.4.5 (altker32 + altker64)
-* Updated XOrg graphical environment and drivers to xorg-server-1.12.3
-* Updated Grub2 bootloader to 2.00 (grub-0.97-r12 is also provided)
-* Updated Super-Grub2-Disk to version 2.00-beta1 (based on Grub-2.00)
-* Updated lvm2 to 2.02.93, e2fsprogs to 1.42.4
-* Updated GParted to 0.13.0, partclone to 0.2.49
-* Removed Ranish floppy disk image
-* Added spacefm-0.7.8 File manager
-
--------------------------------------------------------------------------------
-2.8.0 (2012-06-11)
--------------------------------------------------------------------------------
-* Updated standard kernels to Long-Term-Supported linux-3.2.19 (rescuecd + rescue64)
-* Updated alternative kernels to latest stable: linux-3.4.2 (altker32 + altker64)
-* Fixed USB installer script for linux: usb_inst.sh (Thanks to Gernot for the fix)
-* Updated sys-apps/gptfdisk to 0.8.5 (Fdisk utility for GPT partition tables)
-* Updated fsarchiver to 0.6.15 to support recent features in btrfs/ext4 filesystems
-* Updated firmware files in the initramfs from linux-firmware-20120502
-* Updated DBAN to 2.2.6 (Hard Drive Disk Wipe and Data Clearing program)
-* Updated Grub2 bootloader to 2.00_beta6 (grub-0.97-r12 is also provided)
-* Updated list of kernel modules to put in the initramfs (storage and network)
-* Do not attempt to find sysrcd.dat on extended partitions (bug reported by Gernot)
-
--------------------------------------------------------------------------------
-2.7.1 (2012-05-26)
--------------------------------------------------------------------------------
-* Updated standard kernels to Long-Term-Supported linux-3.2.18 (rescuecd + rescue64)
-* Updated alternative kernels to latest stable: linux-3.3.7 (altker32 + altker64)
-* Updated syslinux and related files to 4.05 (fixes sysresccd-usbstick regression)
-* Updated XFCE graphical environment to 4.10 and Midori web-browser to 0.4.6
-* Updated e2fsprogs to 1.42.3
-
--------------------------------------------------------------------------------
-2.7.0 (2012-05-14)
--------------------------------------------------------------------------------
-* Updated standard kernels to Long-Term-Supported linux-3.2.16 (rescuecd + rescue64)
-* Updated alternative kernels to latest stable: linux-3.3.5 (altker32 + altker64)
-* Updated btrfs-progs from Fedora 17 sources (btrfs-progs-0.19-19.fc17)
-* Updated xfs filesystem tools: xfsprogs-3.1.8 and xfsdump-3.1.0
-* Updated system packages: gcc-4.4.7, openrc-0.9.8.4, portage-2.1.10.49
-* Updated OpenSSH to 5.9_p1-r4 and partclone to 0.2.47
-* Added debian and redhat package management tools (dpkg, debootstrap, rpm)
-* Updated sysresccd-pkgstats script to avoid warnings
-* Updated list of graphical programs used by sysresccd-cleansys
-* Removed GObject introspection data to save space
+* Added support for loading extra modules as SRM files (System Rescue Modules)
+* Added support for UEFI booting from the CDRom on x86_64 using GRUB-2.00 (efi.img)
+* Updated standard kernels to Long-Term-Supported linux-3.2.28 (rescuecd + rescue64)
+* Updated alternative kernels to Long-Term-Supported linux-3.4.9 (altker32 + altker64)
+* The rescuecd kernel image has been renamed rescue32 for better consistency
+* Configured isolinux to automatically use the 64bit kernel if CPU is capable
+* Automatically use 64bit version of fsarchiver/memtester if CPU is capable
+* Reorganized and updated isolinux configuration and help messages
+* Added net-misc/pssh-2.2.1 (parallel versions of the openssh tools)
+* Added open-vm-tools (open-source tools for VMware guests)
+* Updated e2fsprogs to 1.42.5, GParted to 0.13.1, partclone to 0.2.50
 

@@ -11,7 +11,7 @@ MINSIZEMB=300
 PROGIMG="${0}"
 PROGLOC="$(dirname ${0})"
 CDFILES=('sysrcd.dat' 'sysrcd.md5' 'version' '???linux/initram.igz' 
-	'???linux/rescuecd' '???linux/rescue64' '???linux/f1boot.msg'
+	'???linux/rescue32' '???linux/rescue64' '???linux/f1boot.msg'
 	'???linux/???linux.bin' '???linux/???linux.cfg')
 
 ###############################################################################

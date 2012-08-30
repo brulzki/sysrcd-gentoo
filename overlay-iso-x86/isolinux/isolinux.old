@@ -1,96 +1,96 @@
-default rescuecd
-append initrd=initram.igz
-timeout 300
-prompt 1
-display f1boot.msg
-F1 f1boot.msg
-F2 f2images.msg
-F3 f3params.msg
-F4 f4arun.msg
-F5 f5troubl.msg
-F6 f6pxe.msg
-F7 f7net.msg
-label rescue64
-  kernel rescue64
-  append initrd=initram.igz
-label altker32
-  kernel altker32
-  append initrd=initram.igz video=ofonly
-label altker64
-  kernel altker64
-  append initrd=initram.igz video=ofonly
-label vmlinuz2
-  kernel altker32
-  append initrd=initram.igz video=ofonly
-label vesa
-  kernel rescuecd
-  append initrd=initram.igz forcevesa
-label fr
-  kernel rescuecd
-  append initrd=initram.igz setkmap=fr
-label uk32
-  kernel rescuecd
-  append initrd=initram.igz setkmap=uk
-label uk64
-  kernel rescue64
-  append initrd=initram.igz setkmap=uk
-label us
-  kernel rescuecd
-  append initrd=initram.igz setkmap=us
-label nokeymap
-  kernel rescuecd
-  append initrd=initram.igz setkmap=us
-label minishell
-  kernel rescuecd
-  append initrd=initram.igz minishell=/bin/ash
-label rescuehd
-  kernel rescuecd
-  append init=/sbin/init
-label reschd32
-  kernel rescuecd
-  append init=/sbin/init
-label reschd64
-  kernel rescue64
-  append init=/sbin/init
-label memtest
-  kernel /bootdisk/memtestp
-  append -
-label freedos
-  kernel memdisk
-  append initrd=/bootdisk/freedos.img floppy
-label aida
-  kernel memdisk
-  append initrd=/bootdisk/aida.img floppy
-label hdt
-  kernel memdisk
-  append initrd=/bootdisk/hdt.img floppy
-label ntpass
-  kernel /ntpasswd/vmlinuz
-  append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
-label ntpasswd
-  kernel /ntpasswd/vmlinuz
-  append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
-label gag
-  kernel memdisk
-  append initrd=/bootdisk/gag.img floppy
-label dban
-  kernel memdisk
-  append initrd=/bootdisk/dban.img floppy
-label mhdd
-  kernel memdisk
-  append initrd=/bootdisk/mhdd.img floppy
-label grubdisk
-  kernel memdisk
-  append initrd=/bootdisk/grubdisk.img floppy raw
-label netboot
-  kernel netboot
-  append -
-label disk1
-  localboot 0x80
-label disk2
-  localboot 0x81
-label floppy
-  localboot 0x00
-label nextboot
-  localboot -1
-
+<ALL> default rescue32
+<ALL> append initrd=initram.igz
+<ALL> timeout 300
+<ALL> prompt 1
+<ALL> display f1boot.msg
+<ALL> F1 f1boot.msg
+<ALL> F2 f2images.msg
+<ALL> F3 f3params.msg
+<ALL> F4 f4arun.msg
+<ALL> F5 f5troubl.msg
+<ALL> F6 f6pxe.msg
+<ALL> F7 f7net.msg
+<ALL> label rescue64
+<ALL> kernel rescue64
+<ALL> append initrd=initram.igz
+<STD> label altker32
+<STD> kernel altker32
+<STD> append initrd=initram.igz video=ofonly
+<STD> label altker64
+<STD> kernel altker64
+<STD> append initrd=initram.igz video=ofonly
+<STD> label vmlinuz2
+<STD> kernel altker32
+<STD> append initrd=initram.igz video=ofonly
+<ALL> label vesa
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz forcevesa
+<ALL> label fr
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz setkmap=fr
+<ALL> label uk32
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz setkmap=uk
+<ALL> label uk64
+<ALL> kernel rescue64
+<ALL> append initrd=initram.igz setkmap=uk
+<ALL> label us
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz setkmap=us
+<ALL> label nokeymap
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz setkmap=us
+<ALL> label minishell
+<ALL> kernel rescue32
+<ALL> append initrd=initram.igz minishell=/bin/ash
+<ALL> label rescuehd
+<ALL> kernel rescue32
+<ALL> append init=/sbin/init
+<ALL> label reschd32
+<ALL> kernel rescue32
+<ALL> append init=/sbin/init
+<ALL> label reschd64
+<ALL> kernel rescue64
+<ALL> append init=/sbin/init
+<ALL> label memtest
+<ALL> kernel /bootdisk/memtestp
+<ALL> append -
+<ALL> label freedos
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/freedos.img floppy
+<ALL> label aida
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/aida.img floppy
+<ALL> label hdt
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/hdt.img floppy
+<ALL> label ntpass
+<ALL> kernel /ntpasswd/vmlinuz
+<ALL> append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
+<ALL> label ntpasswd
+<ALL> kernel /ntpasswd/vmlinuz
+<ALL> append rw vga=1 initrd=/ntpasswd/initrd.cgz,/ntpasswd/scsi.cgz
+<ALL> label gag
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/gag.img floppy
+<ALL> label dban
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/dban.img floppy
+<ALL> label mhdd
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/mhdd.img floppy
+<ALL> label grubdisk
+<ALL> kernel memdisk
+<ALL> append initrd=/bootdisk/grubdisk.img floppy raw
+<ALL> label netboot
+<ALL> kernel netboot
+<ALL> append -
+<ALL> label disk1
+<ALL> localboot 0x80
+<ALL> label disk2
+<ALL> localboot 0x81
+<ALL> label floppy
+<ALL> localboot 0x00
+<ALL> label nextboot
+<ALL> localboot -1
+<ALL> 

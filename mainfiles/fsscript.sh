@@ -25,8 +25,16 @@ find /etc -name "._cfg*" -exec rm -f {} \; >/dev/null 2>&1
 # remove warning from clock service
 [ -f /etc/conf.d/clock ] && sed -i -e 's:#TIMEZONE="Factory":TIMEZONE="Europe/London":g' /etc/conf.d/clock
 
-# remove warning from freshclam when clamd not running
-sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
+# if clamav is installed fix permissions and update definitions
+if [ -f /usr/bin/freshclam ]
+then
+	sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
+	chown clamav:clamav /var/log/clamav
+	chown clamav:clamav /var/run/clamav
+	chown clamav:clamav /var/lib/clamav
+	chown clamav:clamav /var/lib/clamav/*
+	/usr/bin/freshclam
+fi
 
 # disable DHCP by default in autoconfig
 sed -i -e 's/ewarn "Skipping DHCP broadcast detection as requested on boot commandline ..."//' /etc/init.d/autoconfig
@@ -53,13 +61,6 @@ sed -i -e 's!for x in ${CMDLINE}!for x in ${CMDLINE} cdroot!g' /sbin/livecd-func
 
 # avoid warning
 echo "rc_sys=''" >> /etc/rc.conf
-
-# update clamav virus definitions
-chown clamav:clamav /var/log/clamav
-chown clamav:clamav /var/run/clamav
-chown clamav:clamav /var/lib/clamav
-chown clamav:clamav /var/lib/clamav/*
-/usr/bin/freshclam
 
 # remove warnings about files with a modification time in the future!
 [ -f /etc/init.d/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
@@ -115,16 +116,11 @@ rm -f /etc/init.d/net.eth*
 echo "==> removing desktop files for missing programs"
 rm -f /usr/share/applications/{xfce4-file-manager.desktop,xfce4-help.desktop}
 
-# decompress oscar files
-echo "==> extracting oscar"
-if [ -f /usr/share/oscar/oscar.tar.gz ]
-then
-	tar xfzp /usr/share/oscar/oscar.tar.gz -C /usr/share/oscar
-	rm -rf /usr/share/oscar/oscar.tar.gz
-fi
-
 # update fonts when exiting from xorg
-sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
+if [ -f /usr/bin/startx ]
+then
+	sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
+fi
 
 # for programs that expect syslog
 echo "==> creating /usr/sbin/syslog "
@@ -137,33 +133,48 @@ do
 	echo "find ${curdir} -name "*.gz" -exec gzip -d {} \;"
 	find ${curdir} -name "*.gz" -exec gzip -d {} \;
 done
-/usr/bin/mkfontdir -e /usr/share/fonts/encodings -- /usr/share/fonts/100dpi /usr/share/fonts/75dpi /usr/share/fonts/misc /usr/share/fonts/terminus /usr/share/fonts/TTF /usr/share/fonts/Type1 /usr/share/fonts/unifont
+if [ -x /usr/bin/mkfontdir ]
+then
+	/usr/bin/mkfontdir -e /usr/share/fonts/encodings -- /usr/share/fonts/100dpi /usr/share/fonts/75dpi /usr/share/fonts/misc /usr/share/fonts/terminus /usr/share/fonts/TTF /usr/share/fonts/Type1 /usr/share/fonts/unifont
+fi
+
+# remove alternative kernels in mini edition
+if grep -q 'mini' /usr/share/sysresccd/sysresccd-type.txt
+then
+	rm -rf /lib*/modules/*alt*
+fi
 
 # install 32bit kernel modules
 echo "==> installing 32bit kernel modules"
-for modtar in /lib/modules/*.tar.bz2
-do
-	echo '--------------------------------------------------------------'
-	kerver=$(basename $modtar | sed -e 's/.tar.bz2//')
-	echo "DECOMPRESS32 (version [$kerver]): tar xfjp $modtar -C /lib/modules/"
-	tar xfjp $modtar -C /lib/modules/
-	rm -f $modtar
-	echo '--------------------------------------------------------------'
-done
+if ls -l /lib/modules/*.tar.bz2 >/dev/null 2>/dev/null
+then
+	for modtar in /lib/modules/*.tar.bz2
+	do
+		echo '--------------------------------------------------------------'
+		kerver=$(basename $modtar | sed -e 's/.tar.bz2//')
+		echo "DECOMPRESS32 (version [$kerver]): tar xfjp $modtar -C /lib/modules/"
+		tar xfjp $modtar -C /lib/modules/
+		rm -f $modtar
+		echo '--------------------------------------------------------------'
+	done
+fi
 
 # install 64bit kernel modules
 echo "==> installing 64bit kernel modules"
-for modtar in /lib64/modules/*.tar.bz2
-do
-	echo '--------------------------------------------------------------'
-	kerver=$(basename $modtar | sed -e 's/.tar.bz2//')
-	echo "DECOMPRESS64 (version [$kerver]): tar xfjp $modtar -C /lib64/modules/"
-	tar xfjp $modtar -C /lib64/modules/
-	echo "LINK64: ln -s /lib64/modules/$kerver /lib/modules/$kerver"
-	ln -s /lib64/modules/$kerver /lib/modules/$kerver
-	rm -f $modtar
-	echo '--------------------------------------------------------------'
-done
+if ls -l /lib64/modules/*.tar.bz2 >/dev/null 2>/dev/null
+then
+	for modtar in /lib64/modules/*.tar.bz2
+	do
+		echo '--------------------------------------------------------------'
+		kerver=$(basename $modtar | sed -e 's/.tar.bz2//')
+		echo "DECOMPRESS64 (version [$kerver]): tar xfjp $modtar -C /lib64/modules/"
+		tar xfjp $modtar -C /lib64/modules/
+		echo "LINK64: ln -s /lib64/modules/$kerver /lib/modules/$kerver"
+		ln -s /lib64/modules/$kerver /lib/modules/$kerver
+		rm -f $modtar
+		echo '--------------------------------------------------------------'
+	done
+fi
 
 # strip kernel modules which are in the sysrcd.dat to save space
 echo "==> strip kernel modules"
@@ -206,6 +217,20 @@ localedef -i /usr/share/i18n/locales/en_US -f UTF-8 /usr/lib/locale/en_US.utf8
 localedef -i /usr/share/i18n/locales/en_US -f ISO-8859-1 /usr/lib/locale/en_US
 localedef -i /usr/share/i18n/locales/de_DE -f ISO-8859-1 /usr/lib/locale/de_DE
 localedef -i /usr/share/i18n/locales/fr_FR -f ISO-8859-1 /usr/lib/locale/fr_FR
+
+# remove packages and files in mini edition
+if grep -q 'mini' /usr/share/sysresccd/sysresccd-type.txt
+then
+	emerge -C ndiswrapper net-wireless/wireless-tools
+	rm -rf /lib/firmware/{ti*,ueagle*,libertas,iwlwifi*,ath?k*,rtlwifi,brcm}
+	rm -rf /usr/lib/ccache
+	rm -rf /var/lib/clamav
+	rm -rf /usr/libexec/gcc
+	rm -rf /usr/bin/{cc,gcc,c++*,c89,c99}
+	rm -rf /usr/i486-pc-linux-gnu
+	rm -rf /usr/lib/gcc/i486*/*/{*.a,*.la,*.o,include*}
+	rm -rf /usr/include/{*.h,glib*,bits,cdio,ncursesw,schily,event2,sys,ntfs-3g,rpcsvc}
+fi
 
 # fix dmraid
 ln -s /usr/lib/libdmraid.so /usr/lib/libdmraid.so.1
@@ -255,15 +280,15 @@ then
 	rm -f /etc/init.d/staticroute
 
 	# don't unmount /livemnt/* filesystems in localmount and mount-ro
-	sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/localmount
-	sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/mount-ro
-	sed -i -e "s!# Mount local filesystems!return 0 #!" /etc/init.d/localmount
+	[ -f /etc/init.d/localmount ] && sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/localmount
+	[ -f /etc/init.d/mount-ro ] && sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/mount-ro
+	[ -f /etc/init.d/localmount ] && sed -i -e "s!# Mount local filesystems!return 0 #!" /etc/init.d/localmount
 
 	# fix dependencies
-	sed -i -e 's!need root!!g' /etc/init.d/mtab
-	sed -i -e 's!need fsck!!g' /etc/init.d/localmount
-	sed -i -e 's!need fsck!!g' /etc/init.d/root
-	sed -i -e 's!need hald!use hald!g' /etc/init.d/xdm
+	[ -f /etc/init.d/mtab ] && sed -i -e 's!need root!!g' /etc/init.d/mtab
+	[ -f /etc/init.d/localmount ] && sed -i -e 's!need fsck!!g' /etc/init.d/localmount
+	[ -f /etc/init.d/root ] && sed -i -e 's!need fsck!!g' /etc/init.d/root
+	[ -f /etc/init.d/xdm ] && sed -i -e 's!need hald!use hald!g' /etc/init.d/xdm
 
 	# unpack firmwares
 	if [ -e /lib/firmware.tar.bz2 ]
