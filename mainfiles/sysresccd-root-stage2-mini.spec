@@ -1,10 +1,10 @@
 subarch: i686
-version_stamp: full
+version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
 snapshot: 20121009
-source_subpath: default/livecd-stage1-i686-full
+source_subpath: default/livecd-stage1-i686-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -32,7 +32,6 @@ boot/kernel/rescuecd/use: pcmcia usb -X png truetype
 boot/kernel/rescuecd/extraversion: i586
 boot/kernel/rescuecd/packages:
 	sys-apps/sysresccd-scripts
-	app-emulation/open-vm-tools
 	sys-kernel/linux-firmware
 	net-wireless/ndiswrapper
 	sys-block/open-iscsi
@@ -164,8 +163,6 @@ livecd/unmerge:
 	gnome-base/librsvg
 	media-fonts/unifont
 	dev-libs/gobject-introspection
-	dev-libs/vala-common
-	dev-lang/vala
 
 livecd/empty:
 	/var/cache/revdep-rebuild

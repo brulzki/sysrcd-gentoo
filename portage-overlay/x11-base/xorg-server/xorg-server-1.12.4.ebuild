@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.12.3.ebuild,v 1.1 2012/07/12 13:50:29 chithanh Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.12.4.ebuild,v 1.1 2012/09/01 17:01:45 chithanh Exp $
 
 EAPI=4
 
@@ -9,7 +9,7 @@ inherit xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 DESCRIPTION="X.Org X servers"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux tslib +udev"
@@ -213,6 +213,11 @@ pkg_postinst() {
 		ewarn "	emerge portage-utils; qlist -I -C x11-drivers/"
 		ewarn "or using sets from portage-2.2:"
 		ewarn "	emerge @x11-module-rebuild"
+	fi
+
+	if use udev && has_version sys-fs/udev[-keymap]; then
+		ewarn "sys-fs/udev was built without keymap support. This may cause input device"
+		ewarn "autoconfiguration to fail."
 	fi
 }
 

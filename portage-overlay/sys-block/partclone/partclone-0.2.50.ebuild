@@ -37,6 +37,7 @@ src_compile()
 	use btrfs && myconf="${myconf} --enable-btrfs"
 	use hfs && myconf="${myconf} --enable-hfsp"
 	use fat && myconf="${myconf} --enable-fat"
+	use fat && myconf="${myconf} --enable-exfat"
 	use ntfs && myconf="${myconf} --enable-ntfs"
 	use xfs && myconf="${myconf} --enable-xfs"
 	use vmfs && myconf="${myconf} --enable-vmfs"

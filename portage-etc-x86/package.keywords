@@ -10,8 +10,8 @@
 =sys-fs/multipath-tools-0.4.9* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
-=app-text/epdfview-0.1.7* ~*
-=www-client/midori-0.4.6* ~*
+=app-text/epdfview-0.1.8* ~*
+=www-client/midori-0.4.7* ~*
 =sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
 =net-dialup/ppp-2.4.5* ~*
@@ -19,11 +19,15 @@
 =app-misc/tmux-1.6* ~*
 =sys-devel/gcc-4.4* ~*
 =sys-fs/lvm2-2.02.93* ~*
+=dev-libs/vala-common-0.18* ~*
+=dev-lang/vala-0.18* ~*
+sys-fs/zerofree ~*
+app-admin/keepass ~*
 sys-block/parted ~*
 sys-apps/hwids ~*
 sys-apps/usbutils ~*
 sys-apps/pciutils ~*
-sys-boot/grub **
+sys-boot/grub ~*
 app-arch/pxz ~*
 app-misc/scrub ~*
 dev-util/geany ~*

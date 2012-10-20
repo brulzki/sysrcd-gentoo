@@ -35,6 +35,8 @@ src_configure() {
 	# Gentoo bug 348923 : remove noise on startup
 	epatch "${FILESDIR}/modemmanager-cleanup-startup.patch"
 
+	epatch "${FILESDIR}/modemmanager-fix-include-gtypes.patch"
+
 	# ppp-2.4.5 will change the plugin directory (not added to portage yet)
 	if has_version '=net-dialup/ppp-2.4.4*'; then
 		pppd_plugin_dir="pppd/2.4.4"

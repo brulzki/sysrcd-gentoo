@@ -1002,11 +1002,13 @@ sysresccd_stage1_normal()
             [ -z "${LOWMEM}" ] && [ -d ${BOOTPATH}/${SUBDIR}/bootdisk ] \
             && [ -d ${BOOTPATH}/${SUBDIR}/ntpasswd ]
         then
-            good_msg "Copying isolinux/syslinux + bootdisk + ntpasswd + usb_inst for caching..."
+            good_msg "Copying extra directories for caching..."
             if ! cp -a ${BOOTPATH}/${SUBDIR}/???linux ${BOOTPATH}/${SUBDIR}/bootdisk \
-                ${BOOTPATH}/${SUBDIR}/ntpasswd ${BOOTPATH}/${SUBDIR}/usb_inst* ${CACHEDIR}/
+                ${BOOTPATH}/${SUBDIR}/ntpasswd ${BOOTPATH}/${SUBDIR}/usb_inst* \
+		${BOOTPATH}/${SUBDIR}/boot ${BOOTPATH}/${SUBDIR}/efi ${CACHEDIR}/
             then
-                rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd ${CACHEDIR}/usb_inst*
+                rm -rf ${CACHEDIR}/???linux ${CACHEDIR}/bootdisk ${CACHEDIR}/ntpasswd
+                rm -rf ${CACHEDIR}/usb_inst* ${CACHEDIR}/boot ${CACHEDIR}/efi
                 bad_msg "Cannot cache these directories (required only for pxebootsrv). Likely due to lack of memory"
             fi
         fi

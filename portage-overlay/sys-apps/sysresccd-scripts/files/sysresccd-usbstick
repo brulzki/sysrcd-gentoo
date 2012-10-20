@@ -59,7 +59,7 @@ cleanup_tmpdir()
 {
 	if [ -d "${TMPDIR}" ]
 	then
-		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,dialog,mtools,mcopy,mattrib,mmove}
+		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,syslinux.exe,dialog,mtools,mcopy,mattrib,mmove}
 		rmdir ${TMPDIR}
 	fi
 }
@@ -260,7 +260,7 @@ do_writembr()
 		die "${cmd} --> failed"
 	fi
 	
-	cmd="${PROG_PARTED} -s ${devname} mkpart primary 0 100%"
+	cmd="${PROG_PARTED} -s ${devname} mkpart fat32 primary 0 100%"
 	echo "--> ${cmd}"
 	if ! ${cmd} 2>/dev/null
 	then
@@ -343,6 +343,7 @@ do_copyfiles()
 			umount /mnt/usbstick
 			die "cannot move isolinux to syslinux, failed"
 		fi
+		sed -i -e 's!/isolinux/!/syslinux/!g' /mnt/usbstick/boot/grub/grub.cfg
 	fi
 	
 	# add scandelay option which allows the usb devices to be detected

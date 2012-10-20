@@ -6,6 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.0.1 (2012-10-22)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.2.32 (rescuecd + rescue64)
+* Alternative kernels is Long-Term-Supported linux-3.4.14 (altker32 + altker64)
+* Updated e2fsprogs to 1.42.5, GParted to 0.14.0, linux-firmware-20120924
+* Updated tcpdump-4.3.0, coreutils-8.16, util-linux-2.21.2, dd-rescue-1.28
+* Updated midori-0.4.7, xorg-server-1.12.4, clamav-0.97.6, spacefm-0.7.10
+* Added zerofree-1.0.1 (Utility to zero out all free space on a filesystem)
+* The "docache" boot option must also cached the boot and efi directories
+* Fixed bugs in the installation scripts for USB sticks
+
+-------------------------------------------------------------------------------
 3.0.0 (2012-09-03)
 -------------------------------------------------------------------------------
 * Added support for loading extra modules as SRM files (System Rescue Modules)

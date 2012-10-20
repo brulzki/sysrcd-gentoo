@@ -40,7 +40,7 @@ app-text/poppler-bindings gtk -qt3 -qt4 -test
 net-print/cups -perl -python
 dev-vcs/git -perl -gtk
 net-wireless/wpa_supplicant dbus
-net-misc/networkmanager -doc dhclient gnutls
+net-misc/networkmanager -doc -dhcpcd -nss dhclient gnutls
 media-libs/freetype -bindist
 app-text/ghostscript-gpl -cups
 app-crypt/truecrypt -X

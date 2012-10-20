@@ -17,8 +17,8 @@
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
-<sys-boot/grub-0.97-r11
->sys-boot/grub-0.97-r11
+<sys-boot/grub-0.97-r13
+>sys-boot/grub-0.97-r13
 
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
@@ -45,8 +45,12 @@ app-text/sgml-common
 dev-lang/ruby
 
 # modified packages
+>net-misc/networkmanager-0.8.9
+>net-misc/networkmanager-openvpn-0.8.9
+>net-misc/networkmanager-vpnc-0.8.9
 >net-misc/modemmanager-0.4_p20101211
 <net-misc/modemmanager-0.4_p20101211
+>gnome-extra/nm-applet-0.8.9
 <sys-fs/squashfs-tools-4.2-r1
 >sys-fs/squashfs-tools-4.2-r1
 <sys-boot/efibootmgr-0.5.4
@@ -61,8 +65,8 @@ dev-lang/ruby
 >sys-block/iscsitarget-1.4.20.2
 <sys-fs/btrfs-progs-0.19-r9
 >sys-fs/btrfs-progs-0.19-r9
->www-client/midori-0.4.6
-<www-client/midori-0.4.6
+>www-client/midori-0.4.7
+<www-client/midori-0.4.7
 <sys-apps/gptfdisk-0.8.5
 >sys-apps/gptfdisk-0.8.5
 
@@ -82,8 +86,8 @@ dev-lang/ruby
 # xorg
 <x11-drivers/xf86-input-vmmouse-12.8.0-r1
 >x11-drivers/xf86-input-vmmouse-12.8.0-r1
-<x11-base/xorg-server-1.12.3
->x11-base/xorg-server-1.12.3
+<x11-base/xorg-server-1.12.4
+>x11-base/xorg-server-1.12.4
 <x11-base/xorg-drivers-1.12
 >x11-base/xorg-drivers-1.12
 <net-misc/tigervnc-1.1.0-r7
