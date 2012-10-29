@@ -10,7 +10,7 @@
 >=sys-kernel/gentoo-sources-3.3
 >=sys-kernel/linux-headers-3.2
 >=sys-kernel/std-sources-3.2.999
->=sys-kernel/alt-sources-3.4.999
+>=sys-kernel/alt-sources-3.6.999
 <sys-kernel/genkernel-3.4.10-r2
 >sys-kernel/genkernel-3.4.10-r2
 
@@ -45,12 +45,9 @@ app-text/sgml-common
 dev-lang/ruby
 
 # modified packages
->net-misc/networkmanager-0.8.9
->net-misc/networkmanager-openvpn-0.8.9
->net-misc/networkmanager-vpnc-0.8.9
->net-misc/modemmanager-0.4_p20101211
-<net-misc/modemmanager-0.4_p20101211
->gnome-extra/nm-applet-0.8.9
+>gnome-extra/nm-applet-0.9.4.1
+>net-misc/networkmanager-vpnc-0.9.4.0
+>net-misc/networkmanager-openvpn-0.9.4.0
 <sys-fs/squashfs-tools-4.2-r1
 >sys-fs/squashfs-tools-4.2-r1
 <sys-boot/efibootmgr-0.5.4
@@ -58,13 +55,12 @@ dev-lang/ruby
 >www-servers/thttpd-2.25b-r7
 <app-admin/testdisk-6.13
 >app-admin/testdisk-6.13
-<sys-block/parted-3.1-r2
->sys-block/parted-3.1-r2
-<sys-block/gparted-0.12.1
+<sys-block/parted-3.1-r3
+>sys-block/parted-3.1-r3
 <sys-block/iscsitarget-1.4.20.2
 >sys-block/iscsitarget-1.4.20.2
-<sys-fs/btrfs-progs-0.19-r9
->sys-fs/btrfs-progs-0.19-r9
+<sys-fs/btrfs-progs-0.19-r10
+>sys-fs/btrfs-progs-0.19-r10
 >www-client/midori-0.4.7
 <www-client/midori-0.4.7
 <sys-apps/gptfdisk-0.8.5

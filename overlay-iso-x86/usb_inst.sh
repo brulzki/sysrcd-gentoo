@@ -260,7 +260,7 @@ do_writembr()
 		die "${cmd} --> failed"
 	fi
 	
-	cmd="${PROG_PARTED} -s ${devname} mkpart fat32 primary 0 100%"
+	cmd="${PROG_PARTED} -s ${devname} mkpart primary fat32 0 100%"
 	echo "--> ${cmd}"
 	if ! ${cmd} 2>/dev/null
 	then

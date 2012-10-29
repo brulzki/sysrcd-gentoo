@@ -22,11 +22,13 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	epatch "${FILESDIR}/${PN}-upstream.patch.bz2"
-	epatch "${FILESDIR}/${PN}-fix-labels.patch.bz2"
-	epatch "${FILESDIR}/${PN}-valgrind.patch.bz2"
-	epatch "${FILESDIR}/${PN}-build-fixes.patch.bz2"
-	epatch "${FILESDIR}/${PN}-show-uuid.patch.bz2"
+	epatch "${FILESDIR}/${PN}-git20121017.patch" || die
+	epatch "${FILESDIR}/${PN}-fix-labels.patch" || die
+	epatch "${FILESDIR}/${PN}-valgrind.patch" || die
+	epatch "${FILESDIR}/${PN}-build-fixes.patch" || die
+	epatch "${FILESDIR}/${PN}-add-btrfs-device-ready-command.patch" || die
+	epatch "${FILESDIR}/${PN}-detect-if-the-disk-we-are-formatting-is.patch" || die
+	epatch "${FILESDIR}/btrfs-init-dev-list.patch" || die
 
 	# Fix hardcoded "gcc" and "make"
 	sed -i -e 's:gcc $(CFLAGS):$(CC) $(CFLAGS):' Makefile

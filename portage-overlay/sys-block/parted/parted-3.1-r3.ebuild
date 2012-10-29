@@ -46,18 +46,18 @@ src_prepare() {
 		-e "s:have_check=[a-z]*:have_check=$(usex test):g" || die
 	
 	# apply patches from Fedora
-	#epatch ${FILESDIR}/parted-3.0-libparted-copy-pmbr_boot-when-duplicating-GPT-disk.patch || die 'patch1 failed'
-	#epatch ${FILESDIR}/parted-3.1-libparted-check-PMBR-before-GPT-partition-table-8052.patch || die 'patch2 failed'
-	#epatch ${FILESDIR}/parted-3.1-tests-add-t0301-overwrite-gpt-pmbr.sh.patch || die 'patch3 failed'
 	epatch ${FILESDIR}/parted-3.0-libparted-copy-pmbr_boot-when-duplicating-GPT-disk.patch || die 'patch1 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-check-PMBR-before-GPT-partition-table-8052.patch || die 'patch2 failed'
 	epatch ${FILESDIR}/parted-3.1-tests-add-t0301-overwrite-gpt-pmbr.sh.patch || die 'patch3 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-Fix-endian-error-with-FirstUsableLBA.patch || die 'patch4 failed'
 	epatch ${FILESDIR}/parted-2.1-libparted-use-dm_udev_wait-698121.patch || die 'patch5 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-use-largest_partnum-in-dm_reread_part_tabl.patch || die 'patch6 failed'
-	epatch ${FILESDIR}/parted-3.1-test-creating-20-device-mapper-partitions.patch || die 'patch7 failed'
-	epatch ${FILESDIR}/parted-3.1-libparted-preserve-the-uuid-on-dm-partitions.patch || die 'patch8 failed'
-	epatch ${FILESDIR}/parted-3.1-tests-Make-sure-dm-UUIDs-are-not-erased.patch || die 'patch9 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-preserve-the-uuid-on-dm-partitions.patch || die 'patch7 failed'
+	epatch ${FILESDIR}/parted-3.1-tests-Make-sure-dm-UUIDs-are-not-erased.patch || die 'patch8 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-reallocate-buf-after-_disk_analyse_block_s.patch || die 'patch9 failed'
+	#epatch ${FILESDIR}/parted-3.1-tests-cleanup-losetup-usage.patch || die 'patch10 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-add-support-for-implicit-FBA-DASD-partitions.patch || die 'patch11 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-add-support-for-EAV-DASD-partitions.patch || die 'patch12 failed'
 
 	eautoreconf
 }

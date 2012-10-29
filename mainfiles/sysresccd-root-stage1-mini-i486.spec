@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121009
+snapshot: 20121019
 source_subpath: default/stage4-i386-20120929-03
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -225,7 +225,7 @@ livecd/packages:
 	sys-block/scsiadd
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r13
-	=sys-boot/grub-2.00
+	=sys-boot/grub-2.00-r1
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober

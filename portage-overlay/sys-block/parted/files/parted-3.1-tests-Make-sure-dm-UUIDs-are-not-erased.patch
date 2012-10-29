@@ -1,5 +1,5 @@
 From cc96f793bb4fb088123a40fb9d802e7db1fdbffb Mon Sep 17 00:00:00 2001
-From: Fedora Ninjas <parted-owner@fedoraproject.org>
+From: Brian C. Lane <bcl@redhat.com>
 Date: Tue, 7 Aug 2012 10:14:03 -0700
 Subject: [PATCH] tests: Make sure dm UUIDs are not erased
 
@@ -10,18 +10,6 @@ Subject: [PATCH] tests: Make sure dm UUIDs are not erased
  2 files changed, 60 insertions(+), 0 deletions(-)
  create mode 100755 tests/t6003-dm-uuid.sh
 
-diff --git a/tests/Makefile.am b/tests/Makefile.am
-index 57771be..98310f2 100644
---- a/tests/Makefile.am
-+++ b/tests/Makefile.am
-@@ -56,6 +56,7 @@ TESTS = \
-   t6000-dm.sh \
-   t6001-psep.sh \
-   t6002-dm-many-partitions.sh \
-+  t6003-dm-uuid.sh \
-   t6100-mdraid-partitions.sh \
-   t7000-scripting.sh \
-   t8000-loop.sh \
 diff --git a/tests/t6003-dm-uuid.sh b/tests/t6003-dm-uuid.sh
 new file mode 100755
 index 0000000..1751cb4
