@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.1.1 (2012-11-06)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.2.33 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.6.6 (altker32 + altker64)
+* Re-introduced support for Reiser4 filesystem in the alternative kernels
+* Fixed "rootpass=MyPaSsWoRd" boot option by updating USE flags for shadow
+* Fixed bugs in the installation scripts for USB sticks
+* Updated NetworkManager to 0.9.6.4
+
+-------------------------------------------------------------------------------
 3.1.0 (2012-10-29)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.2.32 (rescuecd + rescue64)

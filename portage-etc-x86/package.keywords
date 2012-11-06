@@ -1,12 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
-# Network Manager
-=net-misc/networkmanager-0.8.4* ~*
-=net-misc/networkmanager-vpnc-0.8* ~*
-=net-misc/networkmanager-openvpn-0.8* ~*
-=net-misc/modemmanager-0.4* ~*
-
 # Misc packages
+=net-misc/networkmanager-0.9.6.4* ~*
 =sys-fs/multipath-tools-0.4.9* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*

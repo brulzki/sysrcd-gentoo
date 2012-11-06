@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121019
+snapshot: 20121103
 source_subpath: default/stage4-i386-20120929-03
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -203,6 +203,7 @@ livecd/packages:
 	sys-apps/sed
 	sys-apps/setserial
 	sys-apps/sg3_utils
+	sys-apps/shadow
 	sys-apps/smartmontools
 	sys-apps/sysresccd-custom
 	sys-apps/tcp-wrappers

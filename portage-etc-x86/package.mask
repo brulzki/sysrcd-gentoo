@@ -46,8 +46,8 @@ dev-lang/ruby
 
 # modified packages
 >gnome-extra/nm-applet-0.9.4.1
->net-misc/networkmanager-vpnc-0.9.4.0
->net-misc/networkmanager-openvpn-0.9.4.0
+>net-misc/networkmanager-vpnc-0.9.6.0
+>net-misc/networkmanager-openvpn-0.9.6.0
 <sys-fs/squashfs-tools-4.2-r1
 >sys-fs/squashfs-tools-4.2-r1
 <sys-boot/efibootmgr-0.5.4

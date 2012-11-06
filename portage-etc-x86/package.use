@@ -85,3 +85,4 @@ dev-libs/openssl static-libs
 app-backup/dar gcrypt
 sys-auth/consolekit policykit
 net-misc/openssh tcpd
+sys-apps/shadow -cracklib

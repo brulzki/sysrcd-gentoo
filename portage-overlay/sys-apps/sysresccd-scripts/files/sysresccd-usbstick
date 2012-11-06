@@ -343,7 +343,7 @@ do_copyfiles()
 			umount /mnt/usbstick
 			die "cannot move isolinux to syslinux, failed"
 		fi
-		sed -i -e 's!/isolinux/!/syslinux/!g' /mnt/usbstick/boot/grub/grub.cfg
+		sed -i -e 's!/isolinux/!/syslinux/!g' /mnt/usbstick/boot/grub/grub*.cfg
 	fi
 	
 	# add scandelay option which allows the usb devices to be detected
