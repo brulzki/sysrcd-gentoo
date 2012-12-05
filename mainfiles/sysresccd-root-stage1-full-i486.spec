@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121103
+snapshot: 20121117
 source_subpath: default/stage4-i386-20120929-03
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -71,6 +71,7 @@ livecd/packages:
 	app-cdr/xfburn
 	app-crypt/chntpw
 	app-crypt/md5deep
+	app-crypt/nwipe
 	app-crypt/truecrypt
 	app-editors/gvim
 	app-editors/hexcurse
@@ -179,6 +180,7 @@ livecd/packages:
 	net-misc/ifenslave
 	net-misc/iperf
 	net-misc/iputils
+	net-misc/modemmanager
 	net-misc/netkit-rsh
 	net-misc/networkmanager
 	net-misc/networkmanager-openvpn
@@ -211,6 +213,7 @@ livecd/packages:
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware
 	net-wireless/rtl8192su-firmware
+	net-wireless/rfkill
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
@@ -389,5 +392,4 @@ livecd/packages:
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
 	#x11-misc/mkxf86config
-	#sys-apps/hwsetup
 

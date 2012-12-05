@@ -6,6 +6,17 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.1.2
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.2.34 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.6.9 (altker32 + altker64)
+* Added ModemManager-0.6.0.0 (Modem and mobile broadband management libraries)
+* Updated sys-fs/btrfs-progs to 0.20_rc1 (btrfs filesystem utilities)
+* Updated sys-block/partclone to 0.2.56 and syslinux/isolinux 4.06
+* Fixed support for samba based autorun scripts (ar_source="smbfs://...")
+* Added app-crypt/nwipe (Program to securely erase disks)
+
+-------------------------------------------------------------------------------
 3.1.1 (2012-11-06)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.2.33 (rescuecd + rescue64)

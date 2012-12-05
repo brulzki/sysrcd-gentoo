@@ -2,6 +2,7 @@
 
 # Misc packages
 =net-misc/networkmanager-0.9.6.4* ~*
+=net-misc/modemmanager-0.6* ~*
 =sys-fs/multipath-tools-0.4.9* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
@@ -19,6 +20,7 @@
 sys-fs/zerofree ~*
 app-admin/keepass ~*
 sys-block/parted ~*
+app-crypt/nwipe ~*
 sys-apps/hwids ~*
 sys-apps/usbutils ~*
 sys-apps/pciutils ~*

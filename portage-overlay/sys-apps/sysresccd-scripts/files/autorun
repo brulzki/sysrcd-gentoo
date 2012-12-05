@@ -140,7 +140,7 @@ def main():
 		commands.getstatusoutput(mnt2)
 	elif re.match('^smb://', ar_source): # mount a samba share
 		source=ar_source.replace('smb://','')
-		mnt1='mount -t smbfs //%s %s'%(source, autorunmnt)
+		mnt1='mount -t cifs //%s %s'%(source, autorunmnt)
 		mnt2='umount %s'%autorunmnt
 		(status, output)=commands.getstatusoutput(mnt1)
 		if status!=0:

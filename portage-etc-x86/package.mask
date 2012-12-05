@@ -48,6 +48,7 @@ dev-lang/ruby
 >gnome-extra/nm-applet-0.9.4.1
 >net-misc/networkmanager-vpnc-0.9.6.0
 >net-misc/networkmanager-openvpn-0.9.6.0
+>net-misc/modemmanager-0.6.0.0
 <sys-fs/squashfs-tools-4.2-r1
 >sys-fs/squashfs-tools-4.2-r1
 <sys-boot/efibootmgr-0.5.4
@@ -59,8 +60,8 @@ dev-lang/ruby
 >sys-block/parted-3.1-r3
 <sys-block/iscsitarget-1.4.20.2
 >sys-block/iscsitarget-1.4.20.2
-<sys-fs/btrfs-progs-0.19-r10
->sys-fs/btrfs-progs-0.19-r10
+<sys-fs/btrfs-progs-0.20_rc1
+>sys-fs/btrfs-progs-0.20_rc1
 >www-client/midori-0.4.7
 <www-client/midori-0.4.7
 <sys-apps/gptfdisk-0.8.5
@@ -68,8 +69,6 @@ dev-lang/ruby
 
 # fix problems
 =app-text/docbook-xml-dtd-4.1.2
->sys-libs/tdb-1.2.8
->dev-util/dialog-1.1.20120200
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
@@ -78,6 +77,8 @@ dev-lang/ruby
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
 >=sys-fs/udev-171
+>sys-libs/tdb-1.2.8
+#>dev-util/dialog-1.1.20120200
 
 # xorg
 <x11-drivers/xf86-input-vmmouse-12.8.0-r1

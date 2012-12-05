@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121103
+snapshot: 20121117
 source_subpath: default/stage4-i386-20120929-03
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -63,6 +63,7 @@ livecd/packages:
 	app-cdr/dvd+rw-tools
 	app-crypt/chntpw
 	app-crypt/md5deep
+	app-crypt/nwipe
 	app-editors/hexcurse
 	app-editors/hexedit
 	app-editors/joe

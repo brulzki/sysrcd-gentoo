@@ -201,8 +201,8 @@ rm -rf /etc/make.profile
 ln -s ../usr/portage/profiles/default/linux/x86/10.0 /etc/make.profile
 
 # update the database for locate
-echo "==> locate -u"
-locate -u >/dev/null 2>&1
+echo "==> /usr/sbin/updatedb"
+/usr/sbin/updatedb >/dev/null 2>&1
 
 # create the apropos / whatis database (time consuming: only for final releases)
 if ! grep -q beta /root/version
