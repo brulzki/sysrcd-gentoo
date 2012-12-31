@@ -3,7 +3,7 @@ version_stamp: krnl
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121117
+snapshot: 20121215
 source_subpath: default/livecd-stage1-amd64-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -29,8 +29,8 @@ boot/kernel/rescue64/config: /worksrc/sysresccd-src/kernelcfg/config-std-x86_64.
 boot/kernel/rescue64/use: pcmcia usb -X png truetype 
 boot/kernel/rescue64/extraversion: amd64
 boot/kernel/rescue64/packages:
-	#app-emulation/open-vm-tools
 	sys-block/open-iscsi
 	net-wireless/ndiswrapper
-	sys-block/iscsitarget
+	app-emulation/open-vm-tools
+	#sys-block/iscsitarget
 

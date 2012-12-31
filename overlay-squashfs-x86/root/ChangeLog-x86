@@ -6,7 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
-3.1.2
+3.2.0
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.24 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.6.11 (altker32 + altker64)
+* Updated Xorg environment and drivers to x11-base/xorg-server-1.13.0-r1
+* Updated LVM (Logical Volume Manager) to sys-fs/lvm2-2.02.95-r4
+* Updated Gentoo packages: portage-2.1.11.31, openrc-0.11.8
+* Added sys-fs/ecryptfs-utils (eCryptfs userspace utilities)
+* Updated GParted to 0.14.1 (bug fixes release)
+* Fixed /etc/init.d/pxebootsrv service
+
+-------------------------------------------------------------------------------
+3.1.2 (2012-12-05)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.2.34 (rescuecd + rescue64)
 * Alternative kernels updated to latest stable 3.6.9 (altker32 + altker64)

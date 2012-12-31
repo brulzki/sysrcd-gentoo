@@ -3,8 +3,8 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121117
-source_subpath: default/stage4-i386-20120929-03
+snapshot: 20121215
+source_subpath: default/stage4-i386-20121206-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -63,7 +63,6 @@ livecd/packages:
 	app-cdr/dvd+rw-tools
 	app-crypt/chntpw
 	app-crypt/md5deep
-	app-crypt/nwipe
 	app-editors/hexcurse
 	app-editors/hexedit
 	app-editors/joe
@@ -243,6 +242,7 @@ livecd/packages:
 	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
+	sys-fs/ecryptfs-utils
 	sys-fs/ext3grep
 	sys-fs/extundelete
 	sys-fs/hfsplusutils

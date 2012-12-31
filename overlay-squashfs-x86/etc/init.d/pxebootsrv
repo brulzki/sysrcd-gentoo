@@ -151,9 +151,6 @@ start()
 		/usr/bin/nbd-server $PXEBOOTSRV_LOCALIP:2000 /tftpboot/sysrcd.dat -r
 	fi
 
-	# ---- stop network manager to avoid conflicts
-	/etc/init.d/NetworkManager stop
-
 	# ---- start the DHCPD service
 	if [ $PXEBOOTSRV_DODHCPD == "yes" ]
 	then

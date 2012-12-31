@@ -1,6 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
+app-emulation/open-vm-tools-kmod ~*
 =net-misc/networkmanager-0.9.6.4* ~*
 =net-misc/modemmanager-0.6* ~*
 =sys-fs/multipath-tools-0.4.9* ~*
@@ -14,7 +15,7 @@
 =sys-apps/lshw-02.16* ~*
 =app-misc/tmux-1.6* ~*
 =sys-devel/gcc-4.4* ~*
-=sys-fs/lvm2-2.02.93* ~*
+=sys-fs/lvm2-2.02.95* ~*
 =dev-libs/vala-common-0.18* ~*
 =dev-lang/vala-0.18* ~*
 sys-fs/zerofree ~*
@@ -63,6 +64,7 @@ sys-block/ms-sys ~*
 sys-boot/os-prober ~*
 sys-fs/aufs3 ~*
 net-misc/tigervnc ~*
+net-wireless/linux-wlan-ng-firmware ~*
 x11-drivers/xf86-input-vmmouse ~*
 app-emulation/open-vm-tools-kmod ~*
 app-emulation/open-vm-tools ~*

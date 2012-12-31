@@ -3,8 +3,8 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121117
-source_subpath: default/stage4-i386-20120929-03
+snapshot: 20121215
+source_subpath: default/stage4-i386-20121206-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -50,7 +50,6 @@ livecd/packages:
 	app-arch/unrar
 	app-arch/unshield
 	app-arch/unzip
-	app-arch/xarchiver
 	app-arch/xz-utils
 	app-arch/zip
 	app-backup/bacula
@@ -134,8 +133,11 @@ livecd/packages:
 	dev-vcs/git
 	gnome-extra/nm-applet
 	lxde-base/lxrandr
+	media-fonts/font-adobe-75dpi
 	media-fonts/font-bh-ttf
 	media-fonts/font-bh-type1
+	media-fonts/font-cursor-misc
+	media-fonts/font-misc-misc
 	media-fonts/font-util
 	media-fonts/terminus-font
 	media-fonts/unifont
@@ -202,7 +204,6 @@ livecd/packages:
 	net-misc/wget
 	net-misc/whois
 	net-misc/wput
-	net-wireless/acx-firmware
 	net-wireless/atmel-firmware
 	net-wireless/b43-fwcutter
 	net-wireless/bcm43xx-fwcutter
@@ -308,6 +309,7 @@ livecd/packages:
 	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
+	sys-fs/ecryptfs-utils
 	sys-fs/ext3grep
 	sys-fs/extundelete
 	sys-fs/hfsplusutils
@@ -370,6 +372,7 @@ livecd/packages:
 	x11-drivers/xf86-input-keyboard
 	x11-drivers/xf86-input-mouse
 	x11-drivers/xf86-input-vmmouse
+	x11-libs/libXvMC
 	x11-libs/libXxf86misc
 	x11-libs/wxGTK
 	x11-misc/read-edid

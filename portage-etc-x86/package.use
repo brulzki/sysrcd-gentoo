@@ -24,13 +24,15 @@ app-editors/vim -X -gpm -minimal -perl bash-completion python
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba slang 7zip
 sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
-sys-fs/udev extras
+sys-fs/udev extras gudev static-libs
+virtual/udev gudev static-libs
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba aio acl readline client server kernel_linux syslog examples -smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
+sys-fs/progsreiserfs static-libs
 dev-libs/libgpg-error static-libs
 nfs-utils/nfs-utils nfsv4
-sys-fs/ecryptfs-utils -gtk
+sys-fs/ecryptfs-utils openssl -pkcs11 -gtk
 gnome-extra/libgsf -python
 app-editors/qemacs -X -png
 sys-fs/ntfs3g -external-fuse -acl ntfsprogs extras
@@ -62,17 +64,18 @@ sys-fs/evms -gtk
 www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
-x11-libs/cairo svg cleartype lcdfilter
+x11-libs/cairo X svg cleartype lcdfilter
 sys-auth/polkit gtk -introspection
+gnome-extra/polkit-gnome -introspection
 x11-libs/gdk-pixbuf -introspection
 x11-libs/pango -introspection
-x11-libs/gtk+ -introspection
+x11-libs/gtk+ -introspection -cups
 dev-libs/atk -introspection
 x11-libs/vte -introspection
 x11-libs/libwnck -introspection
-net-libs/webkit-gtk -introspection
+net-libs/webkit-gtk -introspection -geoloc -webgl
 gnome-base/librsvg -introspection
-media-libs/mesa gallium xa -llvm -egl -classic
+media-libs/mesa gallium xa -llvm -egl -classic -xorg
 x11-libs/libdrm libkms
 sys-apps/lshw -sqlite -static
 sys-boot/grub multislot device-mapper mount -truetype -efiemu

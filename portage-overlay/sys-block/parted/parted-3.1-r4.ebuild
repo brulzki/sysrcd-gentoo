@@ -52,12 +52,16 @@ src_prepare() {
 	epatch ${FILESDIR}/parted-3.1-libparted-Fix-endian-error-with-FirstUsableLBA.patch || die 'patch4 failed'
 	epatch ${FILESDIR}/parted-2.1-libparted-use-dm_udev_wait-698121.patch || die 'patch5 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-use-largest_partnum-in-dm_reread_part_tabl.patch || die 'patch6 failed'
-	epatch ${FILESDIR}/parted-3.1-libparted-preserve-the-uuid-on-dm-partitions.patch || die 'patch7 failed'
-	epatch ${FILESDIR}/parted-3.1-tests-Make-sure-dm-UUIDs-are-not-erased.patch || die 'patch8 failed'
-	epatch ${FILESDIR}/parted-3.1-libparted-reallocate-buf-after-_disk_analyse_block_s.patch || die 'patch9 failed'
+	epatch ${FILESDIR}/parted-3.1-test-creating-20-device-mapper-partitions.patch || die 'patch7 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-preserve-the-uuid-on-dm-partitions.patch || die 'patch8 failed'
+	epatch ${FILESDIR}/parted-3.1-tests-Make-sure-dm-UUIDs-are-not-erased.patch || die 'patch9 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-reallocate-buf-after-_disk_analyse_block_s.patch || die 'patch10 failed'
 	#epatch ${FILESDIR}/parted-3.1-tests-cleanup-losetup-usage.patch || die 'patch10 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-add-support-for-implicit-FBA-DASD-partitions.patch || die 'patch11 failed'
 	epatch ${FILESDIR}/parted-3.1-libparted-add-support-for-EAV-DASD-partitions.patch || die 'patch12 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-don-t-canonicalize-dev-md-paths.patch || die 'patch13 failed'
+	epatch ${FILESDIR}/parted-3.1-libparted-mklabel-eav.patch || die 'patch14 failed'
+	epatch ${FILESDIR}/parted-3.1-avoid-dasd-as-default-file-image-type.patch || die 'patch15 failed'
 
 	eautoreconf
 }
