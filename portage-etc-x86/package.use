@@ -89,3 +89,5 @@ app-backup/dar gcrypt
 sys-auth/consolekit policykit
 net-misc/openssh tcpd
 sys-apps/shadow -cracklib
+dev-util/pkgconf pkg-config
+dev-python/setuptools -python_targets_python3_2

@@ -3,8 +3,8 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121215
-source_subpath: default/stage4-i386-20121206-01
+snapshot: 20130122
+source_subpath: default/stage4-i386-20130122-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -40,6 +40,7 @@ livecd/packages:
 	app-arch/par2cmdline
 	app-arch/pbzip2
 	app-arch/pigz
+	app-arch/pixz
 	app-arch/pxz
 	app-arch/rpm
 	app-arch/rpm2targz
@@ -96,7 +97,6 @@ livecd/packages:
 	app-misc/mc
 	app-misc/screen
 	app-misc/scrub
-	app-misc/secure-delete
 	app-misc/symlinks
 	app-misc/tmux
 	app-misc/vlock
@@ -128,6 +128,7 @@ livecd/packages:
 	dev-util/geany
 	dev-util/intltool
 	dev-util/ltrace
+	dev-util/patchutils
 	dev-util/pkgconfig
 	dev-util/strace
 	dev-vcs/git
@@ -189,7 +190,6 @@ livecd/packages:
 	net-misc/networkmanager-vpnc
 	net-misc/ntp
 	net-misc/openssh
-	net-misc/openswan
 	net-misc/openvpn
 	net-misc/pssh
 	net-misc/rdate
@@ -210,7 +210,6 @@ livecd/packages:
 	net-wireless/ipw2100-firmware
 	net-wireless/ipw2200-firmware
 	net-wireless/iw
-	net-wireless/linux-wlan-ng-firmware
 	net-wireless/madwifi-ng-tools
 	net-wireless/prism54-firmware
 	net-wireless/rtl8192su-firmware
@@ -242,6 +241,7 @@ livecd/packages:
 	sys-apps/gptfdisk
 	sys-apps/groff
 	sys-apps/hdparm
+	sys-apps/hwids
 	sys-apps/ipmitool
 	sys-apps/iproute2
 	sys-apps/kbd
@@ -312,6 +312,7 @@ livecd/packages:
 	sys-fs/ecryptfs-utils
 	sys-fs/ext3grep
 	sys-fs/extundelete
+	sys-fs/fuse-exfat
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
 	sys-fs/jfsutils
@@ -331,6 +332,7 @@ livecd/packages:
 	sys-fs/squashfs-tools
 	sys-fs/sshfs-fuse
 	sys-fs/udev
+	sys-fs/udev-init-scripts
 	sys-fs/udftools
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
@@ -375,6 +377,7 @@ livecd/packages:
 	x11-libs/libXvMC
 	x11-libs/libXxf86misc
 	x11-libs/wxGTK
+	x11-misc/grsync
 	x11-misc/read-edid
 	x11-misc/util-macros
 	x11-misc/xkeyboard-config
@@ -385,7 +388,7 @@ livecd/packages:
 	x11-proto/xf86driproto
 	x11-proto/xf86miscproto
 	x11-proto/xineramaproto
-	x11-terms/terminal
+	x11-terms/xfce4-terminal
 	x11-themes/gnome-icon-theme
 	x11-wm/jwm
 	xfce-base/xfce4-meta

@@ -746,7 +746,7 @@ sysresccd_stage1_nfs()
     nfsurl=$(echo ${NFSBOOT} | sed -e 's!nfs://!!g')
 
     good_msg "Mouting the NFS filesystem from ${NFSBOOT}"
-    cmd="mount -t nfs -o intr,nolock ${nfsurl} ${BOOTPATH}"
+    cmd="mount -t nfs -o intr,nolock,rsize=1024,wsize=1024 ${nfsurl} ${BOOTPATH}"
     if ! ${cmd}
     then
         sysresccd_panic "Cannot mount NFS: ${cmd}"

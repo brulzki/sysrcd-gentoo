@@ -7,7 +7,7 @@
 
 logfile="/var/tmp/usb_inst.log"
 TMPDIR="/var/tmp/usb_inst.tmp"
-MINSIZEMB=300
+MINSIZEMB=512
 PROGIMG="${0}"
 PROGLOC="$(dirname ${0})"
 CDFILES=('sysrcd.dat' 'sysrcd.md5' 'version' '???linux/initram.igz' 
@@ -59,7 +59,7 @@ cleanup_tmpdir()
 {
 	if [ -d "${TMPDIR}" ]
 	then
-		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,syslinux.exe,dialog,mtools,mcopy,mattrib,mmove}
+		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,syslinux.exe,dialog,mtools,mcopy,mattrib,mmove,xorriso}
 		rmdir ${TMPDIR}
 	fi
 }
@@ -260,7 +260,7 @@ do_writembr()
 		die "${cmd} --> failed"
 	fi
 	
-	cmd="${PROG_PARTED} -s ${devname} mkpart primary 0 100%"
+	cmd="${PROG_PARTED} -s ${devname} mkpart primary fat32 0 100%"
 	echo "--> ${cmd}"
 	if ! ${cmd} 2>/dev/null
 	then

@@ -1,24 +1,28 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
+<=udev/udev-197-r2
 >=sys-devel/gcc-4.5
->=sys-libs/glibc-2.14
+>=sys-libs/glibc-2.16
 >=dev-lang/python-3.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=app-misc/livecd-tools-2.0
->=sys-kernel/gentoo-sources-3.5
->=sys-kernel/linux-headers-3.5
+>=sys-kernel/gentoo-sources-3.4.999
+>=sys-kernel/aufs-sources-3.7.999
+>=sys-kernel/linux-headers-3.7.999
 >=sys-kernel/std-sources-3.4.999
->=sys-kernel/alt-sources-3.6.999
-<sys-kernel/genkernel-3.4.10-r2
->sys-kernel/genkernel-3.4.10-r2
+>=sys-kernel/alt-sources-3.7.999
+<sys-kernel/genkernel-3.4.45
+>sys-kernel/genkernel-3.4.45
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
 <sys-boot/grub-0.97-r13
 >sys-boot/grub-0.97-r13
+<www-client/firefox-bin-17.0
+>www-client/firefox-bin-17.9
 
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
@@ -41,12 +45,16 @@ x11-misc/xlockmore
 x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
-app-text/sgml-common
 dev-lang/ruby
 
 # modified packages
->gnome-extra/nm-applet-0.9.4.1
+<gnome-extra/nm-applet-0.9.6.4
+>gnome-extra/nm-applet-0.9.6.4
+<net-misc/modemmanager-0.6.0.0
+>net-misc/modemmanager-0.6.0.0
+<net-misc/networkmanager-vpnc-0.9.6.0
 >net-misc/networkmanager-vpnc-0.9.6.0
+<net-misc/networkmanager-openvpn-0.9.6.0
 >net-misc/networkmanager-openvpn-0.9.6.0
 >net-misc/modemmanager-0.6.0.0
 <sys-fs/squashfs-tools-4.2-r1
@@ -59,8 +67,6 @@ dev-lang/ruby
 >app-admin/testdisk-6.13
 <sys-block/parted-3.1-r4
 >sys-block/parted-3.1-r4
-<sys-block/iscsitarget-1.4.20.2
->sys-block/iscsitarget-1.4.20.2
 <sys-fs/btrfs-progs-0.20_rc1
 >sys-fs/btrfs-progs-0.20_rc1
 >www-client/midori-0.4.7
@@ -73,18 +79,13 @@ dev-lang/ruby
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
-<sys-fs/ntfs3g-2011.4.12
->=net-misc/openswan-2.6
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
 >sys-libs/tdb-1.2.8
+>net-fs/samba-3.6.0
 
 # xorg
-<x11-base/xorg-server-1.13.0-r1
->x11-base/xorg-server-1.13.0-r1
+<x11-base/xorg-server-1.13.1
+>x11-base/xorg-server-1.13.1
 <x11-base/xorg-drivers-1.13
 >x11-base/xorg-drivers-1.13
-
-# binaries are too large in recent samba versions
-# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=474543
-# >net-fs/samba-3.2.0

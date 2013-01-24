@@ -6,7 +6,21 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
-3.2.0
+3.3.0 (2013-01-24)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.27 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.7.4 (altker32 + altker64)
+* Fixed "waiting for uevents to be processed" by upgrading udev to 197-r4
+* Updated XFS Filesystem utilities: xfsprogs-3.1.10 + xfsdump-3.1.2
+* Updated app-backup/dar-2.4.9 (Disk-Archive 2.4.9)
+* Added x11-misc/grsync-1.1.1 (A gtk frontend to rsync)
+* Added sys-fs/fuse-exfat-1.0.0 (exFAT filesystem FUSE module)
+* Fixed Network-Manager applet in the graphical environment
+* Rebased genkernel on latest upstream version
+* Updated sys-fs/ntfs3g to 2013.1.13
+
+-------------------------------------------------------------------------------
+3.2.0 (2013-01-07)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.24 (rescuecd + rescue64)
 * Alternative kernels updated to latest stable 3.6.11 (altker32 + altker64)

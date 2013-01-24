@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121215
+snapshot: 20130122
 source_subpath: default/livecd-stage1-i686-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -36,9 +36,9 @@ boot/kernel/rescuecd/packages:
 	sys-kernel/linux-firmware
 	net-wireless/ndiswrapper
 	sys-fs/nilfs-utils
-	sys-fs/aufs3
 	sys-block/open-iscsi
-	#sys-block/iscsitarget
+	sys-block/iscsitarget
+	sys-fs/aufs3
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -150,7 +150,6 @@ livecd/unmerge:
 	x11-libs/libgksu
 	x11-libs/gksu
 	gnome-base/gnome-common
-	xfce-extra/xfce4-notifyd
 	sys-devel/autoconf
 	sys-devel/autogen
 	sys-devel/automake

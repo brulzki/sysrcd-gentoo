@@ -3,7 +3,7 @@ version_stamp: krnl
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121215
+snapshot: 20130122
 source_subpath: default/livecd-stage1-i686-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -32,4 +32,4 @@ boot/kernel/rescue32/packages:
 	sys-block/open-iscsi
 	net-wireless/ndiswrapper
 	app-emulation/open-vm-tools
-	#sys-block/iscsitarget
+	sys-block/iscsitarget

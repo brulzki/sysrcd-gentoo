@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121215
+snapshot: 20130122
 source_subpath: default/livecd-stage1-i686-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -36,8 +36,8 @@ boot/kernel/rescuecd/packages:
 	net-wireless/ndiswrapper
 	sys-block/open-iscsi
 	sys-fs/nilfs-utils
+	sys-block/iscsitarget
 	sys-fs/aufs3
-	#sys-block/iscsitarget
 
 livecd/unmerge:
 	app-admin/eselect-opengl

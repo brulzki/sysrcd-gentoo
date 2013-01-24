@@ -59,7 +59,7 @@ cleanup_tmpdir()
 {
 	if [ -d "${TMPDIR}" ]
 	then
-		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,syslinux.exe,dialog,mtools,mcopy,mattrib,mmove}
+		rm -rf ${TMPDIR}/{parted,install-mbr,mkfs.vfat,syslinux,syslinux.exe,dialog,mtools,mcopy,mattrib,mmove,xorriso}
 		rmdir ${TMPDIR}
 	fi
 }
@@ -362,7 +362,7 @@ do_syslinux()
 		die "syslinux not found on your system, please install syslinux first."
 	fi
 	
-	${PROG_SYSLINUX} ${partname}
+	${PROG_SYSLINUX} --install --directory syslinux ${partname}
 	res=$?
 	sync
 	if [ ${res} -eq 0 ]

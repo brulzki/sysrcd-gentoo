@@ -255,6 +255,7 @@ then
 	/sbin/rc-update add hald default
 	/sbin/rc-update add NetworkManager default
 	/sbin/rc-update add load-fonts-keymaps default
+	/sbin/rc-update add consolekit default
 
 	# remove services
 	/sbin/rc-update del urandom boot
@@ -267,6 +268,7 @@ then
 	/sbin/rc-update del netmount default
 	/sbin/rc-update del sysctl boot
 	/sbin/rc-update del local default
+	/sbin/rc-update del mount-ro shutdown
 
 	# remove services which don't make sense on a livecd
 	rm -f /etc/init.d/checkfs

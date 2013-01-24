@@ -3,8 +3,8 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/10.0
-snapshot: 20121215
-source_subpath: default/stage4-i386-20121206-01
+snapshot: 20130122
+source_subpath: default/stage4-i386-20130122-01
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -38,6 +38,7 @@ livecd/packages:
 	app-arch/par2cmdline
 	app-arch/pbzip2
 	app-arch/pigz
+	app-arch/pixz
 	app-arch/pxz
 	app-arch/rzip
 	app-arch/sharutils
@@ -83,7 +84,6 @@ livecd/packages:
 	app-misc/mc
 	app-misc/screen
 	app-misc/scrub
-	app-misc/secure-delete
 	app-misc/symlinks
 	app-misc/tmux
 	app-misc/vlock
@@ -111,6 +111,7 @@ livecd/packages:
 	dev-util/cmake
 	dev-util/intltool
 	dev-util/ltrace
+	dev-util/patchutils
 	dev-util/pkgconfig
 	dev-util/strace
 	dev-vcs/git
@@ -151,7 +152,6 @@ livecd/packages:
 	net-misc/netkit-rsh
 	net-misc/ntp
 	net-misc/openssh
-	net-misc/openswan
 	net-misc/openvpn
 	net-misc/pssh
 	net-misc/rdate
@@ -184,6 +184,7 @@ livecd/packages:
 	sys-apps/gawk
 	sys-apps/gptfdisk
 	sys-apps/hdparm
+	sys-apps/hwids
 	sys-apps/ipmitool
 	sys-apps/iproute2
 	sys-apps/kbd
@@ -264,6 +265,7 @@ livecd/packages:
 	sys-fs/squashfs-tools
 	sys-fs/sshfs-fuse
 	sys-fs/udev
+	sys-fs/udev-init-scripts
 	sys-fs/udftools
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
