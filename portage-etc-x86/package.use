@@ -1,5 +1,6 @@
 # ------ SystemRescueCd package.use ------
 sys-kernel/genkernel selinux
+sys-devel/gcc -fortran
 xfce-base/exo -python
 xfce-base/xfconf -perl
 xfce-base/xfce4-meta session
@@ -42,7 +43,7 @@ app-text/poppler-bindings gtk -qt3 -qt4 -test
 net-print/cups -perl -python
 dev-vcs/git -perl -gtk
 net-wireless/wpa_supplicant dbus
-net-misc/networkmanager -doc -dhcpcd -nss dhclient gnutls
+net-misc/networkmanager -doc -dhcpcd -nss modemmanager dhclient gnutls
 media-libs/freetype -bindist
 app-text/ghostscript-gpl -cups
 app-crypt/truecrypt -X
@@ -60,7 +61,6 @@ x11-apps/xinit minimal
 net-dialup/rp-pppoe -X
 net-analyzer/nmap -gtk
 net-dialup/ppp -gtk
-sys-fs/evms -gtk
 www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
@@ -83,11 +83,11 @@ net-libs/glib-networking -gnome
 media-fonts/font-adobe-75dpi nls
 media-fonts/font-cursor-misc nls
 media-fonts/font-misc-misc nls
-sys-libs/zlib static-libs
-dev-libs/openssl static-libs
 app-backup/dar gcrypt
 sys-auth/consolekit policykit
 net-misc/openssh tcpd
 sys-apps/shadow -cracklib
 dev-util/pkgconf pkg-config
 dev-python/setuptools -python_targets_python3_2
+app-backup/rdiff-backup -acl
+net-fs/cifs-utils caps

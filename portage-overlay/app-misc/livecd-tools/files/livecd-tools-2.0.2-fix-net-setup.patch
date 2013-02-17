@@ -1,0 +1,30 @@
+diff -urN livecd-tools-2.0.2-a/livecd-functions.sh livecd-tools-2.0.2-b/livecd-functions.sh
+--- livecd-tools-2.0.2-a/livecd-functions.sh	2011-10-25 03:34:57.000000000 +0100
++++ livecd-tools-2.0.2-b/livecd-functions.sh	2013-01-30 18:57:24.105256684 +0000
+@@ -242,7 +242,7 @@
+ 			GATEWAY=$(tail -n 1 ${iface}.GW)
+ 			dialog --visit-items --title "DNS server" --inputbox "Please enter a name server to use (hit enter for none:)" 20 50 2> ${iface}.DNS
+ 			DNS=$(tail -n 1 ${iface}.DNS)
+-			/sbin/ifconfig ${iface} ${IP} broadcast ${BROADCAST} netmask ${NETMASK}
++			/bin/ifconfig ${iface} ${IP} broadcast ${BROADCAST} netmask ${NETMASK}
+ 			if [ -n "${GATEWAY}" ]
+ 			then
+ 				/sbin/route add default gw ${GATEWAY} dev ${iface} netmask 0.0.0.0 metric 1
+@@ -386,14 +386,14 @@
+ 	local opts
+ 	IFS="
+ "
+-	for ifname in $(/sbin/ifconfig -a | grep "^[^ ]"); do
+-		ifname="${ifname%% *}"
++	for ifname in $(/bin/ifconfig -a | grep "^[^ ]"); do
++		ifname="${ifname%%: *}"
+ 		[[ ${ifname} == "lo" ]] && continue
+ 		opts="${opts} ${ifname} '$(get_ifdesc ${ifname})'"
+ 	done
+ 	IFS="${old_ifs}"
+ 
+-	if ! eval dialog --visit-items --menu "Please select the interface that you wish to configure from the list below:" 0 0 0 $opts 2>iface
++	if ! eval dialog --visit-items --menu \"Please select the interface that you wish to configure from the list below:\" 0 0 0 $opts 2>iface
+ 	then
+ 		exit
+ 	fi

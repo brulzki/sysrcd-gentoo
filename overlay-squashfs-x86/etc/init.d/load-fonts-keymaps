@@ -4,7 +4,7 @@ source /sbin/livecd-functions.sh
 
 depend()
 {
-	after pwgen sshd portmap hald
+	after pwgen sshd portmap
 	before sysresccd
 }
 

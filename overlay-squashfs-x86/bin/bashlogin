@@ -36,11 +36,6 @@ fbecho
 echo -e "${lc1} =========== ${lc2}SystemRescue-Cd${lc1} -----${VERSION}=========== ${lc2}$(basename $(tty))${dc2}/6 ${lc1}=="
 echo -e "                      ${dc1}http://www.sysresccd.org/"
 echo
-if [ -f /etc/init.d/NetworkManager ]
-then
-	echo -e "${dc1}*${dc2} You should stop the Network-Manager service if you want to configure "
-	echo -e "   the network by hand. Just run this command: /etc/init.d/NetworkManager stop"
-fi
 echo -e "${dc1}*${dc2} Type ${lc2}net-setup eth0${dc2} to specify ethernet configuration."
 echo -e "${dc1}*${dc2} If your PC is on an ethernet local network, you can configure by hand:"
 echo -e "   ${dc1}-${dc2} ifconfig eth0 192.168.x.a (your static IP address)"

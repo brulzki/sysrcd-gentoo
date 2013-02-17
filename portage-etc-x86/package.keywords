@@ -1,6 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
+=sys-kernel/vanilla-sources-3.0* ~*
 =x11-drivers/xf86-video-cirrus-1.5* ~*
 =net-misc/networkmanager-0.9.6.4* ~*
 =gnome-extra/nm-applet-0.9.6.4* ~*
@@ -10,16 +11,18 @@
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
-=www-client/midori-0.4.7* ~*
+=www-client/midori-0.4.8* ~*
+=sys-cluster/drbd-8.4.3* ~*
 =sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
 =net-dialup/ppp-2.4.5* ~*
 =sys-apps/lshw-02.16* ~*
 =app-misc/tmux-1.6* ~*
-=sys-devel/gcc-4.4* ~*
-=sys-fs/lvm2-2.02.95* ~*
+=net-misc/pssh-2.3* ~*
+=sys-devel/libtool-2.4.2* ~*
 =dev-libs/vala-common-0.18* ~*
 =dev-lang/vala-0.18* ~*
+=app-arch/star-1.5.2* ~*
 sys-fs/fuse-exfat ~*
 app-arch/pixz ~*
 sys-fs/zerofree ~*

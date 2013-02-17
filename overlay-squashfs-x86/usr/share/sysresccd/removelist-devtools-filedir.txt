@@ -9,7 +9,7 @@
 /etc/make.profile
 /usr/i386-pc-linux-gnu
 /usr/i486-pc-linux-gnu
-/usr/i686-pc-linux-gnu
+/usr/i486-pc-linux-gnu
 /usr/bin/i386-gentoo-linux-uclibc-*
 /usr/bin/i386-pc-linux-*
 /usr/bin/x86_64-pc-linux-gnu-*
@@ -21,7 +21,7 @@
 /usr/lib/gentoolkit
 /usr/lib/pkgconfig
 /usr/lib/gcc/i486-pc-linux-gnu/*/{include,install-tools,libgcj*,libffi*,libgij*,libgfortran*,*.a,*.o,*.X,*.la,security,libmudflap*}
-/usr/lib/gcc/i686*
+/usr/lib/gcc/i486*
 /usr/lib/gcc/sparc64-unknown-linux-gnu/*/{include,install-tools,libgcj*,libffi*,libgij*,libgfortran*,*.a,*.la,security}
 /usr/libexec/gcc
 /usr/share/gcc-data
@@ -29,7 +29,7 @@
 /usr/bin/{c++*,cpp*,g++*,gcc*,gcj*,gcjh*}
 /usr/bin/i486-pc-linux-gnu*
 /usr/bin/{auto*,aclocal,addr2line,as,bashcomp-config,eclean-dist,eclean-pkg,gfortran*,gmsgfmt,gprof}
-/usr/bin/{i686-pc-linux-gnu-*,idle,ifnames,kernel-config,ld,lex,make,nm,objcopy,objdump,profile-config}
+/usr/bin/{i486-pc-linux-gnu-*,idle,ifnames,kernel-config,ld,lex,make,nm,objcopy,objdump,profile-config}
 /usr/bin/{ebuild,emerge,portageq}
 /usr/sbin/{archive-conf,dispatch-conf,emaint,emerge-webrsync,env-update,etc-update,fixpackages,quickpkg,regenworld}
 /usr/lib/{libgettext*,libltdl.so,libmpfr.so,libsandbox*,libtcl*,libtk*}

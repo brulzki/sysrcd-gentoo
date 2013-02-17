@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.4.0 (2013-02-18)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.30 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.7.8 (altker32 + altker64)
+* Updated btrfs-progs filesystem utilities to latest snapshot (0.20_rc1_p56)
+* Disabled power-saving options (CONFIG_SUSPEND and CONFIG_HIBERNATION)
+* Added app-arch/star-1.5.2 (enhanced tar as well as enhanced mt/rmt)
+* Updated fsarchiver to 0.6.16 (bugfix release), midori to 0.4.8
+
+-------------------------------------------------------------------------------
 3.3.0 (2013-01-24)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.27 (rescuecd + rescue64)

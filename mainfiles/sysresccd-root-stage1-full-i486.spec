@@ -1,14 +1,14 @@
-subarch: i686
+subarch: i486
 version_stamp: full
 target: livecd-stage1
 rel_type: default
-profile: default/linux/x86/10.0
-snapshot: 20130122
-source_subpath: default/stage4-i386-20130122-01
+profile: default/linux/x86/13.0
+snapshot: 20130210
+source_subpath: default/stage4-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
-livecd/use: sysrcdfull X consolekit icu gtk gtk2 -svg -opengl -glx -berkdb -gdbm -minimal -introspection dri bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4 -gallium
+livecd/use: sysrcdfull X consolekit icu gtk gtk2 -svg -opengl -glx -berkdb -gdbm -minimal -introspection dri bindist fbcon ipv6 livecd ncurses pam readline ssl unicode zlib nptl nptlonly multilib multislot jfs ntfs reiserfs xfs fat reiser4 samba png jpeg xorg usb pdf acl nologin atm bash-completion slang -kdrive vram loop-aes crypt device-mapper 7zip xattr bzip2 server lzo xpm bash-completion -fam -doc -hardened -spoof-source -static -tcpd -mailwrapper -milter -nls -selinux -ermt -pic -dar32 -dar64 -openct -pcsc-lite -smartcard -caps -qt3 -qt4 -aqua -cscope -gnome -gpm -motif -netbeans -nextaw -perl -python -ruby -xterm -emacs -justify -spell -vim-pager -vim-with-x -sqlite -afs -bashlogger -plugins -vanilla -examples -maildir pcre -accessibility -ithreads -perlsuid -php -pike -tcl -tk -nocxx -no-net2 -kerberos -sse2 -aio -cups -ldap -quotas -swat -syslog -winbind -socks5 -guile -X509 dbus -gnutls -gsm -cracklib -nousuid -skey -old-linux -pxeserial -multitarget -test -clvm -cman -gulm -gd -glibc-compat20 -glibc-omitfp -bidi -xinerama -qt3support -alsa -xcb nfsv4 -gallium -fortran
 
 livecd/packages:
 	app-admin/hddtemp
@@ -32,6 +32,7 @@ livecd/packages:
 	app-arch/dpkg
 	app-arch/dump
 	app-arch/gzip
+	app-arch/lbzip2
 	app-arch/lzip
 	app-arch/lzop
 	app-arch/mt-st
@@ -46,6 +47,7 @@ livecd/packages:
 	app-arch/rpm2targz
 	app-arch/rzip
 	app-arch/sharutils
+	app-arch/star
 	app-arch/tar
 	app-arch/unace
 	app-arch/unrar
@@ -105,6 +107,8 @@ livecd/packages:
 	app-portage/gentoolkit
 	app-portage/mirrorselect
 	app-shells/bash
+	app-shells/bash-completion
+	app-shells/gentoo-bashcomp
 	app-shells/ksh
 	app-shells/tcsh
 	app-shells/zsh
@@ -113,7 +117,6 @@ livecd/packages:
 	app-text/tree
 	app-text/wgetpaste
 	app-vim/gentoo-syntax
-	dev-lang/perl
 	dev-libs/expat
 	dev-libs/libconfig
 	dev-libs/libdnet
@@ -211,14 +214,11 @@ livecd/packages:
 	net-wireless/ipw2200-firmware
 	net-wireless/iw
 	net-wireless/madwifi-ng-tools
-	net-wireless/prism54-firmware
-	net-wireless/rtl8192su-firmware
 	net-wireless/rfkill
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
 	net-wireless/zd1201-firmware
 	net-wireless/zd1211-firmware
-	perl-core/Encode
 	sys-apps/acl
 	sys-apps/attr
 	sys-apps/cciss_vol_status
@@ -242,6 +242,7 @@ livecd/packages:
 	sys-apps/groff
 	sys-apps/hdparm
 	sys-apps/hwids
+	sys-apps/hwsetup
 	sys-apps/ipmitool
 	sys-apps/iproute2
 	sys-apps/kbd
@@ -289,7 +290,7 @@ livecd/packages:
 	sys-block/scsiadd
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r13
-	=sys-boot/grub-2.00-r1
+	=sys-boot/grub-2.00-r2
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober
@@ -301,6 +302,7 @@ livecd/packages:
 	sys-devel/bc
 	sys-devel/crossdev
 	sys-devel/gettext
+	sys-devel/libtool
 	sys-fs/btrfs-progs
 	sys-fs/cryptsetup
 	sys-fs/ddrescue
@@ -331,8 +333,8 @@ livecd/packages:
 	sys-fs/scrounge-ntfs
 	sys-fs/squashfs-tools
 	sys-fs/sshfs-fuse
+	sys-fs/sysfsutils
 	sys-fs/udev
-	sys-fs/udev-init-scripts
 	sys-fs/udftools
 	sys-fs/xfsdump
 	sys-fs/xfsprogs
@@ -397,5 +399,4 @@ livecd/packages:
 	xfce-extra/xfce4-notifyd
 	xfce-extra/xfce4-taskmanager
 	xfce-extra/xfce4-wavelan-plugin
-	#x11-misc/mkxf86config
 

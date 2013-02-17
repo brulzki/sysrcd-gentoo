@@ -1,13 +1,11 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
-<=udev/udev-197-r2
->=sys-devel/gcc-4.5
+>=sys-devel/gcc-4.6
 >=sys-libs/glibc-2.16
->=dev-lang/python-3.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
->=app-misc/livecd-tools-2.0
+>=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.4.999
 >=sys-kernel/aufs-sources-3.7.999
 >=sys-kernel/linux-headers-3.7.999
@@ -19,10 +17,10 @@
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
-<sys-boot/grub-0.97-r13
->sys-boot/grub-0.97-r13
 <www-client/firefox-bin-17.0
 >www-client/firefox-bin-17.9
+<sys-boot/grub-0.97-r13
+>sys-boot/grub-0.97-r13
 
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
@@ -63,26 +61,29 @@ dev-lang/ruby
 >sys-boot/efibootmgr-0.5.4
 <www-servers/thttpd-2.26.4-r1
 >www-servers/thttpd-2.26.4-r1
+<app-misc/livecd-tools-2.0.2
+>app-misc/livecd-tools-2.0.2
 <app-admin/testdisk-6.13
 >app-admin/testdisk-6.13
 <sys-block/parted-3.1-r4
 >sys-block/parted-3.1-r4
-<sys-fs/btrfs-progs-0.20_rc1
->sys-fs/btrfs-progs-0.20_rc1
->www-client/midori-0.4.7
+<sys-fs/btrfs-progs-0.20_rc1_p56
+>sys-fs/btrfs-progs-0.20_rc1_p56
+>www-client/midori-0.4.8
 <www-client/midori-0.4.7
 <sys-apps/gptfdisk-0.8.5
 >sys-apps/gptfdisk-0.8.5
+<app-cdr/cdw-0.7.1
+>app-cdr/cdw-0.7.1
 
 # fix problems
 =app-text/docbook-xml-dtd-4.1.2
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
+<sys-cluster/drbd-8.4.3
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
->sys-libs/tdb-1.2.8
->net-fs/samba-3.6.0
 
 # xorg
 <x11-base/xorg-server-1.13.1

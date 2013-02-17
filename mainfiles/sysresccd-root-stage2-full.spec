@@ -1,17 +1,17 @@
-subarch: i686
+subarch: i486
 version_stamp: full
 target: livecd-stage2
 rel_type: default
-profile: default/linux/x86/10.0
-snapshot: 20130122
-source_subpath: default/livecd-stage1-i686-full
+profile: default/linux/x86/13.0
+snapshot: 20130210
+source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
 livecd/fstype: squashfs
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.09-cdtar.tar.bz2
+livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-cdtar.tar.bz2
 livecd/iso: /worksrc/isofiles/systemrescuecd-x86-current.iso
-livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript.sh
+livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript-livecd.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
@@ -45,14 +45,8 @@ livecd/unmerge:
 	app-admin/perl-cleaner
 	sys-devel/bison
 	sys-devel/flex
-	sys-power/iasl
-	sys-kernel/std-sources
 	sys-kernel/gentoo-sources
-	dev-lang/nasm
-	dev-lang/yasm
-	dev-util/yacc
-	dev-util/gtk-doc
-	dev-util/scons
+	#dev-util/scons
 	dev-util/ccache
 	dev-util/ctags
 	dev-util/intltool
@@ -64,107 +58,113 @@ livecd/unmerge:
 	dev-python/pycrypto
 	dev-python/python-fchksum
 	media-fonts/font-util
-	x11-apps/xclock
-	x11-apps/bdftopcf
-	x11-terms/xterm
-	x11-misc/imake
+	#x11-apps/bdftopcf
+	#x11-terms/xterm
+	#x11-misc/imake
 	x11-misc/util-macros
 	sys-devel/gettext
-	www-client/links
+	#www-client/links
 	x11-proto/compositeproto
 	x11-proto/damageproto
 	x11-proto/dri2proto
 	x11-proto/fixesproto
-	x11-proto/fontcacheproto
+	#x11-proto/fontcacheproto
 	x11-proto/fontsproto
 	x11-proto/glproto
 	x11-proto/inputproto
-	x11-proto/printproto
+	#x11-proto/printproto
 	x11-proto/randrproto
 	x11-proto/recordproto
 	x11-proto/resourceproto
 	x11-proto/scrnsaverproto
-	x11-proto/trapproto
+	#x11-proto/trapproto
 	x11-proto/videoproto
-	x11-proto/xcmiscproto
+	#x11-proto/xcmiscproto
 	x11-proto/xextproto
 	x11-proto/xf86bigfontproto
-	x11-proto/xf86dgaproto
+	#x11-proto/xf86dgaproto
 	x11-proto/xf86driproto
 	x11-proto/xf86miscproto
-	x11-proto/xf86rushproto
+	#x11-proto/xf86rushproto
 	x11-proto/xf86vidmodeproto
 	x11-proto/xineramaproto
-	dev-lang/swig
+	#dev-lang/swig
 	sys-kernel/genkernel
 	sys-libs/cracklib
-	app-text/build-docbook-catalog
-	app-text/sgml-common
-	app-text/docbook-xsl-stylesheets
-	app-text/docbook-xml-dtd
-	app-text/gnome-doc-utils
+	#app-text/build-docbook-catalog
+	#app-text/sgml-common
+	#app-text/docbook-xsl-stylesheets
+	#app-text/docbook-xml-dtd
+	#app-text/gnome-doc-utils
 	app-admin/eselect-xvmc
-	dev-util/unifdef
+	#dev-util/unifdef
 	net-mail/mailbase
 	mail-mta/ssmtp
 	dev-util/cmake
-	dev-util/scons
 	dev-libs/pkcs11-helper
 	app-admin/sudo
 	media-fonts/dejavu
-	games-misc/fortune-mod
-	media-fonts/font-adobe-100dpi
-	app-text/recode
-	media-libs/glew
-	media-sound/alsa-headers
-	app-admin/eselect-ruby
-	dev-lang/ruby
+	#games-misc/fortune-mod
+	#media-fonts/font-adobe-100dpi
+	#app-text/recode
+	#media-libs/glew
+	#media-sound/alsa-headers
+	#app-admin/eselect-ruby
+	#dev-lang/ruby
 	dev-util/gtk-doc-am
-	app-text/scrollkeeper-dtd
-	app-text/scrollkeeper
-	app-text/rarian
-	perl-core/Encode
-	dev-perl/Archive-Tar
-	dev-perl/Compress-Raw-Zlib
-	dev-perl/Compress-Zlib
+	#app-text/scrollkeeper-dtd
+	#app-text/scrollkeeper
+	#perl-core/Encode
+	#app-text/rarian
+	#dev-perl/Archive-Tar
+	#dev-perl/Compress-Raw-Zlib
+	#dev-perl/Compress-Zlib
 	dev-perl/DateManip
-	dev-perl/ExtUtils-CBuilder
-	dev-perl/IO-Compress-Base
-	dev-perl/IO-Compress-Zlib
-	dev-perl/IO-String
-	dev-perl/IO-Zlib
+	#dev-perl/ExtUtils-CBuilder
+	#dev-perl/IO-Compress-Base
+	#dev-perl/IO-Compress-Zlib
+	#dev-perl/IO-String
+	#dev-perl/IO-Zlib
 	dev-perl/XML-Parser
-	dev-perl/extutils-parsexs
-	dev-perl/module-build
-	dev-perl/Compress-Raw-Bzip2
-	dev-perl/IO-Compress-Bzip2
-	dev-perl/yaml
+	#dev-perl/extutils-parsexs
+	#dev-perl/module-build
+	#dev-perl/Compress-Raw-Bzip2
+	#dev-perl/IO-Compress-Bzip2
+	#dev-perl/yaml
 	dev-perl/XML-NamespaceSupport
-	dev-perl/XML-LibXML-Common
+	#dev-perl/XML-LibXML-Common
 	dev-perl/XML-SAX
-	dev-perl/YAML-Tiny
+	#dev-perl/YAML-Tiny
 	dev-perl/XML-LibXML
-	dev-perl/XML-Simple
-	media-gfx/imagemagick
+	#dev-perl/XML-Simple
+	dev-perl/Locale-gettext
+	#media-gfx/imagemagick
 	gnome-base/libgtop
 	x11-libs/libgksu
 	x11-libs/gksu
-	gnome-base/gnome-common
+	#gnome-base/gnome-common
 	sys-devel/autoconf
 	sys-devel/autogen
 	sys-devel/automake
 	dev-scheme/guile
 	dev-python/paramiko
-	dev-vcs/bzr
+	#dev-vcs/bzr
 	dev-vcs/git
-	dev-lang/vala
-	dev-libs/libcroco
+	#dev-lang/vala
+	#dev-libs/libcroco
 	dev-util/gperf
-	gnome-base/librsvg
+	#gnome-base/librsvg
 	media-fonts/unifont
-	dev-libs/gobject-introspection
-	dev-libs/vala-common
-	dev-lang/vala
+	#dev-libs/gobject-introspection
+	#dev-libs/vala-common
+	#x11-apps/xclock
+	#dev-util/scons
+	#dev-util/gtk-doc
+	#dev-util/yacc
+	#dev-lang/yasm
+	#dev-lang/nasm
+	#sys-kernel/std-sources
+	#sys-power/iasl
 
 livecd/empty:
 	/var/cache/revdep-rebuild
@@ -173,18 +173,14 @@ livecd/empty:
 	/etc/cron.monthly
 	/etc/cron.weekly
 	/etc/logrotate.d
-	/etc/runlevels/single
 	/etc/skel
 	/usr/lib/nfs
 	/usr/local
 	/usr/src
 	/var/cache
 	/var/empty
-	/var/lock
 	/var/log
-	/var/run
 	/var/spool
-	/var/state
 	/var/www
 	/var/tmp
 	/tmp

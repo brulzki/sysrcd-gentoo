@@ -1,89 +1,51 @@
-diff -urN catalyst-2.0.6-a/modules/generic_stage_target.py catalyst-2.0.6-c/modules/generic_stage_target.py
---- catalyst-2.0.6-a/modules/generic_stage_target.py	2008-05-29 05:30:10.000000000 +0100
-+++ catalyst-2.0.6-c/modules/generic_stage_target.py	2013-01-15 06:46:31.109342625 +0000
-@@ -426,7 +426,7 @@
- 
- 	def set_snapshot_path(self):
- 		self.settings["snapshot_path"]=normpath(self.settings["storedir"]+\
--			"/snapshots/portage-"+self.settings["snapshot"]+".tar.bz2")
-+			"/snapshots/portage-"+self.settings["snapshot"]+".tar.xz")
- 
- 		if os.path.exists(self.settings["snapshot_path"]):
- 			self.settings["snapshot_path_hash"]=\
-@@ -809,7 +809,7 @@
- 			cleanup_errmsg="Error removing existing snapshot directory."
- 			cleanup_msg=\
- 				"Cleaning up existing portage tree (This can take a long time)..."
--			unpack_cmd="tar xjpf "+self.settings["snapshot_path"]+" -C "+\
-+			unpack_cmd="tar xpf "+self.settings["snapshot_path"]+" --xz -C "+\
- 				self.settings["chroot_path"]+"/usr"
- 			unpack_errmsg="Error unpacking snapshot"
- 
-@@ -1055,6 +1055,13 @@
+diff -urN catalyst-2.0.12.2-a/modules/generic_stage_target.py catalyst-2.0.12.2-b/modules/generic_stage_target.py
+--- catalyst-2.0.12.2-a/modules/generic_stage_target.py	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/modules/generic_stage_target.py	2013-01-27 21:52:08.035047737 +0000
+@@ -1035,6 +1035,13 @@
  			else:
  				myf.write('CXXFLAGS="${CFLAGS}"\n')
  
-+                        myf.write('MAKEOPTS="-j5 --load-average=8"\n')
-+                        myf.write('PORTAGE_NICENESS="19"\n')
-+                        myf.write('ACCEPT_LICENSE="*"\n')
-+                        myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
-+                        myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
-+                        myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned"\n')
++			myf.write('MAKEOPTS="-j5"\n')
++			myf.write('PORTAGE_NICENESS="19"\n')
++			myf.write('ACCEPT_LICENSE="*"\n')
++			myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
++			myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
++			myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned"\n')
 +
  			if self.settings.has_key("LDFLAGS"):
  				myf.write("# LDFLAGS is unsupported.  USE AT YOUR OWN RISK!\n")
  				myf.write('LDFLAGS="'+self.settings["LDFLAGS"]+'"\n')
-diff -urN catalyst-2.0.6-a/modules/snapshot_target.py catalyst-2.0.6-c/modules/snapshot_target.py
---- catalyst-2.0.6-a/modules/snapshot_target.py	2008-05-29 05:30:11.000000000 +0100
-+++ catalyst-2.0.6-c/modules/snapshot_target.py	2013-01-15 06:46:31.112676204 +0000
-@@ -17,7 +17,7 @@
- 		self.settings["target_subpath"]="portage"
- 		st=self.settings["storedir"]
- 		self.settings["snapshot_path"]=normpath(st+"/snapshots/portage-"+self.settings["version_stamp"]\
--			+".tar.bz2")
-+			+".tar.xz")
- 		self.settings["tmp_path"]=normpath(st+"/tmp/"+self.settings["target_subpath"])
- 		if self.settings.has_key("portdir_overlay"):
- 			print "\nWarning!!!!"
-diff -urN catalyst-2.0.6-a/targets/support/chroot-functions.sh catalyst-2.0.6-c/targets/support/chroot-functions.sh
---- catalyst-2.0.6-a/targets/support/chroot-functions.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-c/targets/support/chroot-functions.sh	2013-01-15 06:46:31.112676204 +0000
-@@ -126,6 +126,9 @@
- 	else
+diff -urN catalyst-2.0.12.2-a/targets/support/chroot-functions.sh catalyst-2.0.12.2-b/targets/support/chroot-functions.sh
+--- catalyst-2.0.12.2-a/targets/support/chroot-functions.sh	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/targets/support/chroot-functions.sh	2013-01-27 16:06:40.046950598 +0000
+@@ -129,6 +129,9 @@
  		clst_myemergeopts="--quiet"
+ 		bootstrap_opts="${bootstrap_opts} -q"
  	fi
 +	# set "--keep-going" to bypass compilation errors and continue
 +	clst_myemergeopts="${clst_myemergeopts} -u" # required with >=portage-2.1.7
 +	clst_myemergeopts="${clst_myemergeopts} --autounmask=n --jobs=1 --load-average=8" # workaround parallel build issues in stage1
  	if [ -n "${clst_FETCH}" ]
  	then
- 		export bootstrap_opts="-f"
-@@ -166,7 +169,7 @@
- 	# portage to avoid frying our /etc/make.conf file.  Otherwise, we could
- 	# just let emerge system could merge it.
- 	[ -e /etc/make.conf ] && echo 'USE="${USE} build"' >> /etc/make.conf
--	run_merge --oneshot --nodeps virtual/portage
-+	#run_merge --oneshot --nodeps virtual/portage
- 	sed -i '/USE="${USE} build"/d' /etc/make.conf
- }
- 
-diff -urN catalyst-2.0.6-a/targets/support/filesystem-functions.sh catalyst-2.0.6-c/targets/support/filesystem-functions.sh
---- catalyst-2.0.6-a/targets/support/filesystem-functions.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-c/targets/support/filesystem-functions.sh	2013-01-15 06:46:31.112676204 +0000
-@@ -53,7 +53,9 @@
+ 		export bootstrap_opts="${bootstrap_opts} -f"
+diff -urN catalyst-2.0.12.2-a/targets/support/filesystem-functions.sh catalyst-2.0.12.2-b/targets/support/filesystem-functions.sh
+--- catalyst-2.0.12.2-a/targets/support/filesystem-functions.sh	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/targets/support/filesystem-functions.sh	2013-01-27 16:27:14.278958254 +0000
+@@ -53,8 +53,9 @@
  create_squashfs() {
  	echo "Creating squashfs..."
  	export loopname="image.squashfs"
 -	mksquashfs "${clst_destpath}" "$1/${loopname}" ${clst_fsops} -noappend \
+-		|| die "mksquashfs failed, did you emerge squashfs-tools?"
 +	find ${clst_destpath} -type f -name "*.py?" -exec rm -f {} \;
 +	cp ${clst_destpath}/usr/share/sysresccd/sysresccd-type.txt "$1/${loopname}.txt"
-+	mksquashfs "${clst_destpath}" "$1/${loopname}" ${clst_fsops} -noappend -Xbcj x86 -b 262144 \
- 		|| die "mksquashfs failed, did you emerge squashfs-tools?"
++	mksquashfs "${clst_destpath}" "$1/${loopname}" ${clst_fsops} -noappend -Xbcj x86 -b 262144 || die "mksquashfs failed, did you emerge squashfs-tools?"
  }
  
-diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-c/targets/support/kmerge.sh
---- catalyst-2.0.6-a/targets/support/kmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-c/targets/support/kmerge.sh	2013-01-15 18:21:55.713381998 +0000
+ create_jffs() {
+diff -urN catalyst-2.0.12.2-a/targets/support/kmerge.sh catalyst-2.0.12.2-b/targets/support/kmerge.sh
+--- catalyst-2.0.12.2-a/targets/support/kmerge.sh	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/targets/support/kmerge.sh	2013-01-27 16:35:34.595951535 +0000
 @@ -11,6 +11,7 @@
  	# default genkernel args
  	GK_ARGS="${clst_gk_mainargs} \
@@ -92,20 +54,40 @@ diff -urN catalyst-2.0.6-a/targets/support/kmerge.sh catalyst-2.0.6-c/targets/su
  			 --cachedir=/tmp/kerncache/${clst_kname}-genkernel_cache-${clst_version_stamp} \
  			 --no-mountboot \
  			 --kerneldir=/usr/src/linux \
-@@ -99,7 +100,7 @@
+@@ -104,8 +105,7 @@
  	fi
  	if [ "${clst_kernel_merge}" != "" ]
  	then
 -		genkernel --callback="emerge ${gk_callback_opts} ${clst_kernel_merge}" \
-+		genkernel --callback="emerge -u --autounmask=n --jobs=4 --load-average=8 --accept-properties=-interactive ${gk_callback_opts} ${clst_kernel_merge}" \
- 			${GK_ARGS} || exit 1
+-			${GK_ARGS} || exit 1
++		genkernel --callback="emerge -u --autounmask=n --jobs=4 --load-average=8 --accept-properties=-interactive ${gk_callback_opt} ${clst_kernel_merge}" ${GK_ARGS} || exit 1
  	else
  		genkernel ${GK_ARGS} || exit 1
-diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-c/targets/support/unmerge.sh
---- catalyst-2.0.6-a/targets/support/unmerge.sh	2008-05-29 05:30:09.000000000 +0100
-+++ catalyst-2.0.6-c/targets/support/unmerge.sh	2013-01-15 06:46:31.112676204 +0000
-@@ -2,6 +2,77 @@
+ 	fi
+diff -urN catalyst-2.0.12.2-a/targets/support/livecdfs-update.sh catalyst-2.0.12.2-b/targets/support/livecdfs-update.sh
+--- catalyst-2.0.12.2-a/targets/support/livecdfs-update.sh	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/targets/support/livecdfs-update.sh	2013-01-27 18:02:36.621953114 +0000
+@@ -12,10 +12,10 @@
+ fi
  
+ # Turn off udev tarball
+-sed -i 's:RC_DEVICE_TARBALL="yes":RC_DEVICE_TARBALL="no":' /etc/conf.d/rc
++#sed -i 's:RC_DEVICE_TARBALL="yes":RC_DEVICE_TARBALL="no":' /etc/conf.d/rc
+ 
+ # Turn off udev coldplugging
+-sed -i 's:RC_COLDPLUG="yes":RC_COLDPLUG="no":' /etc/conf.d/rc
++#sed -i 's:RC_COLDPLUG="yes":RC_COLDPLUG="no":' /etc/conf.d/rc
+ 
+ # Clean up the time and set to UTC
+ rm -rf /etc/localtime
+diff -urN catalyst-2.0.12.2-a/targets/support/unmerge.sh catalyst-2.0.12.2-b/targets/support/unmerge.sh
+--- catalyst-2.0.12.2-a/targets/support/unmerge.sh	2012-12-04 20:48:43.000000000 +0000
++++ catalyst-2.0.12.2-b/targets/support/unmerge.sh	2013-01-28 20:24:16.021728409 +0000
+@@ -1,7 +1,81 @@
+ #!/bin/bash
+ 
++[ -n "${TERM}" ] && export TERM='xterm'
++
  source /tmp/chroot-functions.sh
  
 +update_env_settings
@@ -173,7 +155,7 @@ diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-c/targets/s
 +# -------------------------------------------------------------------------
 +
 +# delete the line which contains PORTDIR_OVERLAY in /etc/make.conf (this file is provided with devtools)
-+sed -i -e '/PORTDIR_OVERLAY/d' /etc/make.conf
++sed -i -e '/PORTDIR_OVERLAY/d' /etc/make.conf /etc/portage/make.conf
 +
 +# =========================================================================
 +# =========================================================================
@@ -182,3 +164,4 @@ diff -urN catalyst-2.0.6-a/targets/support/unmerge.sh catalyst-2.0.6-c/targets/s
  run_merge -C ${clst_packages}
  
  exit 0
++

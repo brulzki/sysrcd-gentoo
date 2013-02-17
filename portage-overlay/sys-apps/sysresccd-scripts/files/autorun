@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # Distributed under the terms of the GNU General Public License v2
 # The original bash version of autorun was developed by Pierre Dorgueil in 2003
 # The current python implementation has been developed by Francois Dupoux in 2008
@@ -27,7 +27,7 @@
 import sys, os, commands, re
 
 # ----------------------- autorun default parameters --------------------------
-pidfile='/var/run/autorun.pid'
+pidfile='/run/autorun.pid'
 basedir='/var/autorun'
 autorunlog=basedir+'/log'
 autorunmnt=basedir+'/mnt'

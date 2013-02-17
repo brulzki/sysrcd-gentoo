@@ -5,7 +5,7 @@ source /sbin/livecd-functions.sh
 depend()
 {
 	before xdm autorun tigervnc
-	after pwgen sshd portmap hald
+	after pwgen sshd portmap
 }
 
 start()
@@ -21,6 +21,7 @@ start()
 	mkdir -p /var/log/samba
 	mkdir -p /var/cache/revdep-rebuild
 	mkdir -p /var/run/dhcp
+	mkdir -p /var/lib/misc
 	chown dhcp:dhcp /var/run/dhcp
 
 	# ---- disable screensaver in the console ----
@@ -129,10 +130,6 @@ start()
 	then
 		cat /proc/config.gz | gzip -d > /root/kernel-$(uname -r).conf
 	fi
-
-	# ---- fix inittab for serial consoles ----
-	livecd_fix_inittab
-	/sbin/telinit q &>/dev/null
 
 	# ---- mount tmpfs (important for backing store) ----
 	mount -t tmpfs tmpfs /tmp

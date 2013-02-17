@@ -16,6 +16,10 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 # change the default shell
 chsh -s /bin/zsh root
 
+# fix permissions
+chown root:root /root -R
+chmod 700 /root /root
+
 # Remove python precompiled files
 find /usr/lib -name "*.py?" -exec rm -f {} \; >/dev/null 2>&1
 
@@ -30,15 +34,20 @@ if [ -f /usr/bin/freshclam ]
 then
 	sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
 	chown clamav:clamav /var/log/clamav
-	chown clamav:clamav /var/run/clamav
 	chown clamav:clamav /var/lib/clamav
 	chown clamav:clamav /var/lib/clamav/*
 	/usr/bin/freshclam
 fi
 
-# disable DHCP by default in autoconfig
-sed -i -e 's/ewarn "Skipping DHCP broadcast detection as requested on boot commandline ..."//' /etc/init.d/autoconfig
-sed -i -e 's/DHCP="yes"/DHCP="no"/' /etc/init.d/autoconfig
+# force the "cdroot" command line argument in livecd-functions.sh 
+sed -i -e 's!CMDLINE=$(cat /proc/cmdline)!CMDLINE="$(cat /proc/cmdline) cdroot"!' /sbin/livecd-functions.sh
+
+# change autoconfig output message
+sed -i -e 's!as requested on command line!!g' /etc/init.d/autoconfig
+sed -i -e 's!disabled via cmdline!disabled!g' /etc/init.d/autoconfig
+
+# remove dependency on xdm in /etc/init.d/autoconfig
+sed -i -e 's!svcs="${svcs} $(check_svc ${X11} xdm)"!!g' /etc/init.d/autoconfig
 
 # running hwsetup disturbs the speakup, so run "hwsetup -f" when speakup is used
 sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF "speakup=" \&\& speakupopt=" -f" ; \[ -x /usr/sbin/hwsetup \] \&\& hwsetup ${speakupopt}!g' /etc/init.d/autoconfig
@@ -49,40 +58,38 @@ sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF 
 # make ssh-keygen silent in the sshd initscript
 sed -i -e 's!ssh-keygen -t!ssh-keygen -q -t!g' /etc/init.d/sshd
 
-# disable ALSA sound by default in autoconfig
-sed -i -e 's/GPM="yes"/GPM="no"/' /etc/init.d/autoconfig
-sed -i -e 's/ALSA="yes"/ALSA="no"/' /etc/init.d/autoconfig
-sed -i -e 's/NFS="yes"/NFS="no"/' /etc/init.d/autoconfig
-sed -i -e 's/PCMCIA="yes"/PCMCIA="no"/' /etc/init.d/autoconfig
-sed -i -e 's/Skipping ALSA detection as requested on command line .../Skipping ALSA detection .../' /etc/init.d/autoconfig
+# disable DHCP by default in autoconfig
+sed -i -e 's/DHCP="yes"/DHCP="no"/' /etc/conf.d/autoconfig
 
-# /sbin/livecd-functions.sh expect 'cdroot' in /proc/cmdline (we removed cdroot)
-sed -i -e 's!for x in ${CMDLINE}!for x in ${CMDLINE} cdroot!g' /sbin/livecd-functions.sh
+# disable ALSA and sound related stuff in autoconfig
+sed -i -e 's/GPM="yes"/GPM="no"/' /etc/conf.d/autoconfig
+sed -i -e 's/ALSA="yes"/ALSA="no"/' /etc/conf.d/autoconfig
+sed -i -e 's/NFS="yes"/NFS="no"/' /etc/conf.d/autoconfig
+sed -i -e 's/PCMCIA="yes"/PCMCIA="no"/' /etc/conf.d/autoconfig
+
+# remove services which autoconfig attempts to start
+rm -f /etc/init.d/unmute
+rm -f /etc/init.d/xdm
 
 # avoid warning
 echo "rc_sys=''" >> /etc/rc.conf
-
-# remove warnings about files with a modification time in the future!
-[ -f /etc/init.d/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /etc/init.d/depscan.sh
-[ -f /sbin/depscan.sh ] && sed -i -e 's!if \[\[ ${clock_screw} == 1 \]\]!if \[\[ ${clock_screw} == 2 \]\]!g' /sbin/depscan.sh
-[ -f /etc/init.d/savecache ] && sed -i -e 's!ewarn "WARNING: clock skew detected!#ewarn "WARNING: clock skew detected!g' /etc/init.d/savecache
 
 # don't overwrite /proc/sys/kernel/printk in /etc/init.d/autoconfig
 # http://www.sysresccd.org/forums/viewtopic.php?p=5800
 sed -i -r -e 's!echo "[0-9]" > /proc/sys/kernel/printk!!g' /etc/init.d/autoconfig
 
+# use bashlogin in /etc/inittab
+sed -i -e 's!/sbin/mingetty --noclear --autologin root tty${x}!/sbin/agetty -nl /bin/bashlogin 38400 tty${x} linux!g' /etc/init.d/fixinittab
+
 # fix /sbin/livecd-functions.sh that fixes inittab
 # http://www.sysresccd.org/forums/viewtopic.php?t=2040&postdays=0&postorder=asc&start=15
-sed -i -e 's!s0:12345:respawn:/sbin/agetty -nl /bin/bashlogin!s0:12345:respawn:/sbin/agetty -L -nl /bin/bashlogin!g' /sbin/livecd-functions.sh
+#sed -i -e 's!s0:12345:respawn:/sbin/agetty -nl /bin/bashlogin!s0:12345:respawn:/sbin/agetty -L -nl /bin/bashlogin!g' /sbin/livecd-functions.sh
 
 # prevent the firmware extraction from displaying warnings when the clock is wrong
 sed -i -e 's!tar xjf /lib/firmware.tar.bz2!tar xjfm /lib/firmware.tar.bz2!g' /etc/init.d/autoconfig
 
 # fix a bug in the default mtools configuration file
 sed -i -e 's!SAMPLE FILE!#SAMPLE FILE!g' /etc/mtools/mtools.conf
-
-# don't use fbdev as the default xorg driver since framebuffer is disabled
-sed -i -e 's![ -z "${XMODULE}" ] && XMODULE="fbdev"![ -z "${XMODULE}" ] && XMODULE="vesa"!g' /usr/sbin/mkxf86config.sh
 
 # prevent sshd from complaining
 touch /var/log/lastlog
@@ -245,6 +252,7 @@ if [ -d /usr/share/openrc ]
 then
 	# enable services
 	/sbin/rc-update add lvm boot
+	/sbin/rc-update add fixinittab default
 	/sbin/rc-update add sshd default
 	/sbin/rc-update add sysresccd default
 	/sbin/rc-update add autorun default
@@ -252,14 +260,12 @@ then
 	/sbin/rc-update add tigervnc default
 	/sbin/rc-update add dostartx default
 	/sbin/rc-update add dbus default
-	/sbin/rc-update add hald default
 	/sbin/rc-update add NetworkManager default
 	/sbin/rc-update add load-fonts-keymaps default
 	/sbin/rc-update add consolekit default
 
 	# remove services
 	/sbin/rc-update del urandom boot
-	/sbin/rc-update del consolefont boot
 	/sbin/rc-update del termencoding boot
 	/sbin/rc-update del keymaps boot
 	/sbin/rc-update del bootmisc boot
@@ -275,14 +281,13 @@ then
 	rm -f /etc/init.d/checkroot
 	rm -f /etc/init.d/fsck
 
-	# remove network servics (replaced with netconfig2)
+	# remove network services (replaced with netconfig2)
 	rm -f /etc/init.d/net.*
 	rm -f /etc/init.d/network
 	rm -f /etc/init.d/netmount
 	rm -f /etc/init.d/staticroute
 
 	# don't unmount /livemnt/* filesystems in localmount and mount-ro
-	[ -f /etc/init.d/localmount ] && sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/localmount
 	[ -f /etc/init.d/mount-ro ] && sed -i -e "s!/libexec!/libexec|/livemnt/.*!g" /etc/init.d/mount-ro
 	[ -f /etc/init.d/localmount ] && sed -i -e "s!# Mount local filesystems!return 0 #!" /etc/init.d/localmount
 
@@ -290,7 +295,6 @@ then
 	[ -f /etc/init.d/mtab ] && sed -i -e 's!need root!!g' /etc/init.d/mtab
 	[ -f /etc/init.d/localmount ] && sed -i -e 's!need fsck!!g' /etc/init.d/localmount
 	[ -f /etc/init.d/root ] && sed -i -e 's!need fsck!!g' /etc/init.d/root
-	[ -f /etc/init.d/xdm ] && sed -i -e 's!need hald!use hald!g' /etc/init.d/xdm
 
 	# unpack firmwares
 	if [ -e /lib/firmware.tar.bz2 ]
