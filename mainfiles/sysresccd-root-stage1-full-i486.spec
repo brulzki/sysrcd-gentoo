@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130210
+snapshot: 20130216
 source_subpath: default/stage4-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -207,18 +207,18 @@ livecd/packages:
 	net-misc/wget
 	net-misc/whois
 	net-misc/wput
-	net-wireless/atmel-firmware
+	sys-firmware/atmel-firmware
 	net-wireless/b43-fwcutter
 	net-wireless/bcm43xx-fwcutter
-	net-wireless/ipw2100-firmware
-	net-wireless/ipw2200-firmware
+	sys-firmware/ipw2100-firmware
+	sys-firmware/ipw2200-firmware
 	net-wireless/iw
 	net-wireless/madwifi-ng-tools
 	net-wireless/rfkill
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
-	net-wireless/zd1201-firmware
-	net-wireless/zd1211-firmware
+	sys-firmware/zd1201-firmware
+	sys-firmware/zd1211-firmware
 	sys-apps/acl
 	sys-apps/attr
 	sys-apps/cciss_vol_status

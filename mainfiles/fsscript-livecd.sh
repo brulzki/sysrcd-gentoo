@@ -29,6 +29,12 @@ find /etc -name "._cfg*" -exec rm -f {} \; >/dev/null 2>&1
 # remove warning from clock service
 [ -f /etc/conf.d/clock ] && sed -i -e 's:#TIMEZONE="Factory":TIMEZONE="Europe/London":g' /etc/conf.d/clock
 
+# prevent autoconfig from writing to /etc/conf.d/net
+sed -i -e 's/if ! yesno "${DHCP}"/if false/' /etc/init.d/autoconfig
+
+# fix problem with NetworkManager being inactive
+sed -i -e 's/^#rc_hotplug="\*"/rc_hotplug="!net.*"/' /etc/rc.conf
+
 # if clamav is installed fix permissions and update definitions
 if [ -f /usr/bin/freshclam ]
 then

@@ -6,6 +6,14 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.4.1 (2013-02-21)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.32 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.7.9 (altker32 + altker64)
+* Removed support for "nonm" network boot option as NetworkManager is required
+* Fixed network configuration options that can be passed to the boot command line
+
+-------------------------------------------------------------------------------
 3.4.0 (2013-02-18)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.30 (rescuecd + rescue64)
