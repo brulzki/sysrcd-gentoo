@@ -82,6 +82,7 @@ dev-lang/ruby
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
 <sys-cluster/drbd-8.4.3
+>=dev-libs/libxml2-2.9.0
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
 

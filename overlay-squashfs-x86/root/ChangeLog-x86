@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.4.2 (2013-03-05)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.35 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.7.10 (altker32 + altker64)
+* Updated fsarchiver to 0.6.17 (bugfix release and minor feature enhancement)
+* Fixed support for booting via NBD which was in conflict with Network-Manager
+* Added bootinfoscript which writes reports provinding info about the system
+
+-------------------------------------------------------------------------------
 3.4.1 (2013-02-21)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.32 (rescuecd + rescue64)

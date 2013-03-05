@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130216
+snapshot: 20130301
 source_subpath: default/stage4-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -216,7 +216,6 @@ livecd/packages:
 	sys-apps/x86info
 	sys-auth/pambase
 	sys-block/aic94xx-firmware
-	sys-block/eject
 	sys-block/gpart
 	sys-block/mbuffer
 	sys-block/mpt-status

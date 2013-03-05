@@ -1266,6 +1266,10 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
         mkdir -p "${NEWROOT}${curdir}"
     done
 
+    # avoid zsh error message
+    chmod 700 ${NEWROOT}/root/.zsh
+
+    # keyboard configuration
     if [ -e /etc/sysconfig/keyboard ]
     then
         mkdir -p ${NEWROOT}/etc/sysconfig/
@@ -1290,70 +1294,38 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
     # prevent fbcon module from loading (console could become unusable)
     echo "blacklist fbcon" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
 
-    # write network configuration in /etc/conf.d/net so that Network-Manager preserves it
-    touch ${NEWROOT}/etc/conf.d/net
+    # write network configuration in /etc/conf.d/net so that Network-Manager preserves current addresses
+    > ${NEWROOT}/etc/conf.d/net
     ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
     for cureth in ${ethlist}
     do
         curmac="$(/sbin/ifconfig ${cureth} | grep 'HWaddr' | grep '^eth[0-9]*' | awk '{print $5}')"
+        curip4=$(ip -o -4 addr show dev ${cureth} | awk '{print $4}')
+        echo "Interface [${cureth}] has macaddr=[${curmac}] and ipv4=[${curip4}]"
 
-	curconfig="dhcp" # Get DHCP address by default
+        # Preserve IP address currently configured if there is one (required for NBD)
+        if echo "${curip4}" | grep -q -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/[0-9]{1,2}"
+        then
+            curconfig="${curip4}"
+        elif [ -n "${NODHCP}" ] # Do not use DHCP if explicitly disabled
+        then
+            curconfig="null"
+        else # Get DHCP address by default
+            curconfig="dhcp"
+        fi
 
-	if [ -n "${NODHCP}" ]
-	then
-	    curconfig="null"
-	fi
-
-	if [ -n "${SETETHX}" ]
-	then
-	    curconfig=$(ip -o -4 addr show dev ${cureth} | awk '{print $4}')
-	fi
-
-        for x in $(cat /proc/cmdline)
-	do
-            if echo "${x}" | grep -q -E "${cureth}=[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
-	    then
-	        curconfig=$(ip -o -4 addr show dev ${cureth} | awk '{print $4}')
-	    fi
-        done
-	
-	echo "mac_${cureth}=\"${curmac}\"" >> ${NEWROOT}/etc/conf.d/net
+        echo "mac_${cureth}=\"${curmac}\"" >> ${NEWROOT}/etc/conf.d/net
         echo "config_${cureth}=\"${curconfig}\"" >> ${NEWROOT}/etc/conf.d/net
-	echo "" >> ${NEWROOT}/etc/conf.d/net
     done
     #echo "=================================="
     #ifconfig -a
     #echo "=================================="
-    #cat ${NEWROOT}/etc/conf.d/net
+    echo "Writing network configuration in ${NEWROOT}/etc/conf.d/net:"
+    echo "-----------------------------------------------------------"
+    cat ${NEWROOT}/etc/conf.d/net
+    echo "-----------------------------------------------------------"
     #echo "=================================="
     #read -t 90 -p 'Press enter to continue: ' key
-
-    # if generic ethx option used: write config in /etc/conf.d/net so that Network-Manager can use it
-    #if [ -n "${SETETHX}" ]
-    #then
-    #   touch ${NEWROOT}/etc/conf.d/net
-    #   ethlist="$(/sbin/ifconfig -a | grep 'eth' | awk '{print $1}' | busybox xargs)" # (eg: eth0 eth1 eth2)
-    #   for cureth in ${ethlist}
-    #   do
-    #       echo "config_${cureth}=\"${SETETHX}\"" >> ${NEWROOT}/etc/conf.d/net
-    #       echo "auto_${cureth}=\"true\"" >> ${NEWROOT}/etc/conf.d/net
-    #   done
-    #fi
-    #
-    # if specific eth0/eth1/eth2 option used: write config in /etc/conf.d/net so that Network-Manager can use it
-    #if cat /proc/cmdline | grep -q -E 'eth[0-9]{1,2}=[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-    #then
-    #    for x in $(cat /proc/cmdline)
-    #    do
-    #        if echo "${x}" | grep -q -E 'eth[0-9]{1,2}=[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-    #        then
-    #            iface=$(echo ${x} | cut -d= -f1)
-    #            ipaddr=$(echo ${x} | cut -d= -f2)
-    #            echo "config_${iface}=\"${ipaddr}\"" >> ${NEWROOT}/etc/conf.d/net 
-    #            echo "auto_${iface}=\"true\"" >> ${NEWROOT}/etc/conf.d/net
-    #        fi
-    #    done
-    #fi
 
     # manage services
     rm -f ${NEWROOT}/etc/init.d/crypto-loop

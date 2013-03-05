@@ -6,7 +6,6 @@ depend()
 {
 	before xdm autorun
 	after sysresccd
-	#provide net
 }
 
 log_netconfig2()

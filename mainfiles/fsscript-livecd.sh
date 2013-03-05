@@ -16,10 +16,6 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 # change the default shell
 chsh -s /bin/zsh root
 
-# fix permissions
-chown root:root /root -R
-chmod 700 /root /root
-
 # Remove python precompiled files
 find /usr/lib -name "*.py?" -exec rm -f {} \; >/dev/null 2>&1
 
@@ -211,7 +207,11 @@ done
 # update /etc/make.profile
 echo "==> updating /etc/make.profile"
 rm -rf /etc/make.profile
-ln -s ../usr/portage/profiles/default/linux/x86/10.0 /etc/make.profile
+ln -s ../usr/portage/profiles/default/linux/x86/13.0 /etc/make.profile
+
+# fix permissions
+chown root:root /root -R
+chmod 700 /root /root
 
 # update the database for locate
 echo "==> /usr/sbin/updatedb"
