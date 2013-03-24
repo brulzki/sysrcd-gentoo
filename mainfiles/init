@@ -1292,7 +1292,7 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
     done
 
     # prevent fbcon module from loading (console could become unusable)
-    echo "blacklist fbcon" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
+    #echo "blacklist fbcon" >> ${NEWROOT}/etc/modprobe.d/blacklist.conf
 
     # write network configuration in /etc/conf.d/net so that Network-Manager preserves current addresses
     > ${NEWROOT}/etc/conf.d/net
@@ -1314,16 +1314,15 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
             curconfig="dhcp"
         fi
 
-        echo "mac_${cureth}=\"${curmac}\"" >> ${NEWROOT}/etc/conf.d/net
+	echo "mac_${cureth}=\"${curmac}\"" >> ${NEWROOT}/etc/conf.d/net
         echo "config_${cureth}=\"${curconfig}\"" >> ${NEWROOT}/etc/conf.d/net
     done
-    #echo "=================================="
-    #ifconfig -a
-    #echo "=================================="
     echo "Writing network configuration in ${NEWROOT}/etc/conf.d/net:"
     echo "-----------------------------------------------------------"
     cat ${NEWROOT}/etc/conf.d/net
     echo "-----------------------------------------------------------"
+    #echo "=================================="
+    #ifconfig -a
     #echo "=================================="
     #read -t 90 -p 'Press enter to continue: ' key
 

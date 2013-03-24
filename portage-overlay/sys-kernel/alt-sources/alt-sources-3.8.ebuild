@@ -5,7 +5,7 @@ inherit kernel-2 eutils
 S=${WORKDIR}/linux-${KV}
 
 DESCRIPTION="Full sources for the Linux kernel, including gentoo and sysresccd patches."
-SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.7.tar.bz2"
+SRC_URI="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.bz2"
 PROVIDE="virtual/linux-sources"
 HOMEPAGE="http://kernel.sysresccd.org"
 LICENSE="GPL-2"
@@ -15,21 +15,21 @@ IUSE=""
 
 src_unpack()
 {
-	unpack linux-3.7.tar.bz2
-	mv linux-3.7 linux-${KV}
+	unpack linux-3.8.tar.bz2
+	mv linux-3.8 linux-${KV}
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/alt-sources-3.7-01-stable-3.7.10.patch.bz2 || die "alt-sources stable patch failed."
-	epatch ${FILESDIR}/alt-sources-3.7-02-fc17.patch.bz2 || die "alt-sources fedora patch failed."
-	epatch ${FILESDIR}/alt-sources-3.7-03-aufs.patch.bz2 || die "alt-sources aufs patch failed."
-	epatch ${FILESDIR}/alt-sources-3.7-04-reiser4.patch.bz2 || die "alt-sources reiser4 patch failed."
+	epatch ${FILESDIR}/alt-sources-3.8-01-stable-3.8.4.patch.bz2 || die "alt-sources stable patch failed."
+	epatch ${FILESDIR}/alt-sources-3.8-02-fc17.patch.bz2 || die "alt-sources fedora patch failed."
+	epatch ${FILESDIR}/alt-sources-3.8-03-aufs.patch.bz2 || die "alt-sources aufs patch failed."
+	#epatch ${FILESDIR}/alt-sources-3.8-04-reiser4.patch.bz2 || die "alt-sources reiser4 patch failed."
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e "${sedlockdep}" include/linux/lockdep.h
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt342/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt350/" Makefile
 	sed -i -e 's/2.6.$$((40 + $(PATCHLEVEL)))$(EXTRAVERSION)/$(KERNELVERSION)/' Makefile
 }
 

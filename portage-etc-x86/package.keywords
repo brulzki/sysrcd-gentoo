@@ -11,7 +11,7 @@
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
-=www-client/midori-0.4.8* ~*
+=www-client/midori-0.4.9* ~*
 =sys-cluster/drbd-8.4.3* ~*
 =sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
@@ -72,9 +72,11 @@ sys-block/ms-sys ~*
 sys-boot/os-prober ~*
 sys-fs/aufs3 ~*
 sys-fs/aufs-util ~*
+sys-fs/aufs-headers ~*
 sys-kernel/aufs-sources ~*
 net-misc/tigervnc ~*
 x11-drivers/xf86-input-vmmouse ~*
+x11-drivers/xf86-video-intel ~*
 app-emulation/open-vm-tools-kmod ~*
 app-emulation/open-vm-tools ~*
 

@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130301
+snapshot: 20130322
 source_subpath: default/livecd-stage1-i486-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -163,6 +163,7 @@ livecd/unmerge:
 	gnome-base/librsvg
 	media-fonts/unifont
 	dev-libs/gobject-introspection
+	sys-fs/aufs-headers
 
 livecd/empty:
 	/var/cache/revdep-rebuild

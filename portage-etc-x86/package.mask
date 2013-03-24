@@ -10,7 +10,7 @@
 >=sys-kernel/aufs-sources-3.7.999
 >=sys-kernel/linux-headers-3.7.999
 >=sys-kernel/std-sources-3.4.999
->=sys-kernel/alt-sources-3.7.999
+>=sys-kernel/alt-sources-3.8.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
@@ -44,6 +44,7 @@ x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
 dev-lang/ruby
+dev-lang/lua
 
 # modified packages
 <gnome-extra/nm-applet-0.9.6.4
@@ -69,8 +70,8 @@ dev-lang/ruby
 >sys-block/parted-3.1-r4
 <sys-fs/btrfs-progs-0.20_rc1_p56
 >sys-fs/btrfs-progs-0.20_rc1_p56
->www-client/midori-0.4.8
-<www-client/midori-0.4.7
+>www-client/midori-0.4.9
+<www-client/midori-0.4.9
 <sys-apps/gptfdisk-0.8.5
 >sys-apps/gptfdisk-0.8.5
 <app-cdr/cdw-0.7.1
@@ -87,7 +88,9 @@ dev-lang/ruby
 >=dev-libs/nss-3.13
 
 # xorg
+>x11-drivers/xf86-video-intel-2.20.99
 <x11-base/xorg-server-1.13.1
 >x11-base/xorg-server-1.13.1
 <x11-base/xorg-drivers-1.13
 >x11-base/xorg-drivers-1.13
+

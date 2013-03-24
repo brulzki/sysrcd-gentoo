@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130301
+snapshot: 20130322
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -38,7 +38,7 @@ boot/kernel/rescuecd/packages:
 	sys-fs/nilfs-utils
 	sys-block/open-iscsi
 	sys-block/iscsitarget
-	sys-fs/aufs3
+	sys-fs/aufs-util
 
 livecd/unmerge:
 	app-admin/eselect-opengl
@@ -165,6 +165,7 @@ livecd/unmerge:
 	#dev-lang/nasm
 	#sys-kernel/std-sources
 	#sys-power/iasl
+	sys-fs/aufs-headers
 
 livecd/empty:
 	/var/cache/revdep-rebuild

@@ -200,7 +200,7 @@ check_sizeof_dev()
 check_disk_freespace()
 {
 	freespace=$(\df -m -P ${1} | grep " ${1}$" | tail -n 1 | awk '{print $4}')
-	sysrcdspc=$(\du -csm ${1}/{sysrcd.dat,bootdisk,bootprog,isolinux,ntpasswd,usb_inst} 2>/dev/null | grep total$ | awk '{print $1}')
+	sysrcdspc=$(\du -csm ${1}/{sysrcd.dat,bootdisk,bootprog,isolinux,ntpasswd,usb_inst} 2>/dev/null | awk 'END{print $1}')
 	realfreespace=$((freespace+sysrcdspc))
 	echo "DEBUG: diskspace($1): freespace=${freespace}, sysrcdspc=${sysrcdspc}, realfreespace=${realfreespace}"
 	echo "Free space on ${1} is ${realfreespace}MB"

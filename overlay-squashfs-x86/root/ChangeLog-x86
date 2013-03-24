@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.5.0 (2013-03-25)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.37 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.8.4 (altker32 + altker64)
+* Updated GParted to 0.15.0 and e2fsprogs to 1.42.7
+
+-------------------------------------------------------------------------------
 3.4.2 (2013-03-05)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.35 (rescuecd + rescue64)
