@@ -21,6 +21,7 @@
 >www-client/firefox-bin-17.9
 <sys-boot/grub-0.97-r13
 >sys-boot/grub-0.97-r13
+<www-client/midori-0.4.9
 
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
@@ -70,10 +71,6 @@ dev-lang/lua
 >sys-block/parted-3.1-r4
 <sys-fs/btrfs-progs-0.20_rc1_p56
 >sys-fs/btrfs-progs-0.20_rc1_p56
->www-client/midori-0.4.9
-<www-client/midori-0.4.9
-<sys-apps/gptfdisk-0.8.5
->sys-apps/gptfdisk-0.8.5
 <app-cdr/cdw-0.7.1
 >app-cdr/cdw-0.7.1
 
@@ -88,9 +85,8 @@ dev-lang/lua
 >=dev-libs/nss-3.13
 
 # xorg
->x11-drivers/xf86-video-intel-2.20.99
-<x11-base/xorg-server-1.13.1
->x11-base/xorg-server-1.13.1
+<x11-base/xorg-server-1.13.4
+>x11-base/xorg-server-1.13.4
 <x11-base/xorg-drivers-1.13
 >x11-base/xorg-drivers-1.13
 

@@ -93,6 +93,9 @@ sed -i -e 's!tar xjf /lib/firmware.tar.bz2!tar xjfm /lib/firmware.tar.bz2!g' /et
 # fix a bug in the default mtools configuration file
 sed -i -e 's!SAMPLE FILE!#SAMPLE FILE!g' /etc/mtools/mtools.conf
 
+# remove call to gettext which is not provided
+sed -i -e 's!gettext!echo!g' /usr/bin/ecryptfs-mount-private
+
 # prevent sshd from complaining
 touch /var/log/lastlog
 

@@ -1,15 +1,16 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.13.1.ebuild,v 1.7 2012/12/30 16:18:01 ago Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.13.4.ebuild,v 1.2 2013/04/17 23:24:01 chithanh Exp $
 
-EAPI=4
+EAPI=5
 
 XORG_DOC=doc
 inherit xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 DESCRIPTION="X.Org X servers"
-KEYWORDS="alpha amd64 ~arm ~hppa ia64 ~mips ~ppc ~ppc64 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd"
+SLOT="0/${PV}"
+KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux +suid tslib +udev"
@@ -71,7 +72,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/randrproto-1.4.0
 	>=x11-proto/recordproto-1.13.99.1
 	>=x11-proto/renderproto-0.11
-	>=x11-proto/resourceproto-1.0.2
+	>=x11-proto/resourceproto-1.2.0
 	>=x11-proto/scrnsaverproto-1.1
 	>=x11-proto/trapproto-3.4.3
 	>=x11-proto/videoproto-2.2.2
@@ -209,10 +210,8 @@ pkg_postinst() {
 		ewarn "of module version mismatch errors, this is your problem."
 
 		echo
-		ewarn "You can generate a list of all installed packages in the x11-drivers"
+		ewarn "You can rebuild all installed packages in the x11-drivers"
 		ewarn "category using this command:"
-		ewarn "	emerge portage-utils; qlist -I -C x11-drivers/"
-		ewarn "or using sets from portage-2.2:"
 		ewarn "	emerge @x11-module-rebuild"
 	fi
 

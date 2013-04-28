@@ -12,6 +12,7 @@
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
 =www-client/midori-0.4.9* ~*
+=www-client/midori-0.5.0* ~*
 =sys-cluster/drbd-8.4.3* ~*
 =sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
