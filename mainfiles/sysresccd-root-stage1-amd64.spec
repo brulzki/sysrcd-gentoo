@@ -3,8 +3,8 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130424
-source_subpath: default/stage3-amd64-20121210
+snapshot: 20130508
+source_subpath: default/stage3-amd64-20130425
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -23,4 +23,5 @@ livecd/packages:
 	sys-devel/crossdev
 	sys-devel/gettext
 	sys-apps/ethtool
+	sys-devel/bc
 

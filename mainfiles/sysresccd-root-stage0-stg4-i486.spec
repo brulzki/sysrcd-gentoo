@@ -3,8 +3,8 @@ version_stamp: full
 target: stage4
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130424
-source_subpath: default/stage3-i486-20121213
+snapshot: 20130508
+source_subpath: default/stage3-i486-20130423
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 

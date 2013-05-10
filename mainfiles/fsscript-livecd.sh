@@ -31,14 +31,13 @@ sed -i -e 's/if ! yesno "${DHCP}"/if false/' /etc/init.d/autoconfig
 # fix problem with NetworkManager being inactive
 sed -i -e 's/^#rc_hotplug="\*"/rc_hotplug="!net.*"/' /etc/rc.conf
 
-# if clamav is installed fix permissions and update definitions
+# if clamav is installed fix permissions
 if [ -f /usr/bin/freshclam ]
 then
 	sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
 	chown clamav:clamav /var/log/clamav
 	chown clamav:clamav /var/lib/clamav
 	chown clamav:clamav /var/lib/clamav/*
-	/usr/bin/freshclam
 fi
 
 # force the "cdroot" command line argument in livecd-functions.sh 
@@ -94,7 +93,7 @@ sed -i -e 's!tar xjf /lib/firmware.tar.bz2!tar xjfm /lib/firmware.tar.bz2!g' /et
 sed -i -e 's!SAMPLE FILE!#SAMPLE FILE!g' /etc/mtools/mtools.conf
 
 # remove call to gettext which is not provided
-sed -i -e 's!gettext!echo!g' /usr/bin/ecryptfs-mount-private
+sed -i -e 's!gettext!echo!g' /usr/bin/ecryptfs-{mount-private,migrate-home,rewrite-file,setup-private,setup-swap,umount-private,verify}
 
 # prevent sshd from complaining
 touch /var/log/lastlog

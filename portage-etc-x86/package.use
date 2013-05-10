@@ -92,5 +92,6 @@ virtual/python-argparse python_targets_python3_2
 dev-python/pyxattr python_targets_python3_2
 app-backup/rdiff-backup -acl
 net-fs/cifs-utils caps
+net-misc/openvpn plugins lzo pam ssl iproute2 -pkcs11
 net-misc/vpnc gnutls
 

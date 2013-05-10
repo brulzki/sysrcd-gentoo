@@ -1,16 +1,16 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-devel/gcc-4.6
+>=sys-devel/gcc-4.7
 >=sys-libs/glibc-2.16
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.4.999
->=sys-kernel/aufs-sources-3.7.999
->=sys-kernel/linux-headers-3.7.999
+>=sys-kernel/aufs-sources-3.9.999
+>=sys-kernel/linux-headers-3.8.999
 >=sys-kernel/std-sources-3.4.999
->=sys-kernel/alt-sources-3.8.999
+>=sys-kernel/alt-sources-3.9.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
@@ -21,7 +21,6 @@
 >www-client/firefox-bin-17.9
 <sys-boot/grub-0.97-r13
 >sys-boot/grub-0.97-r13
-<www-client/midori-0.4.9
 
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
@@ -80,7 +79,6 @@ dev-lang/lua
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
 <sys-cluster/drbd-8.4.3
->=dev-libs/libxml2-2.9.0
 >=dev-libs/nspr-4.9
 >=dev-libs/nss-3.13
 
