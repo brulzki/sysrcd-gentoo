@@ -21,15 +21,15 @@ src_unpack()
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/alt-sources-3.9-01-stable-3.9.1.patch.bz2 || die "alt-sources stable patch failed."
-	epatch ${FILESDIR}/alt-sources-3.9-02-fc18.patch.bz2 || die "alt-sources fedora patch failed."
+	epatch ${FILESDIR}/alt-sources-3.9-01-stable-3.9.4.patch.bz2 || die "alt-sources stable patch failed."
+	epatch ${FILESDIR}/alt-sources-3.9-02-fc17.patch.bz2 || die "alt-sources fedora patch failed."
 	epatch ${FILESDIR}/alt-sources-3.9-03-aufs.patch.bz2 || die "alt-sources aufs patch failed."
-	#epatch ${FILESDIR}/alt-sources-3.9-04-reiser4.patch.bz2 || die "alt-sources reiser4 patch failed."
+	epatch ${FILESDIR}/alt-sources-3.9-04-reiser4.patch.bz2 || die "alt-sources reiser4 patch failed."
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e "${sedlockdep}" include/linux/lockdep.h
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt360/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt370/" Makefile
 }
 

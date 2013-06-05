@@ -3,7 +3,7 @@ version_stamp: krnl
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130508
+snapshot: 20130601
 source_subpath: default/livecd-stage1-amd64-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -33,5 +33,3 @@ boot/kernel/rescue64/packages:
 	net-wireless/ndiswrapper
 	sys-block/iscsitarget
 	app-emulation/open-vm-tools
-
-

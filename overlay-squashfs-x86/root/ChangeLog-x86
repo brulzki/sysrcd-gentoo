@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.7.0 (2013-06-05)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.47 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.9.4 (altker32 + altker64)
+* Downgraded gcc to 4.4 in order to produce smaller binaries and save space
+* Fixed crash when booting from NBD (Many thanks to Gernot for the fix)
+* Added sys-fs/safecopy for recovery from damaged (io-errors) devices or files
+
+-------------------------------------------------------------------------------
 3.6.0 (2013-05-10)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.44 (rescuecd + rescue64)

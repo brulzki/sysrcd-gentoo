@@ -8,7 +8,8 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE="jfs xfs reiserfs reiser4 hfs +btrfs +fat +ntfs -vmfs"
 
-RDEPEND="${common_depends}
+DEPEND="
+	dev-util/pkgconfig
 	>=sys-fs/e2fsprogs-1.41.4
 	fat? ( sys-fs/dosfstools )
 	ntfs? ( sys-fs/ntfs3g )
@@ -19,7 +20,6 @@ RDEPEND="${common_depends}
 	btrfs? ( sys-fs/btrfs-progs )
 	xfs? ( sys-fs/xfsprogs )
 	vmfs? ( sys-block/vmfs-tools )"
-DEPEND=""
 
 src_unpack()
 {
@@ -31,7 +31,6 @@ src_compile()
 {
 	local myconf
 	myconf="${myconf} --enable-extfs --enable-ncursesw"
-	use xfs && myconf="${myconf} --enable-xfs"
 	use reiserfs && myconf="${myconf} --enable-reiserfs"
 	use reiser4 && myconf="${myconf} --enable-reiser4"
 	use btrfs && myconf="${myconf} --enable-btrfs"

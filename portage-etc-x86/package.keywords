@@ -11,8 +11,7 @@
 =sys-libs/e2fsprogs-libs-1.42* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
-=www-client/midori-0.4.9* ~*
-=www-client/midori-0.5.0* ~*
+=www-client/midori-0.5* ~*
 =sys-cluster/drbd-8.4.3* ~*
 =sys-apps/udevil-0.2.9 ~*
 =x11-misc/spacefm-0.7.8* ~*
@@ -21,6 +20,7 @@
 =app-misc/tmux-1.6* ~*
 =net-misc/pssh-2.3* ~*
 =sys-devel/libtool-2.4.2* ~*
+=sys-apps/netplug-1.2.9.2* ~*
 =dev-libs/vala-common-0.18* ~*
 =dev-lang/vala-0.18* ~*
 =app-arch/star-1.5.2* ~*

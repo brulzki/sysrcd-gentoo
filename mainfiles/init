@@ -1217,7 +1217,10 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
         sysresccd_panic "Fatal error: cannot mount tmp filesystem on ${TFTPBOOT_MEM}"
     fi
 
-    if ! mount -t aufs none ${TFTPBOOT_DIR} -o dirs=${TFTPBOOT_MEM}=rw:${BOOTPATH}=ro
+    # 7. create writable /tftpboot directory based on ${BOOTPATH} only if it has been mounted
+    AUFSBRANCHES="${TFTPBOOT_MEM}=rw"
+    cat /proc/mounts | awk '{print $2}' | grep -q "^${BOOTPATH}$" && AUFSBRANCHES="${AUFSBRANCHES}:${BOOTPATH}=ro"
+    if ! mount -t aufs none ${TFTPBOOT_DIR} -o dirs=${AUFSBRANCHES}
     then
         bad_msg "Cannot prepare ${TFTPBOOT_DIR} for pxebootsrv"
     fi
@@ -1238,7 +1241,7 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
         done
     fi
 
-    # 7. move filesystems mount points to the newroot
+    # 8. move filesystems mount points to the newroot
     for mntdir in ${BOOTPATH} ${SQUASHFSMNT} ${BACKSTORE_MNT} ${BACKSTORE_MEM} ${ISOSTORE} ${TFTPBOOT_MEM} ${MNTSEXTRA}
     do
         targetdir="${NEWROOT}/livemnt/${mntdir}"
