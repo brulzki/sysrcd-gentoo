@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20130601
+snapshot: 20130701
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -93,6 +93,7 @@ livecd/packages:
 	app-portage/eix
 	app-portage/gentoolkit
 	app-portage/mirrorselect
+	app-portage/portage-utils
 	app-shells/bash
 	app-shells/ksh
 	app-shells/tcsh
@@ -226,6 +227,7 @@ livecd/packages:
 	sys-block/parted
 	sys-block/partimage
 	sys-block/scsiadd
+	sys-block/whdd
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r13
 	=sys-boot/grub-2.00-r3

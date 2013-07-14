@@ -25,6 +25,7 @@
 =dev-lang/vala-0.18* ~*
 =app-arch/star-1.5.2* ~*
 sys-fs/fuse-exfat ~*
+sys-block/whdd ~*
 app-arch/pixz ~*
 sys-fs/zerofree ~*
 app-admin/keepass ~*
@@ -48,7 +49,6 @@ sys-fs/nilfs-utils ~*
 sys-apps/gptfdisk ~*
 sys-apps/memtester ~*
 app-forensics/afflib ~*
-x11-misc/xdg-user-dirs ~*
 net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*

@@ -82,10 +82,6 @@ sed -i -r -e 's!echo "[0-9]" > /proc/sys/kernel/printk!!g' /etc/init.d/autoconfi
 # use bashlogin in /etc/inittab
 sed -i -e 's!/sbin/mingetty --noclear --autologin root tty${x}!/sbin/agetty -nl /bin/bashlogin 38400 tty${x} linux!g' /etc/init.d/fixinittab
 
-# fix /sbin/livecd-functions.sh that fixes inittab
-# http://www.sysresccd.org/forums/viewtopic.php?t=2040&postdays=0&postorder=asc&start=15
-#sed -i -e 's!s0:12345:respawn:/sbin/agetty -nl /bin/bashlogin!s0:12345:respawn:/sbin/agetty -L -nl /bin/bashlogin!g' /sbin/livecd-functions.sh
-
 # prevent the firmware extraction from displaying warnings when the clock is wrong
 sed -i -e 's!tar xjf /lib/firmware.tar.bz2!tar xjfm /lib/firmware.tar.bz2!g' /etc/init.d/autoconfig
 
@@ -132,6 +128,9 @@ if [ -f /usr/bin/startx ]
 then
 	sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
 fi
+
+# fix bug with DHCP and NetworkManager (http://www.sysresccd.org/forums/viewtopic.php?f=24&t=5055)
+sed -i -e '/dhcp-client-identifier/d' /etc/dhcp/dhclient.conf
 
 # for programs that expect syslog
 echo "==> creating /usr/sbin/syslog "

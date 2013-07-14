@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.7.1 (2013-07-15)
+-------------------------------------------------------------------------------
+* Standard kernels is Long-Term-Supported linux-3.4.52 (rescuecd + rescue64)
+* Alternative kernels updated to latest stable 3.9.10 (altker32 + altker64)
+* Enabled CONFIG_X86_X32 in recent kernels to be able to chroot to x32 systems
+
+-------------------------------------------------------------------------------
 3.7.0 (2013-06-05)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.47 (rescuecd + rescue64)

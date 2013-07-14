@@ -25,6 +25,7 @@
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
 >net-libs/webkit-gtk-1.8.3-r200
+>x11-misc/xdg-user-dirs-0.15
 >sys-auth/polkit-0.102
 >x11-libs/gtk+-2.99
 
@@ -78,9 +79,7 @@ dev-lang/lua
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
-<sys-cluster/drbd-8.4.3
->=dev-libs/nspr-4.9
->=dev-libs/nss-3.13
+>=sys-fs/udev-204
 
 # xorg
 <x11-base/xorg-server-1.13.4
