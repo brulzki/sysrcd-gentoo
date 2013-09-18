@@ -9,6 +9,8 @@
 =sys-fs/multipath-tools-0.4.9* ~*
 =www-client/firefox-bin-17* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
+=sys-cluster/glusterfs-3.4* ~*
+=sys-cluster/ceph-0.67* ~*
 =sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
 =www-client/midori-0.5* ~*
@@ -19,6 +21,7 @@
 =sys-apps/lshw-02.16* ~*
 =app-misc/tmux-1.6* ~*
 =net-misc/pssh-2.3* ~*
+=net-misc/remmina-1.0* ~*
 =sys-devel/libtool-2.4.2* ~*
 =sys-apps/netplug-1.2.9.2* ~*
 =dev-libs/vala-common-0.18* ~*
@@ -75,7 +78,6 @@ sys-fs/aufs3 ~*
 sys-fs/aufs-util ~*
 sys-fs/aufs-headers ~*
 sys-kernel/aufs-sources ~*
-net-misc/tigervnc ~*
 x11-drivers/xf86-input-vmmouse ~*
 x11-drivers/xf86-video-intel ~*
 app-emulation/open-vm-tools-kmod ~*

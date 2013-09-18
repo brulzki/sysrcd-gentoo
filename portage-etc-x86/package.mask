@@ -5,12 +5,13 @@
 >=sys-libs/glibc-2.16
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
+>=sys-apps/portage-2.2
 >=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.4.999
->=sys-kernel/aufs-sources-3.9.999
+>=sys-kernel/aufs-sources-3.10.999
 >=sys-kernel/linux-headers-3.8.999
 >=sys-kernel/std-sources-3.4.999
->=sys-kernel/alt-sources-3.9.999
+>=sys-kernel/alt-sources-3.10.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
@@ -26,6 +27,8 @@
 >gnome-extra/polkit-gnome-0.102
 >net-libs/webkit-gtk-1.8.3-r200
 >x11-misc/xdg-user-dirs-0.15
+>sys-apps/shadow-4.1.4.3-r9
+>sys-auth/pambase-20101031
 >sys-auth/polkit-0.102
 >x11-libs/gtk+-2.99
 
@@ -69,16 +72,19 @@ dev-lang/lua
 >app-admin/testdisk-6.13
 <sys-block/parted-3.1-r4
 >sys-block/parted-3.1-r4
-<sys-fs/btrfs-progs-0.20_rc1_p56
->sys-fs/btrfs-progs-0.20_rc1_p56
+<sys-fs/btrfs-progs-0.20_rc1_p358
+>sys-fs/btrfs-progs-0.20_rc1_p358
 <app-cdr/cdw-0.7.1
 >app-cdr/cdw-0.7.1
 
 # fix problems
+>=x11-drivers/xf86-video-intel-2.90
 =app-text/docbook-xml-dtd-4.1.2
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
+>=app-portage/eix-0.26
+>=net-fs/samba-3.6.13
 >=sys-fs/udev-204
 
 # xorg

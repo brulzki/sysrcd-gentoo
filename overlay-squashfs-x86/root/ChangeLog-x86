@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.8.0 (2013-09-18)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.4.62 (rescuecd + rescue64)
+* Alternative kernels: Long-Term-Supported linux-3.10.12 (altker32 + altker64)
+* Added support for Gluster-3.4 filesystem (sys-cluster/glusterfs-3.4.0-r1)
+* Updated btrfs utilities to sys-fs/btrfs-progs-0.20_rc1_p358
+* Updated GParted to 0.16.2 (bug fix release)
+
+-------------------------------------------------------------------------------
 3.7.1 (2013-07-15)
 -------------------------------------------------------------------------------
 * Standard kernels is Long-Term-Supported linux-3.4.52 (rescuecd + rescue64)
