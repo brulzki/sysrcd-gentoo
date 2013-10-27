@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+3.8.1 (2013-10-28)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.4.66 (rescuecd + rescue64)
+* Alternative kernels: Long-Term-Supported linux-3.10.17 (altker32 + altker64)
+* Update filesystem tools: e2fsprogs-1.42.8 + xfsprogs-3.1.11 + xfsdump-3.1.3
+* Updated memtest86+ to verison 5.01 (available in floppy disk boot images)
+* Updated XOrg graphical environment and drivers to xorg-server-1.13.4
+
+-------------------------------------------------------------------------------
 3.8.0 (2013-09-18)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.4.62 (rescuecd + rescue64)

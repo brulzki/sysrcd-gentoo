@@ -96,4 +96,4 @@ net-ftp/lftp ssl gnutls
 net-misc/openvpn plugins lzo pam ssl iproute2 -pkcs11
 app-arch/p7zip rar
 net-misc/vpnc gnutls
-
+sys-libs/talloc python

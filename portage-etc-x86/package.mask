@@ -26,7 +26,7 @@
 # block gtk+-3.x and its deps
 >gnome-extra/polkit-gnome-0.102
 >net-libs/webkit-gtk-1.8.3-r200
->x11-misc/xdg-user-dirs-0.15
+>x11-misc/xdg-user-dirs-0.14
 >sys-apps/shadow-4.1.4.3-r9
 >sys-auth/pambase-20101031
 >sys-auth/polkit-0.102
@@ -84,12 +84,12 @@ dev-lang/lua
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
 >=app-portage/eix-0.26
->=net-fs/samba-3.6.13
+>=net-fs/samba-3.6.99
 >=sys-fs/udev-204
 
 # xorg
-<x11-base/xorg-server-1.13.4
->x11-base/xorg-server-1.13.4
-<x11-base/xorg-drivers-1.13
->x11-base/xorg-drivers-1.13
+<x11-base/xorg-server-1.14.3
+>x11-base/xorg-server-1.14.3
+<x11-base/xorg-drivers-1.14
+>x11-base/xorg-drivers-1.14
 

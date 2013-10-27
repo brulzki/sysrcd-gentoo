@@ -1,16 +1,18 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.13.4.ebuild,v 1.2 2013/04/17 23:24:01 chithanh Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.14.3.ebuild,v 1.10 2013/10/08 05:05:04 ago Exp $
 
 EAPI=5
 
 XORG_DOC=doc
+# avoid maintainer mode, bug #484634
+XORG_EAUTORECONF=yes
 inherit xorg-2 multilib versionator flag-o-matic
 EGIT_REPO_URI="git://anongit.freedesktop.org/git/xorg/xserver"
 
 DESCRIPTION="X.Org X servers"
 SLOT="0/${PV}"
-KEYWORDS="~alpha amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
+KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux"
 
 IUSE_SERVERS="dmx kdrive xnest xorg xvfb"
 IUSE="${IUSE_SERVERS} ipv6 minimal nptl selinux +suid tslib +udev"
@@ -28,7 +30,7 @@ RDEPEND=">=app-admin/eselect-opengl-1.0.8
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXfont-1.4.2
 	>=x11-libs/libxkbfile-1.0.4
-	>=x11-libs/pixman-0.21.8
+	>=x11-libs/pixman-0.27.2
 	>=x11-libs/xtrans-1.2.2
 	>=x11-misc/xbitmaps-1.0.1
 	>=x11-misc/xkeyboard-config-2.4.1-r3
@@ -67,7 +69,7 @@ DEPEND="${RDEPEND}
 	>=x11-proto/fixesproto-5.0
 	>=x11-proto/fontsproto-2.0.2
 	>=x11-proto/glproto-1.4.16
-	>=x11-proto/inputproto-2.1.99.3
+	>=x11-proto/inputproto-2.2.99.1
 	>=x11-proto/kbproto-1.0.3
 	>=x11-proto/randrproto-1.4.0
 	>=x11-proto/recordproto-1.13.99.1
@@ -112,7 +114,8 @@ REQUIRED_USE="!minimal? (
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
 	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
-	"${FILESDIR}"/${PN}-1.13-ia64-asm.patch
+	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
+	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
 )
 
 pkg_pretend() {
@@ -149,11 +152,6 @@ src_configure() {
 		$(use_enable udev config-udev)
 		$(use_with doc doxygen)
 		$(use_with doc xmlto)
-		--disable-aiglx
-		--disable-glx
-		--disable-glx-tls
-		--disable-record
-		--disable-xvfb
 		--enable-libdrm
 		--sysconfdir="${EPREFIX}"/etc/X11
 		--localstatedir="${EPREFIX}"/var
@@ -163,6 +161,11 @@ src_configure() {
 		--without-dtrace
 		--without-fop
 		--with-os-vendor=Gentoo
+		--disable-aiglx
+		--disable-glx
+		--disable-glx-tls
+		--disable-record
+		--disable-xvfb
 	)
 
 	# Xorg-server requires includes from OS mesa which are not visible for
