@@ -8,7 +8,7 @@ xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
 app-cdr/xfburn -hal dbus xfce -gstreamer
 app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
-sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce gtk -debug -gnome -kde
+sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce -gtk -debug -gnome -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
@@ -24,11 +24,11 @@ sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl bash-completion python
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba slang 7zip
-sys-fs/lvm2 lvm1 readline -clvm -cman -gulm -selinux static
+sys-fs/lvm2 lvm1 readline static -clvm -cman -gulm -selinux -thin
 sys-fs/udev extras gudev static-libs
 virtual/udev gudev static-libs
 sys-apps/util-linux crypt unicode loop-aes
-net-fs/samba aio acl readline client server kernel_linux syslog examples -smbclient -ipv6 -cups -netapi -pam -fam
+net-fs/samba aio acl readline client server kernel_linux syslog examples winbind -smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
 sys-fs/progsreiserfs static-libs
 dev-libs/libgpg-error static-libs
@@ -56,7 +56,7 @@ dev-libs/libxml2 python
 net-misc/tigervnc server xorgmodule -opengl
 sys-apps/miscfiles minimal
 net-analyzer/tcpdump -samba
-dev-lang/python -berkdb xml
+dev-lang/python -berkdb xml threads
 x11-apps/xinit minimal
 net-dialup/rp-pppoe -X
 net-analyzer/nmap -gtk -lua
@@ -91,9 +91,11 @@ dev-util/pkgconf pkg-config
 virtual/python-argparse python_targets_python3_2
 dev-python/pyxattr python_targets_python3_2
 app-backup/rdiff-backup -acl
-net-fs/cifs-utils caps
+net-fs/cifs-utils caps -acl
 net-ftp/lftp ssl gnutls
 net-misc/openvpn plugins lzo pam ssl iproute2 -pkcs11
 app-arch/p7zip rar
 net-misc/vpnc gnutls
 sys-libs/talloc python
+sys-apps/hwids udev
+sys-apps/busybox mdev

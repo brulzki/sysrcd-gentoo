@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20131018
+snapshot: 20131210
 source_subpath: default/livecd-stage1-i486-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -33,7 +33,6 @@ boot/kernel/rescuecd/extraversion: i586
 boot/kernel/rescuecd/packages:
 	sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
-	net-wireless/ndiswrapper
 	sys-block/open-iscsi
 	sys-fs/nilfs-utils
 	sys-block/iscsitarget

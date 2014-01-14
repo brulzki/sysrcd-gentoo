@@ -6,9 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.0.0 (2014-01-15)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.25 (rescue32 + rescue64)
+* Alternative kernels: latest stable linux-3.12.7 (altker32 + altker64)
+* Updated XOrg graphical environment and drivers to xorg-server-1.14.3
+* Updated GParted to 0.17.0 (Add support for online resize)
+* Updated btrfs utilities to sys-fs/btrfs-progs-3.12
+
+-------------------------------------------------------------------------------
 3.8.1 (2013-10-28)
 -------------------------------------------------------------------------------
-* Standard kernels: Long-Term-Supported linux-3.4.66 (rescuecd + rescue64)
+* Standard kernels: Long-Term-Supported linux-3.4.66 (rescue32 + rescue64)
 * Alternative kernels: Long-Term-Supported linux-3.10.17 (altker32 + altker64)
 * Update filesystem tools: e2fsprogs-1.42.8 + xfsprogs-3.1.11 + xfsdump-3.1.3
 * Updated memtest86+ to verison 5.01 (available in floppy disk boot images)
@@ -17,7 +26,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.8.0 (2013-09-18)
 -------------------------------------------------------------------------------
-* Standard kernels: Long-Term-Supported linux-3.4.62 (rescuecd + rescue64)
+* Standard kernels: Long-Term-Supported linux-3.4.62 (rescue32 + rescue64)
 * Alternative kernels: Long-Term-Supported linux-3.10.12 (altker32 + altker64)
 * Added support for Gluster-3.4 filesystem (sys-cluster/glusterfs-3.4.0-r1)
 * Updated btrfs utilities to sys-fs/btrfs-progs-0.20_rc1_p358
@@ -26,14 +35,14 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.7.1 (2013-07-15)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.52 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.52 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.9.10 (altker32 + altker64)
 * Enabled CONFIG_X86_X32 in recent kernels to be able to chroot to x32 systems
 
 -------------------------------------------------------------------------------
 3.7.0 (2013-06-05)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.47 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.47 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.9.4 (altker32 + altker64)
 * Downgraded gcc to 4.4 in order to produce smaller binaries and save space
 * Fixed crash when booting from NBD (Many thanks to Gernot for the fix)
@@ -42,28 +51,28 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.6.0 (2013-05-10)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.44 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.44 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.9.1 (altker32 + altker64)
 * Updated GParted to 0.16.1 (another critical bug fix release)
 
 -------------------------------------------------------------------------------
 3.5.1 (2013-04-28)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.42 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.42 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.8.9 (altker32 + altker64)
 * Updated GParted to 0.16.0 (critical bug fix release) and midori to 0.5.0
 
 -------------------------------------------------------------------------------
 3.5.0 (2013-03-25)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.37 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.37 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.8.4 (altker32 + altker64)
 * Updated GParted to 0.15.0 and e2fsprogs to 1.42.7
 
 -------------------------------------------------------------------------------
 3.4.2 (2013-03-05)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.35 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.35 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.7.10 (altker32 + altker64)
 * Updated fsarchiver to 0.6.17 (bugfix release and minor feature enhancement)
 * Fixed support for booting via NBD which was in conflict with Network-Manager
@@ -72,7 +81,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.4.1 (2013-02-21)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.32 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.32 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.7.9 (altker32 + altker64)
 * Removed support for "nonm" network boot option as NetworkManager is required
 * Fixed network configuration options that can be passed to the boot command line
@@ -80,7 +89,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.4.0 (2013-02-18)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.30 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.30 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.7.8 (altker32 + altker64)
 * Updated btrfs-progs filesystem utilities to latest snapshot (0.20_rc1_p56)
 * Disabled power-saving options (CONFIG_SUSPEND and CONFIG_HIBERNATION)
@@ -90,7 +99,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.3.0 (2013-01-24)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.27 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.27 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.7.4 (altker32 + altker64)
 * Fixed "waiting for uevents to be processed" by upgrading udev to 197-r4
 * Updated XFS Filesystem utilities: xfsprogs-3.1.10 + xfsdump-3.1.2
@@ -104,7 +113,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.2.0 (2013-01-07)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.4.24 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.4.24 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.6.11 (altker32 + altker64)
 * Updated Xorg environment and drivers to x11-base/xorg-server-1.13.0-r1
 * Updated LVM (Logical Volume Manager) to sys-fs/lvm2-2.02.95-r4
@@ -116,7 +125,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.1.2 (2012-12-05)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.2.34 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.2.34 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.6.9 (altker32 + altker64)
 * Added ModemManager-0.6.0.0 (Modem and mobile broadband management libraries)
 * Updated sys-fs/btrfs-progs to 0.20_rc1 (btrfs filesystem utilities)
@@ -127,7 +136,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.1.1 (2012-11-06)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.2.33 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.2.33 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.6.6 (altker32 + altker64)
 * Re-introduced support for Reiser4 filesystem in the alternative kernels
 * Fixed "rootpass=MyPaSsWoRd" boot option by updating USE flags for shadow
@@ -137,7 +146,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 3.1.0 (2012-10-29)
 -------------------------------------------------------------------------------
-* Standard kernels is Long-Term-Supported linux-3.2.32 (rescuecd + rescue64)
+* Standard kernels is Long-Term-Supported linux-3.2.32 (rescue32 + rescue64)
 * Alternative kernels updated to latest stable 3.6.4 (altker32 + altker64)
 * Updated btrfs-progs utilities to recent upstream version (git-20121017)
 * Updated e2fsprogs to 1.42.5, GParted to 0.14.0, linux-firmware-20120924
@@ -152,7 +161,7 @@ Manual:.........http://www.sysresccd.org/Online-Manual-EN
 -------------------------------------------------------------------------------
 * Added support for loading extra modules as SRM files (System Rescue Modules)
 * Added support for UEFI booting from the CDRom on x86_64 using GRUB-2.00 (efi.img)
-* Updated standard kernels to Long-Term-Supported linux-3.2.28 (rescuecd + rescue64)
+* Updated standard kernels to Long-Term-Supported linux-3.2.28 (rescue32 + rescue64)
 * Updated alternative kernels to Long-Term-Supported linux-3.4.9 (altker32 + altker64)
 * The rescuecd kernel image has been renamed rescue32 for better consistency
 * Configured isolinux to automatically use the 64bit kernel if CPU is capable

@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20131018
+snapshot: 20131210
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -122,6 +122,7 @@ livecd/packages:
 	dev-libs/libconfig
 	dev-libs/libdnet
 	dev-libs/libisoburn
+	dev-libs/libusb
 	dev-libs/lzo
 	dev-libs/openssl
 	dev-libs/pkcs11-helper
@@ -291,7 +292,7 @@ livecd/packages:
 	sys-block/whdd
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r13
-	=sys-boot/grub-2.00_p5107
+	=sys-boot/grub-2.00_p5107-r2
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober

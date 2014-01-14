@@ -15,7 +15,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="btrfs dmraid fat gtk hfs jfs kde mdadm ntfs reiserfs reiser4 xfs"
+IUSE="btrfs dmraid fat -gtk hfs jfs -kde mdadm ntfs reiserfs reiser4 xfs"
 
 # FIXME: add gpart support
 common_depends=">=sys-block/parted-3.1

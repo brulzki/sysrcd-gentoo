@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20131018
+snapshot: 20131210
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -15,7 +15,7 @@ livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript-livecd.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
-livecd/gk_mainargs: --makeopts="-j5"
+livecd/gk_mainargs: --disklabel --lvm --dmraid --mdadm --luks --makeopts="-j5"
 livecd/type: generic-livecd
 livecd/readme:
 livecd/motd:
@@ -32,13 +32,12 @@ boot/kernel/rescuecd/use: pcmcia usb -X png truetype
 boot/kernel/rescuecd/extraversion: i586
 boot/kernel/rescuecd/packages:
 	sys-apps/sysresccd-scripts
-	app-emulation/open-vm-tools
 	sys-kernel/linux-firmware
-	net-wireless/ndiswrapper
 	sys-fs/nilfs-utils
 	sys-block/open-iscsi
 	sys-block/iscsitarget
 	sys-fs/aufs-util
+	#app-emulation/open-vm-tools
 
 livecd/unmerge:
 	app-admin/eselect-opengl

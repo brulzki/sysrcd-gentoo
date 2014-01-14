@@ -1,17 +1,22 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
+>=sys-fs/eudev-1.0
+>=sys-apps/kmod-14
 >=sys-devel/gcc-4.5
 >=sys-libs/glibc-2.16
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=sys-apps/portage-2.2
+>=sys-apps/systemd-200
+>=sys-fs/static-dev-0.1
+>=sys-apps/openrc-0.12.0
 >=sys-kernel/vanilla-sources-3.0.999
->=sys-kernel/gentoo-sources-3.4.999
+>=sys-kernel/gentoo-sources-3.10.999
 >=sys-kernel/aufs-sources-3.10.999
->=sys-kernel/linux-headers-3.8.999
->=sys-kernel/std-sources-3.4.999
->=sys-kernel/alt-sources-3.10.999
+>=sys-kernel/linux-headers-3.10.999
+>=sys-kernel/std-sources-3.10.999
+>=sys-kernel/alt-sources-3.12.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
@@ -31,6 +36,9 @@
 >sys-auth/pambase-20101031
 >sys-auth/polkit-0.102
 >x11-libs/gtk+-2.99
+>gnome-base/libgnome-keyring-2.99
+>gnome-base/gnome-keyring-2.99
+>gnome-base/gconf-2.99
 
 # packages to avoid
 x11-themes/sound-theme-freedesktop
@@ -47,6 +55,7 @@ x11-misc/xlockmore
 x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
+sys-libs/libcap
 dev-lang/ruby
 dev-lang/lua
 
@@ -55,9 +64,8 @@ dev-lang/lua
 >gnome-extra/nm-applet-0.9.6.4
 <net-misc/modemmanager-0.6.0.0
 >net-misc/modemmanager-0.6.0.0
-<net-misc/networkmanager-vpnc-0.9.6.0
+>net-misc/networkmanager-0.9.6.4
 >net-misc/networkmanager-vpnc-0.9.6.0
-<net-misc/networkmanager-openvpn-0.9.6.0
 >net-misc/networkmanager-openvpn-0.9.6.0
 >net-misc/modemmanager-0.6.0.0
 <sys-fs/squashfs-tools-4.2-r1
@@ -72,24 +80,21 @@ dev-lang/lua
 >app-admin/testdisk-6.13
 <sys-block/parted-3.1-r4
 >sys-block/parted-3.1-r4
-<sys-fs/btrfs-progs-0.20_rc1_p358
->sys-fs/btrfs-progs-0.20_rc1_p358
 <app-cdr/cdw-0.7.1
 >app-cdr/cdw-0.7.1
 
 # fix problems
->=x11-drivers/xf86-video-intel-2.90
 =app-text/docbook-xml-dtd-4.1.2
 >sys-fs/multipath-tools-0.4.9-r3
 >sys-auth/consolekit-0.4.5-r1
 <net-dialup/gtkterm-0.99.6
 >=app-portage/eix-0.26
 >=net-fs/samba-3.6.99
->=sys-fs/udev-204
+>=sys-block/whdd-2.1
 
 # xorg
-<x11-base/xorg-server-1.14.3
->x11-base/xorg-server-1.14.3
+<x11-base/xorg-server-1.14.3-r2
+>x11-base/xorg-server-1.14.3-r2
 <x11-base/xorg-drivers-1.14
 >x11-base/xorg-drivers-1.14
 

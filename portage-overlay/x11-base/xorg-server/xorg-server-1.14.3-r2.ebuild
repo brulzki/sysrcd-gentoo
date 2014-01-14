@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.14.3.ebuild,v 1.10 2013/10/08 05:05:04 ago Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/xorg-server-1.14.3-r2.ebuild,v 1.10 2013/10/22 07:36:05 ago Exp $
 
 EAPI=5
 
@@ -116,6 +116,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
 	"${FILESDIR}"/${PN}-1.12-ia64-fix_inx_outx.patch
 	"${FILESDIR}"/${PN}-1.12-unloadsubmodule.patch
+	"${FILESDIR}"/${PN}-1.12-cve-2013-4396.patch
 )
 
 pkg_pretend() {
@@ -152,6 +153,11 @@ src_configure() {
 		$(use_enable udev config-udev)
 		$(use_with doc doxygen)
 		$(use_with doc xmlto)
+		--disable-aiglx
+		--disable-glx
+		--disable-glx-tls
+		--disable-record
+		--disable-xvfb
 		--enable-libdrm
 		--sysconfdir="${EPREFIX}"/etc/X11
 		--localstatedir="${EPREFIX}"/var
@@ -161,11 +167,6 @@ src_configure() {
 		--without-dtrace
 		--without-fop
 		--with-os-vendor=Gentoo
-		--disable-aiglx
-		--disable-glx
-		--disable-glx-tls
-		--disable-record
-		--disable-xvfb
 	)
 
 	# Xorg-server requires includes from OS mesa which are not visible for
@@ -195,7 +196,7 @@ src_install() {
 	fi
 
 	newinitd "${FILESDIR}"/xdm-setup.initd-1 xdm-setup
-	newinitd "${FILESDIR}"/xdm.initd-9 xdm
+	newinitd "${FILESDIR}"/xdm.initd-10 xdm
 	newconfd "${FILESDIR}"/xdm.confd-4 xdm
 
 	# install the @x11-module-rebuild set for Portage

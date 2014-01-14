@@ -25,9 +25,11 @@
 =net-misc/tigervnc-1.3.0* ~*
 =sys-devel/libtool-2.4.2* ~*
 =sys-apps/netplug-1.2.9.2* ~*
-=dev-libs/vala-common-0.20* ~*
+=dev-libs/vala-common-0.22* ~*
+=dev-lang/vala-0.22* ~*
 =dev-lang/vala-0.20* ~*
 =app-arch/star-1.5.2* ~*
+=sys-apps/kmod-14* ~*
 sys-fs/fuse-exfat ~*
 sys-block/whdd ~*
 app-arch/pixz ~*
@@ -35,7 +37,6 @@ sys-fs/zerofree ~*
 app-admin/keepass ~*
 sys-block/parted ~*
 app-crypt/nwipe ~*
-sys-apps/hwids ~*
 sys-apps/usbutils ~*
 sys-apps/pciutils ~*
 sys-boot/grub ~*
@@ -72,15 +73,12 @@ sys-apps/hdparm ~*
 sys-apps/gdisk ~*
 app-arch/pigz ~*
 sys-process/nmon ~*
-sys-apps/flashrom ~*
 sys-block/ms-sys ~*
 sys-boot/os-prober ~*
 sys-fs/aufs3 ~*
 sys-fs/aufs-util ~*
 sys-fs/aufs-headers ~*
 sys-kernel/aufs-sources ~*
-x11-drivers/xf86-input-vmmouse ~*
-x11-drivers/xf86-video-intel ~*
 app-emulation/open-vm-tools-kmod ~*
 app-emulation/open-vm-tools ~*
 
@@ -95,7 +93,6 @@ sys-kernel/genkernel ~*
 # disk and filesystems
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
-=sys-fs/zfs-fuse-0.7* ~*
 =sys-fs/xfsprogs-3.1* ~*
 =sys-fs/xfsdump-3.1* ~*
 sys-fs/extundelete ~*

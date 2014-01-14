@@ -1,7 +1,7 @@
 #!/sbin/runscript
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License, v2
-# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-9,v 1.1 2012/11/11 01:49:30 chithanh Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-base/xorg-server/files/xdm.initd-10,v 1.1 2013/09/26 15:23:33 axs Exp $
 
 # This is here to serve as a note to myself, and future developers.
 #
@@ -69,16 +69,24 @@ setup_dm() {
 	case "${MY_XDM}" in
 		kdm|kde)
 			EXE=/usr/bin/kdm
-			PIDFILE=/var/run/kdm.pid
+			PIDFILE=/run/kdm.pid
 			;;
 		entrance*)
 			EXE=/usr/sbin/entrance
-			PIDFILE=/var/run/entrance.pid
+			PIDFILE=/run/entrance.pid
 			;;
 		gdm|gnome)
-			EXE=/usr/bin/gdm
+			# gdm-3 and above has different paths
+			if [ -f /usr/sbin/gdm ]; then
+				EXE=/usr/sbin/gdm
+				PIDFILE=/run/gdm/gdm.pid
+				START_STOP_ARGS="--background"
+				AUTOCLEAN_CGROUP="yes"
+			else
+				EXE=/usr/bin/gdm
+				PIDFILE=/run/gdm.pid
+			fi
 			[ "${RC_UNAME}" != "Linux" ] && NAME=gdm-binary
-			PIDFILE=/var/run/gdm.pid
 			;;
 		wdm)
 			EXE=/usr/bin/wdm
@@ -86,22 +94,22 @@ setup_dm() {
 			;;
 		gpe)
 			EXE=/usr/bin/gpe-dm
-			PIDFILE=/var/run/gpe-dm.pid
+			PIDFILE=/run/gpe-dm.pid
 			;;
 		lxdm)
 			EXE=/usr/sbin/lxdm-binary
-			PIDFILE=/var/run/lxdm.pid
+			PIDFILE=/run/lxdm.pid
 			START_STOP_ARGS="--background"
 			;;
 		lightdm)
 			EXE=/usr/sbin/lightdm
-			PIDFILE=/var/run/lightdm.pid
+			PIDFILE=/run/lightdm.pid
 			START_STOP_ARGS="--background"
 			;;
 		*)
 			# first find out if there is such executable
 			EXE="$(command -v ${MY_XDM} 2>/dev/null)"
-			PIDFILE="/var/run/${MY_XDM}.pid"
+			PIDFILE="/run/${MY_XDM}.pid"
 
 			# warn user that he is doing sick things if the exe was not found
 			if [ -z "${EXE}" ]; then
@@ -113,7 +121,7 @@ setup_dm() {
 
 	if ! [ -x "${EXE}" ]; then
 		EXE=/usr/bin/xdm
-		PIDFILE=/var/run/xdm.pid
+		PIDFILE=/run/xdm.pid
 		if ! [ -x "/usr/bin/xdm" ]; then
 			echo "ERROR: Please set your DISPLAYMANAGER variable in /etc/conf.d/xdm,"
 			echo "	or install x11-apps/xdm package"
@@ -134,7 +142,7 @@ vtstatic() {
 }
 
 start() {
-	local EXE NAME PIDFILE
+	local EXE NAME PIDFILE AUTOCLEAN_CGROUP
 	setup_dm
 
 	if [ -f /etc/.noxdm ]; then
@@ -150,6 +158,7 @@ start() {
 	save_options "name"    "${NAME}"
 	save_options "pidfile" "${PIDFILE}"
 	save_options "start_stop_args" "${START_STOP_ARGS}"
+	save_options "autoclean_cgroup" "${AUTOCLEAN_CGROUP:-no}"
 
 	if [ -n "${CHECKVT-y}" ] ; then
 		if vtstatic "${CHECKVT:-7}" ; then
@@ -188,6 +197,7 @@ stop() {
 	myname=$(get_options "name")
 	mypidfile=$(get_options "pidfile")
 	myservice=${myexe##*/}
+	yesno "${rc_cgroup_cleanup:-no}" || rc_cgroup_cleanup=$(get_options "autoclean_cgroup")
 
 	[ -z "${myexe}" ] && return 0
 

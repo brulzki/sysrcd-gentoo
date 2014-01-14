@@ -46,14 +46,6 @@ diff -urN catalyst-2.0.12.2-a/targets/support/filesystem-functions.sh catalyst-2
 diff -urN catalyst-2.0.12.2-a/targets/support/kmerge.sh catalyst-2.0.12.2-b/targets/support/kmerge.sh
 --- catalyst-2.0.12.2-a/targets/support/kmerge.sh	2012-12-04 20:48:43.000000000 +0000
 +++ catalyst-2.0.12.2-b/targets/support/kmerge.sh	2013-01-27 16:35:34.595951535 +0000
-@@ -11,6 +11,7 @@
- 	# default genkernel args
- 	GK_ARGS="${clst_gk_mainargs} \
- 			 ${clst_kernel_gk_kernargs} \
-+			 --no-busybox \
- 			 --cachedir=/tmp/kerncache/${clst_kname}-genkernel_cache-${clst_version_stamp} \
- 			 --no-mountboot \
- 			 --kerneldir=/usr/src/linux \
 @@ -104,8 +105,7 @@
  	fi
  	if [ "${clst_kernel_merge}" != "" ]

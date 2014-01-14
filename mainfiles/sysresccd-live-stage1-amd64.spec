@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/amd64/13.0
-snapshot: 20131018
+snapshot: 20131210
 source_subpath: default/stage4-amd64-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -17,7 +17,6 @@ livecd/packages:
 	app-shells/bash
 	app-shells/zsh
 	dev-libs/libdnet
-	dev-util/pkgconf
 	dev-vcs/git
 	sys-devel/autogen
 	sys-devel/crossdev
