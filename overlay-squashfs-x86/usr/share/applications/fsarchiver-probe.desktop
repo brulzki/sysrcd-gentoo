@@ -3,5 +3,5 @@ Version=0.5
 Name=Show Filesystems
 Type=Application
 Comment=Show the filesystems detected this computer
-Exec=terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=/usr/bin/showfs.sh
+Exec=/usr/bin/xfce4-terminal --hide-menubar --geometry=90x30 --command=/usr/bin/showfs.sh
 Categories=ConsoleOnly;System;

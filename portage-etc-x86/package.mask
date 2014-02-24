@@ -3,6 +3,8 @@
 # system packages
 >=sys-fs/eudev-1.0
 >=sys-apps/kmod-14
+>=sys-fs/udev-205
+>=virtual/udev-205
 >=sys-devel/gcc-4.5
 >=sys-libs/glibc-2.16
 <=sys-boot/syslinux-4.0
@@ -11,6 +13,8 @@
 >=sys-apps/systemd-200
 >=sys-fs/static-dev-0.1
 >=sys-apps/openrc-0.12.0
+>=sys-apps/hwids-20130401
+>=dev-lang/perl-5.12.4-r2
 >=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.10.999
 >=sys-kernel/aufs-sources-3.10.999
@@ -55,7 +59,6 @@ x11-misc/xlockmore
 x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
-sys-libs/libcap
 dev-lang/ruby
 dev-lang/lua
 
@@ -72,8 +75,8 @@ dev-lang/lua
 >sys-fs/squashfs-tools-4.2-r1
 <sys-boot/efibootmgr-0.5.4
 >sys-boot/efibootmgr-0.5.4
-<www-servers/thttpd-2.26.4-r1
->www-servers/thttpd-2.26.4-r1
+<www-servers/thttpd-2.26.4-r3
+>www-servers/thttpd-2.26.4-r3
 <app-misc/livecd-tools-2.0.3
 >app-misc/livecd-tools-2.0.3
 <app-admin/testdisk-6.13
@@ -91,6 +94,9 @@ dev-lang/lua
 >=app-portage/eix-0.26
 >=net-fs/samba-3.6.99
 >=sys-block/whdd-2.1
+>=app-cdr/cdrtools-3.01_alpha1
+>=dev-libs/libusb-compat-0.1.5-r1
+dev-libs/libusbx
 
 # xorg
 <x11-base/xorg-server-1.14.3-r2

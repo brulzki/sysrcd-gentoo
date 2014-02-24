@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20131210
+snapshot: 20140201
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -31,6 +31,8 @@ livecd/packages:
 	app-arch/dump
 	app-arch/gzip
 	app-arch/lbzip2
+	app-arch/lrzip
+	app-arch/lz4
 	app-arch/lzip
 	app-arch/lzop
 	app-arch/mt-st
@@ -74,6 +76,7 @@ livecd/packages:
 	app-editors/vim
 	app-editors/vim-core
 	app-editors/zile
+	app-emulation/open-vm-tools
 	app-forensics/afflib
 	app-forensics/chkrootkit
 	app-forensics/cmospwd
@@ -247,7 +250,6 @@ livecd/packages:
 	sys-fs/dmraid
 	sys-fs/dosfstools
 	sys-fs/e2fsprogs
-	sys-fs/ecryptfs-utils
 	sys-fs/ext3grep
 	sys-fs/extundelete
 	sys-fs/hfsplusutils

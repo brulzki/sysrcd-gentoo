@@ -6,6 +6,18 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.0.1 (2014-02-24)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.30 (rescue32 + rescue64)
+* Alternative kernels: stable linux-3.12.12 (altker32 + altker64)
+* Updated Offline Windows Password & Registry Editor floopy image to 2014-02-01
+* Added app-arch/lz4 (Fast Compression) + app-arch/lrzip-0.44 (Long Range ZIP)
+* Updated fsarchiver to 0.6.18 (bugfix release and minor feature enhancement)
+* Updated filesystem tools: e2fsprogs-1.42.9 and sys-block/partclone-0.2.69
+* Updated GParted to 0.18.0 (Bug fix release)
+* Updated app-backup/dar-2.4.12 (Disk-Archiver)
+
+-------------------------------------------------------------------------------
 4.0.0 (2014-01-15)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.25 (rescue32 + rescue64)

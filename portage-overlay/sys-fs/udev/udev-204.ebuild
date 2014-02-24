@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-200.ebuild,v 1.21 2013/04/27 11:10:43 ssuominen Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-fs/udev/udev-204.ebuild,v 1.18 2013/10/08 19:32:10 ssuominen Exp $
 
 EAPI=5
 
@@ -17,14 +17,13 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_REPO_URI="git://anongit.freedesktop.org/systemd/systemd"
 	inherit git-2
 else
-	patchset=1
+	patchset=2
 	SRC_URI="http://www.freedesktop.org/software/systemd/systemd-${PV}.tar.xz"
 	if [[ -n "${patchset}" ]]; then
 				SRC_URI="${SRC_URI}
-					http://dev.gentoo.org/~ssuominen/${P}-patches-${patchset}.tar.xz
-					http://dev.gentoo.org/~williamh/dist/${P}-patches-${patchset}.tar.xz"
+					mirror://gentoo/${P}-patches-${patchset}.tar.xz"
 			fi
-	KEYWORDS="alpha amd64 arm hppa ia64 ~m68k ~mips ppc ppc64 s390 sh sparc x86"
+	KEYWORDS="alpha amd64 arm hppa ia64 m68k ~mips ppc ppc64 s390 sh sparc x86"
 fi
 
 DESCRIPTION="Linux dynamic and persistent device naming support (aka userspace devfs)"
@@ -40,7 +39,7 @@ COMMON_DEPEND=">=sys-apps/util-linux-2.20
 	acl? ( sys-apps/acl )
 	gudev? ( >=dev-libs/glib-2 )
 	introspection? ( >=dev-libs/gobject-introspection-1.31.1 )
-	kmod? ( >=sys-apps/kmod-12 )
+	kmod? ( >=sys-apps/kmod-13 )
 	selinux? ( >=sys-libs/libselinux-2.1.9 )
 	!<sys-libs/glibc-2.11
 	!sys-apps/systemd"
@@ -48,6 +47,7 @@ COMMON_DEPEND=">=sys-apps/util-linux-2.20
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xsl-stylesheets
 	dev-libs/libxslt
+	>=sys-devel/make-3.82-r4
 	virtual/os-headers
 	virtual/pkgconfig
 	!<sys-kernel/linux-headers-${KV_min}
@@ -71,7 +71,7 @@ RDEPEND="${COMMON_DEPEND}
 	!<sec-policy/selinux-base-2.20120725-r10"
 
 PDEPEND=">=virtual/udev-197-r1
-	hwdb? ( >=sys-apps/hwids-20130326.1[udev] )
+	hwdb? ( <sys-apps/hwids-20130915[udev] )
 	openrc? ( >=sys-fs/udev-init-scripts-25 )"
 
 S=${WORKDIR}/systemd-${PV}
@@ -88,7 +88,7 @@ udev_check_KV() {
 check_default_rules() {
 	# Make sure there are no sudden changes to upstream rules file
 	# (more for my own needs than anything else ...)
-	local udev_rules_md5=3708dcb06e69ef2d3597cad0c98625e1
+	local udev_rules_md5=7d3733faee4203fd7c75c3f3c0d55741
 	MD5=$(md5sum < "${S}"/rules/50-udev-default.rules)
 	MD5=${MD5/  -/}
 	if [[ ${MD5} != ${udev_rules_md5} ]]; then
@@ -121,7 +121,7 @@ pkg_setup() {
 src_prepare() {
 	if ! [[ ${PV} = 9999* ]]; then
 		# secure_getenv() disable for non-glibc systems wrt bug #443030
-		if ! [[ $(grep -r secure_getenv * | wc -l) -eq 16 ]]; then
+		if ! [[ $(grep -r secure_getenv * | wc -l) -eq 19 ]]; then
 			eerror "The line count for secure_getenv() failed, see bug #443030"
 			die
 		fi
@@ -192,7 +192,7 @@ src_prepare() {
 
 src_configure() {
 	tc-export CC #463846
-	use keymap || export ac_cv_path_GPERF=true #452760
+	use keymap || export ac_cv_prog_ac_ct_GPERF=true #452760
 
 	local econf_args
 
@@ -207,7 +207,6 @@ src_configure() {
 		--with-html-dir=/usr/share/doc/${PF}/html
 		--with-rootprefix=
 		--with-rootlibdir=/$(get_libdir)
-		--with-bashcompletiondir=/usr/share/bash-completion
 		--without-python
 		--disable-audit
 		--disable-coredump
@@ -250,12 +249,8 @@ src_configure() {
 src_compile() {
 	echo 'BUILT_SOURCES: $(BUILT_SOURCES)' > "${T}"/Makefile.extra
 	emake -f Makefile -f "${T}"/Makefile.extra BUILT_SOURCES
-	local pretargets=(
-		libsystemd-shared.la
-		libudev-private.la
-		libudev.la
-	)
 	local targets=(
+		libudev.la
 		systemd-udevd
 		udevadm
 		ata_id
@@ -272,7 +267,6 @@ src_compile() {
 	use keymap && targets+=( keymap )
 	use gudev && targets+=( libgudev-1.0.la )
 
-	emake "${pretargets[@]}"
 	emake "${targets[@]}"
 	if use doc; then
 		emake -C docs/libudev
@@ -364,7 +358,6 @@ pkg_preinst() {
 				/usr/share/gtk-doc/html/${htmldir}
 		fi
 	done
-	preserve_old_lib /{,usr/}$(get_libdir)/libudev$(get_libname 0)
 }
 
 pkg_postinst() {
@@ -453,13 +446,11 @@ pkg_postinst() {
 	ewarn "into effect."
 	ewarn "The method you use to do this depends on your init system."
 
-	preserve_old_lib_notify /{,usr/}$(get_libdir)/libudev$(get_libname 0)
-
 	elog
 	elog "For more information on udev on Gentoo, upgrading, writing udev rules, and"
 	elog "         fixing known issues visit:"
+	elog "         http://wiki.gentoo.org/wiki/Udev"
 	elog "         http://wiki.gentoo.org/wiki/Udev/upgrade"
-	elog "         http://www.gentoo.org/doc/en/udev-guide.xml"
 
 	# Update hwdb database in case the format is changed by udev version.
 	if use hwdb && has_version 'sys-apps/hwids[udev]'; then

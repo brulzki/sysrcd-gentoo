@@ -81,6 +81,8 @@ sys-fs/aufs-headers ~*
 sys-kernel/aufs-sources ~*
 app-emulation/open-vm-tools-kmod ~*
 app-emulation/open-vm-tools ~*
+www-servers/thttpd ~*
+app-arch/lz4 ~*
 
 # kernel related packages
 =net-wireless/ndiswrapper-1.58* ~*

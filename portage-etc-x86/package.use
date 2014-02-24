@@ -99,3 +99,4 @@ net-misc/vpnc gnutls
 sys-libs/talloc python
 sys-apps/hwids udev
 sys-apps/busybox mdev
+app-emulation/open-vm-tools -modules
