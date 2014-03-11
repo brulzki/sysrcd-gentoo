@@ -11,7 +11,7 @@ SRC_URI="http://trac.emma-soft.com/epdfview/chrome/site/releases/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="amd64 ~arm ~hppa ~ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="cups nls test"
 
 RDEPEND=">=app-text/poppler-0.12.3-r3[cairo]

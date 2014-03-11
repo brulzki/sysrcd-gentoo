@@ -1,41 +1,18 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
-=sys-kernel/vanilla-sources-3.0* ~*
-=x11-drivers/xf86-video-cirrus-1.5* ~*
-=net-misc/networkmanager-0.9.6.4* ~*
-=gnome-extra/nm-applet-0.9.6.4* ~*
 =net-misc/modemmanager-0.6* ~*
-=sys-fs/multipath-tools-0.4.9* ~*
-=www-client/firefox-bin-17* ~*
-=sys-libs/e2fsprogs-libs-1.42* ~*
-=sys-cluster/glusterfs-3.4* ~*
-=sys-cluster/ceph-0.67* ~*
-=sys-fs/e2fsprogs-1.42* ~*
 =app-text/epdfview-0.1.8* ~*
-=www-client/midori-0.5* ~*
-=sys-cluster/drbd-8.4.3* ~*
-=sys-apps/udevil-0.2.9 ~*
-=x11-misc/spacefm-0.7.8* ~*
-=net-dialup/ppp-2.4.5* ~*
-=sys-apps/lshw-02.16* ~*
-=app-misc/tmux-1.6* ~*
+=www-client/midori-0.5.5* ~*
 =net-misc/pssh-2.3* ~*
 =net-misc/remmina-1.0* ~*
-=net-misc/tigervnc-1.3.0* ~*
-=sys-devel/libtool-2.4.2* ~*
-=sys-apps/netplug-1.2.9.2* ~*
-=dev-libs/vala-common-0.22* ~*
-=dev-lang/vala-0.22* ~*
-=dev-lang/vala-0.20* ~*
+=net-misc/tigervnc-1.3.0 ~*
+=dev-libs/libusb-1.0.18* ~*
+=app-cdr/xfburn-0.5.0* ~*
 =app-arch/star-1.5.2* ~*
-=sys-apps/kmod-14* ~*
-sys-fs/fuse-exfat ~*
+x11-misc/grsync
 sys-block/whdd ~*
 app-arch/pixz ~*
-sys-fs/zerofree ~*
-app-admin/keepass ~*
-sys-block/parted ~*
 app-crypt/nwipe ~*
 sys-apps/usbutils ~*
 sys-apps/pciutils ~*
@@ -44,14 +21,12 @@ app-arch/pxz ~*
 app-misc/scrub ~*
 dev-util/geany ~*
 app-backup/dar ~*
-sys-fs/ext3grep ~*
 sys-apps/ethtool ~*
 app-crypt/chntpw ~*
 perl-core/Encode ~*
 sys-block/gparted ~*
 sys-fs/cryptsetup ~*
 sys-fs/nilfs-utils ~*
-sys-apps/gptfdisk ~*
 sys-apps/memtester ~*
 app-forensics/afflib ~*
 net-firewall/ipsec-tools ~*
@@ -85,7 +60,6 @@ www-servers/thttpd ~*
 app-arch/lz4 ~*
 
 # kernel related packages
-=net-wireless/ndiswrapper-1.58* ~*
 sys-kernel/linux-firmware ~*
 sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
@@ -93,16 +67,26 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
+=sys-fs/squashfs-tools-4.2_p20140119 ~*
+=sys-libs/e2fsprogs-libs-1.42* ~*
+=sys-cluster/glusterfs-3.4* ~*
+=sys-cluster/ceph-0.67* ~*
+=sys-fs/e2fsprogs-1.42* ~*
+=sys-cluster/drbd-8.4.3* ~*
 =sys-block/partimage-0.6.9* ~*
 =sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/xfsprogs-3.1* ~*
 =sys-fs/xfsdump-3.1* ~*
+sys-fs/ext3grep ~*
+sys-fs/zerofree ~*
+sys-block/parted ~*
+sys-fs/fuse-exfat ~*
 sys-fs/extundelete ~*
+sys-apps/gptfdisk ~*
 app-backup/fsarchiver ~*
 app-admin/testdisk ~*
 app-crypt/truecrypt ~*
 sys-fs/ecryptfs-utils ~*
-sys-fs/btrfs-progs ~*
 sys-fs/ntfs3g ~*
 
 # Wireless drivers

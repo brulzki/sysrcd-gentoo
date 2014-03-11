@@ -65,7 +65,6 @@ www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo X svg cleartype lcdfilter
-sys-auth/polkit gtk -introspection
 gnome-extra/polkit-gnome -introspection
 x11-libs/gdk-pixbuf -introspection
 x11-libs/pango -introspection
@@ -75,6 +74,7 @@ x11-libs/vte -introspection
 x11-libs/libwnck -introspection
 net-libs/webkit-gtk -introspection -geoloc -webgl
 gnome-base/librsvg -introspection
+app-text/evince -introspection
 media-libs/mesa gallium xa -llvm -egl -classic -xorg
 x11-libs/libdrm libkms
 sys-apps/lshw -sqlite -static
@@ -84,9 +84,11 @@ media-fonts/font-adobe-75dpi nls
 media-fonts/font-cursor-misc nls
 media-fonts/font-misc-misc nls
 app-backup/dar gcrypt
+sys-auth/polkit -gtk -introspection -systemd
 sys-auth/consolekit policykit
+sys-auth/pambase -consolekit
 net-misc/openssh tcpd
-sys-apps/shadow -cracklib
+sys-apps/shadow -cracklib -pam
 dev-util/pkgconf pkg-config
 virtual/python-argparse python_targets_python3_2
 dev-python/pyxattr python_targets_python3_2

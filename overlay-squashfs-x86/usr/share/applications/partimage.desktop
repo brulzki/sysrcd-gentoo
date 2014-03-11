@@ -3,5 +3,5 @@ Version=0.6.7
 Name=Partimage
 Type=Application
 Comment=Ghost clone for linux
-Exec=terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=partimage
+Exec=xfce4-terminal --hide-menubar --geometry=90x30 --command=partimage
 Categories=ConsoleOnly;System;

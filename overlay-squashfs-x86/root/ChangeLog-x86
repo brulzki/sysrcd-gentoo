@@ -6,6 +6,19 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.1.0 (2014-03-11)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.32 (rescue32 + rescue64)
+* Alternative kernels: updated to stable linux-3.13.5 (altker32 + altker64)
+* Updated NBD client in initramfs to sys-block/nbd-3.2 (Network Block Device)
+* Updated ntfs filesystem in userspace driver to sys-fs/ntfs3g-2014.2.15
+* Updated squashfs-tools to sys-fs/squashfs-tools-4.2_p20140119
+* Updated perl language package to dev-lang/perl-5.16.3
+* Updated sys-auth packages (polkit, pambase, consolekit)
+* Updated fsarchiver to 0.6.19 (bugfix release)
+* Updated OpenRC to sys-apps/openrc-0.12.4
+
+-------------------------------------------------------------------------------
 4.0.1 (2014-02-24)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.30 (rescue32 + rescue64)

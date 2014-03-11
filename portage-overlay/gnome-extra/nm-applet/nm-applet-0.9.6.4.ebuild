@@ -15,7 +15,7 @@ HOMEPAGE="http://projects.gnome.org/NetworkManager/"
 LICENSE="GPL-2+"
 SLOT="0"
 IUSE="bluetooth gconf"
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86"
 
 RDEPEND=">=dev-libs/glib-2.26:2
 	>=dev-libs/dbus-glib-0.88

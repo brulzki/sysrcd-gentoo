@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20140201
+snapshot: 20140301
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -106,6 +106,11 @@ livecd/unmerge:
 	sys-fs/aufs-headers
 	app-text/build-docbook-catalog
 	app-text/docbook-xsl-stylesheets
+	app-text/docbook-xml-dtd
+	app-text/openjade
+	app-text/opensp
+	app-text/po4a
+	app-text/sgml-common
 
 livecd/empty:
 	/var/cache/revdep-rebuild

@@ -4,22 +4,22 @@
 	<RootMenu height="20" onroot="123">
 		<Menu icon="folder_yellow.png" label="System">
 			<Program icon="gparted.png" label="GParted">gparted</Program>
-			<Program icon="partimage.png" label="Partimage">terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=partimage</Program>
-			<Program icon="testdisk.png" label="Testdisk">terminal --hide-toolbars --hide-menubar --geometry=80x25 --command=testdisk</Program>
+			<Program icon="partimage.png" label="Partimage">/usr/bin/xfce4-terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=partimage</Program>
+			<Program icon="testdisk.png" label="Testdisk">/usr/bin/xfce4-terminal --hide-toolbars --hide-menubar --geometry=80x25 --command=testdisk</Program>
 			<Program icon="" label="Lshw (hardware info)">gtk-lshw</Program>
 		</Menu>
 
 		<Menu icon="folder_yellow.png" label="Misc">
-			<Program icon="" label="Midnight Commander">terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=mc</Program>
+			<Program icon="" label="Midnight Commander">/usr/bin/xfce4-terminal --hide-toolbars --hide-menubar --geometry=90x30 --command=mc</Program>
 			<Program icon="" label="Epdfview PDF viewer">epdfview</Program>
 			<Program icon="" label="Dillo web browser">dillo</Program>
 			<Program icon="" label="File Archiver">xarchiver</Program>
-			<Program icon="" label="Hexadecimal editor">terminal --hide-toolbars --hide-menubar --geometry=90x35 --command=hexcurse</Program>
+			<Program icon="" label="Hexadecimal editor">/usr/bin/xfce4-terminal --hide-toolbars --hide-menubar --geometry=90x35 --command=hexcurse</Program>
 		</Menu>
 
 		<Separator/>
 			<Program icon="gparted.png" label="GParted">gparted</Program>
-			<Program icon="terminal.png" label="xfce terminal">terminal</Program>
+			<Program icon="terminal.png" label="xfce terminal">/usr/bin/xfce4-terminal</Program>
 			<Program icon="mrxvt.png" label="mrxvt terminal">LANG=en_US mrxvt</Program>
 			<Program icon="geany.png" label="Geany editor">geany</Program>
 			<Program icon="vim.png" label="GVim editor">gvim</Program> 
@@ -37,7 +37,7 @@
 		<TrayButton popup="Menu Options" icon="cdrom.png">root:1</TrayButton>
 		<TrayButton popup="Show Desktop" icon="desktop.png">showdesktop</TrayButton>
 		<TrayButton popup="GParted" icon="gparted.png">exec:gparted</TrayButton>
-		<TrayButton popup="Terminal" icon="terminal.png">exec:terminal</TrayButton>
+		<TrayButton popup="Terminal" icon="terminal.png">exec:/usr/bin/xfce4-terminal</TrayButton>
 		<TrayButton popup="Firefox web browser" icon="firefox.png">exec:firefox</TrayButton>
 		<TrayButton popup="CD/DVD Burner" icon="xfburn.png">exec:xfburn</TrayButton>
 		<TrayButton popup="Geany editor" icon="geany.png">exec:geany</TrayButton>

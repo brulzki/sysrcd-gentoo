@@ -3,5 +3,5 @@ Version=6.11
 Name=Testdisk
 Type=Application
 Comment=Low level disk recovery program
-Exec=terminal --hide-toolbars --hide-menubar --geometry=80x25 --command=testdisk
+Exec=xfce4-terminal --hide-menubar --geometry=80x25 --command=testdisk
 Categories=ConsoleOnly;System;

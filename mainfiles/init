@@ -745,7 +745,7 @@ sysresccd_stage1_nfs()
 {
     nfsurl=$(echo ${NFSBOOT} | sed -e 's!nfs://!!g')
 
-    good_msg "Mouting the NFS filesystem from ${NFSBOOT}"
+    good_msg "Mounting the NFS filesystem from ${NFSBOOT}"
     cmd="mount -t nfs -o intr,nolock,rsize=1024,wsize=1024 ${nfsurl} ${BOOTPATH}"
     if ! ${cmd}
     then
@@ -1071,7 +1071,7 @@ sysresccd_stage2_nbd()
     fi
 
     good_msg "Setting up the NBD boot device..."
-    if ! ${NBD_PROG} "${NBD_SERVER}" "${NBD_PORT}" "${NBD_DEVICE}" -persist
+    if ! ${NBD_PROG} -N "${NBD_PORT}" "${NBD_SERVER}" "${NBD_DEVICE}" -persist
     then
         sysresccd_panic "Error: nbd-client failed to connect to ${NBD_SERVER}:${NBD_PORT}"
     else
