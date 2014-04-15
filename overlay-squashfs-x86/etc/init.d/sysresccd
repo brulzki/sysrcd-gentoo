@@ -116,15 +116,6 @@ start()
 		sed -i -e "/ \/newroot/d" /etc/mtab
 	fi
 
-	# ---- allow freshclam ----
-	if [ -f /usr/bin/freshclam ]
-	then   
-		mkdir -p /var/log/clamav /var/run/clamav
-		chown clamav:clamav /var/log/clamav
-		chown clamav:clamav /var/run/clamav
-		chown clamav:clamav /var/lib/clamav
-	fi
-
 	# ---- create a kernel options file ----
 	if [ -f /proc/config.gz ]
 	then
@@ -141,6 +132,9 @@ start()
 		mv /tmp/halt /sbin
 		ln -sf /sbin/halt /sbin/reboot
 	fi
+
+	# ---- Create LVM devices such as /dev/VolGroup00/root
+	vgscan --mknodes > /dev/null 2>&1
 
 	# ---- automatically use 64bit version of fsarchiver/memtester if possible
 	if uname -m | grep -q x86_64

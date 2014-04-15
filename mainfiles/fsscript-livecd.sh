@@ -31,15 +31,6 @@ sed -i -e 's/if ! yesno "${DHCP}"/if false/' /etc/init.d/autoconfig
 # fix problem with NetworkManager being inactive
 sed -i -e 's/^#rc_hotplug="\*"/rc_hotplug="!net.*"/' /etc/rc.conf
 
-# if clamav is installed fix permissions
-if [ -f /usr/bin/freshclam ]
-then
-	sed -i -e 's:NotifyClamd:#NotifyClamd:' /etc/freshclam.conf
-	chown clamav:clamav /var/log/clamav
-	chown clamav:clamav /var/lib/clamav
-	chown clamav:clamav /var/lib/clamav/*
-fi
-
 # force the "cdroot" command line argument in livecd-functions.sh 
 sed -i -e 's!CMDLINE=$(cat /proc/cmdline)!CMDLINE="$(cat /proc/cmdline) cdroot"!' /sbin/livecd-functions.sh
 
@@ -238,7 +229,6 @@ then
 	emerge -C ndiswrapper net-wireless/wireless-tools
 	rm -rf /lib/firmware/{ti*,ueagle*,libertas,iwlwifi*,ath?k*,rtlwifi,brcm}
 	rm -rf /usr/lib/ccache
-	rm -rf /var/lib/clamav
 	rm -rf /usr/libexec/gcc
 	rm -rf /usr/bin/{cc,gcc,c++*,c89,c99}
 	rm -rf /usr/i486-pc-linux-gnu

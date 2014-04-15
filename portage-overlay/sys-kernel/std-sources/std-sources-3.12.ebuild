@@ -21,7 +21,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/std-sources-3.12-01-stable-3.12.12.patch.xz || die "std-sources stable patch failed."
+	epatch ${FILESDIR}/std-sources-3.12-01-stable-3.12.16.patch.xz || die "std-sources stable patch failed."
 	epatch ${FILESDIR}/std-sources-3.12-02-fc19.patch.xz || die "std-sources fedora patch failed."
 	epatch ${FILESDIR}/std-sources-3.12-03-aufs.patch.xz || die "std-sources aufs patch failed."
 	epatch ${FILESDIR}/std-sources-3.12-04-reiser4.patch.xz || die "std-sources reiser4 patch failed."

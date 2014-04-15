@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.2.0 (2014-04-15)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.35 (rescue32 + rescue64)
+* Alternative kernels: updated to stable linux-3.13.10 (altker32 + altker64)
+* Updated XOrg graphical environment and drivers to xorg-server-1.15.0
+* Updated LVM (Logical Volume Manager) to version 2.02.103 in the initramfs
+* Dropped ClamAV to save 74MB in the ISO image
+
+-------------------------------------------------------------------------------
 4.1.0 (2014-03-11)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.32 (rescue32 + rescue64)

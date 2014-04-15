@@ -28,14 +28,6 @@ then
 	cat /proc/cmdline | grep -q "640x480" && clear
 	setterm -blank 0 -powersave off
 
-	# ---- allow freshclam ----
-	mkdir -p /var/log/clamav	
-	mkdir -p /var/run/clamav	
-	chown clamav:clamav /var/log/clamav
-	chown clamav:clamav /var/run/clamav
-	chown clamav:clamav /var/lib/clamav
-	chown clamav:clamav /var/lib/clamav/*
-
 	# ---- create directories for samba server ----
 	mkdir -p /var/run/samba
 	mkdir -p /var/cache/samba

@@ -6,7 +6,7 @@
 =www-client/midori-0.5.5* ~*
 =net-misc/pssh-2.3* ~*
 =net-misc/remmina-1.0* ~*
-=net-misc/tigervnc-1.3.0 ~*
+=net-misc/tigervnc-1.3.1-r1 ~*
 =dev-libs/libusb-1.0.18* ~*
 =app-cdr/xfburn-0.5.0* ~*
 =app-arch/star-1.5.2* ~*
@@ -33,7 +33,6 @@ net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
 sys-block/iscsitarget ~*
-app-antivirus/clamav ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 sys-fs/dd-rescue ~*

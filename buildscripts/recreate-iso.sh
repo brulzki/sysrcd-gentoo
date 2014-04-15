@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VERSION_MAJ=4
-VERSION_MIN=1
+VERSION_MIN=2
 VERSION_PAT=0
 
 # ==================================================================
