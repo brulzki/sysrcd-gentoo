@@ -2,6 +2,7 @@
 
 # system packages
 >=sys-fs/eudev-1.0
+>=sys-fs/udev-212
 >=sys-devel/gcc-4.5
 >=sys-libs/glibc-2.16
 <=sys-boot/syslinux-4.0
@@ -16,9 +17,11 @@
 >=sys-kernel/aufs-sources-3.10.999
 >=sys-kernel/linux-headers-3.10.999
 >=sys-kernel/std-sources-3.10.999
->=sys-kernel/alt-sources-3.13.999
+>=sys-kernel/alt-sources-3.14.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
+<dev-lang/ruby-2.0.0_p353
+>dev-lang/ruby-2.0.0_p999
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
@@ -27,15 +30,47 @@
 >www-client/firefox-bin-17.9
 <sys-boot/grub-0.97-r13
 >sys-boot/grub-0.97-r13
+<dev-libs/openssl-1.0.1h-r1
+
+# perl
+perl-core/Archive-Tar
+perl-core/CPAN-Meta
+perl-core/CPAN-Meta-Requirements
+perl-core/CPAN-Meta-YAML
+perl-core/Compress-Raw
+perl-core/Compress-Raw
+perl-core/ExtUtils-CBuilder
+perl-core/ExtUtils-Install
+perl-core/ExtUtils-MakeMaker
+perl-core/ExtUtils-Manifest
+perl-core/ExtUtils-ParseXS
+perl-core/IO
+perl-core/IO-Compress
+perl-core/IPC-Cmd
+perl-core/Module-Build
+perl-core/Module-CoreList
+perl-core/Module-Load
+perl-core/Module-Load-Conditional
+perl-core/Module-Metadata
+perl-core/Params-Check
+perl-core/Parse-CPAN-Meta
+perl-core/Scalar-List-Utils
+perl-core/Test-Harness
+perl-core/version
+dev-perl/SGMLSpm
+dev-perl/TermReadKey
+dev-perl/Text-CharWidth
+dev-perl/Text-WrapI18N
 
 # block gtk+-3.x and its deps
 >x11-libs/gtk+-2.99
->dev-cpp/glibmm-2.36.2
 >dev-cpp/gtkmm-2.24.4
 >net-libs/webkit-gtk-1.8.3-r201
+<net-libs/webkit-gtk-1.8.3-r201
 >gnome-base/gconf-2.99
 >gnome-base/libgnome-keyring-2.99
 >gnome-base/gnome-keyring-2.99
+>x11-misc/spacefm-0.9.0
 
 # packages to avoid
 x11-themes/sound-theme-freedesktop
@@ -52,7 +87,6 @@ x11-misc/xlockmore
 x11-misc/xscreensaver
 x11-apps/xwininfo
 x11-apps/appres
-dev-lang/ruby
 dev-lang/lua
 
 # modified packages
@@ -84,8 +118,11 @@ dev-lang/lua
 >=net-fs/samba-3.6.99
 >=sys-block/whdd-2.1
 >=app-cdr/cdrtools-3.01_alpha1
+>=sys-devel/autogen-5.18
+>=app-editors/zile-2.4.10
 dev-libs/libusbx
 
-# Xorg
+# misc
 <x11-base/xorg-server-1.15.0
+<sys-fs/btrfs-progs-3.14.1
 

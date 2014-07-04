@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20140410
+snapshot: 20140613
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -279,7 +279,7 @@ livecd/rm:
 	/usr/share/vim/vim7*/syntax/{php.vim,baan.vim,pfmain.vim,autoit.vim,xmodmap.vim}
 	/usr/share/vim/vim7*/syntax/{postscr.vim,doxygen.vim,lisp.vim,foxpro.vim,sqlanywhere.vim}
 	/usr/share/vim/vim7*/syntax/{maple.vim,ora.vim,ishd.vim,stata.vim,jam.vim,skill.vim}
-	/usr/share/vim/vim7*/syntax/{rpl.vim,fortran.vim,aml.vim,fvwm.vim,lpc.vim,ruby.vim}
+	/usr/share/vim/vim7*/syntax/{rpl.vim,fortran.vim,aml.vim,fvwm.vim,lpc.vim}
 	/usr/share/vim/vim7*/syntax/{cdrtoc.vim,groovy.vim,vb.vim,progress.vim,vera.vim}
 	/usr/share/vim/vim7*/syntax/{inform.vim,sudoers.vim,maxima.vim,idl.vim,sicad.vim,scheme.vim}
 	/usr/share/vim/vim7*/syntax/{splint.vim,mupad.vim,nqc.vim,openroad.vim,hamster.vim}

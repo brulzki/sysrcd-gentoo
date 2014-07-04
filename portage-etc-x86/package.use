@@ -21,12 +21,12 @@ dev-libs/libgcrypt static-libs
 media-libs/jpeg static-libs
 app-backup/fsarchiver lzma lzo gcrypt -static
 sys-fs/xfsprogs -readline
-app-editors/vim -X -gpm -minimal -perl bash-completion python
+app-editors/vim -X -gpm -minimal -perl -python bash-completion
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba slang 7zip
-sys-fs/lvm2 lvm1 readline static udev -thin -clvm -cman -gulm -selinux
-sys-fs/udev extras gudev static-libs
-virtual/udev gudev static-libs
+sys-fs/lvm2 lvm1 readline udev -static -thin -clvm -cman -gulm -selinux
+sys-fs/udev extras gudev -static-libs
+virtual/udev gudev -static-libs
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba aio acl readline client server kernel_linux syslog examples winbind -smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
@@ -40,6 +40,8 @@ sys-fs/ntfs3g -external-fuse -acl ntfsprogs extras
 sys-fs/btrfs-progs -debug-utils
 app-text/poppler -abiword -lcms cairo
 app-text/poppler-bindings gtk -qt3 -qt4 -test
+app-text/texi2html -unicode
+dev-perl/DateManip -test
 net-print/cups -perl -python
 dev-vcs/git -perl -gtk
 net-wireless/wpa_supplicant dbus
@@ -49,7 +51,7 @@ app-text/ghostscript-gpl -cups
 app-crypt/truecrypt -X
 x11-libs/wxGTK -X
 net-wireless/ndiswrapper usb
-sys-fs/squashfs-tools lzma -gzip
+sys-fs/squashfs-tools xz -lzma gzip lz4 lzo
 www-client/chromium -ffmpeg
 media-fonts/terminus-font X
 dev-libs/libxml2 python
@@ -57,6 +59,7 @@ net-misc/tigervnc server xorgmodule -opengl
 sys-apps/miscfiles minimal
 net-analyzer/tcpdump -samba
 dev-lang/python -berkdb xml threads
+dev-lang/ruby -rdoc
 x11-apps/xinit minimal
 net-dialup/rp-pppoe -X
 net-analyzer/nmap -gtk -lua

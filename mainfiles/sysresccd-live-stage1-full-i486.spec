@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20140410
+snapshot: 20140613
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -74,7 +74,6 @@ livecd/packages:
 	app-crypt/chntpw
 	app-crypt/md5deep
 	app-crypt/nwipe
-	app-crypt/truecrypt
 	app-editors/gvim
 	app-editors/hexcurse
 	app-editors/hexedit
@@ -90,7 +89,6 @@ livecd/packages:
 	app-forensics/cmospwd
 	app-forensics/foremost
 	app-forensics/magicrescue
-	app-forensics/sleuthkit
 	app-misc/beep
 	app-misc/ckermit
 	app-misc/colordiff
@@ -119,6 +117,7 @@ livecd/packages:
 	app-text/tree
 	app-text/wgetpaste
 	app-vim/gentoo-syntax
+	dev-lang/ruby
 	dev-libs/expat
 	dev-libs/libconfig
 	dev-libs/libdnet
