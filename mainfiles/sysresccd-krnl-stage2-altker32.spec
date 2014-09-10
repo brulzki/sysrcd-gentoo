@@ -3,7 +3,7 @@ version_stamp: krnl
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20140613
+snapshot: 20140905
 source_subpath: default/livecd-stage1-i486-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -30,6 +30,5 @@ boot/kernel/altker32/use: pcmcia usb -X png truetype
 boot/kernel/altker32/extraversion: i586
 boot/kernel/altker32/packages:
 	#app-emulation/open-vm-tools-kmod
-	#net-wireless/ndiswrapper
 	#sys-block/open-iscsi
 	#sys-block/iscsitarget

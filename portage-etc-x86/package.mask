@@ -12,6 +12,8 @@
 >=sys-fs/static-dev-0.1
 >=dev-lang/perl-5.16.999
 <=sys-fs/lvm2-2.02.100
+>=sys-fs/aufs-util-3.12.999
+>=sys-fs/aufs-headers-3.12.999
 >=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.10.999
 >=sys-kernel/aufs-sources-3.10.999
@@ -106,8 +108,8 @@ dev-lang/lua
 >app-misc/livecd-tools-2.0.3
 <app-admin/testdisk-6.14
 >app-admin/testdisk-6.14
-<sys-block/parted-3.1-r4
->sys-block/parted-3.1-r4
+<sys-block/parted-3.2
+>sys-block/parted-3.2.999
 <app-cdr/cdw-0.7.1
 >app-cdr/cdw-0.7.1
 

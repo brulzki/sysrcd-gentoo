@@ -6,6 +6,14 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.3.1 (2014-09-10)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.53 (rescue32 + rescue64)
+* Alternative kernels: updated to stable linux-3.14.17 (altker32 + altker64)
+* Updated GNU Parted to 3.2 and GParted to 0.19.1 (Bug fix release)
+* Updated file systems: e2fsprogs-1.42.12, btrfs-progs-3.14.2, fuse-exfat-1.1.0
+
+-------------------------------------------------------------------------------
 4.3.0 (2014-07-07)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.45 (rescue32 + rescue64)
