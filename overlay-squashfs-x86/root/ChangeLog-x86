@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.4.0 (2014-10-13)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.55 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-3.14.20 (altker32 + altker64)
+* Updated filesystem tools: btrfs-progs-3.16.1 + reiser4progs-1.0.9
+* Updated partclone to sys-block/partclone-0.2.73
+* Updated perl language package to dev-lang/perl-5.18.2-r1
+* Updated to a new major portage version: portage-2.2.8
+
+-------------------------------------------------------------------------------
 4.3.1 (2014-09-10)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.53 (rescue32 + rescue64)

@@ -4,3 +4,4 @@ app-admin/hwreport
 =app-text/epdfview-0.1.8*
 =sys-boot/grub-0.97*
 =sys-boot/grub-2.00*
+=sys-boot/grub-2.02*

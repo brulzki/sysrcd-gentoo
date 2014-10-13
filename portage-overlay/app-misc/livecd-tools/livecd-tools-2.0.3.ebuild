@@ -32,7 +32,7 @@ RDEPEND="dev-util/dialog
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch ${FILESDIR}/livecd-tools-2.0.2-fix-net-setup.patch || die
+	epatch ${FILESDIR}/livecd-tools-2.0.3-fix-net-setup.patch || die
 }
 
 pkg_setup() {

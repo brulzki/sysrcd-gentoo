@@ -6,12 +6,7 @@
 =www-client/midori-0.5.5* ~*
 =net-misc/pssh-2.3* ~*
 =net-misc/remmina-1.0* ~*
-=net-misc/tigervnc-1.3.1-r1 ~*
 =dev-ruby/builder-3.1.4* ~*
-=sys-fs/btrfs-progs-3.14* ~*
-=dev-libs/libusb-1.0.18* ~*
-=app-cdr/xfburn-0.5.0* ~*
-=app-arch/star-1.5.2* ~*
 x11-misc/grsync
 sys-block/whdd ~*
 app-arch/pixz ~*
@@ -73,11 +68,12 @@ sys-kernel/genkernel ~*
 =sys-cluster/glusterfs-3.4* ~*
 =sys-cluster/ceph-0.67* ~*
 =sys-fs/e2fsprogs-1.42* ~*
+=sys-fs/btrfs-progs-3.16* ~*
+=sys-fs/reiser4progs-1.0.9* ~*
 =sys-cluster/drbd-8.4.3* ~*
 =sys-block/partimage-0.6.9* ~*
-=sys-fs/dmraid-1.0.0_rc16* ~*
 =sys-fs/xfsprogs-3.1* ~*
-=sys-fs/xfsdump-3.1* ~*
+=sys-fs/xfsdump-3.1.3 ~*
 sys-fs/ext3grep ~*
 sys-fs/zerofree ~*
 sys-block/parted ~*

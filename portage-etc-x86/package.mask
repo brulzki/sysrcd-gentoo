@@ -1,17 +1,13 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-fs/eudev-1.0
 >=sys-fs/udev-212
 >=sys-devel/gcc-4.5
->=sys-libs/glibc-2.16
+>=sys-libs/glibc-2.18
+>=sys-apps/paludis-2.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
->=sys-apps/portage-2.2
->=sys-apps/systemd-200
->=sys-fs/static-dev-0.1
->=dev-lang/perl-5.16.999
-<=sys-fs/lvm2-2.02.100
+>=dev-lang/perl-5.18.9
 >=sys-fs/aufs-util-3.12.999
 >=sys-fs/aufs-headers-3.12.999
 >=sys-kernel/vanilla-sources-3.0.999
@@ -28,11 +24,9 @@
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
-<www-client/firefox-bin-17.0
->www-client/firefox-bin-17.9
 <sys-boot/grub-0.97-r13
 >sys-boot/grub-0.97-r13
-<dev-libs/openssl-1.0.1h-r1
+<dev-libs/openssl-1.0.1i
 
 # perl
 perl-core/Archive-Tar
@@ -100,8 +94,6 @@ dev-lang/lua
 >net-misc/networkmanager-vpnc-0.9.6.0
 >net-misc/networkmanager-openvpn-0.9.6.0
 >net-misc/modemmanager-0.6.0.0
-<sys-boot/efibootmgr-0.5.4
->sys-boot/efibootmgr-0.5.4
 <www-servers/thttpd-2.26.4-r3
 >www-servers/thttpd-2.26.4-r3
 <app-misc/livecd-tools-2.0.3
@@ -115,16 +107,10 @@ dev-lang/lua
 
 # fix problems
 =app-text/docbook-xml-dtd-4.1.2
-<net-dialup/gtkterm-0.99.6
->=app-portage/eix-0.26
 >=net-fs/samba-3.6.99
 >=sys-block/whdd-2.1
 >=app-cdr/cdrtools-3.01_alpha1
 >=sys-devel/autogen-5.18
 >=app-editors/zile-2.4.10
 dev-libs/libusbx
-
-# misc
-<x11-base/xorg-server-1.15.0
-<sys-fs/btrfs-progs-3.14.1
 

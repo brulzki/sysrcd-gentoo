@@ -14,7 +14,7 @@ SRC_URI="http://people.redhat.com/~heinzm/sw/dmraid/src/${PN}-${MY_PV}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="amd64 x86"
 IUSE="static selinux"
 
 RDEPEND="|| ( >=sys-fs/lvm2-2.02.45
