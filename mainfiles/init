@@ -1263,7 +1263,7 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 
     # make directories
     for curdir in /mnt/custom /mnt/gentoo /mnt/windows /mnt/floppy /mnt/backup \
-        /var/log/iptraf /var/spool/cron /var/log/samba /var/cache/samba /var/lib/misc
+        /var/log/iptraf /var/spool/cron /var/log/samba /var/cache/samba /var/lib/misc /var/lib/dhclient
     do
         mkdir -p "${NEWROOT}${curdir}"
     done

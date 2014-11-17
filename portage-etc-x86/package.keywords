@@ -30,6 +30,7 @@ net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
 sys-block/iscsitarget ~*
+perl-core/Pod-Simple ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 sys-fs/dd-rescue ~*
@@ -68,7 +69,8 @@ sys-kernel/genkernel ~*
 =sys-cluster/glusterfs-3.4* ~*
 =sys-cluster/ceph-0.67* ~*
 =sys-fs/e2fsprogs-1.42* ~*
-=sys-fs/btrfs-progs-3.16* ~*
+=sys-fs/btrfs-progs-3.17* ~*
+=sys-libs/libaal-1.0.6* ~*
 =sys-fs/reiser4progs-1.0.9* ~*
 =sys-cluster/drbd-8.4.3* ~*
 =sys-block/partimage-0.6.9* ~*

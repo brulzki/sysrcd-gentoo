@@ -6,11 +6,21 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.4.1 (2014-11-17)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.10.60 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-3.14.24 (altker32 + altker64)
+* Updated GParted to 0.20.0 (improves resizing for multi-device btrfs)
+* Updated fs tools: btrfs-progs-3.17.1 + reiser4progs-1.0.9 + xfsprogs-3.2.1
+* Updated python packages to dev-lang/python-2.7.7 + dev-lang/python-3.4.1
+* Updated ruby package to dev-lang/ruby-2.0.0_p594
+
+-------------------------------------------------------------------------------
 4.4.0 (2014-10-13)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.10.55 (rescue32 + rescue64)
 * Alternative kernels: Long-Term-Supported linux-3.14.20 (altker32 + altker64)
-* Updated filesystem tools: btrfs-progs-3.16.1 + reiser4progs-1.0.9
+* Updated filesystem tools: btrfs-progs-3.16.2 + reiser4progs-1.0.7
 * Updated partclone to sys-block/partclone-0.2.73
 * Updated perl language package to dev-lang/perl-5.18.2-r1
 * Updated to a new major portage version: portage-2.2.8

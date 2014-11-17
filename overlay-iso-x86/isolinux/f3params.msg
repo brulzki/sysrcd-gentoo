@@ -9,7 +9,7 @@
 <ALL> 0Fdocache07    0Ccopy system in RAM07: you can eject the cd, requires <MEMREQ> of RAM
 <ALL> 0Fsetkmap=x07  0Cconfigure the keyboard07 with the x keymap (x='fr', 'de', 'us', ...)
 <ALL> 0Froot=x07     0Croot=/dev/sda107 boots from 0F/dev/sda107, 0Croot=auto07 scans the disks
-<ALL> 0Fforcevesa07  0Cuse the 0CXvesa07 grahical server instead of 0CXorg07 when you type startx
+<ALL> 0Fforcevesa07  0Cuse the 0CXvesa07 graphical server instead of 0CXorg07 when you type startx
 <ALL> 0Fnoload=x07   0Cprevent a module07 from being loaded at startup (eg: noload=3c59x)
 <ALL> 0Fdoload=x07   0Cforce to load one/several modules07 at startup (eg: doload=3c59x)
 <ALL> 0Frootpass=x07 sets the 0Croot password07 to x so that you can ssh to the system

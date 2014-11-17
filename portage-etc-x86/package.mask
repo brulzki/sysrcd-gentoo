@@ -108,7 +108,6 @@ dev-lang/lua
 # fix problems
 =app-text/docbook-xml-dtd-4.1.2
 >=net-fs/samba-3.6.99
->=sys-block/whdd-2.1
 >=app-cdr/cdrtools-3.01_alpha1
 >=sys-devel/autogen-5.18
 >=app-editors/zile-2.4.10
