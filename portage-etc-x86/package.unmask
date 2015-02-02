@@ -1,11 +1,4 @@
 # ------ SystemRescueCd package.unmask ------
 net-wireless/linux-wlan-ng-firmware
 app-admin/hwreport
-=gnome-base/gnome-keyring-2.32.1-r1
-=gnome-base/libgnome-keyring-2.32.0
-=net-misc/networkmanager-vpnc-0.9.6.0
-=net-misc/modemmanager-0.6.0.0
-=gnome-base/gconf-2.32.4-r1
 =app-text/epdfview-0.1.8*
-=sys-boot/grub-0.97*
-=sys-boot/grub-2.02*

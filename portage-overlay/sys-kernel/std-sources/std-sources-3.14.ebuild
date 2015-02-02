@@ -21,15 +21,15 @@ src_unpack()
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/alt-sources-3.14-01-stable-3.14.24.patch.xz || die "alt-sources stable patch failed."
-	epatch ${FILESDIR}/alt-sources-3.14-02-fc19.patch.xz || die "alt-sources fedora patch failed."
-	epatch ${FILESDIR}/alt-sources-3.14-03-aufs.patch.xz || die "alt-sources aufs patch failed."
-	epatch ${FILESDIR}/alt-sources-3.14-04-reiser4.patch.xz || die "alt-sources reiser4 patch failed."
+	epatch ${FILESDIR}/std-sources-3.14-01-stable-3.14.31.patch.xz || die "std-sources stable patch failed."
+	epatch ${FILESDIR}/std-sources-3.14-02-fc19.patch.xz || die "std-sources fedora patch failed."
+	epatch ${FILESDIR}/std-sources-3.14-03-aufs.patch.xz || die "std-sources aufs patch failed."
+	epatch ${FILESDIR}/std-sources-3.14-04-reiser4.patch.xz || die "std-sources reiser4 patch failed."
 	sedlockdep='s!.*#define MAX_LOCKDEP_SUBCLASSES.*8UL!#define MAX_LOCKDEP_SUBCLASSES 16UL!'
 	sed -i -e "${sedlockdep}" include/linux/lockdep.h
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt441/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std450/" Makefile
 }
 

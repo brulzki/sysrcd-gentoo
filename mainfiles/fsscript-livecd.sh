@@ -44,6 +44,15 @@ sed -i -e 's!svcs="${svcs} $(check_svc ${X11} xdm)"!!g' /etc/init.d/autoconfig
 # running hwsetup disturbs the speakup, so run "hwsetup -f" when speakup is used
 sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF "speakup=" \&\& speakupopt=" -f" ; \[ -x /usr/sbin/hwsetup \] \&\& hwsetup ${speakupopt}!g' /etc/init.d/autoconfig
 
+# fix path to udevadm in /etc/init.d/firmware
+[ -f /bin/udevadm ] && sed -i -e 's!/sbin/udevadm!/bin/udevadm!g' /etc/init.d/firmware
+
+# fix "WARNING: lvmetad is running but disabled" error message
+sed -i -e 's!use_lvmetad = 0!use_lvmetad = 1!g' /etc/lvm/lvm.conf
+
+# disable management of cgroups in openrc and redirect error messages
+sed -i -e 's!^.*rc_controller_cgroups="YES"$!rc_controller_cgroups="NO"!' /etc/rc.conf
+
 # disable netplug
 [ -f /etc/init.d/net.lo ] && sed -i -e 's/"netplugd"//' /etc/init.d/net.lo
 
@@ -213,7 +222,7 @@ echo "==> /usr/sbin/updatedb"
 if ! grep -q beta /root/version
 then
 	echo "==> running makewhatis"
-	makewhatis >/dev/null 2>&1
+	/usr/sbin/makewhatis >/dev/null 2>&1
 fi
 
 # create the locales:
@@ -272,6 +281,7 @@ then
 	/sbin/rc-update del sysctl boot
 	/sbin/rc-update del local default
 	/sbin/rc-update del mount-ro shutdown
+	/sbin/rc-update del loopback boot
 
 	# remove services which don't make sense on a livecd
 	rm -f /etc/init.d/checkfs

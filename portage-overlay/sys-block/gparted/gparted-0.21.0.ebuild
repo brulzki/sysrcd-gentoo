@@ -81,7 +81,5 @@ src_install() {
 
 	if use gtk; then
 		echo "NotShowIn=KDE;" >> "${D}"/usr/share/applications/gparted.desktop
-	else
-		echo "OnlyShowIn=X-NeverShowThis;" >> "${D}"/usr/share/applications/gparted.desktop
 	fi
 }

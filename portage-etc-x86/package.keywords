@@ -1,7 +1,9 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
-=net-misc/modemmanager-0.6* ~*
+=x11-drivers/xf86-video-siliconmotion-1.7.7-r1 ~*
+=net-misc/modemmanager-1.4* ~*
+=sys-boot/efibootmgr-0.6* ~*
 =app-text/epdfview-0.1.8* ~*
 =www-client/midori-0.5.5* ~*
 =net-misc/pssh-2.3* ~*
@@ -11,9 +13,6 @@ x11-misc/grsync
 sys-block/whdd ~*
 app-arch/pixz ~*
 app-crypt/nwipe ~*
-sys-apps/usbutils ~*
-sys-apps/pciutils ~*
-sys-boot/grub ~*
 app-arch/pxz ~*
 app-misc/scrub ~*
 dev-util/geany ~*
@@ -34,7 +33,6 @@ perl-core/Pod-Simple ~*
 sys-block/lsiutil ~*
 sys-libs/openipmi ~*
 sys-fs/dd-rescue ~*
-sys-boot/efibootmgr ~*
 app-forensics/foremost ~*
 sys-fs/diskdev_cmds ~*
 sys-block/open-iscsi ~*
@@ -54,7 +52,6 @@ sys-kernel/aufs-sources ~*
 app-emulation/open-vm-tools-kmod ~*
 app-emulation/open-vm-tools ~*
 www-servers/thttpd ~*
-app-arch/lz4 ~*
 
 # kernel related packages
 sys-kernel/linux-firmware ~*

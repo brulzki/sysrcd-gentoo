@@ -565,6 +565,7 @@ then
 	PROG_MKVFATFS="${TMPDIR}/mkfs.vfat"
 	PROG_SYSLINUX="${TMPDIR}/syslinux"
 	PROG_DIALOG="${TMPDIR}/dialog"
+	export DIALOGRC="/dev/null"
 	# syslinux requires mtools
 	ln -s mtools ${TMPDIR}/mcopy
 	ln -s mtools ${TMPDIR}/mmove

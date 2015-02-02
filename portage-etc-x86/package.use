@@ -14,6 +14,8 @@ sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
 www-client/midori deprecated -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
+sys-apps/man-db -nls
+dev-libs/popt -nls
 app-arch/bzip2 static-libs
 app-arch/xz-utils threads -nls static-libs
 dev-libs/lzo static-libs

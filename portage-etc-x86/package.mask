@@ -1,10 +1,15 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-fs/udev-212
->=sys-devel/gcc-4.5
->=sys-libs/glibc-2.18
->=sys-apps/paludis-2.0
+>=sys-fs/udev-217
+>=sys-apps/kmod-19
+>=sys-devel/gcc-4.8.99
+>=sys-libs/glibc-2.17.99
+>=sys-fs/lvm2-2.02.110
+>=sys-apps/openrc-0.12.99
+>=sys-fs/udev-init-scripts-27
+>=sys-apps/busybox-1.23.0
+>=net-fs/nfs-utils-1.3.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=dev-lang/perl-5.18.9
@@ -13,20 +18,18 @@
 >=sys-kernel/vanilla-sources-3.0.999
 >=sys-kernel/gentoo-sources-3.10.999
 >=sys-kernel/aufs-sources-3.10.999
->=sys-kernel/linux-headers-3.10.999
->=sys-kernel/std-sources-3.10.999
->=sys-kernel/alt-sources-3.14.999
+>=sys-kernel/linux-headers-3.14.999
+>=sys-kernel/std-sources-3.14.999
+>=sys-kernel/alt-sources-3.18.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
-<dev-lang/ruby-2.0.0_p353
+<dev-lang/ruby-2.0.0_p598
 >dev-lang/ruby-2.0.0_p999
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
-<sys-boot/grub-0.97-r13
->sys-boot/grub-0.97-r13
-<dev-libs/openssl-1.0.1i
+>app-crypt/gnupg-2.1.0
 
 # perl
 perl-core/Archive-Tar
@@ -59,14 +62,8 @@ dev-perl/Text-CharWidth
 dev-perl/Text-WrapI18N
 
 # block gtk+-3.x and its deps
->x11-libs/gtk+-2.99
->dev-cpp/gtkmm-2.24.4
 >net-libs/webkit-gtk-1.8.3-r201
 <net-libs/webkit-gtk-1.8.3-r201
->gnome-base/gconf-2.99
->gnome-base/libgnome-keyring-2.99
->gnome-base/gnome-keyring-2.99
->x11-misc/spacefm-0.9.0
 
 # packages to avoid
 x11-themes/sound-theme-freedesktop
@@ -86,14 +83,6 @@ x11-apps/appres
 dev-lang/lua
 
 # modified packages
-<gnome-extra/nm-applet-0.9.6.4
->gnome-extra/nm-applet-0.9.6.4
-<net-misc/modemmanager-0.6.0.0
->net-misc/modemmanager-0.6.0.0
->net-misc/networkmanager-0.9.6.4
->net-misc/networkmanager-vpnc-0.9.6.0
->net-misc/networkmanager-openvpn-0.9.6.0
->net-misc/modemmanager-0.6.0.0
 <www-servers/thttpd-2.26.4-r3
 >www-servers/thttpd-2.26.4-r3
 <app-misc/livecd-tools-2.0.3

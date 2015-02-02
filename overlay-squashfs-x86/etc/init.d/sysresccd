@@ -19,6 +19,7 @@ start()
 
 	# ---- create various directories ----
 	mkdir -p /var/log/samba
+	mkdir -p /var/log/glusterfs
 	mkdir -p /var/cache/revdep-rebuild
 	mkdir -p /var/run/dhcp
 	mkdir -p /var/lib/misc
