@@ -6,6 +6,8 @@
 =sys-boot/efibootmgr-0.6* ~*
 =app-text/epdfview-0.1.8* ~*
 =www-client/midori-0.5.5* ~*
+=sys-fs/btrfs-progs-3.18* ~*
+=sys-devel/libtool-2.4.4* ~*
 =net-misc/pssh-2.3* ~*
 =net-misc/remmina-1.0* ~*
 =dev-ruby/builder-3.1.4* ~*

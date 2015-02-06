@@ -4,7 +4,7 @@
 >=sys-fs/udev-217
 >=sys-apps/kmod-19
 >=sys-devel/gcc-4.8.99
->=sys-libs/glibc-2.17.99
+>=sys-libs/glibc-2.19.99
 >=sys-fs/lvm2-2.02.110
 >=sys-apps/openrc-0.12.99
 >=sys-fs/udev-init-scripts-27
@@ -25,6 +25,7 @@
 >sys-kernel/genkernel-3.4.45
 <dev-lang/ruby-2.0.0_p598
 >dev-lang/ruby-2.0.0_p999
+<sys-devel/libtool-2.4.4
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2

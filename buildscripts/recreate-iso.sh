@@ -2,7 +2,7 @@
 
 VERSION_MAJ=4
 VERSION_MIN=5
-VERSION_PAT=0
+VERSION_PAT=1
 
 # ==================================================================
 # ==================================================================
@@ -62,6 +62,19 @@ cp /mnt/cdrom/image.squashfs ${TEMPDIR}/sysrcd.dat
 CDTYPE="$(cat /mnt/cdrom/image.squashfs.txt)"
 CDVERS="$(cat ${REPOSRC}/overlay-squashfs-x86/root/version)"
 umount /mnt/cdrom
+
+# ========= update grub modules ================================================
+# The modules must match the grub verison which provides /usr/bin/grub2-mkimage
+# hence they must both come from the OS which runs this script
+GRUBDST="${REPOBIN}/overlay-iso-x86/boot/grub/x86_64-efi"
+GRUBSRC="/usr/lib64/grub/x86_64-efi"
+rm -rf ${GRUBDST}
+mkdir -p ${GRUBDST}
+if ! rsync -a ${GRUBSRC}/{*.mod,*.lst} "${GRUBDST}/"
+then
+	echo "Failed to rsync grub modules: rsync -a ${GRUBSRC}/{*.mod,*.lst} ${GRUBDST}/"
+	exit 1
+fi
 
 # ========= copy files from overlays ===========================================
 rsync -ax ${REPOBIN}/overlay-iso-x86/ "${TEMPDIR}/"

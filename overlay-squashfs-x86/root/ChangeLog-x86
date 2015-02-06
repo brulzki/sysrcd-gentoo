@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.5.1 (2015-02-06)
+-------------------------------------------------------------------------------
+* Fixed and updated grub to version 2.02_beta2-r3 in the UEFI boot image
+* Updated glibc to 2.19-r1 in order to fix security vulnerability CVE-2015-0235
+* Updated firmwares in the initramfs and btrfs tools: btrfs-progs-3.18.2
+
+-------------------------------------------------------------------------------
 4.5.0 (2015-02-02)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.31 (rescue32 + rescue64)
