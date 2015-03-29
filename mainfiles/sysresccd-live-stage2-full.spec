@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20150201
+snapshot: 20150325
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -208,6 +208,7 @@ livecd/rm:
 	/usr/*/lib/{libbfd.a,libiberty.a,libopcodes.a}
 	/usr/lib/binutils/*/*/libbfd.{a,la}
 	/usr/lib/binutils/*/*/libopcodes.{a,la}
+	/usr/lib/lib{gfxdr.la,glusterfs.la,gfrpc.la}
 	/usr/lib/glusterfs/*/*.la
 	/usr/lib/glusterfs/*/*/*.la
 	/usr/lib/glusterfs/*/*/*/*.la

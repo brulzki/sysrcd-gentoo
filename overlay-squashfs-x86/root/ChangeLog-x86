@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.5.2 (2015-03-30)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.14.35 (rescue32 + rescue64)
+* Alternative kernels: updated to stable linux-3.18.10 (altker32 + altker64)
+* Updated GParted to 0.22.0 (support for unpartitioned whole disk drives)
+* Updated Xorg environment and drivers to x11-base/xorg-server-1.16.4
+* Updated Network-Manager packages to 1.0.0
+
+-------------------------------------------------------------------------------
 4.5.1 (2015-02-06)
 -------------------------------------------------------------------------------
 * Fixed and updated grub to version 2.02_beta2-r3 in the UEFI boot image

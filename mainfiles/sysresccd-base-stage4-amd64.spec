@@ -3,7 +3,7 @@ version_stamp: baseos
 target: stage4
 rel_type: default
 profile: default/linux/amd64/13.0
-snapshot: 20150201
+snapshot: 20150325
 source_subpath: default/stage3-amd64-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay

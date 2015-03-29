@@ -2,7 +2,7 @@ inherit eutils
 
 DESCRIPTION="Outil Systeme Complet d'Assistance Reseau"
 HOMEPAGE="http://oscar.crdp-lyon.fr/wiki/"
-SRC_URI="http://www2.ac-lyon.fr/enseigne/electronique/oscar/livecd/${P}.tar.gz"
+SRC_URI="http://oscar.crdp-lyon.fr/wiki/_media/pub/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

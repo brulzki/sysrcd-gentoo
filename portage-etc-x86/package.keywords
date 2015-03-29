@@ -2,11 +2,11 @@
 
 # Misc packages
 =x11-drivers/xf86-video-siliconmotion-1.7.7-r1 ~*
+=net-misc/tigervnc-1.3.1-r4 ~*
 =net-misc/modemmanager-1.4* ~*
 =sys-boot/efibootmgr-0.6* ~*
 =app-text/epdfview-0.1.8* ~*
 =www-client/midori-0.5.5* ~*
-=sys-fs/btrfs-progs-3.18* ~*
 =sys-devel/libtool-2.4.4* ~*
 =net-misc/pssh-2.3* ~*
 =net-misc/remmina-1.0* ~*
@@ -65,10 +65,10 @@ sys-kernel/genkernel ~*
 # disk and filesystems
 =sys-fs/squashfs-tools-4.3* ~*
 =sys-libs/e2fsprogs-libs-1.42* ~*
-=sys-cluster/glusterfs-3.4* ~*
+=sys-cluster/glusterfs-3.5* ~*
 =sys-cluster/ceph-0.67* ~*
 =sys-fs/e2fsprogs-1.42* ~*
-=sys-fs/btrfs-progs-3.17* ~*
+=sys-fs/btrfs-progs-3.18* ~*
 =sys-libs/libaal-1.0.6* ~*
 =sys-fs/reiser4progs-1.0.9* ~*
 =sys-cluster/drbd-8.4.3* ~*

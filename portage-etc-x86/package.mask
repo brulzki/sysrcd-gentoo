@@ -100,6 +100,5 @@ dev-lang/lua
 >=net-fs/samba-3.6.99
 >=app-cdr/cdrtools-3.01_alpha1
 >=sys-devel/autogen-5.18
->=app-editors/zile-2.4.10
 dev-libs/libusbx
 
