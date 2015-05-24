@@ -51,8 +51,6 @@ RDEPEND="${COMMON_DEPEND}
 	xfs? ( sys-fs/xfsprogs sys-fs/xfsdump )
 "
 DEPEND="${COMMON_DEPEND}
-	app-text/docbook-xml-dtd:4.1.2
-	app-text/gnome-doc-utils
 	app-text/rarian
 	dev-util/intltool
 	virtual/pkgconfig
@@ -65,7 +63,7 @@ src_prepare() {
 
 src_configure() {
 	gnome2_src_configure \
-		--enable-doc \
+		--disable-doc \
 		--enable-online-resize \
 		GKSUPROG=$(type -P true)
 }

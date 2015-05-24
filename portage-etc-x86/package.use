@@ -48,6 +48,7 @@ net-print/cups -perl -python
 dev-vcs/git -perl -gtk
 net-wireless/wpa_supplicant dbus
 net-misc/networkmanager -doc -dhcpcd -nss modemmanager dhclient gnutls
+net-misc/modemmanager -qmi
 media-libs/freetype -bindist
 app-text/ghostscript-gpl -cups
 app-crypt/truecrypt -X

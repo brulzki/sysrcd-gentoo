@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20150325
+snapshot: 20150522
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -56,14 +56,13 @@ livecd/packages:
 	app-backup/bacula
 	app-backup/dar
 	app-backup/fsarchiver
-	app-backup/rsnapshot
+	#app-backup/rsnapshot
 	app-backup/tob
 	app-benchmarks/bonnie++
 	app-benchmarks/cpuburn
 	app-benchmarks/iozone
 	app-benchmarks/stress
 	app-benchmarks/systester
-	app-cdr/cdw
 	app-cdr/dvd+rw-tools
 	app-crypt/chntpw
 	app-crypt/md5deep
