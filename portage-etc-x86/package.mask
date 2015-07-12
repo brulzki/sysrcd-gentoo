@@ -95,6 +95,7 @@ dev-lang/lua
 >app-cdr/cdw-0.7.1
 
 # fix problems
+=app-portage/portage-utils-0.56
 =app-text/docbook-xml-dtd-4.1.2
 >=net-fs/samba-3.6.99
 >=app-cdr/cdrtools-3.01_alpha1

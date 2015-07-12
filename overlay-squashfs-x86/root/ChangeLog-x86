@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.5.4 (2015-07-13)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.14.48 (rescue32 + rescue64)
+* Alternative kernels: updated to stable linux-3.18.18 (altker32 + altker64)
+* Updated fs tools: e2fsprogs-1.42.13, btrfs-progs-4.0.1, xfsprogs-3.2.2
+
+-------------------------------------------------------------------------------
 4.5.3 (2015-05-25)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.43 (rescue32 + rescue64)

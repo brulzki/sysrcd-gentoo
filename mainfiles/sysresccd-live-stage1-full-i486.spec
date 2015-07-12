@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20150522
+snapshot: 20150626
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -60,7 +60,7 @@ livecd/packages:
 	app-backup/dar
 	app-backup/duplicity
 	app-backup/fsarchiver
-	#app-backup/rsnapshot
+	app-backup/rsnapshot
 	app-backup/tob
 	app-benchmarks/bonnie++
 	app-benchmarks/cpuburn

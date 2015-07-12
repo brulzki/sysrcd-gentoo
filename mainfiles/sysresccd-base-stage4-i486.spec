@@ -3,7 +3,7 @@ version_stamp: baseos
 target: stage4
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20150522
+snapshot: 20150626
 source_subpath: default/stage3-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -24,7 +24,6 @@ stage4/packages:
 	dev-perl/YAML-Syck
 	dev-util/intltool
 	dev-util/pkgconfig
-	perl-core/File-Spec
 	perl-core/Pod-Simple
 	sys-apps/file
 	sys-devel/bc

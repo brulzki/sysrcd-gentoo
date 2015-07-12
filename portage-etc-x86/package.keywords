@@ -55,11 +55,11 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-cluster/ceph-0.80* ~*
-=sys-fs/btrfs-progs-3.19* ~*
+=sys-fs/btrfs-progs-4.0* ~*
+=sys-libs/e2fsprogs-libs-1.42.13* ~*
+=sys-fs/e2fsprogs-1.42.13* ~*
 =sys-cluster/glusterfs-3.5* ~*
 =sys-cluster/drbd-8.4.3* ~*
-=app-admin/testdisk-7.0* ~*
 sys-fs/ext3grep ~*
 sys-fs/zerofree ~*
 sys-fs/fuse-exfat ~*
