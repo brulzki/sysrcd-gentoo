@@ -13,22 +13,25 @@
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=dev-lang/perl-5.20.999
->=sys-kernel/vanilla-sources-3.0.999
->=sys-kernel/gentoo-sources-3.10.999
->=sys-kernel/aufs-sources-3.10.999
->=sys-kernel/linux-headers-3.14.999
+>=sys-kernel/vanilla-sources-3.18.999
+>=sys-kernel/gentoo-sources-3.18.999
+>=sys-kernel/aufs-sources-3.18.999
+<=sys-kernel/linux-headers-3.14
+>=sys-kernel/linux-headers-3.18.999
 >=sys-kernel/std-sources-3.14.999
->=sys-kernel/alt-sources-3.18.999
+>=sys-kernel/alt-sources-4.1.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
-<dev-lang/ruby-2.0.0_p598
->dev-lang/ruby-2.0.0_p999
+<dev-lang/ruby-2.1.6
+>dev-lang/ruby-2.1.999
 <sys-devel/libtool-2.4.4
 
 # misc packages
 <sys-fs/dmraid-1.0.0_rc16-r2
 >sys-fs/dmraid-1.0.0_rc16-r2
 >app-crypt/gnupg-2.1.0
+>sys-libs/ncurses-5.9-r9
+>sys-kernel/linux-firmware-20150801
 
 # perl
 perl-core/Archive-Tar
@@ -91,6 +94,8 @@ dev-lang/lua
 <app-admin/testdisk-7.0
 <sys-block/parted-3.2
 >sys-block/parted-3.2.999
+<www-client/midori-0.5.5
+>www-client/midori-0.5.5
 <app-cdr/cdw-0.7.1
 >app-cdr/cdw-0.7.1
 
@@ -101,4 +106,5 @@ dev-lang/lua
 >=app-cdr/cdrtools-3.01_alpha1
 >=sys-devel/autogen-5.18
 dev-libs/libusbx
+x11-misc/slock
 

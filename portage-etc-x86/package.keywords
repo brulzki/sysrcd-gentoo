@@ -4,7 +4,7 @@
 =net-misc/modemmanager-1.4* ~*
 =app-text/epdfview-0.1.8* ~*
 =net-misc/remmina-1.0* ~*
-=dev-ruby/builder-3.1.4* ~*
+=dev-ruby/builder-3.2.2* ~*
 =sys-fs/aufs-headers-3.19* ~*
 =sys-fs/aufs-util-3.19* ~*
 sys-block/whdd ~*
@@ -55,7 +55,7 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-fs/btrfs-progs-4.0* ~*
+=sys-fs/btrfs-progs-4.1* ~*
 =sys-libs/e2fsprogs-libs-1.42.13* ~*
 =sys-fs/e2fsprogs-1.42.13* ~*
 =sys-cluster/glusterfs-3.5* ~*

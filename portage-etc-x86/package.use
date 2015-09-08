@@ -30,7 +30,7 @@ sys-fs/lvm2 lvm1 readline udev -static -thin -clvm -cman -gulm -selinux
 sys-fs/udev extras gudev -static-libs
 virtual/udev gudev -static-libs
 sys-apps/util-linux crypt unicode loop-aes
-net-fs/samba aio acl readline client server kernel_linux syslog examples winbind -smbclient -ipv6 -cups -netapi -pam -fam
+net-fs/samba aio acl readline client server kernel_linux syslog examples winbind smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
 sys-fs/progsreiserfs static-libs
 dev-libs/libgpg-error static-libs

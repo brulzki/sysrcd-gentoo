@@ -6,6 +6,16 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.6.0 (2015-09-08)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.14.50 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.1.6 (altker32 + altker64)
+* Updated XFCE Desktop environment to version 4.12, GParted to 0.23.0
+* Updated filesystem tools: btrfs-progs-4.1.2, xfsprogs-3.2.4
+* Updated Grub2 bootloader to sys-boot/grub-2.02_beta2-r7
+* Updated ruby package to dev-lang/ruby-2.1.6
+
+-------------------------------------------------------------------------------
 4.5.4 (2015-07-13)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.48 (rescue32 + rescue64)
