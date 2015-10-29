@@ -6,6 +6,13 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.6.1 (2015-10-29)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.14.56 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.1.12 (altker32 + altker64)
+* Updated filesystem tools: GParted-0.24.0, btrfs-progs-4.2.2
+
+-------------------------------------------------------------------------------
 4.6.0 (2015-09-08)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.50 (rescue32 + rescue64)

@@ -1,6 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
+=app-portage/portage-utils-0.55 ~*
 =net-misc/modemmanager-1.4* ~*
 =app-text/epdfview-0.1.8* ~*
 =net-misc/remmina-1.0* ~*
@@ -55,7 +56,7 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-fs/btrfs-progs-4.1* ~*
+=sys-fs/btrfs-progs-4.2* ~*
 =sys-libs/e2fsprogs-libs-1.42.13* ~*
 =sys-fs/e2fsprogs-1.42.13* ~*
 =sys-cluster/glusterfs-3.5* ~*

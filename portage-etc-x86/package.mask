@@ -4,7 +4,7 @@
 >=sys-fs/udev-217
 >=sys-apps/kmod-19
 >=sys-devel/gcc-4.8.99
->=sys-libs/glibc-2.19.99
+>=sys-libs/glibc-2.20.99
 >=sys-fs/lvm2-2.02.110
 >=sys-apps/openrc-0.12.99
 >=sys-fs/udev-init-scripts-27
@@ -100,6 +100,7 @@ dev-lang/lua
 >app-cdr/cdw-0.7.1
 
 # fix problems
+=x11-drivers/xf86-video-s3virge-1.10.7
 =app-portage/portage-utils-0.56
 =app-text/docbook-xml-dtd-4.1.2
 >=net-fs/samba-3.6.99

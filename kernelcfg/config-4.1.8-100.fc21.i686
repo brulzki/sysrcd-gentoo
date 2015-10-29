@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/i386 4.1.4-100.fc21.i686 Kernel Configuration
+# Linux/i386 4.1.8-100.fc21.i686 Kernel Configuration
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -6009,9 +6009,7 @@ CONFIG_ISCSI_IBFT=m
 #
 # EFI (Extensible Firmware Interface) Support
 #
-CONFIG_EFI_VARS=y
-CONFIG_EFI_VARS_PSTORE=y
-CONFIG_EFI_VARS_PSTORE_DEFAULT_DISABLE=y
+# CONFIG_EFI_VARS is not set
 CONFIG_EFI_RUNTIME_MAP=y
 CONFIG_EFI_RUNTIME_WRAPPERS=y
 CONFIG_UEFI_CPER=y

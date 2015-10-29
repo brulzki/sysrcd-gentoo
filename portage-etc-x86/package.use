@@ -20,6 +20,7 @@ app-arch/bzip2 static-libs
 app-arch/xz-utils threads -nls static-libs
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
+app-crypt/gcr gtk
 media-libs/jpeg static-libs
 app-backup/fsarchiver lzma lzo gcrypt -static
 sys-fs/xfsprogs -readline
@@ -109,3 +110,4 @@ sys-libs/talloc python
 sys-apps/hwids udev
 sys-apps/busybox mdev
 app-emulation/open-vm-tools -modules
+app-crypt/pinentry gnome-keyring
