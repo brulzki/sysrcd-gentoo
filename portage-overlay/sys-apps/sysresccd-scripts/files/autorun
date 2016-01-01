@@ -130,7 +130,7 @@ def main():
 		commands.getstatusoutput(mnt2)
 	elif re.match('^nfs://', ar_source): # mount an nfs share
 		source=ar_source.replace('nfs://','')
-		mnt1='mount -t nfs %s %s'%(source, autorunmnt)
+		mnt1='mount -t nfs -o nolock %s %s'%(source, autorunmnt)
 		mnt2='umount %s'%autorunmnt
 		(status, output)=commands.getstatusoutput(mnt1)
 		if status!=0:

@@ -10,7 +10,7 @@ diff -urN catalyst-2.0.17-000/modules/generic_stage_target.py catalyst-2.0.17-00
 +			myf.write('ACCEPT_LICENSE="*"\n')
 +			myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
 +			myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
-+			myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned"\n')
++			myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned -xattr"\n')
  
  			if "LDFLAGS" in self.settings:
  				myf.write("# LDFLAGS is unsupported.  USE AT YOUR OWN RISK!\n")

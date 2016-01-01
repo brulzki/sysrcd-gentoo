@@ -12,7 +12,7 @@ sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
-www-client/midori deprecated -sqlite -unique -doc -gnome -html -idn -libnotify
+www-client/midori deprecated -webkit2 -sqlite -unique -doc -gnome -html -idn -libnotify
 sys-block/partimage ssl -nologin -nls pam -static
 sys-apps/man-db -nls
 dev-libs/popt -nls
@@ -28,8 +28,8 @@ app-editors/vim -X -gpm -minimal -perl -python bash-completion
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba slang 7zip
 sys-fs/lvm2 lvm1 readline udev -static -thin -clvm -cman -gulm -selinux
-sys-fs/udev extras gudev -static-libs
-virtual/udev gudev -static-libs
+sys-fs/udev extras -gudev -static-libs
+virtual/udev -gudev -static-libs
 sys-apps/util-linux crypt unicode loop-aes
 net-fs/samba aio acl readline client server kernel_linux syslog examples winbind smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
@@ -82,7 +82,7 @@ x11-libs/libwnck -introspection
 net-libs/webkit-gtk -introspection -geoloc -webgl
 gnome-base/librsvg -introspection
 app-text/evince -introspection
-media-libs/mesa gallium xa -llvm egl gbm -classic -xorg
+media-libs/mesa gallium xa llvm egl gbm classic -xorg
 x11-libs/libdrm libkms
 sys-apps/lshw -sqlite -static
 sys-boot/grub multislot device-mapper mount -truetype -efiemu
@@ -92,6 +92,7 @@ media-fonts/font-cursor-misc nls
 media-fonts/font-misc-misc nls
 app-backup/dar gcrypt
 x11-misc/xdg-user-dirs -gtk
+x11-misc/spacefm -video-thumbnails -gtk2 gtk3
 sys-auth/polkit -gtk -introspection -systemd
 sys-auth/consolekit policykit
 sys-auth/pambase -consolekit
@@ -100,6 +101,7 @@ sys-apps/shadow -cracklib -pam
 dev-util/pkgconf pkg-config
 virtual/python-argparse python_targets_python3_2
 dev-python/pyxattr python_targets_python3_2
+app-text/asciidoc python_single_target_python2_7
 app-backup/rdiff-backup -acl
 net-fs/cifs-utils caps -acl
 net-ftp/lftp ssl gnutls

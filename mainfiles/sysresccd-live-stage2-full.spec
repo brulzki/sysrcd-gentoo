@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20151015
+snapshot: 20151215
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -59,6 +59,7 @@ livecd/unmerge:
 	media-fonts/font-util
 	x11-misc/util-macros
 	sys-devel/gettext
+	sys-devel/llvm
 	x11-proto/compositeproto
 	x11-proto/damageproto
 	x11-proto/dri2proto
@@ -112,6 +113,7 @@ livecd/unmerge:
 	app-text/opensp
 	app-text/po4a
 	app-text/sgml-common
+	media-video/ffmpeg
 
 livecd/empty:
 	/var/cache/revdep-rebuild

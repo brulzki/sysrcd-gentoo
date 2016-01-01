@@ -6,6 +6,15 @@ Forums:.........http://www.sysresccd.org/forums/
 Manual:.........http://www.sysresccd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.7.0 (2016-01-01)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.18.25 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.1.15 (altker32 + altker64)
+* Updated Xorg environment and drivers to x11-base/xorg-server-1.17.4
+* Updated filesystem tools: btrfs-progs-4.3.1, partclone-0.2.80
+* Updated OpenRC to sys-apps/openrc-0.18.4
+
+-------------------------------------------------------------------------------
 4.6.1 (2015-10-29)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.56 (rescue32 + rescue64)
