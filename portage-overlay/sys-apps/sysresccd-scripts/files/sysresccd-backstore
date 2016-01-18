@@ -1,5 +1,5 @@
 #!/bin/bash
-# Project page: http://www.sysresccd.org/
+# Project page: http://www.system-rescue-cd.org/
 # By Francois Dupoux
 # (C) 2003-2008 Francois Dupoux
 # This scipt is available under the GPL-2 license.
@@ -23,7 +23,7 @@ Commands:
 
  -h|--help	                           Display this screen
 
-Copyright 2008 Francois Dupoux. (http://www.sysresccd.org)
+Copyright 2008 Francois Dupoux. (http://www.system-rescue-cd.org)
 Distributed under the GNU Public License version 2
 EOF
 }
@@ -36,7 +36,7 @@ help_readman()
 {
 	echo "$1"
 	echo "Please, read the manual for more help about this script"
-	echo "Web: http://www.sysresccd.org"
+	echo "Web: http://www.system-rescue-cd.org"
 	exit 1
 }
 

@@ -4,7 +4,7 @@
 <ALL> This page tells you how to boot SystemRescueCd from the network using PXE.
 <ALL> 
 <ALL> For more help read the SystemRescueCd manual or find support in the forums:
-<ALL> 02www.sysresccd.org/Online-Manual-EN07
+<ALL> 02www.system-rescue-cd.org/Online-Manual-EN07
 <ALL> 
 <ALL> 0C*07 0EAbout PXE Network booting07:
 <ALL> SystemRescueCd provides a PXE-boot-server out of the box. You just have

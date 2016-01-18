@@ -1,5 +1,5 @@
 #!/bin/bash
-# Project page: http://www.sysresccd.org/
+# Project page: http://www.system-rescue-cd.org/
 # (C) 2003-2008 Francois Dupoux
 # This scipt is available under the GPL-2 license
 
@@ -20,10 +20,10 @@ Available packages categories:
  -h|--help	    Display this screen
 
 Please, read the manual for help about how to use this script.
-http://www.sysresccd.org/Sysresccd-manual-en_How_to_personalize_SystemRescueCd
+http://www.system-rescue-cd.org/Sysresccd-manual-en_How_to_personalize_SystemRescueCd
 This script must be executed inside the chroot environment.
 
-Distributed under the GNU Public License version 2 - http://www.sysresccd.org
+Distributed under the GNU Public License version 2 - http://www.system-rescue-cd.org
 EOF
 }
 

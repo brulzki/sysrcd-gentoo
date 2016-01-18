@@ -1,7 +1,7 @@
 inherit eutils
 
 DESCRIPTION="admin scripts provided with SystemRescueCd"
-HOMEPAGE="http://www.sysresccd.org"
+HOMEPAGE="http://www.system-rescue-cd.org"
 
 LICENSE="GPL-2"
 SLOT="0"

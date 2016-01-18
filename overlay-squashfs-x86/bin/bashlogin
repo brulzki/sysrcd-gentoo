@@ -34,7 +34,7 @@ fi
 
 fbecho
 echo -e "${lc1} =========== ${lc2}SystemRescue-Cd${lc1} -----${VERSION}=========== ${lc2}$(basename $(tty))${dc2}/6 ${lc1}=="
-echo -e "                      ${dc1}http://www.sysresccd.org/"
+echo -e "                     ${dc1}http://www.system-rescue-cd.org/"
 echo
 echo -e "${dc1}*${dc2} Type ${lc2}net-setup eth0${dc2} to specify ethernet configuration."
 echo -e "${dc1}*${dc2} If your PC is on an ethernet local network, you can configure by hand:"

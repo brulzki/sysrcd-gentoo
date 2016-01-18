@@ -1,6 +1,6 @@
 
 ================================================================
-Welcome to SystemRescueCd 0.4.0 for SPARC    (www.sysresccd.org)
+Welcome to SystemRescueCd 0.4.0 for SPARC    (www.system-rescue-cd.org)
 ================================================================
 
 ________BOOT IMAGES__________

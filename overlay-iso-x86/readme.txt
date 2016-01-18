@@ -1,13 +1,13 @@
 ##############################################################################
 #                                                                            #
-# Project page: http://www.sysresccd.org/                                    #
+# Project page: http://www.system-rescue-cd.org/                                    #
 # (C) 2013 Francois Dupoux                                                   #
 #                                                                            #
 ###############################################################################
 
 You may want to modify the CDRom version of SystemRescueCd (ISO image file).
 This can be useful in order to add your own script or SRM files 
-(SystemRescueCd modules: http://www.sysresccd.org/Modules). Module provide
+(SystemRescueCd modules: http://www.system-rescue-cd.org/Modules). Module provide
 support for extra programs which are not included in the standard version.
 
 There are two ways to customize the ISO image of SystemRescueCd:

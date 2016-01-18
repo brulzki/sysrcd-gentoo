@@ -1,7 +1,7 @@
 inherit eutils
 
 DESCRIPTION="dump/restore disk layout (msdos-disklabel + lvm-layout) to a text file"
-HOMEPAGE="http://www.sysresccd.org"
+HOMEPAGE="http://www.system-rescue-cd.org"
 
 LICENSE="GPL-2"
 SLOT="0"

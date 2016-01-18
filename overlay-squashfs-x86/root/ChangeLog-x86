@@ -1,9 +1,16 @@
 This is the ChangeLog of SystemRescueCd (x86 edition)
 =====================================================
 
-Homepage:.......http://www.sysresccd.org/
-Forums:.........http://www.sysresccd.org/forums/
-Manual:.........http://www.sysresccd.org/Online-Manual-EN
+Homepage:.......http://www.system-rescue-cd.org/
+Forums:.........http://www.system-rescue-cd.org/forums/
+Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
+
+-------------------------------------------------------------------------------
+4.7.1 (2016-01-18)
+-------------------------------------------------------------------------------
+* Updated filesystem tools: xfsprogs-4.3.0 + xfsdump-3.1.6 (updates for XFSv5)
+* Updated fsarchiver to 0.6.21 (Improves support for XFS filesystem)
+* Updated GParted to 0.25.0
 
 -------------------------------------------------------------------------------
 4.7.0 (2016-01-01)

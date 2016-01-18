@@ -9,7 +9,7 @@ inherit gnome2
 
 DESCRIPTION="Gnome Partition Editor"
 HOMEPAGE="http://gparted.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2+ FDL-1.2+"
 SLOT="0"

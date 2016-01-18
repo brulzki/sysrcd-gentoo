@@ -59,6 +59,10 @@ sed -i -e 's!^.*rc_controller_cgroups="YES"$!rc_controller_cgroups="NO"!' /etc/r
 # make ssh-keygen silent in the sshd initscript
 sed -i -e 's!ssh-keygen -t!ssh-keygen -q -t!g' /etc/init.d/sshd
 
+# Authorize ssh login as root so the "rootpass" option works
+sed -i -e '/^PermitRootLogin/d' /etc/ssh/sshd_config
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
 # disable DHCP by default in autoconfig
 sed -i -e 's/DHCP="yes"/DHCP="no"/' /etc/conf.d/autoconfig
 
@@ -76,7 +80,7 @@ rm -f /etc/init.d/xdm
 echo "rc_sys=''" >> /etc/rc.conf
 
 # don't overwrite /proc/sys/kernel/printk in /etc/init.d/autoconfig
-# http://www.sysresccd.org/forums/viewtopic.php?p=5800
+# http://www.system-rescue-cd.org/forums/viewtopic.php?p=5800
 sed -i -r -e 's!echo "[0-9]" > /proc/sys/kernel/printk!!g' /etc/init.d/autoconfig
 
 # use bashlogin in /etc/inittab
@@ -129,7 +133,7 @@ then
 	sed -i -e 's!exit $retval!source /etc/conf.d/consolefont\nsetfont $CONSOLEFONT\nexit $retval!' /usr/bin/startx
 fi
 
-# fix bug with DHCP and NetworkManager (http://www.sysresccd.org/forums/viewtopic.php?f=24&t=5055)
+# fix bug with DHCP and NetworkManager (http://www.system-rescue-cd.org/forums/viewtopic.php?f=24&t=5055)
 sed -i -e '/dhcp-client-identifier/d' /etc/dhcp/dhclient.conf
 
 # for programs that expect syslog

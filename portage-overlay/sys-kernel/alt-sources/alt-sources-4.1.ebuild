@@ -7,7 +7,7 @@ S=${WORKDIR}/linux-${KV}
 DESCRIPTION="Full sources for the Linux kernel, including gentoo and sysresccd patches."
 SRC_URI="http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.1.tar.xz"
 PROVIDE="virtual/linux-sources"
-HOMEPAGE="http://kernel.sysresccd.org"
+HOMEPAGE="http://kernel.system-rescue-cd.org"
 DEPEND="sys-devel/bc"
 LICENSE="GPL-2"
 SLOT="${KV}"
@@ -30,6 +30,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt470/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt471/" Makefile
 }
 

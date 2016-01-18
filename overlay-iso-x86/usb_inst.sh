@@ -1,5 +1,5 @@
 #!/bin/bash
-# Project page: http://www.sysresccd.org/
+# Project page: http://www.system-rescue-cd.org/
 # (C) 2010 Francois Dupoux
 # This scipt is available under the GPL-2 license
 
@@ -23,7 +23,7 @@ ${PROGIMG}: SystemRescueCd installation script for USB-sticks
 Syntax: ${PROGIMG} <command> ...
 
 Please, read the manual for help about how to use this script.
-http://www.sysresccd.org/Online-Manual-EN
+http://www.system-rescue-cd.org/Online-Manual-EN
 
 You can either run all sub-commands in the appropriate order, or you
 can just use the semi-graphical menu which requires less effort:
@@ -41,7 +41,7 @@ B) Sub-commands for manual installation (execute in that order):
 C) Extra sub-commands:
    -h|--help	            Display these instructions
 
-Distributed under the GNU Public License version 2 - http://www.sysresccd.org
+Distributed under the GNU Public License version 2 - http://www.system-rescue-cd.org
 EOF
 }
 
@@ -51,7 +51,7 @@ help_readman()
 {
 	echo "$1"
 	echo "Please, read the manual for more help about this script"
-	echo "Web: http://www.sysresccd.org"
+	echo "Web: http://www.system-rescue-cd.org"
 	exit 1
 }
 

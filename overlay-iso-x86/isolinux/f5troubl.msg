@@ -4,7 +4,7 @@
 <ALL> This page tells you how to troubleshoot boot problems. Try these options if
 <ALL> you cannot boot (error during the kernel initialisation, screen frozen, ... )
 <ALL> For more help read the SystemRescueCd manual or find support in the forums:
-<ALL> 02www.sysresccd.org/Online-Manual-EN07 and 02http://www.sysresccd.org/forums/07
+<ALL> 02www.system-rescue-cd.org/Online-Manual-EN07 and 02http://www.system-rescue-cd.org/forums/07
 <ALL> 
 <ALL> 0C*07 0EProblems related to storage07 (hard disk / cdrom / usb stick):
 <ALL> 0C+07 you can try to disable the DMA speed optimisations: 0Fide=nodma07

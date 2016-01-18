@@ -8,7 +8,7 @@ show-menubar=true
 show-bookmarkbar=true
 toolbar-items=TabNew,Back,Forward,Next,ReloadStop,BookmarkAdd,Location,Search,Trash,
 load-on-startup=MIDORI_STARTUP_HOMEPAGE
-homepage=http://www.sysresccd.org/
+homepage=http://www.system-rescue-cd.org/
 location-entry-search=https://duckduckgo.com/?q=%s&t=sysrescue
 always-show-tabbar=true
 enable-spell-checking=false

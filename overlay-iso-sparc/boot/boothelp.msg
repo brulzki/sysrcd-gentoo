@@ -1,6 +1,6 @@
 
 ================================================================
-Welcome to SystemRescueCd for SPARC (www.sysresccd.org)   [help]
+Welcome to SystemRescueCd for SPARC (www.system-rescue-cd.org)   [help]
 ================================================================
 
 ________MAIN SCREEN__________
@@ -16,6 +16,6 @@ these boot problems:
 3. Cold boot instead of typing "boot cdrom". You will first have
    to define the cdrom as first boot device in OBP with 
    "setenv boot-device cdrom disk" and then poweroff and boot.
-More details about these problems on http://www.sysresccd.org and
+More details about these problems on http://www.system-rescue-cd.org and
 you can post questions in the SystemRescueCd forums.
 

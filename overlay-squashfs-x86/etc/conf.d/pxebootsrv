@@ -1,9 +1,9 @@
-# Copyright 2003-2007 Francois Dupoux - www.sysresccd.org
+# Copyright 2003-2007 Francois Dupoux - www.system-rescue-cd.org
 # Distributed under the terms of the GNU General Public License v2
 
 # Config file for /etc/init.d/pxebootsrv
 # Have a look at the PXE chapter in the official manual for more details:
-# http://www.sysresccd.org/Sysresccd-manual-en_PXE_network_booting
+# http://www.system-rescue-cd.org/Sysresccd-manual-en_PXE_network_booting
 
 # ------------------------- README ------------------------------------
 # The pxebootsrv service allows to provide a PXE-boot-server for 
