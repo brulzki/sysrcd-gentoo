@@ -1,13 +1,13 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
-=net-misc/modemmanager-1.4* ~*
 =net-misc/tigervnc-1.4.2-r2 ~*
 =app-text/epdfview-0.1.8* ~*
-=net-misc/remmina-1.0* ~*
 =dev-ruby/builder-3.2.2* ~*
 =sys-fs/aufs-headers-3.19* ~*
 =sys-fs/aufs-util-3.19* ~*
+=app-forensics/chkrootkit-0.50* ~*
+=sys-block/nbd-3.13* ~*
 sys-block/whdd ~*
 app-arch/pixz ~*
 app-crypt/nwipe ~*
@@ -38,7 +38,6 @@ app-admin/procinfo-ng ~*
 sys-apps/lm_sensors ~*
 sys-block/scsiadd ~*
 sys-apps/hdparm ~*
-sys-apps/gdisk ~*
 app-arch/pigz ~*
 sys-process/nmon ~*
 sys-block/ms-sys ~*
@@ -56,9 +55,7 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-fs/btrfs-progs-4.3* ~*
-=sys-libs/e2fsprogs-libs-1.42.13* ~*
-=sys-fs/e2fsprogs-1.42.13* ~*
+=sys-fs/btrfs-progs-4.4* ~*
 =sys-fs/xfsprogs-4.3* ~*
 =sys-fs/xfsdump-3.1* ~*
 =sys-cluster/glusterfs-3.5* ~*

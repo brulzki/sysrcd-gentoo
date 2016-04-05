@@ -72,6 +72,7 @@ www-client/elinks -X
 sys-fs/mtools -X
 app-cdr/cdw -gtk
 x11-libs/cairo X svg cleartype lcdfilter
+dev-cpp/cairomm svg
 gnome-extra/polkit-gnome -introspection
 x11-libs/gdk-pixbuf -introspection
 x11-libs/pango -introspection

@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160115
+snapshot: 20160401
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -317,6 +317,7 @@ livecd/packages:
 	sys-fs/ext3grep
 	sys-fs/extundelete
 	sys-fs/fuse-exfat
+	sys-fs/growpart
 	sys-fs/hfsplusutils
 	sys-fs/hfsutils
 	sys-fs/jfsutils
@@ -335,7 +336,7 @@ livecd/packages:
 	sys-fs/safecopy
 	sys-fs/scrounge-ntfs
 	sys-fs/squashfs-tools
-	sys-fs/sshfs-fuse
+	sys-fs/sshfs
 	sys-fs/sysfsutils
 	sys-fs/udftools
 	sys-fs/xfsdump
