@@ -27,7 +27,7 @@ sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl -python bash-completion
 app-editors/vim-core -livecd bash-completion
 app-misc/mc -gpm -ncurses -nls -samba slang 7zip
-sys-fs/lvm2 lvm1 readline udev -static -thin -clvm -cman -gulm -selinux
+sys-fs/lvm2 lvm1 readline udev thin -static -clvm -cman -gulm -selinux
 sys-fs/udev extras -gudev -static-libs
 virtual/udev -gudev -static-libs
 sys-apps/util-linux crypt unicode loop-aes

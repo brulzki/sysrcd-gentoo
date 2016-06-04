@@ -6,6 +6,14 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.7.3 (2016-06-04)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-3.18.34 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.1.25 (altker32 + altker64)
+* Updated LVM (Logical Volume Manager) to sys-fs/lvm2-2.02.116
+* Updated disk tools: GParted-0.26.0, btrfs-progs-4.5.3, partclone-0.2.88
+
+-------------------------------------------------------------------------------
 4.7.2 (2016-04-05)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.18.29 (rescue32 + rescue64)

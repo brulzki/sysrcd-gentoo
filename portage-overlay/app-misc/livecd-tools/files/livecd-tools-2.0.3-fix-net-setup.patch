@@ -1,7 +1,19 @@
-diff -urN livecd-tools-2.0.2-a/livecd-functions.sh livecd-tools-2.0.2-b/livecd-functions.sh
---- livecd-tools-2.0.2-a/livecd-functions.sh	2011-10-25 03:34:57.000000000 +0100
-+++ livecd-tools-2.0.2-b/livecd-functions.sh	2013-01-30 18:57:24.105256684 +0000
-@@ -242,7 +242,7 @@
+diff -urN livecd-tools-2.0.3-a/init.d/autoconfig livecd-tools-2.0.3-b/init.d/autoconfig
+--- livecd-tools-2.0.3-a/init.d/autoconfig	2012-10-10 21:49:08.000000000 +0100
++++ livecd-tools-2.0.3-b/init.d/autoconfig	2016-05-21 14:23:11.172433750 +0100
+@@ -515,7 +515,7 @@
+ 				einfo "Network device ${HILITE}${nics}${NORMAL} detected, DHCP broadcasting for IP ..."
+ 				if [ -f /var/run/dhcpcd-${nics}.pid ]
+ 				then
+-					if [ -z "$(/sbin/ifconfig ${nics} | grep 'inet addr')" ]
++					if [ -z "$(/bin/ifconfig ${nics} | grep 'inet addr')" ]
+ 					then
+ 						kill $(cat /var/run/dhcpcd-${nics}.pid)
+ 						sleep 2
+diff -urN livecd-tools-2.0.3-a/livecd-functions.sh livecd-tools-2.0.3-b/livecd-functions.sh
+--- livecd-tools-2.0.3-a/livecd-functions.sh	2012-10-10 21:49:08.000000000 +0100
++++ livecd-tools-2.0.3-b/livecd-functions.sh	2016-05-21 14:22:18.231614964 +0100
+@@ -242,10 +242,10 @@
  			GATEWAY=$(tail -n 1 ${iface}.GW)
  			dialog --visit-items --title "DNS server" --inputbox "Please enter a name server to use (hit enter for none:)" 20 50 2> ${iface}.DNS
  			DNS=$(tail -n 1 ${iface}.DNS)
@@ -9,7 +21,11 @@ diff -urN livecd-tools-2.0.2-a/livecd-functions.sh livecd-tools-2.0.2-b/livecd-f
 +			/bin/ifconfig ${iface} ${IP} broadcast ${BROADCAST} netmask ${NETMASK}
  			if [ -n "${GATEWAY}" ]
  			then
- 				/sbin/route add default gw ${GATEWAY} dev ${iface} netmask 0.0.0.0 metric 1
+-				/sbin/route add default gw ${GATEWAY} dev ${iface} netmask 0.0.0.0 metric 1
++				/bin/route add default gw ${GATEWAY} dev ${iface} netmask 0.0.0.0 metric 1
+ 			fi
+ 			if [ -n "${DNS}" ]
+ 			then
 @@ -386,14 +386,14 @@
  	local opts
  	IFS="

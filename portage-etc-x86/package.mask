@@ -1,12 +1,10 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-fs/udev-217
+>=sys-fs/udev-226
 >=sys-devel/gcc-4.8.99
 >=sys-libs/glibc-2.20.99
->=sys-fs/lvm2-2.02.110
 >=sys-apps/openrc-0.18.99
->=sys-apps/busybox-1.23.0
 >=net-fs/nfs-utils-1.3.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
@@ -25,8 +23,6 @@
 <sys-devel/libtool-2.4.4
 
 # misc packages
-<sys-fs/dmraid-1.0.0_rc16-r2
->sys-fs/dmraid-1.0.0_rc16-r2
 >app-crypt/gnupg-2.1.0
 >sys-libs/ncurses-5.9-r9
 >sys-kernel/linux-firmware-20150801

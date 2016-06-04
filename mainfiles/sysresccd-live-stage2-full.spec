@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160401
+snapshot: 20160520
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -15,7 +15,7 @@ livecd/fsscript: /worksrc/sysresccd-src/mainfiles/fsscript-livecd.sh
 livecd/splash_type:
 livecd/splash_theme:
 livecd/bootargs: dokeymap
-livecd/gk_mainargs: --disklabel --lvm --dmraid --mdadm --luks --makeopts="-j5"
+livecd/gk_mainargs: --disklabel --lvm --mdadm --luks --makeopts="-j5"
 livecd/type: generic-livecd
 livecd/readme:
 livecd/motd:
