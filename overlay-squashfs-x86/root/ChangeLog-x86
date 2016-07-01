@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.8.0 (2016-07-01)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.1.27 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.4.14 (altker32 + altker64)
+* Updated disk tools: GParted-0.26.1, xfsprogs-4.5.0
+
+-------------------------------------------------------------------------------
 4.7.3 (2016-06-04)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.18.34 (rescue32 + rescue64)
@@ -55,7 +62,7 @@ Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
 4.5.4 (2015-07-13)
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-3.14.48 (rescue32 + rescue64)
 * Alternative kernels: updated to stable linux-3.18.18 (altker32 + altker64)
 * Updated fs tools: e2fsprogs-1.42.13, btrfs-progs-4.0.1, xfsprogs-3.2.2

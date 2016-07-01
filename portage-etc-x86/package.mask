@@ -1,21 +1,26 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-fs/udev-226
+>=sys-fs/udev-220
 >=sys-devel/gcc-4.8.99
 >=sys-libs/glibc-2.20.99
+>=dev-libs/elfutils-0.164
 >=sys-apps/openrc-0.18.99
 >=net-fs/nfs-utils-1.3.0
 <=sys-boot/syslinux-4.0
 >=sys-boot/syslinux-5.0
 >=dev-lang/perl-5.20.999
->=sys-kernel/vanilla-sources-3.18.999
->=sys-kernel/gentoo-sources-3.18.999
->=sys-kernel/aufs-sources-3.18.999
+>=sys-fs/lvm2-2.02.117
+>=sys-libs/libseccomp-2.3.0
+>=sys-kernel/vanilla-sources-4.1.999
+>=sys-kernel/gentoo-sources-4.1.999
+>=sys-kernel/aufs-sources-4.1.999
 <=sys-kernel/linux-headers-3.14
->=sys-kernel/linux-headers-3.18.999
->=sys-kernel/std-sources-3.18.999
->=sys-kernel/alt-sources-4.1.999
+>=sys-kernel/linux-headers-4.0
+<sys-kernel/std-sources-4.1
+>sys-kernel/std-sources-4.1.999
+<sys-kernel/alt-sources-4.4
+>sys-kernel/alt-sources-4.4.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 <dev-lang/ruby-2.1.6
@@ -71,6 +76,7 @@ media-libs/libogg
 media-libs/libvorbis
 media-video/ffmpegthumbnailer
 media-video/ffmpeg
+dev-embedded/libftdi
 sys-fs/device-mapper
 app-arch/lzma-utils
 sys-apps/pcmcia-cs
@@ -94,11 +100,11 @@ dev-lang/lua
 >app-cdr/cdw-0.7.1
 
 # fix problems
+>dev-util/ccache-3.2.0
 =x11-drivers/xf86-video-s3virge-1.10.7
 =app-text/docbook-xml-dtd-4.1.2
 >=net-fs/samba-3.6.99
 >=app-cdr/cdrtools-3.01_alpha1
->=sys-devel/autogen-5.18
 dev-libs/libusbx
 x11-misc/slock
 

@@ -114,3 +114,4 @@ sys-apps/hwids udev
 sys-apps/busybox mdev
 app-emulation/open-vm-tools -modules
 app-crypt/pinentry gnome-keyring
+sys-apps/flashrom -ft2232_spi -usbblaster_spi
