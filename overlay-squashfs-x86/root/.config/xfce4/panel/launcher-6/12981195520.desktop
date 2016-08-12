@@ -1,10 +1,10 @@
 
 [Desktop Entry]
 Type=Application
-Name=Midori Web Browser
+Name=NetSurf Browser
 Comment=Web browser
-Icon=/root/icons/midori.png
-Exec=/usr/bin/midori
+Icon=/usr/share/pixmaps/netsurf.xpm
+Exec=/usr/bin/netsurf-gtk
 Path=/root
 Terminal=false
 StartupNotify=false

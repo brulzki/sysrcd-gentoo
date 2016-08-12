@@ -13,6 +13,8 @@ sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
 net-libs/webkit-gtk -gstreamer -doc -test
 www-client/midori deprecated -webkit2 -sqlite -unique -doc -gnome -html -idn -libnotify
+www-client/netsurf gtk gif jpeg png svg -javascript -duktape -bmp -fbcon -webp -mng -rosprite
+net-libs/libdom xml
 sys-block/partimage ssl -nologin -nls pam -static
 sys-apps/man-db -nls
 dev-libs/popt -nls
@@ -41,7 +43,7 @@ gnome-extra/libgsf -python
 app-editors/qemacs -X -png
 sys-fs/ntfs3g -external-fuse -acl ntfsprogs extras
 sys-fs/btrfs-progs -debug-utils
-app-text/poppler -abiword -lcms cairo
+app-text/poppler -abiword -lcms -jpeg2k cairo
 app-text/poppler-bindings gtk -qt3 -qt4 -test
 app-text/texi2html -unicode
 dev-perl/DateManip -test

@@ -6,6 +6,14 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.8.1 (2016-08-12)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.1.30 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.4.17 (altker32 + altker64)
+* Updated disk tools: btrfs-progs-4.6.1, partclone-0.2.89, fsarchiver-0.8.0
+* Replaced Midori web browser with NetSurf
+
+-------------------------------------------------------------------------------
 4.8.0 (2016-07-01)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.1.27 (rescue32 + rescue64)

@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160627
+snapshot: 20160810
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -367,3 +367,9 @@ livecd/rm:
 	/usr/bin/glsl_compiler
 	/usr/lib/dri
 	/lib/firmware/{dvb*,v4l*,i6050*,i2400*}
+	/usr/share/applications/exo-mail-reader.desktop
+	/usr/share/applications/exo-file-manager.desktop
+	/usr/share/applications/exo-preferred-applications.desktop
+	/usr/share/applications/exo-web-browser.desktop
+	/usr/share/applications/fluid.desktop
+	/usr/share/applications/sandbox.desktop

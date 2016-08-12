@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160627
+snapshot: 20160810
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -12,7 +12,6 @@ livecd/use: -sysrcdfull -X -consolekit -icu -gtk -gtk2 -svg -opengl -glx -berkdb
 
 livecd/packages:
 	app-admin/hddtemp
-	app-admin/hwreport
 	app-admin/ide-smart
 	app-admin/mcelog
 	app-admin/passook

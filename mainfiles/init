@@ -831,6 +831,19 @@ sysresccd_find_file() # $1=devtype, $2=filepath $3=mountdir, $4=mode
     mountdir="$3"  # where to mount the device if we find it
     mountmode="$4" # mount mode: either 'ro' or 'rw'
 
+    # Support for adding/loading squashfs from rootfs/initrd for iPXE boot
+    case "${devtype}" in
+    auto) # extra search on rootfs
+        if [ -e ${filepath} ]
+        then
+            SEARCHDEVICE="/"
+            ln -s ${filepath} ${mountdir}
+            good_msg "File ${filepath} found on already mounted filesystem, link created in ${mountdir}"
+            return 0
+        fi
+        ;;
+    esac
+
     searchdevices="$(sysresccd_find_devices ${devtype})"
 
     SEARCHDEVICE='' # result returned
