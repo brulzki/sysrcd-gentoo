@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160810
+snapshot: 20160915
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -56,6 +56,7 @@ livecd/packages:
 	app-arch/xz-utils
 	app-arch/zip
 	app-backup/bacula
+	app-backup/borgbackup
 	app-backup/dar
 	app-backup/duplicity
 	app-backup/fsarchiver
@@ -257,6 +258,7 @@ livecd/packages:
 	sys-apps/pcmciautils
 	sys-apps/pv
 	sys-apps/rename
+	sys-apps/renameutils
 	sys-apps/rescan-scsi-bus
 	sys-apps/sdparm
 	sys-apps/sed
@@ -288,7 +290,7 @@ livecd/packages:
 	sys-block/whdd
 	sys-boot/efibootmgr
 	=sys-boot/grub-0.97-r16
-	=sys-boot/grub-2.02_beta2-r8
+	=sys-boot/grub-2.02_beta2-r9
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober
@@ -326,6 +328,7 @@ livecd/packages:
 	sys-fs/mdadm
 	sys-fs/mtd-utils
 	sys-fs/multipath-tools
+	sys-fs/ncdu
 	sys-fs/ntfs3g
 	sys-fs/ntfsreloc
 	sys-fs/reiser4progs
@@ -333,7 +336,7 @@ livecd/packages:
 	sys-fs/safecopy
 	sys-fs/scrounge-ntfs
 	sys-fs/squashfs-tools
-	sys-fs/sshfs
+	net-fs/sshfs
 	sys-fs/sysfsutils
 	sys-fs/udftools
 	sys-fs/xfsdump

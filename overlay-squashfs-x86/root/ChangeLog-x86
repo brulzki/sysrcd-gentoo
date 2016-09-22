@@ -6,6 +6,17 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.8.2 (2016-09-22)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.1.33 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.4.21 (altker32 + altker64)
+* Added sys-fs/ncdu (disk usage analyzer with an ncurses interface)
+* Added app-backup/borgbackup (deduplicating backup program)
+* Added sys-apps/renameutils (tool for easily renaming files)
+* Updated linux-firmware to version 20160628
+* Updated disk tools: btrfs-progs-4.7.2
+
+-------------------------------------------------------------------------------
 4.8.1 (2016-08-12)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.1.30 (rescue32 + rescue64)

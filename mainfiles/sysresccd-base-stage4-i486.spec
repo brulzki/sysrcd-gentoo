@@ -3,7 +3,7 @@ version_stamp: baseos
 target: stage4
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20160810
+snapshot: 20160915
 source_subpath: default/stage3-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -17,6 +17,7 @@ stage4/packages:
 	app-portage/eix
 	app-portage/gentoolkit
 	app-shells/zsh
+	>=dev-lang/python-3.4.3
 	dev-libs/icu
 	dev-libs/libxml2
 	dev-perl/XML-LibXML
