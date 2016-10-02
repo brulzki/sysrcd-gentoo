@@ -86,6 +86,7 @@ net-libs/webkit-gtk -introspection -geoloc -webgl
 gnome-base/librsvg -introspection
 app-text/evince -introspection
 media-libs/mesa gallium xa llvm egl gbm classic -xorg
+x11-base/xorg-server glamor
 x11-libs/libdrm libkms
 sys-apps/lshw -sqlite -static
 sys-boot/grub multislot device-mapper mount -truetype -efiemu

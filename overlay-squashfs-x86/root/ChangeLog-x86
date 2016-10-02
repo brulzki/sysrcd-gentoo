@@ -6,6 +6,14 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.8.3 (2016-10-02)
+-------------------------------------------------------------------------------
+* Alternative kernels: Long-Term-Supported linux-4.4.23 (altker32 + altker64)
+* Fixed missing /efi/boot/bootx64.efi file in ISO image required for UEFI
+* Updated Xorg environment and drivers to x11-base/xorg-server-1.18.4
+* Updated disk tools: btrfs-progs-4.7.3
+
+-------------------------------------------------------------------------------
 4.8.2 (2016-09-22)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.1.33 (rescue32 + rescue64)

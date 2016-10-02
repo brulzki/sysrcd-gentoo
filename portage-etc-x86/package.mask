@@ -4,6 +4,7 @@
 >=sys-fs/udev-220
 >=sys-devel/gcc-4.8.99
 >=sys-libs/glibc-2.20.99
+>=sys-apps/portage-2.2.999
 >=dev-libs/elfutils-0.164
 >=sys-apps/openrc-0.18.99
 >=net-fs/nfs-utils-1.3.0
@@ -25,7 +26,6 @@
 >sys-kernel/genkernel-3.4.45
 <dev-lang/ruby-2.1.6
 >dev-lang/ruby-2.1.999
-<sys-devel/libtool-2.4.4
 
 # misc packages
 >app-crypt/gnupg-2.1.0

@@ -30,6 +30,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -std482/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std483/" Makefile
 }
 

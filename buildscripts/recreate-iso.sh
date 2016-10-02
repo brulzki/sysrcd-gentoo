@@ -2,7 +2,7 @@
 
 VERSION_MAJ=4
 VERSION_MIN=8
-VERSION_PAT=2
+VERSION_PAT=3
 
 # ==================================================================
 # ==================================================================
@@ -14,6 +14,13 @@ ISODIR=/worksrc/isofiles
 TEMPDIR=/worksrc/catalyst/isotemp
 REPOSRC=/worksrc/sysresccd-src
 REPOBIN=/worksrc/sysresccd-bin
+
+# ========= error handling ====================================================
+die()
+{
+	echo "$@" 1>&2
+	exit 1
+}
 
 # ========= check command line ================================================
 usage()
@@ -64,7 +71,7 @@ CDVERS="$(cat ${REPOSRC}/overlay-squashfs-x86/root/version)"
 umount /mnt/cdrom
 
 # ========= update grub modules ================================================
-# The modules must match the grub verison which provides /usr/bin/grub2-mkimage
+# The modules must match the grub verison which provides /usr/bin/grub-mkimage
 # hence they must both come from the OS which runs this script
 GRUBDST="${REPOBIN}/overlay-iso-x86/boot/grub/x86_64-efi"
 GRUBSRC="/usr/lib64/grub/x86_64-efi"
@@ -180,7 +187,7 @@ echo "source (\${root})/boot/grub/${GRUBCFG} " >> ${initialcfg}
 	--prefix='(memdisk)/boot/grub' -d /usr/lib64/grub/x86_64-efi -C xz -O x86_64-efi \
 	search iso9660 configfile normal memdisk tar boot linux part_msdos part_gpt \
 	part_apple configfile help loadenv ls reboot chain search_fs_uuid multiboot \
-	fat iso9660 udf ext2 btrfs ntfs reiserfs xfs lvm ata
+	fat iso9660 udf ext2 btrfs ntfs reiserfs xfs lvm ata || die 'grub-mkimage failed'
 
 # 4. create boot/grub/efi.img that contains bootx64.efi
 fatdisk_dir="/var/tmp/FATDISKDIR"

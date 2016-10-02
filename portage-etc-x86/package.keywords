@@ -38,7 +38,6 @@ app-forensics/foremost ~*
 sys-fs/diskdev_cmds ~*
 sys-block/open-iscsi ~*
 app-admin/procinfo-ng ~*
-sys-apps/lm_sensors ~*
 sys-block/scsiadd ~*
 sys-apps/hdparm ~*
 app-arch/pigz ~*
