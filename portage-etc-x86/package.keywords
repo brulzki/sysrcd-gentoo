@@ -1,6 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
+=sys-boot/grub-2.02_beta3-r1 ~*
 =app-text/epdfview-0.1.8* ~*
 =dev-ruby/builder-3.2.2* ~*
 =sys-fs/aufs-headers-3.19* ~*
@@ -68,6 +69,8 @@ app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
+=sys-fs/e2fsprogs-1.43* ~*
+=sys-libs/e2fsprogs-libs-1.43* ~*
 =sys-fs/btrfs-progs-4.7* ~*
 =sys-cluster/glusterfs-3.5* ~*
 =sys-cluster/drbd-8.4.3* ~*

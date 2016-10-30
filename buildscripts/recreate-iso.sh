@@ -1,8 +1,8 @@
 #!/bin/sh
 
 VERSION_MAJ=4
-VERSION_MIN=8
-VERSION_PAT=3
+VERSION_MIN=9
+VERSION_PAT=0
 
 # ==================================================================
 # ==================================================================
@@ -42,27 +42,11 @@ CURFILE="${ISODIR}/systemrescuecd-${CURARCH}-current.iso"
 MYDATE=$(date +%Y%m%d-%Hh%M)
 DESTDIR=/home/sysresccdiso
 mkdir -p ${DESTDIR}
-
-if [ ! -f "${CURFILE}"  ]
-then
-	echo "Cannot find \"${CURFILE}\". Failed"
-	exit 1
-fi
-
+test -f "${CURFILE}" || die "Cannot find \"${CURFILE}\". Failed"
 mkdir -p /mnt/cdrom
 umount /mnt/cdrom 2>/dev/null
-if ! mount -o loop,ro ${CURFILE} /mnt/cdrom
-then
-	echo "Cannot mount ${CURFILE}"
-	exit 1
-fi
-
-if [ ! -f /mnt/cdrom/image.squashfs ]
-then
-	echo "Cannot find a valid file in the ISO"
-	exit 1
-fi
-
+mount -o loop,ro ${CURFILE} /mnt/cdrom || die "Cannot mount ${CURFILE}"
+test -f /mnt/cdrom/image.squashfs || die "Cannot find a valid file in the ISO"
 [ -d ${TEMPDIR} ] && rm -rf ${TEMPDIR} ; mkdir -p ${TEMPDIR}
 cp /mnt/cdrom/image.squashfs ${TEMPDIR}/sysrcd.dat
 ( cd ${TEMPDIR} ; md5sum sysrcd.dat > sysrcd.md5 ; chmod 644 sysrcd.* ) 
@@ -77,11 +61,7 @@ GRUBDST="${REPOBIN}/overlay-iso-x86/boot/grub/x86_64-efi"
 GRUBSRC="/usr/lib64/grub/x86_64-efi"
 rm -rf ${GRUBDST}
 mkdir -p ${GRUBDST}
-if ! rsync -a ${GRUBSRC}/{*.mod,*.lst} "${GRUBDST}/"
-then
-	echo "Failed to rsync grub modules: rsync -a ${GRUBSRC}/{*.mod,*.lst} ${GRUBDST}/"
-	exit 1
-fi
+rsync -a ${GRUBSRC}/{*.mod,*.lst} "${GRUBDST}/" || die "Failed to rsync grub modules: rsync -a ${GRUBSRC}/{*.mod,*.lst} ${GRUBDST}/"
 
 # ========= copy files from overlays ===========================================
 rsync -ax ${REPOBIN}/overlay-iso-x86/ "${TEMPDIR}/"
@@ -117,11 +97,11 @@ done
 # ========= copy kernel images from overlays ===================================
 if echo ${CDTYPE} | grep -q -E 'full|mini'
 then
-	rsync -ax ${REPOBIN}/kernels-x86/{rescue32,rescue64} ${TEMPDIR}/isolinux/
+	rsync -ax ${REPOBIN}/kernels-x86/{rescue32,rescue64} ${TEMPDIR}/isolinux/ || die "rsync failed to copy std kernels"
 fi
 if echo ${CDTYPE} | grep -q -E 'full'
 then
-	rsync -ax ${REPOBIN}/kernels-x86/{altker32,altker64} ${TEMPDIR}/isolinux/
+	rsync -ax ${REPOBIN}/kernels-x86/{altker32,altker64} ${TEMPDIR}/isolinux/ || die "rsync failed to copy alt kernels"
 fi
 
 # ========= recreate initramfs =================================================
@@ -194,9 +174,9 @@ fatdisk_dir="/var/tmp/FATDISKDIR"
 fatdisk_img="/var/tmp/FATDISKIMG"
 rm -rf ${fatdisk_dir} ${fatdisk_img}
 mkdir -p "${fatdisk_dir}/efi/boot"
-cp -a "${TEMPDIR}/efi/boot/bootx64.efi" "${fatdisk_dir}/efi/boot/bootx64.efi"
-mformat -C -f 1440 -L 16 -i "${TEMPDIR}/boot/grub/efi.img" ::
-mcopy -s -i "${TEMPDIR}/boot/grub/efi.img" "${fatdisk_dir}/efi" ::/
+rsync -a "${TEMPDIR}/efi/boot/bootx64.efi" "${fatdisk_dir}/efi/boot/bootx64.efi" || die "rsync failed to copy bootx64.efi"
+mformat -C -f 1440 -L 16 -i "${TEMPDIR}/boot/grub/efi.img" :: || die "mformat failed"
+mcopy -s -i "${TEMPDIR}/boot/grub/efi.img" "${fatdisk_dir}/efi" ::/ || die "mcopy failed"
 
 # 5. create iso image
 if [ "${CURARCH}" = "x86" ] || [ "${CURARCH}" = "amd64" ]
@@ -206,12 +186,12 @@ then
 		-b isolinux/isolinux.bin -c isolinux/boot.cat \
 		-no-emul-boot -boot-load-size 4 -boot-info-table \
 		-eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot \
-		-volid ${VOLNAME} -o ${ISOFILE} ${TEMPDIR}
+		-volid ${VOLNAME} -o ${ISOFILE} ${TEMPDIR} || die "xorriso failed"
 	#/usr/bin/isohybrid ${ISOFILE}
 fi
 if [ "${CURARCH}" = "sparc" ]
 then
-	mkisofs -G /boot/isofs.b -J -V ${VOLNAME} -B ... -r -o ${ISOFILE} ${TEMPDIR}
+	mkisofs -G /boot/isofs.b -J -V ${VOLNAME} -B ... -r -o ${ISOFILE} ${TEMPDIR} || die "mkisofs failed"
 fi
 
 # ========= copy list of packages ===============================================
