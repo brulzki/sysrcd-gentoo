@@ -64,14 +64,15 @@ net-libs/libdom **
 # kernel related packages
 sys-kernel/linux-firmware ~*
 sys-kernel/gentoo-sources ~*
-sys-kernel/linux-headers ~*
 app-accessibility/speakup ~*
 sys-kernel/genkernel ~*
 
 # disk and filesystems
-=sys-fs/e2fsprogs-1.43* ~*
-=sys-libs/e2fsprogs-libs-1.43* ~*
-=sys-fs/btrfs-progs-4.7* ~*
+=sys-fs/xfsprogs-4.8* ~*
+=sys-fs/e2fsprogs-1.43.3* ~*
+=sys-libs/e2fsprogs-libs-1.43.3* ~*
+=sys-fs/btrfs-progs-4.8* ~*
+=sys-devel/binutils-2.26.1* ~*
 =sys-cluster/glusterfs-3.5* ~*
 =sys-cluster/drbd-8.4.3* ~*
 sys-fs/ext3grep ~*

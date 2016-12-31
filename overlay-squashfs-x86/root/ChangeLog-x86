@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.9.1 (2017-01-01)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.4.39 (rescue32 + rescue64)
+* Alternative kernels: Latest stable linux-4.8.15 (altker32 + altker64)
+* Updated filesystem tools: btrfs-progs-4.8.5, xfsprogs-4.8.0
+
+-------------------------------------------------------------------------------
 4.9.0 (2016-10-30)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.4.28 (rescue32 + rescue64)

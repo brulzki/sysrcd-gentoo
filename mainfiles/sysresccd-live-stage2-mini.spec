@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20161025
+snapshot: 20161215
 source_subpath: default/livecd-stage1-i486-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
