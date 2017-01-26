@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.9.2 (2017-01-26)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.4.44 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.9.5 (altker32 + altker64)
+* Updated disk tools: fsarchiver-0.8.1
+
+-------------------------------------------------------------------------------
 4.9.1 (2017-01-01)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.4.39 (rescue32 + rescue64)

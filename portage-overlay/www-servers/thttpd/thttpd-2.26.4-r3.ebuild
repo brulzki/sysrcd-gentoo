@@ -15,7 +15,7 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="BSD GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~hppa ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~arm-linux ~x86-linux"
+KEYWORDS="~amd64 ~arm ~hppa ~mips ~ppc ~ppc64 ~sparc x86 amd64-linux ~arm-linux ~x86-linux"
 IUSE=""
 
 RDEPEND=""

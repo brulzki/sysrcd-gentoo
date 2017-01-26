@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20161215
+snapshot: 20170122
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -205,7 +205,8 @@ livecd/rm:
 	/usr/lib/cairo/*.la
 	/usr/lib/librpm*.la
 	/usr/lib/rpm-plugins/*.la
-	/usr/lib/{libbsd.a,libcurses.a,libpng.a}
+	/usr/lib/{libbsd.a,libcurses.a,libpng.a,libdb*.a,libOpenIPMI*.a}
+	/usr/lib/{libruby*.a,libpython*.a}
 	/usr/lib/libipsec.la
 	/usr/*/lib/{libbfd.a,libiberty.a,libopcodes.a}
 	/usr/lib/binutils/*/*/libbfd.{a,la}

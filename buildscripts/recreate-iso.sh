@@ -2,7 +2,7 @@
 
 VERSION_MAJ=4
 VERSION_MIN=9
-VERSION_PAT=1
+VERSION_PAT=2
 
 # ==================================================================
 # ==================================================================
@@ -205,7 +205,7 @@ pkglist_mini_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i486-mini/root/sys
 [ -f "${pkglist_mini_eix}" ] && cp "${pkglist_mini_eix}" "${REPOSRC}/pkglist/sysresccd-x86-packages-mini-eix-${CDVERS}.txt"
 
 # ========= prepare the backup ==================================================
-tar cfz "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${CDTYPE}-${MYDATE}.tar.gz" ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win* --exclude='.git'
+tar -c -z -f "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${CDTYPE}-${MYDATE}.tar.gz" --exclude='.git' ${REPOSRC} ${REPOBIN} /worksrc/sysresccd-win*
 
 # ========= force recompilation of sys-apps/sysresccd-scripts ===================
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-apps/sysresccd-*.tbz2

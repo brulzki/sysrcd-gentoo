@@ -6,6 +6,7 @@ xfce-base/xfconf -perl
 xfce-base/xfce4-meta session
 xfce-base/xfdesktop xfce_plugins_menu
 xfce-base/xfce-utils dbus -lock
+xfce-base/xfce4-session -xscreensaver
 app-cdr/xfburn -hal dbus xfce -gstreamer
 app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
 sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs -kde
@@ -111,7 +112,7 @@ app-arch/p7zip rar
 net-misc/vpnc gnutls
 sys-apps/hwids udev
 sys-apps/busybox mdev
-app-emulation/open-vm-tools -modules
+app-emulation/open-vm-tools -modules -X
 app-crypt/pinentry gnome-keyring
 sys-apps/flashrom -ft2232_spi -usbblaster_spi
 sys-libs/openipmi -python
