@@ -38,6 +38,9 @@ sed -i -e 's!CMDLINE=$(cat /proc/cmdline)!CMDLINE="$(cat /proc/cmdline) cdroot"!
 sed -i -e 's!as requested on command line!!g' /etc/init.d/autoconfig
 sed -i -e 's!disabled via cmdline!disabled!g' /etc/init.d/autoconfig
 
+# convert to openrc-run
+sed -i -e 's!/sbin/runscript!/sbin/openrc-run!' /etc/init.d/* 
+
 # remove dependency on xdm in /etc/init.d/autoconfig
 sed -i -e 's!svcs="${svcs} $(check_svc ${X11} xdm)"!!g' /etc/init.d/autoconfig
 

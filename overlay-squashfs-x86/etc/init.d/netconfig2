@@ -1,4 +1,4 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 
 debugnetcfg2='/var/log/netconfig2.log'
 

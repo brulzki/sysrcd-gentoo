@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
 
 -------------------------------------------------------------------------------
+4.9.3 (2017-02-28)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.4.50 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.9.12 (altker32 + altker64)
+* Updated disk tools: GParted-0.28.1
+
+-------------------------------------------------------------------------------
 4.9.2 (2017-01-26)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.4.44 (rescue32 + rescue64)
