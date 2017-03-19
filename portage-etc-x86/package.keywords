@@ -1,9 +1,7 @@
 # ------ SystemRescueCd package.keywords ------
 
 # Misc packages
-=sys-libs/glibc-2.23* ~*
 =app-backup/borgbackup-1.0.10* ~*
-=sys-devel/binutils-2.26.1* ~*
 =app-misc/scrub-2.6* ~*
 =sys-block/nbd-3.14* ~*
 sys-libs/efivar ~*

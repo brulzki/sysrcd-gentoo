@@ -1,9 +1,6 @@
 # ------ SystemRescueCd package.mask ------
 
 # system packages
->=sys-fs/udev-220
->=virtual/udev-217
->=sys-fs/udev-init-scripts-29
 >=sys-fs/lvm2-2.02.117
 >=sys-devel/gcc-4.8.999
 >=sys-libs/glibc-2.23.999
@@ -23,9 +20,17 @@
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
+# Replaced sys-fs/udev-216 with sys-fs/eudev-3.1.5 in 494
+sys-fs/udev
+
 # misc packages
->sys-libs/ncurses-5.9-r9
+<sys-libs/ncurses-6.0
 >dev-cpp/gtkmm-2.999
+
+# Xorg
+>x11-base/xorg-server-1.18.999
+>x11-base/xorg-drivers-1.18.999
+>media-libs/mesa-12.999
 
 # perl
 perl-core/Archive-Tar

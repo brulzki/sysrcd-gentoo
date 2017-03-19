@@ -3,7 +3,14 @@ This is the ChangeLog of SystemRescueCd (x86 edition)
 
 Homepage:.......http://www.system-rescue-cd.org/
 Forums:.........http://www.system-rescue-cd.org/forums/
-Manual:.........http://www.system-rescue-cd.org/Online-Manual-EN
+Manual:.........http://www.system-rescue-cd.org/manual/
+
+-------------------------------------------------------------------------------
+4.9.4 (2017-03-19)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.4.55 (rescue32 + rescue64)
+* Alternative kernels: Long-Term-Supported linux-4.9.15 (altker32 + altker64)
+* Replaced sys-fs/udev-216 with sys-fs/eudev-3.1.5
 
 -------------------------------------------------------------------------------
 4.9.3 (2017-02-28)

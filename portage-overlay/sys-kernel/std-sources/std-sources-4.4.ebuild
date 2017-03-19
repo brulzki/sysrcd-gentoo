@@ -21,7 +21,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/std-sources-4.4-01-stable-4.4.50.patch.xz || die "std-sources stable patch failed."
+	epatch ${FILESDIR}/std-sources-4.4-01-stable-4.4.55.patch.xz || die "std-sources stable patch failed."
 	epatch ${FILESDIR}/std-sources-4.4-02-fc22.patch.xz || die "std-sources fedora patch failed."
 	epatch ${FILESDIR}/std-sources-4.4-03-aufs.patch.xz || die "std-sources aufs patch failed."
 	epatch ${FILESDIR}/std-sources-4.4-04-reiser4.patch.xz || die "std-sources reiser4 patch failed."
@@ -30,6 +30,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -std493/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -std494/" Makefile
 }
 

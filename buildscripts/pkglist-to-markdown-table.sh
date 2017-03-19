@@ -7,9 +7,8 @@
 
 ignore="dev-libs dev-util media-fonts media-libs sys-libs virtual x11-apps x11-libs x11-proto x11-misc perl-core dev-perl dev-cpp net-libs net-nds sys-devel virtual"
 
-echo "{| class=\"wikitable\" border=\"1\" cellspacing=\"0\" cellpadding=\"2\""
-echo "! style=\"background:#4488FF;\" width=170 | Category"
-echo "! style=\"background:#4488FF;\" width=270 | Package"
+echo "|         **Category**         |                    **Package**                   |"
+echo "|:----------------------------:|:------------------------------------------------:|"
 
 rm -f /tmp/pkglist.txt
 echo $ignore | sed -e "s/ /\n/g" > /tmp/pkglist.txt
@@ -20,21 +19,9 @@ do
 	echo "$package" | grep -q -f /tmp/pkglist.txt 
 	if [ "$?" != '0' ]
 	then
-		categorie=$(echo $package | cut -d/ -f1)
-		packagename=$(echo $package | cut -d/ -f2)
-		if [ "$row" = '0' ]
-		then
-			coul="#FEFEBB"
-			row=1
-		else
-			coul="#DDFFDD"
-			row=0
-		fi
-		echo "|-align=\"center\" style=\"background:$coul;\""
-		echo "| $categorie "
-		echo "| $packagename "
+		category=$(echo $package | cut -d/ -f1)
+		pkgname=$(echo $package | cut -d/ -f2)
+		printf "|%-30s|%-50s|\n" "${category}" "${pkgname}"
 	fi
 done
-
-echo "|}"
 
