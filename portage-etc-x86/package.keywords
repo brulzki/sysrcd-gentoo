@@ -2,6 +2,7 @@
 
 # Misc packages
 =app-backup/borgbackup-1.0.10* ~*
+=sys-block/parted-3.2-r1 ~*
 =app-misc/scrub-2.6* ~*
 =sys-block/nbd-3.14* ~*
 sys-libs/efivar ~*
@@ -17,7 +18,6 @@ sys-fs/cryptsetup ~*
 sys-fs/nilfs-utils ~*
 sys-apps/memtester ~*
 app-forensics/afflib ~*
-net-firewall/ipsec-tools ~*
 net-misc/ethercard-diag ~*
 app-benchmarks/systester ~*
 perl-core/Pod-Simple ~*
@@ -50,11 +50,12 @@ net-libs/libdom **
 sys-kernel/genkernel ~*
 
 # disk and filesystems
+=sys-fs/lvm2-2.02.139* ~*
+=sys-fs/btrfs-progs-4.9* ~*
 =sys-fs/xfsprogs-4.8* ~*
-=sys-fs/btrfs-progs-4.8* ~*
+sys-fs/ecryptfs-utils ~*
 sys-fs/ext3grep ~*
 sys-fs/zerofree ~*
-sys-fs/ecryptfs-utils ~*
 
 # Wireless drivers
 net-wireless/b43-fwcutter ~*

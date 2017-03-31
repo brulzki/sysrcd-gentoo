@@ -21,7 +21,7 @@ src_unpack()
 	ln -s linux-${KV} linux
 	cd linux-${KV}
 
-	epatch ${FILESDIR}/alt-sources-4.9-01-stable-4.9.15.patch.xz || die "alt-sources stable patch failed."
+	epatch ${FILESDIR}/alt-sources-4.9-01-stable-4.9.18.patch.xz || die "alt-sources stable patch failed."
 	epatch ${FILESDIR}/alt-sources-4.9-02-fc24.patch.xz || die "alt-sources fedora patch failed."
 	epatch ${FILESDIR}/alt-sources-4.9-03-aufs.patch.xz || die "alt-sources aufs patch failed."
 	epatch ${FILESDIR}/alt-sources-4.9-04-reiser4.patch.xz || die "alt-sources reiser4 patch failed."
@@ -30,6 +30,6 @@ src_unpack()
 	sednoagp='s!int nouveau_noagp;!int nouveau_noagp=1;!g'
 	sed -i -e "${sednoagp}" drivers/gpu/drm/nouveau/nouveau_drv.c
 	oldextra=$(cat Makefile | grep "^EXTRAVERSION")
-	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt494/" Makefile
+	sed -i -e "s/${oldextra}/EXTRAVERSION = -alt495/" Makefile
 }
 

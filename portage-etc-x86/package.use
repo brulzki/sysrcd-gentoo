@@ -107,9 +107,9 @@ dev-util/pkgconf pkg-config
 app-backup/rdiff-backup -acl
 net-fs/cifs-utils caps -acl
 net-ftp/lftp ssl gnutls
-net-misc/openvpn plugins lzo pam ssl iproute2 -pkcs11
+net-vpn/openvpn plugins lzo pam ssl iproute2 -pkcs11
 app-arch/p7zip rar
-net-misc/vpnc gnutls
+net-vpn/vpnc gnutls
 sys-apps/hwids udev
 sys-apps/busybox mdev
 app-emulation/open-vm-tools -modules -X

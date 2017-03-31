@@ -8,8 +8,8 @@ diff -urN catalyst-2.0.17-000/modules/generic_stage_target.py catalyst-2.0.17-00
 +			myf.write('MAKEOPTS="-j5"\n')
 +			myf.write('PORTAGE_NICENESS="19"\n')
 +			myf.write('ACCEPT_LICENSE="*"\n')
-+			myf.write('CFLAGS="-Os -mtune=i686 -pipe"\n')
-+			myf.write('CXXFLAGS="-Os -mtune=i686 -pipe"\n')
++			myf.write('CFLAGS="-Os -pipe"\n')
++			myf.write('CXXFLAGS="-Os -pipe"\n')
 +			myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned -xattr"\n')
  
  			if "LDFLAGS" in self.settings:

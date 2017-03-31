@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170315
+snapshot: 20170325
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -136,7 +136,7 @@ livecd/packages:
 	net-dialup/mingetty
 	net-dialup/minicom
 	net-dns/bind-tools
-	net-firewall/ipsec-tools
+	net-vpn/ipsec-tools
 	net-firewall/iptables
 	net-fs/curlftpfs
 	net-fs/nfs-utils
@@ -157,14 +157,14 @@ livecd/packages:
 	net-misc/netkit-rsh
 	net-misc/ntp
 	net-misc/openssh
-	net-misc/openvpn
+	net-vpn/openvpn
 	net-misc/pssh
 	net-misc/rdate
 	net-misc/rsync
 	net-misc/telnet-bsd
 	net-misc/udpcast
 	net-misc/vconfig
-	net-misc/vpnc
+	net-vpn/vpnc
 	net-misc/wget
 	net-misc/whois
 	net-misc/wput
