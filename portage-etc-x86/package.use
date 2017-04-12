@@ -12,9 +12,6 @@ app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
 sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools minimal
-net-libs/webkit-gtk -gstreamer -doc -test
-www-client/midori deprecated -webkit2 -sqlite -unique -doc -gnome -html -idn -libnotify
-www-client/netsurf gtk gif jpeg png svg -javascript -duktape -bmp -fbcon -webp -mng -rosprite
 net-libs/libdom xml
 sys-block/partimage ssl -nologin -nls pam -static
 sys-apps/man-db -nls
@@ -83,7 +80,6 @@ x11-libs/gtk+ -introspection -cups
 dev-libs/atk -introspection
 x11-libs/vte -introspection -python
 x11-libs/libwnck -introspection
-net-libs/webkit-gtk -introspection -geoloc -webgl
 gnome-base/librsvg -introspection
 app-text/evince -introspection
 media-libs/mesa gallium xa llvm egl gbm classic -xorg

@@ -1,74 +1,32 @@
 # ------ SystemRescueCd package.keywords ------
 
-# Misc packages
 =app-backup/borgbackup-1.0.10* ~*
 =sys-block/parted-3.2-r1 ~*
-=app-misc/scrub-2.6* ~*
-=sys-block/nbd-3.14* ~*
-sys-libs/efivar ~*
-sys-block/whdd ~*
-app-arch/pixz ~*
-app-crypt/nwipe ~*
-app-backup/dar ~*
-sys-apps/duc ~*
-sys-apps/ethtool ~*
-app-crypt/chntpw ~*
-sys-block/gparted ~*
-sys-fs/cryptsetup ~*
-sys-fs/nilfs-utils ~*
-sys-apps/memtester ~*
-app-forensics/afflib ~*
-net-misc/ethercard-diag ~*
-app-benchmarks/systester ~*
-perl-core/Pod-Simple ~*
-sys-libs/openipmi ~*
-sys-fs/dd-rescue ~*
-sys-fs/diskdev_cmds ~*
-app-admin/procinfo-ng ~*
-sys-block/scsiadd ~*
-sys-apps/hdparm ~*
-app-arch/pigz ~*
-sys-block/ms-sys ~*
-sys-boot/os-prober ~*
-sys-kernel/aufs-sources ~*
-app-emulation/open-vm-tools-kmod ~*
-app-emulation/open-vm-tools ~*
-www-client/netsurf **
-media-libs/libsvgtiny **
-media-libs/libnsgif **
-media-libs/libnspsl **
-dev-libs/libnsutils **
-net-libs/libhubbub **
-dev-libs/libutf8proc **
-dev-libs/libwapcaplet **
-dev-libs/libparserutils **
-dev-libs/nsgenbind **
-dev-libs/libcss **
-net-libs/libdom **
-
-# kernel related packages
-sys-kernel/genkernel ~*
-
-# disk and filesystems
-=sys-fs/lvm2-2.02.139* ~*
 =sys-fs/btrfs-progs-4.9* ~*
 =sys-fs/xfsprogs-4.8* ~*
+=sys-block/nbd-3.14* ~*
+
+app-arch/pixz ~*
+app-backup/dar ~*
+app-benchmarks/systester ~*
+app-crypt/nwipe ~*
+app-crypt/chntpw ~*
+app-emulation/open-vm-tools-kmod ~*
+app-emulation/open-vm-tools ~*
+app-misc/scrub ~*
+net-misc/ethercard-diag ~*
+net-wireless/bcm43xx-fwcutter ~*
+perl-core/Pod-Simple ~*
+sys-apps/duc ~*
+sys-block/gparted ~*
+sys-block/ms-sys ~*
+sys-block/scsiadd ~*
+sys-block/whdd ~*
 sys-fs/ecryptfs-utils ~*
 sys-fs/ext3grep ~*
+sys-fs/cryptsetup ~*
+sys-fs/dd-rescue ~*
+sys-fs/nilfs-utils ~*
 sys-fs/zerofree ~*
-
-# Wireless drivers
-net-wireless/b43-fwcutter ~*
-net-wireless/bcm43xx-fwcutter ~*
-net-wireless/atmel-firmware ~*
-net-wireless/libertas-firmware ~*
-net-wireless/madwifi-ng ~*
-net-wireless/madwifi-ng-tools ~*
-net-wireless/rt61-firmware ~*
-net-wireless/rt73-firmware ~*
-net-wireless/prism54-firmware ~*
-net-wireless/linux-wlan-ng-firmware ~*
-net-wireless/rtl8192se-firmware ~*
-net-wireless/rtl8192su-firmware ~*
-net-wireless/linux-wlan-ng-firmware ~*
-
+sys-kernel/aufs-sources ~*
+sys-kernel/genkernel ~*

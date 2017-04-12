@@ -1,10 +1,10 @@
 
 [Desktop Entry]
 Type=Application
-Name=NetSurf Browser
+Name=Firefox Browser
 Comment=Web browser
-Icon=/usr/share/pixmaps/netsurf.xpm
-Exec=/usr/bin/netsurf-gtk
+Icon=/usr/share/icons/hicolor/32x32/apps/firefox-bin.png
+Exec=/usr/bin/firefox-bin
 Path=/root
 Terminal=false
 StartupNotify=false

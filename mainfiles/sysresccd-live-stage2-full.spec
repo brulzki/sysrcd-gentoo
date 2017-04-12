@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170325
+snapshot: 20170410
 source_subpath: default/livecd-stage1-i486-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -87,6 +87,7 @@ livecd/unmerge:
 	dev-libs/pkcs11-helper
 	app-admin/sudo
 	media-fonts/dejavu
+	media-libs/alsa-lib
 	dev-util/gtk-doc-am
 	dev-perl/DateManip
 	dev-perl/XML-Parser
