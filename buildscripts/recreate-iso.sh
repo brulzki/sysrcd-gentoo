@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION_MAJ=4
-VERSION_MIN=9
-VERSION_PAT=6
+VERSION_MAJ=5
+VERSION_MIN=0
+VERSION_PAT=0
 
 # ==================================================================
 # ==================================================================
@@ -95,14 +95,7 @@ do
 done
 
 # ========= copy kernel images from overlays ===================================
-if echo ${CDTYPE} | grep -q -E 'full|mini'
-then
-	rsync -ax ${REPOBIN}/kernels-x86/{rescue32,rescue64} ${TEMPDIR}/isolinux/ || die "rsync failed to copy std kernels"
-fi
-if echo ${CDTYPE} | grep -q -E 'full'
-then
-	rsync -ax ${REPOBIN}/kernels-x86/{altker32,altker64} ${TEMPDIR}/isolinux/ || die "rsync failed to copy alt kernels"
-fi
+rsync -ax ${REPOBIN}/kernels-x86/{rescue32,rescue64} ${TEMPDIR}/isolinux/ || die "rsync failed to copy std kernels"
 
 # ========= recreate initramfs =================================================
 curdir="${TEMPDIR}/isolinux"

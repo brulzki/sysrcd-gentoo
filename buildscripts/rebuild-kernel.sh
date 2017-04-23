@@ -13,16 +13,6 @@ case ${imagename} in
 		ARCHNAME='amd64'
 		LIBDIR='lib64'
 		;;
-	altker32)
-		KERTYPE='alt'
-		ARCHNAME='i?86'
-		LIBDIR='lib'
-		;;
-	altker64)
-		KERTYPE='alt'
-		ARCHNAME='amd64'
-		LIBDIR='lib64'
-		;;
 	*)
 		echo "$0: invalid argument"
 		exit 1

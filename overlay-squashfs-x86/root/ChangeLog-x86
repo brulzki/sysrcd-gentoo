@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.0.0 (2017-04-23)
+-------------------------------------------------------------------------------
+* Standard kernels: Long-Term-Supported linux-4.9.24 (rescue32 + rescue64)
+* Dropped alternative kernels and old floppy disk images to make the ISO smaller
+* Updated system packages: gcc-5.4.0
+
+-------------------------------------------------------------------------------
 4.9.6 (2017-04-12)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.4.60 (rescue32 + rescue64)

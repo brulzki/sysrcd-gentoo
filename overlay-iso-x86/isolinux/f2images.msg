@@ -8,8 +8,6 @@
 <ALL> 0Frescuecd07     Default: boot either rescue32 or rescue64 depending on CPU type
 <ALL> 0Frescue3207     Standard 32bit kernel for x86, should work on any PC
 <ALL> 0Frescue6407     Standard 64bit kernel (required to run/chroot to 64bit binaries)
-<STD> 0Faltker3207     Alternative 32bit kernel (use it if problems with rescue32)
-<STD> 0Faltker6407     Alternative 64bit kernel (use it if problems with rescue64)
 <ALL> 
 <ALL> 0C*07 0EFloppy disk boot images07:
 <ALL> 0Fmemtest07      Run memtest+ (memory tester)

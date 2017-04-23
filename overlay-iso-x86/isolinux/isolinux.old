@@ -13,15 +13,6 @@
 <ALL> label rescue64
 <ALL> kernel rescue64
 <ALL> append initrd=initram.igz
-<STD> label altker32
-<STD> kernel altker32
-<STD> append initrd=initram.igz video=ofonly
-<STD> label altker64
-<STD> kernel altker64
-<STD> append initrd=initram.igz video=ofonly
-<STD> label vmlinuz2
-<STD> kernel altker32
-<STD> append initrd=initram.igz video=ofonly
 <ALL> label vesa
 <ALL> kernel rescue32
 <ALL> append initrd=initram.igz forcevesa

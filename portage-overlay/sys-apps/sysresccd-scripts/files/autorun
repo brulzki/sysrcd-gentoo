@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # Distributed under the terms of the GNU General Public License v2
 # The original bash version of autorun was developed by Pierre Dorgueil in 2003
 # The current python implementation has been developed by Francois Dupoux in 2008
@@ -24,7 +24,7 @@
 # - if option 'ar_ignorefail' is used, do not stop autorun if a script failed
 # - if option 'ar_disable' is used, absolutely no autorun script will be run
 
-import sys, os, commands, re
+import sys, os, subprocess, re
 
 # ----------------------- autorun default parameters --------------------------
 pidfile='/run/autorun.pid'
@@ -53,7 +53,7 @@ def printtitle(title, padding):
 	startpos=int(totallen/2)-int(len(title)/2)
 	remain=totallen-startpos-len(title)
 	text=(padding*startpos)+title+(padding*remain)
-	print text
+	print(text)
 
 def copyfilefct_basic(src, dest):
 	if os.path.isfile(src):
@@ -67,7 +67,7 @@ def copyfilefct_basic(src, dest):
 
 def copyfilefct_http(src, dest):
 	cmd="wget %s -O %s"%(src, dest)
-	(status, output)=commands.getstatusoutput(cmd)
+	(status, output)=subprocess.getstatusoutput(cmd)
 	if status==0:
 		os.chmod(dest, 755)
 		return 0
@@ -88,7 +88,7 @@ def search_autoruns(dirname, ar_autoruns, copyfilefct):
 def main():
 	global ar_nowait, ar_nodel, ar_ignorefail, ar_source, ar_autoruns
 	status=0 # in case no autorun executed
-	print 'Initializing autorun...\n'
+	print('Initializing autorun...\n')
 	
 	# ---- brutal kernel args parsing ----
 	for opt in cmdline.split():
@@ -122,35 +122,35 @@ def main():
 	elif re.match('^/dev/', ar_source): # mount a partition/device
 		mnt1='mount %s %s'%(ar_source, autorunmnt)
 		mnt2='umount %s'%autorunmnt
-		(status, output)=commands.getstatusoutput(mnt1)
+		(status, output)=subprocess.getstatusoutput(mnt1)
 		if status!=0:
-			print 'fatal error: cannot mount (%s)'%mnt1
+			print('fatal error: cannot mount (%s)'%mnt1)
 			sys.exit(1)
     		search_autoruns(autorunmnt, ar_autoruns, copyfilefct_basic)
-		commands.getstatusoutput(mnt2)
+		subprocess.getstatusoutput(mnt2)
 	elif re.match('^nfs://', ar_source): # mount an nfs share
 		source=ar_source.replace('nfs://','')
 		mnt1='mount -t nfs -o nolock %s %s'%(source, autorunmnt)
 		mnt2='umount %s'%autorunmnt
-		(status, output)=commands.getstatusoutput(mnt1)
+		(status, output)=subprocess.getstatusoutput(mnt1)
 		if status!=0:
-			print 'fatal error: cannot mount (%s)'%mnt1
+			print('fatal error: cannot mount (%s)'%mnt1)
 			sys.exit(1)
     		search_autoruns(autorunmnt, ar_autoruns, copyfilefct_basic)
-		commands.getstatusoutput(mnt2)
+		subprocess.getstatusoutput(mnt2)
 	elif re.match('^smb://', ar_source): # mount a samba share
 		source=ar_source.replace('smb://','')
 		mnt1='mount -t cifs //%s %s'%(source, autorunmnt)
 		mnt2='umount %s'%autorunmnt
-		(status, output)=commands.getstatusoutput(mnt1)
+		(status, output)=subprocess.getstatusoutput(mnt1)
 		if status!=0:
-			print 'fatal error: cannot mount (%s)'%mnt1
+			print('fatal error: cannot mount (%s)'%mnt1)
 			sys.exit(1)
     		search_autoruns(autorunmnt, ar_autoruns, copyfilefct_basic)
-		commands.getstatusoutput(mnt2)
+		subprocess.getstatusoutput(mnt2)
 	else: # search in all the default directories
 		if ar_source!='':
-			print 'cannot find a valid ar_source, searching scripts in the default directories'
+			print('cannot find a valid ar_source, searching scripts in the default directories')
 		found=0
 		for curdir in defaultsrc:
 			if found==0:
@@ -166,30 +166,30 @@ def main():
 		filebase=os.path.basename(curfile)
 		redir=os.path.join(autorunlog, filebase)
 		cmd='sh %s 2>&1 | tee %s'%(curfile, redir)
-		print '\n'; printtitle('executing %s'%filebase, '=')
+		print('\n'); printtitle('executing %s'%filebase, '=')
 		status=os.system(cmd)
 		fileres=open(redir+'.return','wb')
 		fileres.write(str(status)+'\n')
 		fileres.close()
-		print '\n'+'='*80+'\n'
+		print('\n'+'='*80+'\n')
 		
 		# first non zero exit stops all
 		if status!=0 and ar_ignorefail=='n':
-			print 'execution of %s returned %d: aborting autorun'%(filebase,status)
+			print('execution of %s returned %d: aborting autorun'%(filebase,status))
 			ar_nowait='y'
 			break;
 		
 	# ---- delete the copies of the scripts ----
 	if ar_nodel=='n':
 		for curfile in autorunfiles:
-			print 'removing %s'%curfile
+			print('removing %s'%curfile)
 			os.unlink(curfile)
 	
 	# ---- wait a keypress feature -----
 	if os.path.isfile('/etc/ar_nowait'):
 		ar_nowait='y'
 	if ar_nowait=='n' and len(autorunfiles)>0:
-		print 'end of autorun scripts, press <Enter> to continue'
+		print('end of autorun scripts, press <Enter> to continue')
 		sys.stdin.read(1)
 
 	return status

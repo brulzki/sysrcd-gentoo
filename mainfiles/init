@@ -1248,7 +1248,7 @@ sysresccd_stage3_normal() # "backstore" + "aufs" + "mount --move"
 
     if [ -n "${isolinux_dir}" ]
     then
-        for curfile in initram.igz rescue32 rescue64 altker32 altker64
+        for curfile in initram.igz rescue32 rescue64
         do
             ln -s ${isolinux_dir}/${curfile} ${TFTPBOOT_DIR}/${curfile}
         done

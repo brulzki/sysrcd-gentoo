@@ -8,7 +8,7 @@ SLOT="0"
 KEYWORDS="alpha amd64 hppa mips ppc ppc64 sparc x86"
 IUSE=""
 
-DEPEND=">=dev-lang/python-2.4.0
+DEPEND=">=dev-lang/python-3.4.0
         >=app-shells/bash-3.1"
 RDEPEND="${DEPEND}"
 

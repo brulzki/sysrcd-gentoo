@@ -12,7 +12,6 @@
 <ALL> 0C+07 wait for devices that are slow to initialize: 0Fscandelay=1507
 <ALL> 0C*07 0EIf the boot process stops due to a problem with a driver:07
 <ALL> 0C+07 if the driver is compiled as a module, try 0Fnoload=modulename07
-<STD> 0C+07 use the alternative kernel: use 0Faltker3207 instead of 0Frescue3207
 <ALL> 0C+07 if the hardware autodetection crashes the computer try 0Fnodetect07
 <ALL> 0C+07 you can also try this: 0Fnoapic07 or 0Firqpool07 or 0Facpi=off07
 <ALL> 0C*07 0EProblems with the X.Org graphical mode (startx does not work):07

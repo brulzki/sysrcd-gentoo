@@ -47,6 +47,9 @@ sed -i -e 's!svcs="${svcs} $(check_svc ${X11} xdm)"!!g' /etc/init.d/autoconfig
 # running hwsetup disturbs the speakup, so run "hwsetup -f" when speakup is used
 sed -i -e 's!\[ -x /usr/sbin/hwsetup \] && hwsetup!cat /proc/cmdline | grep -qF "speakup=" \&\& speakupopt=" -f" ; \[ -x /usr/sbin/hwsetup \] \&\& hwsetup ${speakupopt}!g' /etc/init.d/autoconfig
 
+# the nfsmount service has been renamed nfsclient
+sed -i -e 's!nfsmount!nfsclient!g' /etc/init.d/autoconfig
+
 # fix path to udevadm in /etc/init.d/firmware
 [ -f /bin/udevadm ] && sed -i -e 's!/sbin/udevadm!/bin/udevadm!g' /etc/init.d/firmware
 
@@ -298,7 +301,6 @@ then
 	# remove network services (replaced with netconfig2)
 	rm -f /etc/init.d/net.*
 	rm -f /etc/init.d/network
-	rm -f /etc/init.d/netmount
 	rm -f /etc/init.d/staticroute
 
 	# don't unmount /livemnt/* filesystems in localmount and mount-ro
