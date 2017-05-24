@@ -6,7 +6,6 @@
 >sys-libs/glibc-2.23.999
 >sys-apps/portage-2.3.999
 >sys-boot/syslinux-4.999
->sys-boot/grub-2.02_beta3-r99
 >sys-kernel/vanilla-sources-4.9.999
 >sys-kernel/gentoo-sources-4.9.999
 >sys-kernel/aufs-sources-4.9.999
@@ -18,6 +17,8 @@
 >sys-kernel/genkernel-3.4.45
 
 # modified packages
+<sys-boot/grub-2.02
+>sys-boot/grub-2.02
 >sys-block/parted-3.2-r1
 <sys-block/parted-3.2-r1
 <www-servers/thttpd-2.26.4-r3
@@ -34,9 +35,6 @@
 
 # block versions
 >dev-cpp/gtkmm-2.999
-
-# fix problems
-=dev-python/contextlib2-0.5.4
 
 # packages to avoid
 sys-fs/udev

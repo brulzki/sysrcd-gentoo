@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170420
+snapshot: 20170518
 source_subpath: default/stage4-i486-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -290,8 +290,7 @@ livecd/packages:
 	sys-block/scsiadd
 	sys-block/whdd
 	sys-boot/efibootmgr
-	=sys-boot/grub-0.97-r16
-	=sys-boot/grub-2.02_beta3-r1
+	sys-boot/grub
 	sys-boot/lilo
 	sys-boot/mbr
 	sys-boot/os-prober

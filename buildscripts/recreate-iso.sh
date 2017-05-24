@@ -2,7 +2,7 @@
 
 VERSION_MAJ=5
 VERSION_MIN=0
-VERSION_PAT=0
+VERSION_PAT=1
 
 # ==================================================================
 # ==================================================================
@@ -156,7 +156,7 @@ echo "source (\${root})/boot/grub/${GRUBCFG} " >> ${initialcfg}
 (cd "${memdisk_dir}"; tar -cf - boot) > "${memdisk_img}"
 
 # 3. create bootx64.efi that contains embedded memdisk tar image
-/usr/bin/grub2-mkimage -m "${memdisk_img}" -o "${TEMPDIR}/efi/boot/bootx64.efi" \
+/usr/bin/grub-mkimage -m "${memdisk_img}" -o "${TEMPDIR}/efi/boot/bootx64.efi" \
 	--prefix='(memdisk)/boot/grub' -d /usr/lib64/grub/x86_64-efi -C xz -O x86_64-efi \
 	search iso9660 configfile normal memdisk tar boot linux part_msdos part_gpt \
 	part_apple configfile help loadenv ls reboot chain search_fs_uuid multiboot \

@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.0.1 (2017-05-24)
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.9.28 (rescue32 + rescue64)
+* Updated grub to version 2.02 and dropped grub legacy
+* Reverted autorun to original python2 version
+
+-------------------------------------------------------------------------------
 5.0.0 (2017-04-23)
 -------------------------------------------------------------------------------
 * Standard kernels: Long-Term-Supported linux-4.9.24 (rescue32 + rescue64)

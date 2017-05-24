@@ -86,7 +86,7 @@ media-libs/mesa gallium xa llvm egl gbm classic -xorg
 x11-base/xorg-server glamor
 x11-libs/libdrm libkms
 sys-apps/lshw -sqlite -static
-sys-boot/grub multislot device-mapper mount -truetype -efiemu
+sys-boot/grub device-mapper mount -truetype -efiemu -multislot -test
 net-libs/glib-networking -gnome
 media-fonts/font-adobe-75dpi nls
 media-fonts/font-cursor-misc nls
@@ -116,3 +116,4 @@ app-admin/syslog-ng -python
 app-arch/rpm -python
 app-editors/gvim -python
 app-forensics/afflib -python
+app-crypt/gnupg smartcard usb
