@@ -117,3 +117,4 @@ app-arch/rpm -python
 app-editors/gvim -python
 app-forensics/afflib -python
 app-crypt/gnupg smartcard usb
+www-client/firefox-bin -ffmpeg -pulseaudio

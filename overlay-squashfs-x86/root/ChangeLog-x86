@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.0.2 (2017-06-11)
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.9.30 (rescue32 + rescue64)
+* Ported autorun script to python3 (contribution from Gernot)
+* Downgraded grub to version 2.02_beta3-r1 to fix UEFI Boot
+
+-------------------------------------------------------------------------------
 5.0.1 (2017-05-24)
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.9.28 (rescue32 + rescue64)

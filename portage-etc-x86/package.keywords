@@ -4,8 +4,7 @@
 =sys-block/parted-3.2-r1 ~*
 =sys-fs/btrfs-progs-4.9* ~*
 =sys-fs/xfsprogs-4.8* ~*
-=sys-block/nbd-3.14* ~*
-=sys-boot/grub-2.02* ~*
+=sys-block/nbd-3.15* ~*
 
 app-arch/pixz ~*
 app-backup/dar ~*

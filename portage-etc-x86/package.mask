@@ -16,9 +16,13 @@
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
+# filesystem tools
+>sys-fs/btrfs-progs-4.9.999
+>sys-fs/xfsprogs-4.9.999
+
 # modified packages
-<sys-boot/grub-2.02
->sys-boot/grub-2.02
+<sys-boot/grub-2.02_beta3-r1
+>sys-boot/grub-2.02_beta3-r1
 >sys-block/parted-3.2-r1
 <sys-block/parted-3.2-r1
 <www-servers/thttpd-2.26.4-r3
