@@ -6,6 +6,12 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.0.3 (2017-07-29)
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.9.40 (rescue32 + rescue64)
+* Updated grub to version 2.02
+
+-------------------------------------------------------------------------------
 5.0.2 (2017-06-11)
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.9.30 (rescue32 + rescue64)
