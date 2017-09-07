@@ -1,10 +1,10 @@
-subarch: i486
+subarch: i686
 version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170822
-source_subpath: default/livecd-stage1-i486-full
+snapshot: 20170901
+source_subpath: default/livecd-stage1-i686-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
@@ -27,9 +27,9 @@ livecd/volid: sysresccd
 boot/kernel: rescuecd
 
 boot/kernel/rescuecd/sources: sys-kernel/std-sources
-boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-fake-i586.cfg
+boot/kernel/rescuecd/config: /worksrc/sysresccd-src/kernelcfg/config-fake-i686.cfg
 boot/kernel/rescuecd/use: pcmcia usb -X png truetype 
-boot/kernel/rescuecd/extraversion: i586
+boot/kernel/rescuecd/extraversion: i686
 boot/kernel/rescuecd/packages:
 	sys-apps/sysresccd-scripts
 	sys-kernel/linux-firmware
@@ -355,8 +355,8 @@ livecd/rm:
 	/usr/lib/gentoolkit/pym/gentoolkit/{*.pyo,*.pyc}
 	/usr/share/dstat/{*.pyo,*.pyc}
 	/usr/bin/{Xchips,Xepson,Xmach64,Xnest,Xpm2,Xr128,Xsmi,Xvfb}
-	/usr/share/gcc-data/i486-pc-linux-gnu/*/{info,locale}
-	/usr/share/binutils-data/i486-pc-linux-gnu/*/{info,locale}
+	/usr/share/gcc-data/*-pc-linux-gnu/*/{info,locale}
+	/usr/share/binutils-data/*-pc-linux-gnu/*/{info,locale}
 	/usr/lib/mozilla-firefox/xpidl
 	/usr/bin/fgl_glxgears
 	/usr/include/{X11,sigc++*}

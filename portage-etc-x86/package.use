@@ -85,6 +85,7 @@ app-text/evince -introspection
 media-libs/mesa gallium xa llvm egl gbm classic -xorg
 x11-base/xorg-server glamor
 x11-libs/libdrm libkms
+x11-drivers/xf86-video-intel uxa -sna
 sys-apps/lshw -sqlite -static
 sys-boot/grub device-mapper mount -truetype -efiemu -multislot -test
 net-libs/glib-networking -gnome

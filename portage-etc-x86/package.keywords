@@ -1,10 +1,9 @@
 # ------ SystemRescueCd package.keywords ------
 
 =app-backup/borgbackup-1.0.10* ~*
+=app-backup/fsarchiver-0.8.2 ~*
 =sys-block/parted-3.2-r1 ~*
 =sys-fs/btrfs-progs-4.9* ~*
-=sys-fs/xfsprogs-4.8* ~*
-=sys-block/nbd-3.15* ~*
 
 app-arch/pixz ~*
 app-backup/dar ~*

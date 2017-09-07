@@ -105,12 +105,12 @@ sed -i -e 's!gettext!echo!g' /usr/bin/ecryptfs-{mount-private,migrate-home,rewri
 touch /var/log/lastlog
 
 # preserve the 'ar' and 'strings' binaries from the binutils package (and its libs)
-cp -a /usr/i486-pc-linux-gnu/binutils-bin/*/ar /usr/sbin/
-cp -a /usr/i486-pc-linux-gnu/binutils-bin/*/strings /usr/sbin/
-cp -a /usr/lib/binutils/i486-pc-linux-gnu/*/libbfd*.so /usr/lib/
+cp -a /usr/i686-pc-linux-gnu/binutils-bin/*/ar /usr/sbin/
+cp -a /usr/i686-pc-linux-gnu/binutils-bin/*/strings /usr/sbin/
+cp -a /usr/lib/binutils/i686-pc-linux-gnu/*/libbfd*.so /usr/lib/
 
 # provide a symblink to libstdc++.so.6 so that we can install all packages
-ln -s /lib/lib/gcc/i486-pc-linux-gnu/*/libstdc++.so.6 /usr/lib/libstdc++.so.6
+ln -s /lib/lib/gcc/i686-pc-linux-gnu/*/libstdc++.so.6 /usr/lib/libstdc++.so.6
 
 # replace the strings-static binary (provided by app-forensics/chkrootkit) to save splace
 rm -f /usr/sbin/strings-static ; ln -s /usr/sbin/strings /usr/sbin/strings-static
@@ -250,8 +250,8 @@ then
 	rm -rf /usr/lib/ccache
 	rm -rf /usr/libexec/gcc
 	rm -rf /usr/bin/{cc,gcc,c++*,c89,c99}
-	rm -rf /usr/i486-pc-linux-gnu
-	rm -rf /usr/lib/gcc/i486*/*/{*.a,*.la,*.o,include*}
+	rm -rf /usr/i686-pc-linux-gnu
+	rm -rf /usr/lib/gcc/i686*/*/{*.a,*.la,*.o,include*}
 	rm -rf /usr/include/{*.h,glib*,bits,cdio,ncursesw,schily,event2,sys,ntfs-3g,rpcsvc}
 fi
 

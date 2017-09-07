@@ -6,6 +6,12 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.1.0 (2017-09-07):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.9.47 (rescue32 + rescue64)
+* Updated system platform from 486/586 to 686 (userspace and 32bit kernel)
+
+-------------------------------------------------------------------------------
 5.0.4 (2017-08-24)
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.9.44 (rescue32 + rescue64)

@@ -29,13 +29,8 @@
 >www-servers/thttpd-2.26.4-r3
 <app-misc/livecd-tools-2.0.3
 >app-misc/livecd-tools-2.0.3
-
-# Xorg
->media-libs/mesa-12.999
->x11-base/xorg-server-1.18.999
->x11-base/xorg-drivers-1.18.999
->x11-drivers/xf86-video-intel-2.99.917_p20160621-r1
->net-misc/tigervnc-1.7.1
+<dev-python/contextlib2-0.5.4
+>dev-python/contextlib2-0.5.4
 
 # block versions
 >dev-cpp/gtkmm-2.999

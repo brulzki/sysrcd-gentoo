@@ -1,8 +1,8 @@
 #!/bin/sh
 
 VERSION_MAJ=5
-VERSION_MIN=0
-VERSION_PAT=4
+VERSION_MIN=1
+VERSION_PAT=0
 
 # ==================================================================
 # ==================================================================
@@ -188,10 +188,10 @@ then
 fi
 
 # ========= copy list of packages ===============================================
-pkglist_full_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i486-full/root/sysresccd-pkg.txt"
-pkglist_full_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i486-full/root/sysresccd-eix.txt"
-pkglist_mini_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i486-mini/root/sysresccd-pkg.txt"
-pkglist_mini_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i486-mini/root/sysresccd-eix.txt"
+pkglist_full_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-full/root/sysresccd-pkg.txt"
+pkglist_full_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-full/root/sysresccd-eix.txt"
+pkglist_mini_std="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-mini/root/sysresccd-pkg.txt"
+pkglist_mini_eix="/var/tmp/catalyst/tmp/default/livecd-stage2-i686-mini/root/sysresccd-eix.txt"
 [ -f "${pkglist_full_std}" ] && cp "${pkglist_full_std}" "${REPOSRC}/pkglist/sysresccd-x86-packages-full-std-${CDVERS}.txt"
 [ -f "${pkglist_full_eix}" ] && cp "${pkglist_full_eix}" "${REPOSRC}/pkglist/sysresccd-x86-packages-full-eix-${CDVERS}.txt"
 [ -f "${pkglist_mini_std}" ] && cp "${pkglist_mini_std}" "${REPOSRC}/pkglist/sysresccd-x86-packages-mini-std-${CDVERS}.txt"
@@ -203,4 +203,6 @@ tar -c -z -f "${DESTDIR}/systemrescuecd-${CURARCH}-${VERSION}-${CDTYPE}-${MYDATE
 # ========= force recompilation of sys-apps/sysresccd-scripts ===================
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-apps/sysresccd-*.tbz2
 rm -f /var/tmp/catalyst/packages/default/livecd-stage2-*/sys-kernel/genkernel-*.tbz2
+
+echo "End of $0"
 

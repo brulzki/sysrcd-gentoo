@@ -1,9 +1,9 @@
 all: rescue32 rescue64
 
 rescue32:
-	./merge.pl sysrcd-generic.conf config-4.9.15-100.fc24.i686 >| config-std-i586.tmp1
-	./merge.pl sysrcd-stdker.conf config-std-i586.tmp1 >| config-std-i586.tmp2
-	./merge.pl sysrcd-32bit.conf config-std-i586.tmp2 >| config-std-i586.cfg
+	./merge.pl sysrcd-generic.conf config-4.9.15-100.fc24.i686 >| config-std-i686.tmp1
+	./merge.pl sysrcd-stdker.conf config-std-i686.tmp1 >| config-std-i686.tmp2
+	./merge.pl sysrcd-32bit.conf config-std-i686.tmp2 >| config-std-i686.cfg
 	rm -f config*tmp*
 
 rescue64:
