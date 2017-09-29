@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170901
+snapshot: 20170925
 source_subpath: default/stage4-i686-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -13,6 +13,7 @@ livecd/use: python sysrcdfull X consolekit icu gtk gtk2 -svg -opengl -glx -berkd
 livecd/packages:
 	app-admin/hddtemp
 	app-admin/ide-smart
+	app-admin/keepassx
 	app-admin/mcelog
 	app-admin/passook
 	app-admin/procinfo-ng

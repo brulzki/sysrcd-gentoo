@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.1.1 (2017-09-29):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.9.52 (rescue32 + rescue64)
+* Added keepassx password management software (version 2.0.2)
+* Updated filesystem tools: sys-fs/e2fsprogs-1.43.6
+
+-------------------------------------------------------------------------------
 5.1.0 (2017-09-07):
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.9.47 (rescue32 + rescue64)

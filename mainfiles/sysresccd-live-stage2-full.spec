@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/13.0
-snapshot: 20170901
+snapshot: 20170925
 source_subpath: default/livecd-stage1-i686-full
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -37,6 +37,7 @@ boot/kernel/rescuecd/packages:
 	sys-block/open-iscsi
 	sys-fs/aufs-util
 	sys-fs/ecryptfs-utils
+	app-admin/keepassx
 
 livecd/unmerge:
 	app-admin/eselect-opengl

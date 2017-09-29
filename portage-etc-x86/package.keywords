@@ -4,6 +4,8 @@
 =app-backup/fsarchiver-0.8.2 ~*
 =sys-block/parted-3.2-r1 ~*
 =sys-fs/btrfs-progs-4.9* ~*
+=sys-libs/e2fsprogs-libs-1.43.6* ~*
+=sys-fs/e2fsprogs-1.43.6* ~*
 
 app-arch/pixz ~*
 app-backup/dar ~*
