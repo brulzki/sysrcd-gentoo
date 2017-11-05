@@ -11,7 +11,7 @@ app-cdr/xfburn -hal dbus xfce -gstreamer
 app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
 sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs -kde
 sys-block/parted readline -device-mapper
-sys-apps/smartmontools minimal
+sys-apps/smartmontools -daemon
 net-libs/libdom xml
 sys-block/partimage ssl -nologin -nls pam -static
 sys-apps/man-db -nls
@@ -82,7 +82,7 @@ x11-libs/vte -introspection -python
 x11-libs/libwnck -introspection
 gnome-base/librsvg -introspection
 app-text/evince -introspection
-media-libs/mesa gallium xa llvm egl gbm classic -xorg
+media-libs/mesa gallium xa llvm egl gbm classic -xorg -vmware
 x11-base/xorg-server glamor
 x11-libs/libdrm libkms
 x11-drivers/xf86-video-intel uxa -sna

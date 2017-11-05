@@ -1,24 +1,32 @@
 # ------ SystemRescueCd package.keywords ------
 
-=app-backup/borgbackup-1.0.10* ~*
+=app-backup/borgbackup-1.0.11* ~*
 =app-backup/fsarchiver-0.8.2 ~*
 =sys-block/parted-3.2-r1 ~*
 =sys-fs/btrfs-progs-4.9* ~*
-=sys-libs/e2fsprogs-libs-1.43.6* ~*
-=sys-fs/e2fsprogs-1.43.6* ~*
+=sys-fs/xfsdump-3.1.8* ~*
+=app-admin/keepassxc-2.2* ~*
+=app-crypt/gnupg-2.2.1* ~*
 
 app-arch/pixz ~*
 app-backup/dar ~*
 app-benchmarks/systester ~*
-app-crypt/nwipe ~*
 app-crypt/chntpw ~*
-app-emulation/open-vm-tools-kmod ~*
+app-crypt/libu2f-host ~*
+app-crypt/nwipe ~*
+app-crypt/yubikey-manager **
 app-emulation/open-vm-tools ~*
+app-emulation/open-vm-tools-kmod ~*
 app-misc/scrub ~*
+dev-python/pyscard **
+dev-python/pyusb ~*
 net-misc/ethercard-diag ~*
 net-wireless/bcm43xx-fwcutter ~*
-perl-core/Pod-Simple ~*
 sys-apps/duc ~*
+sys-apps/nvme-cli ~*
+sys-apps/smartmontools ~*
+sys-auth/libyubikey ~*
+sys-auth/ykpers ~*
 sys-block/gparted ~*
 sys-block/ms-sys ~*
 sys-block/scsiadd ~*
