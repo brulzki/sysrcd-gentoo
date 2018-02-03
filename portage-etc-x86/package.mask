@@ -2,45 +2,51 @@
 
 # core package versions
 <sys-libs/ncurses-6.0
->sys-devel/gcc-5.4.999
->sys-libs/glibc-2.23.999
+>sys-devel/gcc-6.4.999
+>sys-libs/glibc-2.26.999
 >sys-apps/portage-2.3.999
+>dev-lang/python-3.6.999
 >sys-boot/syslinux-4.999
 >sys-kernel/vanilla-sources-4.9.999
 >sys-kernel/gentoo-sources-4.9.999
 >sys-kernel/aufs-sources-4.9.999
 <sys-kernel/linux-headers-4.4
 >sys-kernel/linux-headers-4.4.999
-<sys-kernel/std-sources-4.9
->sys-kernel/std-sources-4.9.999
+<sys-kernel/std-sources-4.14
+>sys-kernel/std-sources-4.14.999
 <sys-kernel/genkernel-3.4.45
 >sys-kernel/genkernel-3.4.45
 
+# block old python-3.x
+=dev-lang/python-3.5*
+=dev-lang/python-3.4*
+
 # filesystem tools
->sys-fs/btrfs-progs-4.9.999
->sys-fs/xfsprogs-4.9.999
+>sys-fs/btrfs-progs-4.14.999
+>sys-fs/xfsprogs-4.14.999
 
 # modified packages
 <sys-boot/grub-2.02
 >sys-boot/grub-2.02
->sys-block/parted-3.2-r1
 <sys-block/parted-3.2-r1
+>sys-block/parted-3.2-r1
 <www-servers/thttpd-2.26.4-r3
 >www-servers/thttpd-2.26.4-r3
 <app-misc/livecd-tools-2.0.3
 >app-misc/livecd-tools-2.0.3
-<dev-python/contextlib2-0.5.4
->dev-python/contextlib2-0.5.4
 
 # block versions
 >dev-cpp/gtkmm-2.999
+
+# fix build issues
+>sys-apps/portage-2.3.8
+>app-emulation/open-vm-tools-10.1.10
 
 # packages to avoid
 sys-fs/udev
 app-arch/lzma-utils
 dev-lang/lua
 gnome-base/gnome-desktop
-app-text/gnome-doc-utils
 media-libs/libcanberra
 media-libs/libogg
 media-libs/libvorbis
@@ -58,6 +64,7 @@ x11-apps/xwininfo
 x11-apps/appres
 x11-themes/sound-theme-freedesktop
 dev-libs/libusbx
+dev-util/pkgconf
 
 # perl
 perl-core/Archive-Tar

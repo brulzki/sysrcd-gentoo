@@ -2,8 +2,8 @@ subarch: amd64
 version_stamp: baseos
 target: stage4
 rel_type: default
-profile: default/linux/amd64/13.0
-snapshot: 20171101
+profile: default/linux/amd64/17.0
+snapshot: 20180201
 source_subpath: default/stage3-amd64-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -17,7 +17,7 @@ stage4/packages:
 	app-portage/eix
 	app-portage/gentoolkit
 	app-shells/zsh
-	>=dev-lang/python-3.5.4
+	dev-lang/python
 	dev-libs/icu
 	dev-libs/libxml2
 	dev-perl/XML-LibXML

@@ -17,7 +17,7 @@ sys-block/partimage ssl -nologin -nls pam -static
 sys-apps/man-db -nls
 dev-libs/popt -nls
 app-arch/bzip2 static-libs
-app-arch/xz-utils threads -nls static-libs
+app-arch/xz-utils extra-filters threads static-libs -nls
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
 app-crypt/gcr gtk
@@ -98,6 +98,7 @@ x11-misc/spacefm -video-thumbnails -gtk2 gtk3
 sys-auth/polkit -gtk -introspection -systemd
 sys-auth/consolekit policykit
 sys-auth/pambase -consolekit
+sys-libs/pam -filecaps
 net-misc/openssh tcpd
 sys-apps/shadow -cracklib -pam
 dev-util/pkgconf pkg-config
@@ -119,3 +120,4 @@ app-editors/gvim -python
 app-forensics/afflib -python
 app-crypt/gnupg smartcard usb
 www-client/firefox-bin -ffmpeg -pulseaudio
+app-text/asciidoc python_single_target_python2_7

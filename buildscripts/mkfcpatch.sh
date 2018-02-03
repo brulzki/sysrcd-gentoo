@@ -1,29 +1,30 @@
 #!/bin/bash
 
-SPECFILE='/root/rpmbuild/SPECS/kernel.spec'
-SOURCEDIR="/root/rpmbuild/SOURCES"
+SPECFILE='~/rpmbuild/SPECS/kernel.spec'
+SOURCEDIR="~/rpmbuild/SOURCES"
 RESULTDIR="/var/tmp/RESULT"
 TMPDIR='/var/tmp/MKKERPATCH'
 
 # ============================ internal functions =================================
 function full_patch_list()
 {
-	cat ${SPECFILE} | grep -E '^[[:space:]]*Apply' | grep -v '^\$' | grep -v '^\%' | grep -v '\%{' | grep -v '\%{' | grep -v '\${' | awk '{print $2,$3}' | grep -vE '^[[:space:]]$'
-}
-
-function filtered_patch_list()
-{
-	full_patch_list | grep -v linux-2.6-v4l-dvb
+	cat ${SPECFILE} | grep -E '^[[:space:]]*Patch' | grep -v '^\$' | grep -v '^\%' | grep -v '\%{' | grep -v '\%{' | grep -v '\${' | awk '{print $2,$3}' | grep -vE '^[[:space:]]$'
 }
 
 # ============================ determine variables ===============================
-KERVERSION=$(cat ${SPECFILE} | grep '%define base_sublevel' | head -n 1 | awk '{print $3}') 
+KERPREVERS=$(cat ${SPECFILE} | grep '%define rcrev' | head -n 1 | awk '{print $3}')
+KERVERSION=$(cat ${SPECFILE} | grep '%define base_sublevel' | head -n 1 | awk '{print $3}')
 KERPATCHNR=$(cat ${SPECFILE} | grep '%define stable_update' | head -n 1 | awk '{print $3}')
 
-KERBASEVER="2.6"
-KERARCHIVE="${SOURCEDIR}/linux-${KERBASEVER}.${KERVERSION}.tar.bz2"
-KERBZPATCH="${SOURCEDIR}/patch-${KERBASEVER}.${KERVERSION}.${KERPATCHNR}.bz2"
-FCPATCHNAM="linux-${KERBASEVER}.${KERVERSION}.${KERPATCHNR}-fedora.patch"
+KERBASEVER="4"
+KERARCHIVE="${SOURCEDIR}/linux-${KERBASEVER}.${KERVERSION}.tar.xz"
+
+if [ ${KERPATCHNR} -gt 0 ]
+then
+	KERBZPATCH="${SOURCEDIR}/patch-${KERBASEVER}.${KERVERSION}.${KERPATCHNR}.xz"
+fi
+
+FCPATCHNAM="linux-${KERBASEVER}.${KERVERSION}-fedora.patch"
 PATCHDIR01="linux-${KERBASEVER}.${KERVERSION}-01"
 PATCHDIR02="linux-${KERBASEVER}.${KERVERSION}-02"
 
@@ -41,7 +42,7 @@ mkdir -p ${RESULTDIR} 2>/dev/null
 	cd ${TMPDIR}
 	tar xf ${KERARCHIVE}
 	cd "linux-${KERBASEVER}.${KERVERSION}"
-	bzcat ${KERBZPATCH} | patch -p1 2>&1 | grep -vF 'patching file'
+	[ -n "${KERBZPATCH}" ] && xzcat ${KERBZPATCH} | patch -p1 2>&1 | grep -vF 'patching file'
 	cd ${TMPDIR}
 	mv "linux-${KERBASEVER}.${KERVERSION}" "${PATCHDIR01}"
 	cp -a "${PATCHDIR01}" "${PATCHDIR02}"
@@ -49,7 +50,7 @@ mkdir -p ${RESULTDIR} 2>/dev/null
 )
 
 # ============================ Apply all patches ==================================
-filtered_patch_list | while read line
+full_patch_list | while read line
 do
 	patchfile=$(echo ${line} | awk '{print $1}')
 	patchargs=$(echo ${line} | awk '{print $2}')
@@ -86,10 +87,9 @@ done
 (
 	cd ${TMPDIR}
 	rm -f ${RESULTDIR}/${FCPATCHNAM}* 2>/dev/null
-	diff -urN "${PATCHDIR01}" "${PATCHDIR02}" | bzip2 >| ${RESULTDIR}/${FCPATCHNAM}.bz2
+	diff -urN "${PATCHDIR01}" "${PATCHDIR02}" | xz >| ${RESULTDIR}/${FCPATCHNAM}.xz
 	ls -lh ${RESULTDIR}/${FCPATCHNAM}*
 )
 
 # ============================ Final cleanup ========================================
 rm -rf ${TMPDIR} 2>/dev/null
-

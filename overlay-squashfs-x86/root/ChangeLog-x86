@@ -6,6 +6,15 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.2.0 (2018-02-03):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.14.15 (rescue32 + rescue64)
+* Updated system: glibc-2.25 and gcc-6.4.0
+* Updated filesystem tools: xfsprogs-4.14.0, btrfs-progs-4.14.1
+* Updated fsarchiver to version 0.8.3 (implemented lz4 compression)
+* Updated languages: ruby-2.3.6 and python 2.7.14 + 3.6.3
+
+-------------------------------------------------------------------------------
 5.1.2 (2017-11-05):
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.9.60 (rescue32 + rescue64)
