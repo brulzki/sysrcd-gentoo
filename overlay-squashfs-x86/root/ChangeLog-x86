@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.2.1 (2018-02-24):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.14.20 (rescue32 + rescue64)
+* Updated disk tools: GParted-0.30.0, fsarchiver-0.8.4, ntfs3g-2017.3.23
+* Added yubikey-personalization-gui-3.1.25
+
+-------------------------------------------------------------------------------
 5.2.0 (2018-02-03):
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.14.15 (rescue32 + rescue64)

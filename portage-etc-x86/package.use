@@ -22,7 +22,7 @@ dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
 app-crypt/gcr gtk
 media-libs/jpeg static-libs
-app-backup/fsarchiver lzma lzo gcrypt -static
+app-backup/fsarchiver lzma lzo lz4 zstd gcrypt -static
 sys-fs/xfsprogs -readline
 app-editors/vim -X -gpm -minimal -perl -python bash-completion
 app-editors/vim-core -livecd bash-completion
@@ -121,3 +121,5 @@ app-forensics/afflib -python
 app-crypt/gnupg smartcard usb
 www-client/firefox-bin -ffmpeg -pulseaudio
 app-text/asciidoc python_single_target_python2_7
+dev-libs/boehm-gc threads
+dev-scheme/guile threads regex

@@ -4,9 +4,11 @@
 =sys-fs/btrfs-progs-4.14* ~*
 =sys-fs/xfsdump-3.1.8* ~*
 =sys-fs/reiserfsprogs-3.6* ~*
+=sys-fs/ntfs3g-2017* ~*
 =app-admin/keepassxc-2.2* ~*
 =app-backup/borgbackup-1.1* ~*
 =app-portage/gentoolkit-0.4.1 ~*
+=sys-block/parted-3.2_p20* ~*
 
 app-arch/pixz ~*
 app-backup/dar ~*
@@ -28,6 +30,7 @@ sys-apps/nvme-cli ~*
 sys-apps/smartmontools ~*
 sys-auth/libyubikey ~*
 sys-auth/ykpers ~*
+sys-auth/yubikey-personalization-gui ~*
 sys-block/ms-sys ~*
 sys-block/scsiadd ~*
 sys-block/whdd ~*
