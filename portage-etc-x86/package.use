@@ -123,3 +123,4 @@ www-client/firefox-bin -ffmpeg -pulseaudio
 app-text/asciidoc python_single_target_python2_7
 dev-libs/boehm-gc threads
 dev-scheme/guile threads regex
+app-arch/libarchive -lz4

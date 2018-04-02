@@ -1,4 +1,5 @@
 # ------ SystemRescueCd package.unmask ------
 net-wireless/linux-wlan-ng-firmware
+x11-themes/gnome-icon-theme
 app-admin/hwreport
 =app-text/epdfview-0.1.8*

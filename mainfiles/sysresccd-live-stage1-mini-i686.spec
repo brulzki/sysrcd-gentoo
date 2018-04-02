@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/17.0
-snapshot: 20180220
+snapshot: 20180329
 source_subpath: default/stage4-i686-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -237,7 +237,7 @@ livecd/packages:
 	sys-boot/mbr
 	sys-boot/os-prober
 	sys-boot/syslinux
-	sys-cluster/drbd
+	sys-cluster/drbd-utils
 	sys-devel/autogen
 	sys-devel/bc
 	sys-fs/btrfs-progs
