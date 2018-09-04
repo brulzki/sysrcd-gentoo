@@ -5,7 +5,7 @@ ArrowPosition=0
 [Entry 0]
 Name=Command Prompt
 Comment=X terminal emulator
-Icon=utilities-terminal
+Icon=/root/icons/terminal.png
 Exec='/usr/bin/xfce4-terminal'
 Path=/root
 Terminal=false

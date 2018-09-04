@@ -1,7 +1,7 @@
-diff -urN catalyst-2.0.17-000/modules/generic_stage_target.py catalyst-2.0.17-001/modules/generic_stage_target.py
---- catalyst-2.0.17-000/modules/generic_stage_target.py	2014-05-17 05:09:20.000000000 +0100
-+++ catalyst-2.0.17-001/modules/generic_stage_target.py	2014-10-02 20:23:13.588830691 +0100
-@@ -1044,6 +1044,12 @@
+diff -urN catalyst-2.0.17-a/modules/generic_stage_target.py catalyst-2.0.17-b/modules/generic_stage_target.py
+--- catalyst-2.0.17-a/modules/generic_stage_target.py	2014-05-17 05:09:20.000000000 +0100
++++ catalyst-2.0.17-b/modules/generic_stage_target.py	2018-08-14 13:44:24.714000422 +0100
+@@ -1044,6 +1044,13 @@
  					myf.write('CXXFLAGS="${CFLAGS}"\n')
  			else:
  				myf.write('CXXFLAGS="${CFLAGS}"\n')
@@ -11,12 +11,13 @@ diff -urN catalyst-2.0.17-000/modules/generic_stage_target.py catalyst-2.0.17-00
 +			myf.write('CFLAGS="-Os -pipe"\n')
 +			myf.write('CXXFLAGS="-Os -pipe"\n')
 +			myf.write('FEATURES="parallel-fetch -collision-protect -protect-owned -xattr"\n')
++                        myf.write('EMERGE_DEFAULT_OPTS="--autounmask=n"\n')
  
  			if "LDFLAGS" in self.settings:
  				myf.write("# LDFLAGS is unsupported.  USE AT YOUR OWN RISK!\n")
-diff -urN catalyst-2.0.17-000/targets/support/chroot-functions.sh catalyst-2.0.17-001/targets/support/chroot-functions.sh
---- catalyst-2.0.17-000/targets/support/chroot-functions.sh	2014-05-17 05:09:20.000000000 +0100
-+++ catalyst-2.0.17-001/targets/support/chroot-functions.sh	2014-10-02 20:15:13.630753438 +0100
+diff -urN catalyst-2.0.17-a/targets/support/chroot-functions.sh catalyst-2.0.17-b/targets/support/chroot-functions.sh
+--- catalyst-2.0.17-a/targets/support/chroot-functions.sh	2014-05-17 05:09:20.000000000 +0100
++++ catalyst-2.0.17-b/targets/support/chroot-functions.sh	2018-08-14 13:43:28.206459882 +0100
 @@ -129,6 +129,9 @@
  		clst_myemergeopts="--quiet"
  		bootstrap_opts="${bootstrap_opts} -q"
@@ -27,9 +28,9 @@ diff -urN catalyst-2.0.17-000/targets/support/chroot-functions.sh catalyst-2.0.1
  	if [ -n "${clst_FETCH}" ]
  	then
  		export bootstrap_opts="${bootstrap_opts} -f"
-diff -urN catalyst-2.0.17-000/targets/support/filesystem-functions.sh catalyst-2.0.17-001/targets/support/filesystem-functions.sh
---- catalyst-2.0.17-000/targets/support/filesystem-functions.sh	2014-05-17 05:09:20.000000000 +0100
-+++ catalyst-2.0.17-001/targets/support/filesystem-functions.sh	2014-10-02 20:15:13.630753438 +0100
+diff -urN catalyst-2.0.17-a/targets/support/filesystem-functions.sh catalyst-2.0.17-b/targets/support/filesystem-functions.sh
+--- catalyst-2.0.17-a/targets/support/filesystem-functions.sh	2014-05-17 05:09:20.000000000 +0100
++++ catalyst-2.0.17-b/targets/support/filesystem-functions.sh	2018-08-14 13:43:28.206459882 +0100
 @@ -53,8 +53,9 @@
  create_squashfs() {
  	echo "Creating squashfs..."
@@ -42,22 +43,9 @@ diff -urN catalyst-2.0.17-000/targets/support/filesystem-functions.sh catalyst-2
  }
  
  create_jffs() {
-diff -urN catalyst-2.0.17-000/targets/support/kmerge.sh catalyst-2.0.17-001/targets/support/kmerge.sh
---- catalyst-2.0.17-000/targets/support/kmerge.sh	2014-05-17 05:09:20.000000000 +0100
-+++ catalyst-2.0.17-001/targets/support/kmerge.sh	2014-10-02 20:15:13.630753438 +0100
-@@ -104,8 +104,7 @@
- 	fi
- 	if [ "${clst_kernel_merge}" != "" ]
- 	then
--		genkernel --callback="emerge ${gk_callback_opts} ${clst_kernel_merge}" \
--			${GK_ARGS} || exit 1
-+		genkernel --callback="emerge -u --autounmask=n --jobs=4 --load-average=8 --accept-properties=-interactive ${gk_callback_opt} ${clst_kernel_merge}" ${GK_ARGS} || exit 1
- 	else
- 		genkernel ${GK_ARGS} || exit 1
- 	fi
-diff -urN catalyst-2.0.17-000/targets/support/unmerge.sh catalyst-2.0.17-001/targets/support/unmerge.sh
---- catalyst-2.0.17-000/targets/support/unmerge.sh	2014-05-17 05:09:20.000000000 +0100
-+++ catalyst-2.0.17-001/targets/support/unmerge.sh	2014-10-02 20:20:13.973289506 +0100
+diff -urN catalyst-2.0.17-a/targets/support/unmerge.sh catalyst-2.0.17-b/targets/support/unmerge.sh
+--- catalyst-2.0.17-a/targets/support/unmerge.sh	2014-05-17 05:09:20.000000000 +0100
++++ catalyst-2.0.17-b/targets/support/unmerge.sh	2018-08-14 13:43:28.206459882 +0100
 @@ -1,7 +1,80 @@
  #!/bin/bash
  

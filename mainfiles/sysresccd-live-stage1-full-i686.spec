@@ -3,7 +3,7 @@ version_stamp: full
 target: livecd-stage1
 rel_type: default
 profile: default/linux/x86/17.0
-snapshot: 20180329
+snapshot: 20180901
 source_subpath: default/stage4-i686-baseos
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -216,7 +216,6 @@ livecd/packages:
 	sys-firmware/ipw2100-firmware
 	sys-firmware/ipw2200-firmware
 	net-wireless/iw
-	net-wireless/rfkill
 	net-wireless/wireless-tools
 	net-wireless/wpa_supplicant
 	sys-firmware/zd1201-firmware
@@ -389,15 +388,8 @@ livecd/packages:
 	x11-misc/read-edid
 	x11-misc/util-macros
 	x11-misc/xkeyboard-config
-	x11-proto/dri2proto
-	x11-proto/glproto
-	x11-proto/inputproto
-	x11-proto/xextproto
-	x11-proto/xf86driproto
-	x11-proto/xf86miscproto
-	x11-proto/xineramaproto
 	x11-terms/xfce4-terminal
-	x11-themes/gnome-icon-theme
+	x11-themes/tango-icon-theme
 	x11-wm/jwm
 	xfce-base/xfce4-meta
 	xfce-extra/xfce4-battery-plugin

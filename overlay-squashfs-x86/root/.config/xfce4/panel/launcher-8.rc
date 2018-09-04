@@ -1,7 +1,7 @@
 [Entry 0]
 Name=Editor
 Comment=Edit text files
-Icon=accessories-text-editor
+Icon=geany
 Exec='/usr/bin/geany'
 Path=/root
 Terminal=false

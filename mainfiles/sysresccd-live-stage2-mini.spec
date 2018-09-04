@@ -3,7 +3,7 @@ version_stamp: mini
 target: livecd-stage2
 rel_type: default
 profile: default/linux/x86/17.0
-snapshot: 20180329
+snapshot: 20180901
 source_subpath: default/livecd-stage1-i686-mini
 portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
@@ -72,12 +72,9 @@ livecd/unmerge:
 	www-client/links
 	x11-proto/compositeproto
 	x11-proto/damageproto
-	x11-proto/dri2proto
 	x11-proto/fixesproto
 	x11-proto/fontcacheproto
 	x11-proto/fontsproto
-	x11-proto/glproto
-	x11-proto/inputproto
 	x11-proto/printproto
 	x11-proto/randrproto
 	x11-proto/recordproto
@@ -86,7 +83,6 @@ livecd/unmerge:
 	x11-proto/trapproto
 	x11-proto/videoproto
 	x11-proto/xcmiscproto
-	x11-proto/xextproto
 	x11-proto/xf86bigfontproto
 	x11-proto/xf86dgaproto
 	x11-proto/xf86driproto

@@ -1,5 +1,6 @@
 # ------ SystemRescueCd package.use ------
 sys-kernel/genkernel selinux
+sys-apps/portage -rsync-verify
 sys-devel/gcc -fortran
 xfce-base/exo -python
 xfce-base/xfconf -perl
@@ -9,7 +10,7 @@ xfce-base/xfce-utils dbus -lock
 xfce-base/xfce4-session -xscreensaver
 app-cdr/xfburn -hal dbus xfce -gstreamer
 app-backup/bacula bacula-clientonly bacula-nosd bacula-nodir
-sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs -kde
+sys-block/gparted btrfs fat hfs jfs ntfs reiser4 reiserfs xfs xfce f2fs cryptsetup mdadm -kde
 sys-block/parted readline -device-mapper
 sys-apps/smartmontools -daemon
 net-libs/libdom xml
@@ -20,7 +21,7 @@ app-arch/bzip2 static-libs
 app-arch/xz-utils extra-filters threads static-libs -nls
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
-app-crypt/gcr gtk
+app-crypt/gcr -introspection gtk
 media-libs/jpeg static-libs
 app-backup/fsarchiver lzma lzo lz4 zstd gcrypt -static
 sys-fs/xfsprogs -readline
@@ -30,7 +31,7 @@ app-misc/mc -gpm -ncurses -nls -samba slang 7zip
 sys-fs/lvm2 lvm1 readline udev thin -static -clvm -cman -gulm -selinux
 sys-fs/udev extras -gudev -static-libs
 virtual/udev -gudev -static-libs
-sys-apps/util-linux crypt unicode loop-aes
+sys-apps/util-linux crypt unicode loop-aes sys-apps static-libs
 net-fs/samba aio acl readline client server kernel_linux syslog examples winbind smbclient -ipv6 -cups -netapi -pam -fam
 sys-block/partclone -reiserfs -xfs -reiser4 hfs fat ntfs btrfs
 sys-fs/progsreiserfs static-libs
@@ -99,7 +100,7 @@ sys-auth/polkit -gtk -introspection -systemd
 sys-auth/consolekit policykit
 sys-auth/pambase -consolekit
 sys-libs/pam -filecaps
-net-misc/openssh tcpd
+net-misc/openssh kerberos tcpd
 sys-apps/shadow -cracklib -pam
 dev-util/pkgconf pkg-config
 app-backup/rdiff-backup -acl
@@ -110,7 +111,7 @@ app-arch/p7zip rar
 net-vpn/vpnc gnutls
 sys-apps/hwids udev
 sys-apps/busybox mdev
-app-emulation/open-vm-tools -modules -X
+app-emulation/open-vm-tools vgauth xml-security-c -modules -X
 app-crypt/pinentry gnome-keyring
 sys-apps/flashrom -ft2232_spi -usbblaster_spi
 sys-libs/openipmi -python

@@ -1,16 +1,11 @@
 # ------ SystemRescueCd package.keywords ------
 
 =app-backup/fsarchiver-0.8* ~*
+=app-shells/ksh-93.20180331* ~*
 =sys-fs/btrfs-progs-4.14* ~*
-=sys-fs/xfsdump-3.1.8* ~*
 =sys-fs/reiserfsprogs-3.6* ~*
-=sys-fs/ntfs3g-2017* ~*
-=app-admin/keepassxc-2.2* ~*
-=app-backup/borgbackup-1.1* ~*
-=app-portage/gentoolkit-0.4.1 ~*
 =sys-block/parted-3.2_p20* ~*
 
-app-arch/pixz ~*
 app-backup/dar ~*
 app-benchmarks/systester ~*
 app-crypt/argon2 ~*
@@ -21,14 +16,14 @@ app-crypt/yubikey-manager **
 app-emulation/open-vm-tools ~*
 app-emulation/open-vm-tools-kmod ~*
 app-misc/scrub ~*
+dev-libs/xml-security-c ~*
+dev-python/fido2 ~*
 dev-python/pyscard **
 dev-python/pyusb ~*
 net-misc/ethercard-diag ~*
 net-wireless/bcm43xx-fwcutter ~*
 sys-apps/duc ~*
 sys-apps/nvme-cli ~*
-sys-apps/smartmontools ~*
-sys-auth/libyubikey ~*
 sys-auth/ykpers ~*
 sys-auth/yubikey-personalization-gui ~*
 sys-block/ms-sys ~*
@@ -36,8 +31,7 @@ sys-block/scsiadd ~*
 sys-block/whdd ~*
 sys-fs/ecryptfs-utils ~*
 sys-fs/ext3grep ~*
-sys-fs/dd-rescue ~*
 sys-fs/nilfs-utils ~*
 sys-fs/zerofree ~*
 sys-kernel/aufs-sources ~*
-sys-kernel/genkernel ~*
+
