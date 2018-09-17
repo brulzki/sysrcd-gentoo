@@ -6,6 +6,13 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.3.1 (2018-09-17):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.14.70 (rescue32 + rescue64)
+* Support for booting from NVMe disk (Gentoo bug #660724)
+* Added partclone-0.2.89
+
+-------------------------------------------------------------------------------
 5.3.0 (2018-09-04):
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.14.67 (rescue32 + rescue64)

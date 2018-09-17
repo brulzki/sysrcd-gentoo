@@ -1,30 +1,29 @@
-# ------ SystemRescueCd package.mask ------
-
 # core package versions
-<sys-libs/ncurses-6.0
 >sys-devel/gcc-7.999
 >sys-libs/glibc-2.26.999
 >sys-apps/portage-2.3.999
 >dev-lang/python-3.6.999
->sys-boot/syslinux-6.999
-<sys-block/parted-3.2_p19
->sys-block/parted-3.2_p9999
-<sys-boot/grub-2.02-r1
->sys-boot/grub-2.02-r1
->sys-kernel/vanilla-sources-4.9.999
->sys-kernel/gentoo-sources-4.9.999
->sys-kernel/aufs-sources-4.9.999
-<sys-kernel/linux-headers-4.4
->sys-kernel/linux-headers-4.4.999
+
+# kernel packages
+<sys-kernel/vanilla-sources-4.14
+>sys-kernel/vanilla-sources-4.14.999
+<sys-kernel/gentoo-sources-4.14
+>sys-kernel/gentoo-sources-4.14.999
+<sys-kernel/aufs-sources-4.14
+>sys-kernel/aufs-sources-4.14.999
+<sys-kernel/linux-headers-4.14
+>sys-kernel/linux-headers-4.14.999
 <sys-kernel/std-sources-4.14
 >sys-kernel/std-sources-4.14.999
 
-# block old python-3.x
-=dev-lang/python-3.5*
-=dev-lang/python-3.4*
-
-# filesystem tools
+# disk and filesystem packages
+<sys-block/parted-3.2_p20
+>sys-block/parted-3.2_p9999
+<sys-boot/grub-2.02-r1
+>sys-boot/grub-2.02-r1
+<sys-fs/btrfs-progs-4.14
 >sys-fs/btrfs-progs-4.14.999
+<sys-fs/xfsprogs-4.14
 >sys-fs/xfsprogs-4.14.999
 
 # modified packages
@@ -33,12 +32,11 @@
 <app-misc/livecd-tools-2.0.3
 >app-misc/livecd-tools-2.0.3
 
-# block versions
+# block unnecessary versions
+=dev-lang/python-3.5*
+=dev-lang/python-3.4*
+<sys-libs/ncurses-6.0
 >dev-cpp/gtkmm-2.999
-
-# fix build issues
->sys-apps/portage-2.3.8
->sys-devel/bison-3.0.0
 
 # packages to avoid
 sys-fs/udev

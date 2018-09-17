@@ -27,6 +27,10 @@ src_unpack()
 	cd ${S}
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/fail-mbr-no-pie.diff" || die "patch failed"
+}
+
 src_compile()
 {
 	local myconf

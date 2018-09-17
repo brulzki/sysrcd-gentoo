@@ -1,10 +1,8 @@
-# ------ SystemRescueCd package.keywords ------
-
 =app-backup/fsarchiver-0.8* ~*
 =app-shells/ksh-93.20180331* ~*
+=sys-block/parted-3.2_p20* ~*
 =sys-fs/btrfs-progs-4.14* ~*
 =sys-fs/reiserfsprogs-3.6* ~*
-=sys-block/parted-3.2_p20* ~*
 
 app-backup/dar ~*
 app-benchmarks/systester ~*
@@ -34,4 +32,6 @@ sys-fs/ext3grep ~*
 sys-fs/nilfs-utils ~*
 sys-fs/zerofree ~*
 sys-kernel/aufs-sources ~*
+sys-kernel/gentoo-sources ~*
+sys-kernel/linux-headers ~*
 

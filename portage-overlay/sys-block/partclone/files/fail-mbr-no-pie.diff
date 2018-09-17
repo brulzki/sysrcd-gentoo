@@ -1,0 +1,41 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ partclone (0.2.88-1ubuntu1) yakkety; urgency=medium
+ .
+   * Build statically linked fail-mbr.bin binary with -no-pie.
+   * Configure with --disable-silent-rules.
+Author: Matthias Klose <doko@ubuntu.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- partclone-0.2.88.orig/fail-mbr/compile-mbr.sh
++++ partclone-0.2.88/fail-mbr/compile-mbr.sh
+@@ -2,10 +2,10 @@
+ if dpkg-architecture -e amd64 || dpkg-architecture -e i386; then
+    # compile the file fail-mbr.bin
+     echo -n "Compiling: fail-mbr.S -> fail-mbr.o -> "
+-    gcc -Wall -Werror -m32 -nostdlib -o fail-mbr.o fail-mbr.S
++    gcc -no-pie -Wall -Werror -m32 -nostdlib -o fail-mbr.o fail-mbr.S
+ 
+     echo -n "fail-mbr.image -> "
+-    gcc -Os -Wall -W -Wshadow -Wpointer-arith -Wmissing-prototypes -Wundef -Wstrict-prototypes -g -falign-jumps=1 -falign-loops=1 -falign-functions=1 -mno-mmx -mno-sse -mno-sse2 -mno-3dnow -fno-dwarf2-cfi-asm -fno-asynchronous-unwind-tables -m32 -fno-stack-protector -mno-stack-arg-probe -Werror -Wno-trampolines -DUSE_ASCII_FAILBACK=1 -DHAVE_UNIFONT_WIDTHSPEC=1  -mrtd -mregparm=3       -fno-builtin   -m32 -Wl,--build-id=none   -nostdlib -Wl,-N,-S -Wl,-N -Wl,-Ttext,0x7C00   -o fail-mbr.image fail-mbr.o
++    gcc -no-pie -Os -Wall -W -Wshadow -Wpointer-arith -Wmissing-prototypes -Wundef -Wstrict-prototypes -g -falign-jumps=1 -falign-loops=1 -falign-functions=1 -mno-mmx -mno-sse -mno-sse2 -mno-3dnow -fno-dwarf2-cfi-asm -fno-asynchronous-unwind-tables -m32 -fno-stack-protector -mno-stack-arg-probe -Werror -Wno-trampolines -DUSE_ASCII_FAILBACK=1 -DHAVE_UNIFONT_WIDTHSPEC=1  -mrtd -mregparm=3       -fno-builtin   -m32 -Wl,--build-id=none   -nostdlib -Wl,-N,-S -Wl,-N -Wl,-Ttext,0x7C00   -o fail-mbr.image fail-mbr.o
+ 
+     echo "fail-mbr.bin [Done]. "
+     objcopy  -O binary  --strip-unneeded -R .note -R .comment -R .note.gnu.build-id -R .reginfo -R .rel.dyn fail-mbr.image fail-mbr.bin
