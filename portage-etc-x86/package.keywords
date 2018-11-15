@@ -5,8 +5,6 @@
 =sys-fs/reiserfsprogs-3.6* ~*
 
 app-backup/dar ~*
-app-benchmarks/systester ~*
-app-crypt/argon2 ~*
 app-crypt/chntpw ~*
 app-crypt/libu2f-host ~*
 app-crypt/nwipe ~*

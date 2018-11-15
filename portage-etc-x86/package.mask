@@ -1,7 +1,8 @@
 # core package versions
 >sys-devel/gcc-7.999
->sys-libs/glibc-2.26.999
+>sys-libs/glibc-2.27.999
 >sys-apps/portage-2.3.999
+>app-portage/eix-0.32.999
 >dev-lang/python-3.6.999
 
 # kernel packages
@@ -23,8 +24,6 @@
 >sys-boot/grub-2.02-r1
 <sys-fs/btrfs-progs-4.14
 >sys-fs/btrfs-progs-4.14.999
-<sys-fs/xfsprogs-4.14
->sys-fs/xfsprogs-4.14.999
 
 # modified packages
 <www-servers/thttpd-2.26.4-r3
@@ -37,6 +36,7 @@
 =dev-lang/python-3.4*
 <sys-libs/ncurses-6.0
 >dev-cpp/gtkmm-2.999
+>net-fs/samba-4.5.999
 
 # packages to avoid
 sys-fs/udev

@@ -6,6 +6,12 @@ Forums:.........http://www.system-rescue-cd.org/forums/
 Manual:.........http://www.system-rescue-cd.org/manual/
 
 -------------------------------------------------------------------------------
+5.3.2 (2018-11-14):
+-------------------------------------------------------------------------------
+* Updated kernels to Long-Term-Supported linux-4.14.80 (rescue32 + rescue64)
+* Updated Xorg environment and drivers to x11-base/xorg-server-1.20.3
+
+-------------------------------------------------------------------------------
 5.3.1 (2018-09-17):
 -------------------------------------------------------------------------------
 * Updated kernels to Long-Term-Supported linux-4.14.70 (rescue32 + rescue64)

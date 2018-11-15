@@ -1,0 +1,737 @@
+app-accessibility/at-spi2-atk-2.24.1 : -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-accessibility/at-spi2-core-2.24.1 : X -introspection ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-admin/eselect-1.4.13 : -doc -emacs -vim-syntax
+app-admin/hddtemp-0.3_beta15-r26 : -network-cron -nls -selinux
+app-admin/ide-smart-1.4-r1
+app-admin/keepassxc-2.3.3 : yubikey -autotype -browser -debug -network -test
+app-admin/killproc-2.13-r1
+app-admin/mcelog-154 : -selinux KERNEL=linux
+app-admin/passook-20121001
+app-admin/procinfo-ng-2.0.304-r1
+app-admin/pwgen-2.07 : livecd
+app-admin/syslog-ng-3.13.2 : ipv6 -amqp -caps -dbi -geoip -http -json -libressl -mongodb -pacct -python -redis -smtp -spoof-source -systemd -tcpd PYTHON_TARGETS=python2_7
+app-admin/sysstat-11.4.0 : -debug -isag -lm_sensors -nls -selinux -static
+app-admin/testdisk-7.1_pre20180922 : jpeg ntfs reiserfs zlib -ewf -qt5 -static
+app-arch/afio-2.5.1-r1
+app-arch/arj-3.10.22-r5
+app-arch/bzip2-1.0.6-r10 : static-libs -static ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-arch/cabextract-1.9 : -extras
+app-arch/cfv-1.18.3-r1 : -bittorrent PYTHON_TARGETS=python2_7
+app-arch/cpio-2.12-r1 : -nls
+app-arch/dpkg-1.19.0.5 : bzip2 lzma unicode update-alternatives zlib -nls -selinux -test
+app-arch/dump-0.4.46 : bzip2 lzo readline ssl zlib -debug -ermt -libressl -selinux -sqlite -static -test -uuid
+app-arch/gzip-1.8 : -pic -static
+app-arch/lbzip2-2.5 : -debug -symlink
+app-arch/libarchive-3.3.1 : acl bzip2 e2fsprogs iconv lzma lzo threads xattr zlib -expat -libressl -lz4 -nettle -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+app-arch/lrzip-0.621
+app-arch/lz4-1.8.2 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-arch/lzip-1.20
+app-arch/lzop-1.04
+app-arch/mt-st-1.3
+app-arch/ncompress-4.2.4.4
+app-arch/p7zip-16.02-r4 : pch rar -doc -kde -static -wxwidgets ABI_X86=-x32
+app-arch/par2cmdline-0.7.3 : openmp
+app-arch/pbzip2-1.1.12 : -static -symlink
+app-arch/pigz-2.4 : -static -symlink -test
+app-arch/pixz-1.0.6 : -static
+app-arch/pxz-5.0_pre20151029
+app-arch/rpm-4.14.1 : acl -caps -doc -lua -nls -python -selinux -test PYTHON_SINGLE_TARGET=python2_7 -python3_5 -python3_6 PYTHON_TARGETS=python2_7 python3_6 -python3_5
+app-arch/rpm2targz-9.0.0.5g
+app-arch/rzip-2.1-r3
+app-arch/sharutils-4.14-r1 : -nls
+app-arch/star-1.5.3 : acl xattr
+app-arch/tar-1.30 : acl xattr -minimal -nls -selinux -static ELIBC=glibc USERLAND=GNU
+app-arch/unace-2.5-r5
+app-arch/unrar-5.6.6
+app-arch/unshield-1.4 : -libressl
+app-arch/unzip-6.0_p21-r2 : bzip2 unicode -natspec
+app-arch/xz-utils-5.2.3 : extra-filters static-libs threads -nls ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=-FreeBSD
+app-arch/zip-3.0-r3 : bzip2 crypt unicode -natspec
+app-arch/zstd-1.3.4-r1 : lz4 -static-libs
+app-backup/bacula-9.0.8-r1 : X acl bacula-clientonly bacula-nodir bacula-nosd ipv6 readline ssl -examples -libressl -logwatch -mysql -postgres -qt5 -sqlite -static -tcpd -vim-syntax
+app-backup/borgbackup-1.1.6 : -libressl PYTHON_TARGETS=python3_6 -python3_4 -python3_5
+app-backup/dar-2.5.17 : gcrypt lzo xattr -dar32 -dar64 -doc -gpg -nls -static -static-libs
+app-backup/duplicity-0.7.10 : -s3 -test PYTHON_TARGETS=python2_7
+app-backup/fsarchiver-0.8.5 : lz4 lzma lzo zstd -debug -static
+app-backup/rsnapshot-1.4.2
+app-backup/tob-0.26-r2
+app-benchmarks/bonnie++-1.97.3 : -debug
+app-benchmarks/cpuburn-1.4a-r1
+app-benchmarks/iozone-3.471
+app-benchmarks/stress-1.0.4-r1 : -static
+app-benchmarks/systester-1.1.0 : -qt4
+app-cdr/cdrtools-3.02_alpha09 : acl filecaps unicode -caps -nls
+app-cdr/dvd+rw-tools-7.1-r3
+app-cdr/isomaster-1.3.13 : -nls
+app-cdr/xfburn-0.5.5 : udev -gstreamer
+app-crypt/argon2-20171227 : -static-libs
+app-crypt/chntpw-140201 : -libressl -static
+app-crypt/gcr-3.28.0 : gtk -debug -introspection -test -vala
+app-crypt/gnupg-2.2.10 : bzip2 readline smartcard ssl usb -doc -ldap -nls -selinux -tofu -tools -wks-server
+app-crypt/libsecret-0.18.6-r1 : crypt -introspection -test -vala ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-crypt/md5deep-4.3
+app-crypt/mit-krb5-1.16-r2 : keyutils pkinit threads -doc -libressl -nls -openldap -selinux -test -xinetd ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-crypt/nwipe-0.21
+app-crypt/p11-kit-0.23.12 : asn1 libffi trust -debug ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-crypt/pinentry-1.1.0-r2 : gnome-keyring gtk ncurses -caps -emacs -fltk -qt5 -static
+app-crypt/rhash-1.3.6-r1 : ssl -debug -libressl -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+app-crypt/yubikey-manager-1.0.0-r1 : -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+app-editors/gvim-8.0.1298 : acl gtk -aqua -cscope -debug -gnome -gtk3 -lua -luajit -motif -neXt -netbeans -nls -perl -python -racket -ruby -selinux -session -tcl PYTHON_SINGLE_TARGET=python2_7 -python3_4 -python3_5 -python3_6 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+app-editors/hexcurse-1.55
+app-editors/hexedit-1.2.13
+app-editors/joe-4.6 : -xterm
+app-editors/nano-2.9.8 : magic ncurses slang unicode -debug -justify -minimal -nls -spell -static
+app-editors/qemacs-0.4.1_pre20170225 : unicode -X -png -xv
+app-editors/vim-8.0.1298 : acl -X -cscope -debug -gpm -lua -luajit -minimal -nls -perl -python -racket -ruby -selinux -tcl -terminal -vim-pager PYTHON_SINGLE_TARGET=python2_7 -python3_4 -python3_5 -python3_6 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+app-editors/vim-core-8.0.1298 : acl -minimal -nls
+app-editors/zile-2.4.11 : acl -test
+app-emulation/open-vm-tools-10.2.5 : deploypkg dnet fuse grabbitmqproxy icu pam resolutionkms ssl vgauth xml-security-c -X -caf -doc -gtkmm -multimon -static-libs -test -xmlsec KERNEL=linux
+app-eselect/eselect-ctags-1.18
+app-eselect/eselect-fontconfig-1.1
+app-eselect/eselect-lib-bin-symlink-0.1.1
+app-eselect/eselect-notify-send-0.1
+app-eselect/eselect-opengl-1.3.1-r4
+app-eselect/eselect-pinentry-0.7
+app-eselect/eselect-python-20171204
+app-eselect/eselect-ruby-20170723
+app-eselect/eselect-vi-1.1.9
+app-eselect/eselect-wxwidgets-20140423
+app-eselect/eselect-xvmc-0.4
+app-forensics/afflib-3.7.4 : ncurses readline -fuse -python -qemu -s3 -static-libs -threads PYTHON_TARGETS=python2_7
+app-forensics/chkrootkit-0.52 : cron
+app-forensics/cmospwd-5.1-r1
+app-forensics/foremost-1.5.7-r3
+app-forensics/magicrescue-1.1.9
+app-misc/beep-1.3-r3 : -suid
+app-misc/c_rehash-1.7-r1
+app-misc/ca-certificates-20170717.3.36.1 : -cacert -insecure_certs
+app-misc/ckermit-8.0.211-r4 : ncurses
+app-misc/colordiff-1.0.18
+app-misc/editor-wrapper-4
+app-misc/emelfm2-0.9.1-r1 : acl -ansi -gimp -gtk3 -nls -policykit -spell -udisks KERNEL=linux
+app-misc/fdupes-1.5.1
+app-misc/livecd-tools-2.0.3
+app-misc/mc-4.8.20-r1 : X edit slang xdg -gpm -mclib -nls -samba -sftp -spell -test
+app-misc/mime-types-9
+app-misc/pax-utils-1.2.3 : python seccomp -caps -debug
+app-misc/screen-4.6.1 : pam -debug -multiuser -nethack -selinux
+app-misc/scrub-2.6.1
+app-misc/symlinks-1.4-r3 : -static
+app-misc/tmux-2.7 : -debug -selinux -utempter -vim-syntax KERNEL=linux -FreeBSD
+app-misc/vlock-2.2.3-r1 : pam -test
+app-misc/wipe-2.3.1
+app-portage/cpuid2cpuflags-5
+app-portage/eix-0.32.9 : -debug -doc -nls -sqlite
+app-portage/gentoolkit-0.4.2-r1 : PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5 -python3_7
+app-portage/mirrorselect-2.2.3 : PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+app-portage/portage-utils-0.64 : -nls -static
+app-shells/bash-4.4_p12 : net readline -afs -bashlogger -examples -mem-scramble -nls -plugins
+app-shells/bash-completion-2.7-r3 : -test
+app-shells/gentoo-bashcomp-20180302
+app-shells/ksh-93.20180331
+app-shells/push-2.0-r1
+app-shells/quoter-3.0_p2-r1
+app-shells/tcsh-6.20.00 : -doc -nls
+app-shells/zsh-5.5.1-r1 : pcre unicode -caps -debug -doc -examples -gdbm -maildir -static
+app-text/dos2unix-7.3.5 : -debug -nls -test
+app-text/epdfview-0.1.8-r1 : -cups -nls -test
+app-text/iso-codes-3.76
+app-text/manpager-1
+app-text/poppler-0.62.0-r1 : cairo cxx jpeg png utils -cjk -curl -debug -doc -introspection -jpeg2k -lcms -nss -qt5 -tiff
+app-text/tree-1.7.0
+app-text/wgetpaste-2.28
+app-vim/gentoo-syntax-20180821 : -ignore-glep31
+dev-cpp/atkmm-2.24.2 : -doc ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-cpp/cairomm-1.12.0-r1 : X svg -aqua -doc ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-cpp/glibmm-2.52.1 : -debug -doc -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-cpp/gtkmm-2.24.5 : -doc -examples -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-cpp/pangomm-2.40.1 : -doc ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-db/sqlite-3.24.0 : icu readline -debug -doc -secure-delete -static-libs -tcl -test -tools ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-lang/perl-5.24.3-r1 : -berkdb -debug -doc -gdbm -ithreads
+dev-lang/python-2.7.15 dev-lang/python-3.6.5 : ipv6 ncurses readline ssl threads wide-unicode xml -berkdb -bluetooth -build -doc -examples -gdbm -hardened -libressl -sqlite -tk -wininst ELIBC=-uclibc(ipv6 ncurses readline ssl threads xml -build -examples -gdbm -hardened -libressl -sqlite -test -tk -wininst)
+dev-lang/python-exec-2.4.6 : PYTHON_TARGETS=jython2_7 pypy pypy3 python2_7 python3_4 python3_5 python3_6 -python3_7
+dev-lang/ruby-2.3.8 : ipv6 ncurses readline ssl -berkdb -debug -doc -examples -gdbm -jemalloc -libressl -rdoc -rubytests -socks5 -tk -xemacs
+dev-lang/spidermonkey-1.8.5-r6 : -debug -minimal -static-libs -test
+dev-lang/tcl-8.6.8 : threads -debug ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/atk-2.24.0 : -introspection -nls -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/boehm-gc-7.6.4 : cxx threads -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/dbus-glib-0.110 : -debug -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/double-conversion-3.0.0 : -test
+dev-libs/elfutils-0.170-r1 : bzip2 utils -lzma -nls -static-libs -test -threads ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/expat-2.2.5 : unicode -examples -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=-FreeBSD
+dev-libs/fribidi-0.19.7 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/glib-2.52.3 : dbus mime xattr -debug -fam -selinux -static-libs -systemtap -test -utils ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux PYTHON_TARGETS=python2_7
+dev-libs/gmp-6.1.2 : asm cxx -doc -pgo -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/icu-60.2 : -debug -doc -examples -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/iniparser-3.1-r1 : -doc -examples -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/ivykis-0.42.2
+dev-libs/json-c-0.12 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libaio-0.3.110 : -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libassuan-2.5.1 : -static-libs
+dev-libs/libbsd-0.9.1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libburn-1.4.8-r2 : -debug -static-libs
+dev-libs/libconfig-1.5 : cxx -examples -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libcroco-0.6.12-r1 : -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libdnet-1.12 : ipv6 python -static-libs -test PYTHON_TARGETS=python2_7
+dev-libs/libev-4.23 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=glibc
+dev-libs/libevdev-1.5.9-r1 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libevent-2.1.8 : ssl threads -debug -libressl -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libffi-3.2.1 : -debug -pax_kernel -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libgcrypt-1.8.3 : static-libs -doc -o-flag-munging ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libgpg-error-1.29 : static-libs -common-lisp -nls ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libgudev-232 : -introspection -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libinput-1.10.7 : -doc -test INPUT_DEVICES=-wacom
+dev-libs/libisoburn-1.4.8-r1 : acl readline xattr zlib -debug -external-filters -external-filters-setuid -frontend-optional -launch-frontend -launch-frontend-setuid -libedit -static-libs
+dev-libs/libisofs-1.4.8 : acl xattr zlib -debug -static-libs -verbose-debug
+dev-libs/libksba-1.3.5-r1 : -static-libs
+dev-libs/liblinear-210-r1 : -blas
+dev-libs/libltdl-2.4.6 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libmix-2.05-r7 : -static-libs
+dev-libs/libmspack-0.9_alpha : -debug -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libnl-3.4.0 : debug python threads -static-libs -utils ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-libs/libpcre-8.41-r1 : bzip2 cxx jit pcre16 pcre32 readline recursion-limit unicode zlib -libedit -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libpcre2-10.30 : bzip2 jit pcre16 pcre32 readline recursion-limit unicode zlib -libedit -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libpipeline-1.4.2 : -static-libs -test
+dev-libs/libpthread-stubs-0.4-r1 : ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libsigc++-2.10.0 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libsodium-1.0.16-r2 : asm urandom -minimal -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CPU_FLAGS_X86=-aes -sse4_1
+dev-libs/libtasn1-4.13 : -doc -static-libs -test -valgrind ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libunistring-0.9.7 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libusb-1.0.21 : -debug -doc -examples -static-libs -test -udev ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libusb-compat-0.1.5-r2 : -debug -examples -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libuv-1.20.0 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libverto-0.2.5-r1 : libev threads -glib -libevent -static-libs -tevent ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/libx86-1.1-r4 : -static-libs
+dev-libs/libxml2-2.9.8 : icu ipv6 python readline -debug -examples -lzma -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-libs/libyaml-0.1.7 : -doc -examples -static-libs -test
+dev-libs/lzo-2.10 : static-libs -examples ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/mpc-1.0.3 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/mpfr-3.1.6 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/nettle-3.4 : gmp -doc -neon -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CPU_FLAGS_X86=-aes
+dev-libs/newt-0.52.20 : -gpm -nls -tcl PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-libs/npth-1.3 : -static-libs
+dev-libs/nspr-4.19 : -debug ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/nss-3.37.3 : nss-pem -cacert -utils ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/openssl-1.0.2p : asm sslv3 tls-heartbeat zlib -bindist -gmp -kerberos -rfc3779 -sctp -sslv2 -static-libs -test -vanilla ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CPU_FLAGS_X86=-sse2
+dev-libs/popt-1.16-r2 : -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+dev-libs/userspace-rcu-0.10.1 : -regression-test -static-libs -test
+dev-libs/xerces-c-3.1.4-r1 : iconv icu -curl -doc -examples -static-libs -test -threads CPU_FLAGS_X86=-sse2 ELIBC=-Darwin -FreeBSD
+dev-libs/xml-security-c-1.7.3 : -debug -examples -libressl -nss -static-libs -xalan
+dev-perl/Crypt-PasswdMD5-1.400.0
+dev-perl/Digest-SHA1-2.130.0-r1
+dev-perl/Lchown-1.10.0-r2
+dev-perl/Text-Unidecode-1.300.0
+dev-perl/URI-1.730.0 : -test
+dev-perl/Unicode-EastAsianWidth-1.330.0-r1
+dev-perl/YAML-Syck-1.300.0
+dev-perl/libintl-perl-1.280.0
+dev-python/PySocks-1.6.7 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/asn1crypto-0.22.0 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/bcrypt-3.1.3 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5
+dev-python/certifi-2018.4.16 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/cffi-1.11.4 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/chardet-3.0.4 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/click-6.7 : -doc -examples -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/contextlib2-0.5.5 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/cryptography-2.2.2-r1 : -libressl -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/enum34-1.1.6 : -doc PYTHON_TARGETS=python2_7 -pypy -pypy3
+dev-python/extras-1.0.0 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/fido2-0.4.0 : -examples -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/fixtures-3.0.0 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/gevent-1.2.1 : -doc -examples PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5
+dev-python/greenlet-0.4.12 : -doc PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/idna-2.5 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/ipaddress-1.0.19 : PYTHON_TARGETS=python2_7 -pypy
+dev-python/linecache2-1.0.0 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/llfuse-1.3.2 : -doc -examples -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/lockfile-0.11.0-r1 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/mimeparse-1.6.0 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/msgpack-0.5.1 : -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/ndg-httpsclient-0.4.0 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/pbr-4.2.0-r1 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/ply-3.9 : -examples PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/py-1.4.34 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/pyasn1-0.2.3 : -doc PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/pyblake2-1.1.2 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/pycparser-2.14 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/pyelftools-0.24 : -examples PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/pynacl-1.2.1 : -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/pyopenssl-17.5.0 : -doc -examples -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/pyrsistent-0.14.2 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/pyscard-1.9.5 : PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/pyusb-1.0.2 : PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/pyxattr-0.6.0-r1 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5 -python3_7
+dev-python/pyzmq-16.0.2 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+dev-python/requests-2.18.4-r1 : ssl -socks5 PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/setuptools-36.7.2 : -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-python/six-1.11.0 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/ssl-fetch-0.4 : PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5
+dev-python/subunit-1.2.0-r1 : -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/testtools-2.3.0 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/traceback2-1.4.0 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/unittest2-1.1.0 : PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5 -python3_7
+dev-python/urllib3-1.22 : -doc -test PYTHON_TARGETS=python2_7 python3_6 -pypy -pypy3 -python3_4 -python3_5
+dev-qt/qtchooser-0_p20170803 : -test
+dev-qt/qtcore-5.11.1-r1 : icu -debug -systemd -test
+dev-qt/qtdbus-5.11.1 : -debug -test
+dev-qt/qtgui-5.11.1 : dbus gif jpeg libinput png udev xcb -accessibility -debug -egl -eglfs -evdev -gles2 -ibus -test -tslib -tuio -vnc
+dev-qt/qtnetwork-5.11.1 : ssl -bindist -connman -debug -libproxy -networkmanager -test
+dev-qt/qtwidgets-5.11.1 : gtk png xcb -debug -gles2 -test
+dev-ruby/builder-3.2.3 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/did_you_mean-1.0.2 : -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23
+dev-ruby/json-1.8.6-r1 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/minitest-5.10.3 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/net-telnet-0.1.1-r1 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/power_assert-1.1.1 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/rake-10.5.0 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23
+dev-ruby/rubygems-2.7.6-r1 : server -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-ruby/test-unit-3.2.7 : -doc -test ELIBC=-FreeBSD RUBY_TARGETS=ruby23 -ruby24 -ruby25
+dev-util/debootstrap-1.0.89
+dev-util/desktop-file-utils-0.23 : -emacs
+dev-util/dialog-1.3.20170131 : unicode -examples -minimal -nls -static-libs
+dev-util/geany-1.30.1 : vte -gtk3
+dev-util/gtk-update-icon-cache-3.22.19
+dev-util/ltrace-0.7.3_p4 : -debug -selinux -test -unwind
+dev-util/patchutils-0.3.4 : -test
+dev-util/pkgconfig-0.29.2 : -hardened -internal-glib ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=glibc -FreeBSD
+dev-util/shadowman-2
+dev-util/strace-4.23-r1 : -aio -elfutils -perl -static -unwind
+gnome-base/dconf-0.26.1 : -test
+gnome-base/gnome-keyring-3.28.2 : filecaps pam ssh-agent -caps -selinux -test
+gnome-base/gsettings-desktop-schemas-3.24.1 : -introspection
+gnome-base/gvfs-1.32.2 : gtk http samba udev -afp -archive -bluray -cdda -elogind -fuse -gnome-keyring -gnome-online-accounts -google -gphoto2 -ios -mtp -nfs -policykit -systemd -test -udisks -zeroconf
+gnome-base/librsvg-2.40.18 : -introspection -tools -vala ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+gnome-extra/nm-applet-1.8.14 : gcr modemmanager -ayatana -introspection -selinux -teamd
+lxde-base/lxrandr-0.3.1-r1
+mail-mta/nullmailer-2.0-r1 : ssl
+media-fonts/encodings-1.0.4-r3 : -X
+media-fonts/font-adobe-75dpi-1.0.3-r1 : X nls
+media-fonts/font-alias-1.0.3-r1
+media-fonts/font-bh-ttf-1.0.3-r1 : X
+media-fonts/font-bh-type1-1.0.3-r1 : X
+media-fonts/font-cursor-misc-1.0.3-r1 : X
+media-fonts/font-misc-misc-1.1.2-r1 : X nls
+media-fonts/terminus-font-4.46 : X center-tilde pcf pcf-unicode-only psf ru-g -a-like-o -distinct-l -quote -ru-dv -ru-i -ru-k
+media-gfx/graphite2-1.3.10 : -perl -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+media-libs/fontconfig-2.13.0-r4 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+media-libs/freetype-2.9.1-r3 : X adobe-cff bzip2 cleartype_hinting png -bindist -debug -doc -fontforge -harfbuzz -infinality -static-libs -utils ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+media-libs/harfbuzz-1.9.0 : cairo glib graphite icu truetype -debug -fontconfig -introspection -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+media-libs/libepoxy-1.5.3 : X -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+media-libs/libjpeg-turbo-1.5.3-r2 : -java -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=-FreeBSD
+media-libs/libpng-1.6.34 : -apng -neon -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CPU_FLAGS_X86=-sse
+media-libs/mesa-18.2.4 : classic dri3 egl gallium gbm llvm xa -d3d9 -debug -gles1 -gles2 -lm_sensors -opencl -osmesa -pax_kernel -pic -selinux -test -unwind -vaapi -valgrind -vdpau -vulkan -wayland -xvmc ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 VIDEO_CARDS=intel nouveau radeon vmware -freedreno -i915 -i965 -imx -r100 -r200 -r300 -r600 -radeonsi -vc4 -virgl -vivante
+net-analyzer/dnstracer-1.9-r2 : ipv6
+net-analyzer/httping-2.5 : ncurses ssl -debug -fftw -libressl -tfo L10N=-nl
+net-analyzer/ifstat-1.1-r2 : -snmp
+net-analyzer/iftop-1.0_pre4-r2
+net-analyzer/iptraf-ng-1.1.4-r1 : -doc
+net-analyzer/macchanger-1.7.0
+net-analyzer/netcat-110-r9 : crypt ipv6 -static
+net-analyzer/netselect-0.3-r3
+net-analyzer/ngrep-1.45-r3 : ipv6
+net-analyzer/nmap-7.70 : ipv6 nse ssl -libressl -libssh2 -ncat -ndiff -nls -nmap-update -nping -system-lua -zenmap PYTHON_TARGETS=python2_7
+net-analyzer/tcpdump-4.9.2 : drop-root ssl -libressl -samba -smi -suid -test
+net-analyzer/tcptraceroute-1.5_beta7-r2
+net-analyzer/traceroute-2.1.0 : -static
+net-analyzer/vnstat-1.17 : -gd -selinux -test
+net-dialup/linux-atm-2.5.0
+net-dialup/lrzsz-0.12.20-r4 : -nls
+net-dialup/mingetty-1.08-r1 : unicode
+net-dialup/minicom-2.7.1 : -nls
+net-dialup/ppp-2.4.7-r6 : atm ipv6 pam -activefilter -dhcp -eap-tls -gtk -libressl -radius KERNEL=linux
+net-dialup/ppp-scripts-0
+net-dialup/pppconfig-2.3.21 : -nls
+net-dialup/pptpclient-1.8.0 : -tk
+net-dialup/rp-pppoe-3.12-r1 : -tk
+net-dns/bind-tools-9.11.2_p1 : ipv6 readline seccomp ssl -doc -gost -gssapi -idn -libressl -urandom -xml
+net-dns/c-ares-1.13.0 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-dns/libidn2-2.0.4 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-firewall/iptables-1.6.1-r3 : ipv6 -conntrack -netlink -nftables -pcap -static-libs
+net-fs/cifs-utils-6.7 : ads caps caps-ng pam -acl -creds KERNEL=linux
+net-fs/curlftpfs-0.9.2-r3
+net-fs/nfs-utils-2.3.3 : ipv6 libmount nfsidmap nfsv4 uuid -caps -junction -kerberos -ldap -nfsdcld -nfsv41 -selinux -tcpd
+net-fs/samba-4.5.16 : acl client syslog system-mitkrb5 winbind -addc -addns -ads -cluster -cups -dmapi -fam -gnutls -gpg -iprint -ldap -pam -quota -selinux -system-heimdal -systemd -test -zeroconf ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux PYTHON_TARGETS=python2_7
+net-fs/sshfs-2.10-r1
+net-ftp/ftp-0.17.23.0.2.1 : ipv6 readline ssl -libressl
+net-ftp/lftp-4.8.4 : gnutls ipv6 ssl -convert-mozilla-cookies -idn -libressl -nls -socks5 -verify-file
+net-ftp/ncftp-3.2.6 : -pch
+net-ftp/tftp-hpa-5.2-r1 : ipv6 readline -selinux -tcpd
+net-irc/irssi-1.1.1-r2 : proxy -libressl -perl -selinux -socks5
+net-libs/glib-networking-2.50.0 : libproxy ssl -gnome -smartcard -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/gnutls-3.5.19 : cxx idn openssl seccomp tls-heartbeat zlib -dane -doc -examples -guile -nls -openpgp -pkcs11 -sslv2 -sslv3 -static-libs -test -test-full -tools -valgrind ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/libmnl-1.0.4 : -examples -static-libs
+net-libs/libndp-1.6-r1 : ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/libnet-1.2_rc3-r1 : -doc -static-libs
+net-libs/libnsl-1.2.0 : ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/libpcap-1.8.1 : dbus usb -bluetooth -netlink -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/libproxy-0.4.13-r2 : python -gnome -kde -mono -networkmanager -perl -spidermonkey -test -webkit ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7
+net-libs/librsync-2.0.1-r1
+net-libs/libsoup-2.58.2 : samba ssl -debug -gssapi -introspection -test -vala ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/libtirpc-1.0.2-r1 : ipv6 -kerberos -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+net-libs/rpcsvc-proto-1.3.1-r1
+net-libs/zeromq-4.2.2-r2 : sodium -doc -drafts -pgm -static-libs -test -unwind ELIBC=-Darwin
+net-misc/autossh-1.4e
+net-misc/bridge-utils-1.5 : -selinux KERNEL=linux
+net-misc/curl-7.61.1 : ipv6 samba ssl -adns -brotli -http2 -idn -kerberos -ldap -metalink -rtmp -ssh -static-libs -test -threads ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CURL_SSL=openssl -axtls -gnutls -libressl -mbedtls -nss -winssl ELIBC=-Winnt
+net-misc/dhcp-4.3.6_p1 : client ipv6 server ssl -ldap -libressl -selinux -vim-syntax KERNEL=linux
+net-misc/dhcpcd-7.0.1 : embedded ipv6 udev ELIBC=glibc KERNEL=linux
+net-misc/ethercard-diag-20050321.1g-r1
+net-misc/ifenslave-1.1.0-r6 : KERNEL=linux
+net-misc/iperf-3.1.3 : -sctp -static-libs
+net-misc/iputils-20171016_pre : arping filecaps ipv6 openssl ssl -SECURITY_HAZARD -caps -clockdiff -doc -gcrypt -idn -libressl -nettle -rarpd -rdisc -static -tftpd -tracepath -traceroute
+net-misc/mobile-broadband-provider-info-20170310 : -test
+net-misc/modemmanager-1.6.12 : -introspection -mbim -policykit -qmi -systemd -vala
+net-misc/netifrc-0.5.1
+net-misc/netkit-rsh-0.17-r10 : filecaps pam
+net-misc/networkmanager-1.10.10 : consolekit dhclient gnutls modemmanager ncurses ppp wext wifi -audit -bluetooth -connection-sharing -dhcpcd -elogind -introspection -json -nss -ofono -ovs -policykit -resolvconf -selinux -systemd -teamd -test -vala ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+net-misc/networkmanager-openvpn-1.8.4 : gtk -test
+net-misc/networkmanager-vpnc-1.2.6 : gtk -test
+net-misc/ntp-4.2.8_p11 : ipv6 readline samba ssl threads -caps -debug -libressl -openntpd -parse-clocks -selinux -snmp -vim-syntax -zeroconf
+net-misc/openssh-7.7_p1-r9 : X kerberos livecd pam pie ssl -X509 -audit -bindist -debug -hpn -ldns -libedit -libressl -sctp -selinux -skey -static -test ABI_MIPS=-n32 KERNEL=linux
+net-misc/pssh-2.3.1-r1 : PYTHON_TARGETS=python2_7
+net-misc/rdate-1.4-r4 : ipv6
+net-misc/rdesktop-1.8.3 : ipv6 -alsa -ao -debug -kerberos -libsamplerate -oss -pcsc-lite
+net-misc/rsync-3.1.3 : acl iconv ipv6 xattr -examples -static -stunnel
+net-misc/telnet-bsd-1.2-r1 : -nls -xinetd
+net-misc/tigervnc-1.9.0-r1 : drm pam server xorgmodule -dri3 -gnutls -java -libressl -nls -opengl -xinerama ELIBC=-FreeBSD
+net-misc/udpcast-20120424
+net-misc/vconfig-1.9 : -static
+net-misc/wget-1.19.5 : ipv6 pcre ssl zlib -debug -gnutls -idn -libressl -nls -ntlm -static -test -uuid
+net-misc/whois-5.3.2 : iconv -idn -nls
+net-misc/wput-0.6.1-r1 : ssl -debug -nls
+net-nds/rpcbind-0.2.4-r3 : -debug -selinux -systemd -tcpd -warmstarts
+net-vpn/ipsec-tools-0.8.2-r5 : ipv6 pam readline -hybrid -idea -kerberos -ldap -libressl -nat -rc5 -selinux -stats KERNEL=linux
+net-vpn/openvpn-2.4.6 : iproute2 lz4 lzo pam plugins ssl -down-root -examples -inotify -libressl -mbedtls -pkcs11 -selinux -static -systemd -test KERNEL=linux USERLAND=-BSD
+net-vpn/vpnc-0.5.3_p550 : gnutls -resolvconf -selinux KERNEL=linux
+net-wireless/b43-fwcutter-019
+net-wireless/bcm43xx-fwcutter-006
+net-wireless/crda-3.18-r1 : -gcrypt -libressl
+net-wireless/iw-4.9
+net-wireless/wireless-regdb-20181024
+net-wireless/wireless-tools-30_pre9 : -multicall
+net-wireless/wpa_supplicant-2.6-r6 : dbus hs2-0 readline ssl -ap -eap-sim -eapol_test -fasteap -gnutls -libressl -p2p -privsep -ps3 -qt5 -selinux -smartcard -tdls -uncommon-eap-types -wimax -wps KERNEL=linux -FreeBSD
+perl-core/File-Path-2.130.0
+perl-core/File-Temp-0.230.400-r1
+sys-apps/acl-2.2.52-r1 : -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/attr-2.4.47-r2 : -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/baselayout-2.6-r1 : split-usr -build KERNEL=linux -FreeBSD
+sys-apps/cciss_vol_status-1.12
+sys-apps/coreutils-8.29-r1 : acl split-usr xattr -caps -gmp -hostname -kill -multicall -nls -selinux -static -test -vanilla USERLAND=-BSD
+sys-apps/dbus-1.10.24 : X -debug -doc -elogind -selinux -static-libs -systemd -test -user-session ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+sys-apps/dcfldd-1.3.4.1
+sys-apps/debianutils-4.8.3 : -static KERNEL=linux
+sys-apps/diffutils-3.6-r1 : -nls -static
+sys-apps/dmapi-2.2.12-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/dmidecode-3.1 : -selinux
+sys-apps/dstat-0.7.3 : -doc -examples -wifi PYTHON_TARGETS=python2_7
+sys-apps/ed-1.13
+sys-apps/ethtool-4.13
+sys-apps/fbset-2.1 : -static
+sys-apps/file-5.34 : python zlib -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5 -python3_7
+sys-apps/findutils-4.6.0-r1 : -nls -selinux -static -test
+sys-apps/flashrom-0.9.8 : atavia buspirate_spi drkaiser dummy gfxnvidia internal internal_dmi it8212 linux_spi nic3com nicintel nicintel_eeprom nicintel_spi nicrealtek ogp_spi pickit2_spi pony_spi rayer_spi satamv satasii serprog wiki -atahpt -dediprog -ft2232_spi -mstarddc_spi -nicnatsemi -static -tools -usbblaster_spi
+sys-apps/fxload-20081013-r1
+sys-apps/gawk-4.1.4 : readline -mpfr -nls
+sys-apps/gentoo-functions-0.12
+sys-apps/gptfdisk-1.0.3 : ncurses -static KERNEL=linux
+sys-apps/grep-3.1 : nls pcre -static
+sys-apps/groff-1.22.2 : X -examples L10N=-ja
+sys-apps/hdparm-9.56 : -static
+sys-apps/hwdata-gentoo-0.4 : -binary-drivers -opengl
+sys-apps/hwids-20171003 : net pci udev usb
+sys-apps/hwsetup-1.2-r3 : zlib
+sys-apps/install-xattr-0.5
+sys-apps/ipmitool-1.8.17-r1 : -libressl -openipmi -static
+sys-apps/iproute2-4.17.0-r1 : atm iptables ipv6 -berkdb -caps -elf -minimal -selinux
+sys-apps/kbd-2.0.4 : pam -nls -test
+sys-apps/keyutils-1.5.9-r4 : -static -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+sys-apps/kmod-24 : python tools zlib -debug -doc -lzma -static-libs PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+sys-apps/less-531 : pcre unicode
+sys-apps/lm_sensors-3.4.0_p20180923 : -contrib -sensord -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+sys-apps/lshw-02.18b : gtk -sqlite -static
+sys-apps/man-1.6g-r1 : lzma -nls -selinux
+sys-apps/man-pages-4.16 : -nls L10N=-da -de -fr -it -ja -nl -pl -ru -zh-CN
+sys-apps/man-pages-posix-2013a
+sys-apps/memtester-4.3.0
+sys-apps/mlocate-0.26-r2 : -nls -selinux
+sys-apps/net-tools-1.60_p20161110235919 : arp hostname ipv6 -nis -nls -plipconfig -selinux -slattach -static
+sys-apps/netplug-1.2.9.2-r2 : -debug -doc
+sys-apps/nvme-cli-1.6-r1 : uuid
+sys-apps/openrc-0.38.3 : ncurses netifrc pam unicode -audit -debug -newnet -prefix -selinux -static-libs KERNEL=linux -FreeBSD
+sys-apps/opentmpfiles-0.1.3 : -selinux
+sys-apps/pciutils-3.5.6 : kmod udev zlib -dns -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/pcmciautils-018_p8-r1 : -debug -staticsocket KERNEL=linux
+sys-apps/pcsc-lite-1.8.23 : python udev -libusb -policykit -selinux -systemd ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_SINGLE_TARGET=python2_7 -python3_4 -python3_5 -python3_6 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+sys-apps/portage-2.3.51 : ipc native-extensions xattr -build -doc -epydoc -gentoo-dev -rsync-verify -selinux PYTHON_TARGETS=python2_7 python3_6 -pypy -python3_4 -python3_5 -python3_7
+sys-apps/pv-1.6.6 : -debug -nls KERNEL=linux
+sys-apps/rename-1.3-r2
+sys-apps/renameutils-0.12.0 : -nls
+sys-apps/rescan-scsi-bus-1.57-r1
+sys-apps/sandbox-2.13 : ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/sdparm-1.10
+sys-apps/sed-4.5 : acl -forced-sandbox -nls -selinux -static
+sys-apps/setserial-2.17-r5
+sys-apps/sg3_utils-1.42 : -static-libs
+sys-apps/shadow-4.6 : acl xattr -audit -cracklib -nls -pam -selinux -skey
+sys-apps/smartmontools-6.6 : -caps -daemon -selinux -static -update_drivedb
+sys-apps/sysresccd-custom-3.4.0 : sysrcdfull
+sys-apps/sysresccd-scripts-5.0.0
+sys-apps/sysvinit-2.88-r9 : -ibm -selinux -static KERNEL=-FreeBSD
+sys-apps/tcp-wrappers-7.6.22-r1 : ipv6 -netgroups -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-apps/udevil-0.4.4-r3
+sys-apps/usb_modeswitch-2.5.2 : -jimtcl KERNEL=linux
+sys-apps/usbutils-009 : python PYTHON_TARGETS=python2_7
+sys-apps/util-linux-2.32-r4 : cramfs ncurses pam python readline slang static-libs suid unicode -build -caps -fdformat -kill -nls -selinux -systemd -test -tty-helpers -udev ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7 USERLAND=GNU
+sys-apps/which-2.21
+sys-apps/x86info-1.30 : KERNEL=linux
+sys-auth/consolekit-1.2.1 : acl pam policykit -cgroups -debug -doc -evdev -pm-utils -selinux -test -udev KERNEL=linux
+sys-auth/libyubikey-1.13 : -static-libs
+sys-auth/pambase-20150213-r2 : nullok sha512 -consolekit -cracklib -debug -elogind -minimal -mktemp -pam_krb5 -pam_ssh -passwdqc -securetty -selinux -systemd
+sys-auth/polkit-0.113-r4 : pam -elogind -examples -gtk -introspection -jit -kde -nls -selinux -systemd -test
+sys-auth/ykpers-1.19.0 : consolekit -static-libs
+sys-auth/yubikey-personalization-gui-3.1.25 : -debug -test
+sys-block/aic94xx-firmware-20090727
+sys-block/gpart-0.1h-r2
+sys-block/gparted-0.32.0 : btrfs cryptsetup f2fs fat hfs jfs mdadm ntfs reiser4 reiserfs xfs -dmraid -kde -policykit -udf
+sys-block/mbuffer-20171011 : ssl -debug -test
+sys-block/mpt-status-1.2.0-r1
+sys-block/ms-sys-2.5.3
+sys-block/mtx-1.3.12
+sys-block/nbd-3.15.3 : zlib -debug
+sys-block/open-iscsi-2.0.873-r1 : -debug -slp KERNEL=linux
+sys-block/partclone-0.2.89 : btrfs fat hfs jfs ntfs -reiser4 -reiserfs -vmfs -xfs
+sys-block/parted-3.2_p20-r1 : debug readline -device-mapper -nls -selinux -static-libs
+sys-block/partimage-0.6.9 : pam ssl -nls -nologin -static
+sys-block/scsiadd-1.97 : -suid
+sys-block/thin-provisioning-tools-0.7.0 : -static -test
+sys-block/whdd-3.0
+sys-boot/efibootmgr-15
+sys-boot/grub-2.02-r1 : device-mapper fonts mount themes -debug -doc -efiemu -libzfs -multislot -nls -sdl -static -test -truetype GRUB_PLATFORMS=efi-64 pc -coreboot -efi-32 -emu -ieee1275 -loongson -multiboot -qemu -qemu-mips -uboot -xen -xen-32
+sys-boot/lilo-24.0-r1 : device-mapper -minimal -pxeserial -static
+sys-boot/mbr-1.1.11-r1 : -test
+sys-boot/os-prober-1.76-r1
+sys-boot/syslinux-6.04_pre1 : -custom-cflags
+sys-cluster/drbd-utils-8.9.6-r1 : udev -heartbeat -pacemaker -xen
+sys-cluster/glusterfs-4.0.0-r1 : fuse georeplication ipv6 libtirpc tiering xml -bd-xlator -crypt-xlator -debug -emacs -glupy -infiniband -qemu-block -rsyslog -static-libs -syslog -systemtap -test -vim-syntax PYTHON_TARGETS=python2_7
+sys-devel/bc-1.06.95-r2 : readline -libedit -static
+sys-devel/binutils-2.30-r4 : cxx -doc -multitarget -nls -static-libs -test
+sys-devel/binutils-config-5-r4
+sys-devel/crossdev-20171230
+sys-devel/gcc-7.3.0-r3 : cxx nptl openmp pch pie sanitize ssp vtv -altivec -cilk -debug -doc -fixed-point -fortran -go -graphite -hardened -jit -libssp -mpx -multilib -nls -objc -objc++ -objc-gc -pgo -regression-test -vanilla
+sys-devel/gcc-config-1.8-r1
+sys-devel/gnuconfig-20170101
+sys-devel/libtool-2.4.6-r3 : -vanilla
+sys-devel/m4-1.4.17 : -examples
+sys-devel/make-4.2.1-r4 : -guile -nls -static
+sys-devel/patch-2.7.6-r2 : xattr -static -test
+sys-firmware/atmel-firmware-1.3-r1 : usb -pcmcia
+sys-firmware/ipw2100-firmware-1.3
+sys-firmware/ipw2200-firmware-3.1
+sys-firmware/zd1201-firmware-0.14
+sys-firmware/zd1211-firmware-1.4
+sys-fs/aufs-util-4.0_p20150420 : KERNEL=linux
+sys-fs/btrfs-progs-4.14.1 : convert reiserfs zstd -static -static-libs
+sys-fs/cryptsetup-1.7.5-r1 : gcrypt udev -kernel -libressl -nettle -nls -openssl -pwquality -python -reencrypt -static -static-libs -urandom KERNEL=linux PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5 -python3_7
+sys-fs/dd-rescue-1.99.8 : lzo xattr -static CPU_FLAGS_X86=-avx2 -sse4_2
+sys-fs/ddrescue-1.21-r1 : -static
+sys-fs/diskdev_cmds-332.14_p1
+sys-fs/dmraid-1.0.0_rc16-r3 : -dietlibc -intel_led -klibc -led -mini -static KERNEL=linux
+sys-fs/dosfstools-4.1 : udev -compat -test
+sys-fs/e2fsprogs-1.43.9 : -fuse -nls -static-libs ELIBC=-FreeBSD
+sys-fs/ecryptfs-utils-111 : openssl pam -doc -gpg -gtk -pkcs11 -python -suid -tpm KERNEL=linux PYTHON_TARGETS=python2_7
+sys-fs/eudev-3.2.5 : hwdb kmod -introspection -rule-generator -selinux -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 KERNEL=linux
+sys-fs/ext3grep-0.10.2 : -debug -pch
+sys-fs/extundelete-0.2.4
+sys-fs/f2fs-tools-1.11.0-r1 : -selinux
+sys-fs/fuse-2.9.7 : -examples -static-libs KERNEL=linux -FreeBSD
+sys-fs/fuse-exfat-1.2.8
+sys-fs/growpart-0.0.30
+sys-fs/hfsplusutils-1.0.4-r1 : -static-libs
+sys-fs/hfsutils-3.2.6-r5 : -tcl -tk
+sys-fs/jfsutils-1.1.15 : -static
+sys-fs/lsscsi-0.29
+sys-fs/lufis-0.3
+sys-fs/lufs-0.9.7-r3 : -debug
+sys-fs/lvm2-2.02.145-r2 : lvm1 readline thin udev -clvm -cman -corosync -device-mapper-only -lvm2create_initrd -openais -selinux -static -static-libs -systemd KERNEL=linux
+sys-fs/mac-fdisk-0.1-r7
+sys-fs/mdadm-4.1 : -static
+sys-fs/mtd-utils-1.5.2 : xattr
+sys-fs/mtools-4.0.18-r2 : -X ELIBC=glibc
+sys-fs/multipath-tools-0.6.4-r1 : -rbd -systemd KERNEL=linux
+sys-fs/ncdu-1.13
+sys-fs/nilfs-utils-2.2.2 : -static-libs KERNEL=linux
+sys-fs/ntfs3g-2017.3.23-r1 : ntfsprogs xattr -acl -debug -external-fuse -ntfsdecrypt -static-libs -suid KERNEL=linux
+sys-fs/ntfsreloc-0.7
+sys-fs/reiser4progs-1.1.0 : readline -debug -static -static-libs
+sys-fs/reiserfsprogs-3.6.27 : -static-libs
+sys-fs/safecopy-1.7 : -test
+sys-fs/scrounge-ntfs-0.9
+sys-fs/squashfs-tools-4.3-r2 : lz4 lzo xattr xz -debug -lzma -static
+sys-fs/sysfsutils-2.1.0 : -static-libs
+sys-fs/udev-init-scripts-32
+sys-fs/udftools-1.1-r1
+sys-fs/xfsdump-3.1.8 : ncurses -nls
+sys-fs/xfsprogs-4.17.0-r1 : icu -libedit -nls -readline -static-libs
+sys-fs/zerofree-1.0.4
+sys-kernel/linux-firmware-20181026 : -savedconfig
+sys-kernel/linux-headers-4.14-r1 : -headers-only
+sys-libs/binutils-libs-2.30-r4 : -64-bit-bfd -multitarget -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/db-5.3.28-r2 : cxx -doc -examples -java -tcl -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=-FreeBSD
+sys-libs/e2fsprogs-libs-1.43.9 : -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/efivar-31
+sys-libs/gdbm-1.13-r2 : readline -berkdb -exporter -nls -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/glibc-2.27-r6 : multiarch -audit -caps -compile-locales -doc -gd -hardened -headers-only -multilib -nscd -profile -selinux -suid -systemtap -vanilla
+sys-libs/gpm-1.20.7-r2 : -selinux -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/ldb-1.1.29-r1 : python -doc -ldap ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7
+sys-libs/libaal-1.0.6 : -static-libs
+sys-libs/libcap-2.25 : pam -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/libcap-ng-0.7.8 : python -static-libs PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+sys-libs/libseccomp-2.3.3 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/libstdc++-v3-3.3.6-r1 : -multilib -nls
+sys-libs/mtdev-1.1.5 : -static-libs
+sys-libs/ncurses-6.1-r2 : cxx unicode -ada -debug -doc -gpm -minimal -profile -static-libs -test -threads -tinfo -trace ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/openipmi-2.0.22 : crypt -perl -python -snmp -tcl PYTHON_TARGETS=python2_7
+sys-libs/pam-1.3.0-r2 : pie -audit -berkdb -cracklib -debug -filecaps -nis -nls -selinux -test -vim-syntax ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/pwdb-0.62-r1 : -selinux
+sys-libs/readline-7.0_p3 : -static-libs -utils ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/slang-2.3.2 : pcre png readline zlib -cjk -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-libs/talloc-2.1.14 : python -compat ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7
+sys-libs/tdb-1.3.16 : python ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 PYTHON_TARGETS=python2_7
+sys-libs/tevent-0.9.37 : python ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 ELIBC=glibc PYTHON_TARGETS=python2_7
+sys-libs/timezone-data-2018g : -leaps_timezone -nls ELIBC=-FreeBSD
+sys-libs/zlib-1.2.11-r2 : -minizip -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+sys-power/acpi-1.6
+sys-process/acct-6.6.4-r1
+sys-process/atop-2.3.0-r1 : KERNEL=linux
+sys-process/cronbase-0.3.7-r6
+sys-process/htop-2.2.0 : unicode -openvz -vserver KERNEL=linux -FreeBSD PYTHON_SINGLE_TARGET=python2_7 -python3_4 -python3_5 -python3_6 -python3_7 PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5 -python3_7
+sys-process/iotop-0.6 : KERNEL=linux PYTHON_TARGETS=python2_7 python3_6 -python3_4 -python3_5
+sys-process/lsof-4.91 : ipv6 -examples -rpc -selinux
+sys-process/nmon-16f
+sys-process/procps-3.3.15-r1 : kill ncurses unicode -elogind -modern-top -nls -selinux -static-libs -systemd -test
+sys-process/psmisc-23.1-r1 : X ipv6 -nls -selinux
+sys-process/vixie-cron-4.1-r15 : pam -debug -selinux
+www-client/elinks-0.12_pre6-r1 : bzip2 ipv6 mouse samba ssl unicode zlib -X -bittorrent -debug -finger -ftp -gc -gopher -gpm -guile -idn -javascript -lua -nls -nntp -perl -ruby -xml
+www-client/firefox-bin-63.0.1-r1 : -ffmpeg -pulseaudio -selinux -startup-notification L10N=-ach -af -an -ar -as -ast -az -bg -bn-BD -bn-IN -br -bs -ca -cs -cy -da -de -el -en-GB -en-ZA -eo -es-AR -es-CL -es-ES -es-MX -et -eu -fa -fi -fr -fy -ga -gd -gl -gu -he -hi -hr -hsb -hu -hy -id -is -it -ja -kk -km -kn -ko -lt -lv -mai -mk -ml -mr -ms -nb -nl -nn -or -pa -pl -pt-BR -pt-PT -rm -ro -ru -si -sk -sl -son -sq -sr -sv -ta -te -th -tr -uk -uz -vi -xh -zh-CN -zh-TW
+www-servers/thttpd-2.26.4-r3
+x11-apps/iceauth-1.0.8
+x11-apps/mkfontdir-1.0.7
+x11-apps/mkfontscale-1.1.3
+x11-apps/rgb-1.0.6
+x11-apps/setxkbmap-1.3.1
+x11-apps/xauth-1.0.10 : ipv6 -test
+x11-apps/xcalc-1.0.6
+x11-apps/xdpyinfo-1.3.2 : -dga -dmx -xinerama
+x11-apps/xgamma-1.0.6
+x11-apps/xhost-1.0.7 : ipv6
+x11-apps/xinit-1.4.0 : minimal
+x11-apps/xkbcomp-1.4.2
+x11-apps/xmodmap-1.0.9
+x11-apps/xrandr-1.5.0
+x11-apps/xrdb-1.1.1
+x11-apps/xset-1.2.4
+x11-apps/xsetroot-1.1.2
+x11-apps/xwd-1.0.7
+x11-base/xorg-drivers-1.20 : INPUT_DEVICES=evdev keyboard mouse synaptics vmmouse -elographics -joystick -libinput -tslib -void -wacom VIDEO_CARDS=ast dummy glint intel nouveau nv r128 radeon siliconmotion vesa via vmware -amdgpu -fbdev -freedreno -geode -i915 -i965 -mga -nvidia -omap -qxl -radeonsi -tdfx -tegra -vc4 -virtualbox -voodoo
+x11-base/xorg-proto-2018.4
+x11-base/xorg-server-1.20.3 : glamor ipv6 udev xorg -debug -dmx -doc -kdrive -libressl -minimal -selinux -static-libs -suid -systemd -unwind -wayland -xcsecurity -xephyr -xnest -xvfb
+x11-drivers/xf86-input-evdev-2.10.6 : KERNEL=linux
+x11-drivers/xf86-input-keyboard-1.9.0
+x11-drivers/xf86-input-mouse-1.9.3
+x11-drivers/xf86-input-synaptics-1.9.1 : KERNEL=linux
+x11-drivers/xf86-input-vmmouse-13.1.0-r1
+x11-drivers/xf86-video-ast-1.1.5
+x11-drivers/xf86-video-ati-18.1.0 : glamor -udev KERNEL=linux
+x11-drivers/xf86-video-dummy-0.3.8 : -dga
+x11-drivers/xf86-video-glint-1.2.9
+x11-drivers/xf86-video-intel-2.99.917_p20180214-r1 : dri udev uxa -debug -dri3 -sna -tools -xvmc KERNEL=linux
+x11-drivers/xf86-video-nouveau-1.0.15-r1
+x11-drivers/xf86-video-nv-2.1.21
+x11-drivers/xf86-video-openchrome-0.6.0 : -debug -viaregtool
+x11-drivers/xf86-video-r128-6.12.0 : dri
+x11-drivers/xf86-video-siliconmotion-1.7.9
+x11-drivers/xf86-video-vesa-2.4.0 : KERNEL=linux
+x11-drivers/xf86-video-vmware-13.3.0 : KERNEL=linux
+x11-libs/cairo-1.14.12 : X glib svg xcb -aqua -debug -gles2 -opengl -static-libs -valgrind ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/fltk-1.3.3-r3 : threads xft -cairo -debug -doc -examples -games -opengl -static-libs -xinerama
+x11-libs/gdk-pixbuf-2.36.12 : X jpeg -debug -introspection -jpeg2k -test -tiff ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/gnome-pty-helper-0.40.2 : -hardened
+x11-libs/gtk+-2.24.32 x11-libs/gtk+-3.22.30 : -aqua -cups -examples -introspection -test -vim-syntax -xinerama ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32(X -aqua -broadway -cloudprint -colord -cups -examples -introspection -test -vim-syntax -wayland -xinerama ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32)
+x11-libs/libICE-1.0.9-r2 : ipv6 -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libSM-1.2.3 : ipv6 uuid -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libX11-1.6.7 : ipv6 -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXScrnSaver-1.2.3 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXau-1.0.8-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXaw-1.0.13-r1 : -deprecated -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXcomposite-0.4.4-r2 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXcursor-1.1.15 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXdamage-1.1.4-r2 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXdmcp-1.1.2-r2 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXext-1.3.3-r1 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXfixes-5.0.3-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXfont2-2.0.3-r1 : bzip2 ipv6 -doc -static-libs -truetype
+x11-libs/libXft-2.3.2-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXi-1.7.9-r1 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXmu-1.1.2-r1 : ipv6 -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXpm-3.5.12-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXrandr-1.5.1-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXrender-0.9.10-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXres-1.2.0-r1 : -static-libs
+x11-libs/libXt-1.1.5-r1 : -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXtst-1.2.3-r1 : -doc -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXv-1.0.11-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXvMC-1.0.10-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libXxf86misc-1.0.4 : -static-libs
+x11-libs/libXxf86vm-1.1.4-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libdrm-2.4.96 : libkms -valgrind ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 VIDEO_CARDS=intel nouveau radeon vmware -amdgpu -exynos -freedreno -omap -tegra -vc4 -vivante
+x11-libs/libfontenc-1.1.3-r1 : -static-libs
+x11-libs/libnotify-0.7.7-r1 : -introspection -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libpciaccess-0.14 : zlib -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libwnck-2.31.0 : -introspection -startup-notification
+x11-libs/libxcb-1.13.1 : xkb -doc -selinux -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libxkbcommon-0.8.2 : X -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libxkbfile-1.0.9-r2 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/libxklavier-5.4 : -introspection -vala
+x11-libs/libxshmfence-1.3-r1 : -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/pango-1.42.4 : X -introspection -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/pixman-0.34.0 : -altivec -loongson2f -neon -static-libs ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32 CPU_FLAGS_ARM=-iwmmxt CPU_FLAGS_X86=-mmxext -sse2 -ssse3
+x11-libs/vte-0.28.2-r208 x11-libs/vte-0.48.4 : -debug -introspection -python PYTHON_TARGETS=python2_7(crypt -debug -glade -introspection -vala -vanilla)
+x11-libs/wxGTK-3.0.4-r300 : -X -aqua -debug -doc -gstreamer -libnotify -opengl -sdl -tiff -webkit ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-0.4.0-r1 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-cursor-0.1.3-r2 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-image-0.4.0-r1 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-keysyms-0.4.0-r1 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-renderutil-0.3.9-r2 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xcb-util-wm-0.4.1-r2 : -doc -static-libs -test ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-libs/xtrans-1.3.5 : -doc
+x11-misc/grsync-1.2.6
+x11-misc/read-edid-3.0.2
+x11-misc/shared-mime-info-1.10 : -test
+x11-misc/xbitmaps-1.1.2-r1
+x11-misc/xkeyboard-config-2.25
+x11-terms/xfce4-terminal-0.8.7.2 : -utempter
+x11-themes/adwaita-icon-theme-3.24.0 : -branding
+x11-themes/gnome-themes-standard-3.22.3
+x11-themes/gtk-engines-adwaita-3.22.3 : ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-themes/gtk-engines-xfce-3.2.0-r200 : -debug ABI_MIPS=-n32 -n64 -o32 ABI_PPC=-32 -64 ABI_S390=-32 -64 ABI_X86=32 -64 -x32
+x11-themes/hicolor-icon-theme-0.17
+x11-themes/tango-icon-theme-0.8.90-r1 : png -minimal
+x11-wm/jwm-2.3.2 : jpeg png xpm -bidi -debug -truetype -xinerama
+xfce-base/exo-0.12.0
+xfce-base/garcon-0.6.1 : gtk2
+xfce-base/libxfce4ui-4.13.4 : -debug -glade -introspection -startup-notification -vala
+xfce-base/libxfce4util-4.13.1 : -introspection
+xfce-base/thunar-1.6.14 : dbus pcre trash-panel-plugin -exif -libnotify -test -udisks
+xfce-base/xfce4-appfinder-4.12.0-r1 : -debug
+xfce-base/xfce4-meta-4.12-r1 : -minimal -svg
+xfce-base/xfce4-panel-4.12.2
+xfce-base/xfce4-session-4.12.1-r1 : -debug -nls -policykit -systemd -upower -xscreensaver
+xfce-base/xfce4-settings-4.12.3 : xklavier -libcanberra -libnotify -upower INPUT_DEVICES=-libinput
+xfce-base/xfconf-4.12.1 : -debug -perl
+xfce-base/xfdesktop-4.12.4 : thunar -debug -libnotify
+xfce-base/xfwm4-4.12.4 : dri xcomposite -startup-notification
+xfce-extra/xfce4-battery-plugin-1.1.0 : KERNEL=linux
+xfce-extra/xfce4-datetime-plugin-0.7.0
+xfce-extra/xfce4-notifyd-0.4.2
+xfce-extra/xfce4-taskmanager-1.2.0 : -gtk3
+xfce-extra/xfce4-wavelan-plugin-0.6.0 : KERNEL=linux
