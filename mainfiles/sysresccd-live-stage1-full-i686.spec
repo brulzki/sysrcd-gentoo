@@ -48,7 +48,6 @@ livecd/packages:
 	app-arch/rpm2targz
 	app-arch/rzip
 	app-arch/sharutils
-	app-arch/star
 	app-arch/tar
 	app-arch/unace
 	app-arch/unrar
@@ -116,7 +115,6 @@ livecd/packages:
 	app-shells/tcsh
 	app-shells/zsh
 	app-text/dos2unix
-	app-text/epdfview
 	app-text/tree
 	app-text/wgetpaste
 	app-vim/gentoo-syntax
@@ -278,7 +276,6 @@ livecd/packages:
 	sys-apps/x86info
 	sys-auth/pambase
 	sys-auth/yubikey-personalization-gui
-	sys-block/aic94xx-firmware
 	sys-block/gpart
 	sys-block/gparted
 	sys-block/mbuffer
@@ -336,7 +333,6 @@ livecd/packages:
 	sys-fs/reiser4progs
 	sys-fs/reiserfsprogs
 	sys-fs/safecopy
-	sys-fs/scrounge-ntfs
 	sys-fs/squashfs-tools
 	net-fs/sshfs
 	sys-fs/sysfsutils

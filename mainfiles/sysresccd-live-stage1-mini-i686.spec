@@ -44,7 +44,6 @@ livecd/packages:
 	app-arch/pxz
 	app-arch/rzip
 	app-arch/sharutils
-	app-arch/star
 	app-arch/tar
 	app-arch/unace
 	app-arch/unrar
@@ -220,7 +219,6 @@ livecd/packages:
 	sys-apps/which
 	sys-apps/x86info
 	sys-auth/pambase
-	sys-block/aic94xx-firmware
 	sys-block/gpart
 	sys-block/mbuffer
 	sys-block/mpt-status
@@ -269,7 +267,6 @@ livecd/packages:
 	sys-fs/reiser4progs
 	sys-fs/reiserfsprogs
 	sys-fs/safecopy
-	sys-fs/scrounge-ntfs
 	sys-fs/squashfs-tools
 	net-fs/sshfs
 	sys-fs/eudev
