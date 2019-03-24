@@ -33,3 +33,5 @@ sys-kernel/aufs-sources ~*
 sys-kernel/gentoo-sources ~*
 sys-kernel/linux-headers ~*
 
+sys-fs/aufs-util
+sys-fs/aufs-headers

@@ -2,7 +2,7 @@
 >sys-devel/gcc-7.999
 >sys-libs/glibc-2.27.999
 >sys-apps/portage-2.3.999
->app-portage/eix-0.32.999
+#>app-portage/eix-0.32.999
 >dev-lang/python-3.6.999
 
 # kernel packages
@@ -20,16 +20,16 @@
 # disk and filesystem packages
 <sys-block/parted-3.2_p20
 >sys-block/parted-3.2_p9999
-<sys-boot/grub-2.02-r1
->sys-boot/grub-2.02-r1
-<sys-fs/btrfs-progs-4.14
->sys-fs/btrfs-progs-4.14.999
+#<sys-boot/grub-2.02-r1
+#>sys-boot/grub-2.02-r1
+#<sys-fs/btrfs-progs-4.14
+#>sys-fs/btrfs-progs-4.14.999
 
 # modified packages
-<www-servers/thttpd-2.26.4-r3
->www-servers/thttpd-2.26.4-r3
-<app-misc/livecd-tools-2.0.3
->app-misc/livecd-tools-2.0.3
+#<www-servers/thttpd-2.26.4-r3
+#>www-servers/thttpd-2.26.4-r3
+#<app-misc/livecd-tools-2.0.3
+#>app-misc/livecd-tools-2.0.3
 
 # block unnecessary versions
 =dev-lang/python-3.5*

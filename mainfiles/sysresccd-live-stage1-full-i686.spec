@@ -193,8 +193,8 @@ livecd/packages:
 	net-misc/netifrc
 	net-misc/netkit-rsh
 	net-misc/networkmanager
-	net-misc/networkmanager-openvpn
-	net-misc/networkmanager-vpnc
+	net-vpn/networkmanager-openvpn
+	net-vpn/networkmanager-vpnc
 	net-misc/ntp
 	net-misc/openssh
 	net-vpn/openvpn

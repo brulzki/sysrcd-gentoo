@@ -124,3 +124,7 @@ xfce-base/xfce4-meta session
 xfce-base/xfce4-session -xscreensaver
 xfce-base/xfconf -perl
 xfce-base/xfdesktop xfce_plugins_menu
+
+# fix up build errors
+>=dev-lang/python-2.7.15:2.7 sqlite
+x11-libs/libdrm video_cards_vmware

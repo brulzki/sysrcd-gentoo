@@ -9,7 +9,7 @@ portage_confdir: /worksrc/sysresccd-src/portage-etc-x86
 portage_overlay: /worksrc/sysresccd-src/portage-overlay
 
 livecd/fstype: none
-livecd/cdtar: /usr/lib/catalyst/livecd/cdtar/isolinux-3.72-cdtar.tar.bz2
+livecd/cdtar: /usr/share/catalyst/livecd/cdtar/isolinux-3.72-cdtar.tar.bz2
 livecd/iso: /worksrc/isofiles/systemrescuecd-x86-current.iso
 livecd/splash_type: 
 livecd/splash_theme: 
